@@ -3,4 +3,4 @@ gem 'jekyll-paginate'
 
 
 gem "jekyll-sitemap"
-gem "pygments.rb"
+#gem "pygments.rb"
