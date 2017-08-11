@@ -1,0 +1,68 @@
+---
+layout: post
+title: "最短路径解法"
+date: 2011-09-05 13:27:08.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "数学算法"
+tags:
+- Dijkstra
+- "最短路径"
+- "标号法"
+- "算法"
+meta:
+  views: '143'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<h5>这个Dijkstra算法转自<a title="http://2728green-rock.blog.163.com/blog/static/43636790200901211848284/" href="http://2728green-rock.blog.163.com/blog/static/43636790200901211848284/">http://2728green-rock.blog.163.com/blog/static/43636790200901211848284/</a></h5>
+<p>看了七八篇，就这篇看懂了！</p>
+<h5>
+<p><a></a></p>
+<p>   <a>１&#160; </a>最短路径算法</h5>
+<p>在日常生活中，我们如果需要常常往返A地区和B地区之间，我们最希望知道的可能是从A地区到B地区间的众多路径中，那一条路径的路途最短。最短路径问题是图论研究中的一个经典算法问题， 旨在寻找图（由结点和路径组成的）中两结点之间的最短路径。 算法具体的形式包括：</p>
+<p>（１）确定起点的最短路径问题：即已知起始结点，求最短路径的问题。 </p>
+<p>（２）确定终点的最短路径问题：与确定起点的问题相反，该问题是已知终结结点，求最短路径的问题。在无向图中该问题与确定起点的问题完全等同，在有向图中该问题等同于把所有路径方向反转的确定起点的问题。 </p>
+<p>（３）确定起点终点的最短路径问题：即已知起点和终点，求两结点之间的最短路径。 </p>
+<p>（４）全局最短路径问题：求图中所有的最短路径。</p>
+<p>用于解决最短路径问题的算法被称做“最短路径算法”， 有时被简称作“路径算法”。 最常用的路径算法有：Dijkstra算法、A*算法、Bellman-Ford算法、Floyd-Warshall算法、Johnson算法。</p>
+<p>本文主要研究Dijkstra算法的单源算法。</p>
+<p><a>２&#160; Dijkstra</a>算法</p>
+<p><a></a><a></a><a></a><a></a><a>2.1&#160; </a><a>Dijkstra</a>算法</p>
+<p>Dijkstra算法是典型最短路算法，用于计算一个节点到其他所有节点的最短路径。主要特点是以起始点为中心向外层层扩展，直到扩展到终点为止。Dijkstra算法能得出最短路径的最优解，但由于它遍历计算的节点很多，所以效率低。</p>
+<p>Dijkstra算法是很有代表性的最短路算法，在很多专业课程中都作为基本内容有详细的介绍，如数据结构，图论，运筹学等等。 </p>
+<p><a>2.2&#160; Dijkstra</a>算法思想</p>
+<p>Dijkstra算法思想为：设G=(V,E)是一个带权有向图，把图中顶点集合V分成两组，第一组为已求出最短路径的顶点集合（用S表示，初始时S中只有一个源点，以后每求得一条最短路径 , 就将 加入到集合S中，直到全部顶点都加入到S中，算法就结束了），第二组为其余未确定最短路径的顶点集合（用U表示），按最短路径长度的递增次序依次把第二组的顶点加入S中。在加入的过程中，总保持从源点v到S中各顶点的最短路径长度不大于从源点v到U中任何顶点的最短路径长度。此外，每个顶点对应一个距离，S中的顶点的距离就是从v到此顶点的最短路径长度，U中的顶点的距离，是从v到此顶点只包括S中的顶点为中间顶点的当前最短路径长度。</p>
+<p><a>2.3&#160; Dijkstra</a>算法具体步骤 </p>
+<p><a></a><a>（</a>1）初始时，S只包含源点，即S＝，v的距离为0。U包含除v外的其他顶点，U中顶点u距离为边上的权（若v与u有边）或 ）（若u不是v的出边邻接点）。</p>
+<p>（2）从U中选取一个距离v最小的顶点k，把k，加入S中（该选定的距离就是v到k的最短路径长度）。</p>
+<p>（3）以k为新考虑的中间点，修改U中各顶点的距离；若从源点v到顶点u（u U）的距离（经过顶点k）比原来距离（不经过顶点k）短，则修改顶点u的距离值，修改后的距离值的顶点k的距离加上边上的权。</p>
+<p>（4）重复步骤（2）和（3）直到所有顶点都包含在S中。</p>
+<p><a>2.4&#160; Dijkstra</a>算法举例说明</p>
+<p>如下图，设A为源点，求A到其他各顶点（B、C、D、E、F）的最短路径。线上所标注为相邻线段之间的距离，即权值。（注：此图为随意所画，其相邻顶点间的距离与图中的目视长度不能一一对等）</p>
+<p><a></a><a></a></p>
+<p>图一：Dijkstra无向图</p>
+<p><a href="http://kazge.com/wp-content/uploads/2011/11/583497626721859365.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="583497626721859365" border="0" alt="583497626721859365" src="{{ site.baseurl }}/assets/583497626721859365_thumb.jpg" width="244" height="146" /></a> </p>
+<p>算法执行步骤如下表：【注：图片要是看不到请到“相册--日志相册”中，名为“Dijkstra算法过程”的图就是了】</p>
+<p><a href="http://kazge.com/wp-content/uploads/2011/09/583497626721859362.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="583497626721859362" border="0" alt="583497626721859362" src="{{ site.baseurl }}/assets/583497626721859362_thumb.jpg" width="523" height="484" /></a> </p>
+<p><a>参考文献</a></p>
+<p>[1] 黄国瑜、叶乃菁，数据结构，清华大学出版社，2001年8月第1版</p>
+<p>[2] 最短路径，<a href="http://baike.baidu.com/view/349189.htm?func=retitle">http://baike.baidu.com/view/349189.htm?func=retitle</a></p>
+<p>[3] 李春葆，数据结构教程，清华大学出版社，2005年1月第1版</p>
+<p>[3] Dijkstra算法，http://baike.baidu.com/view/7839.htm</p>
+<blockquote>
+</blockquote>
+<blockquote></blockquote>
+<p>---------------------------------------------------------------------------------------------------------------------------- </p>
+<p>再讲讲直观一点的标号法处理如下的较复杂的图:</p>
+<p><a href="http://kazge.com/wp-content/uploads/2011/09/Snap2.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb.jpg" width="244" height="127" /></a> </p>
+<p>这个图很容易让人看昏，漏掉了较短路径，从a点到z点最短路径为13。</p>
+<p>步骤，从途中列出所有点从近到远到a的最短距离，这样可以基于之前的点找到余下的点。</p>
+<p>a-----b/d[2]------e[3]-----h[5]-----f[6]-----c[7]------g[9]-----j[10]-----i[11]------z[13]</p>
+<p>这里面f点是个比较容易忽视的点，使用标号法就不容易出错！</p>

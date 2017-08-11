@@ -1,0 +1,40 @@
+---
+layout: post
+title: "最小依赖集 无损联接分解 保持函数依赖"
+date: 2011-10-12 22:05:29.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "数据库"
+tags:
+- "数据库"
+meta:
+  views: '136'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<ul>
+<li><strong>最小依赖集:</strong> </li>
+</ul>
+<p>对于一个给定的函数依赖集F，当F`满足如下条件时，称为F的最小函数依赖集：    <br />⑴ F`中的每个函数依赖的右部都是单个属性。     <br />⑵ 对于F`中的任一函数依赖X→Y来说，F`-{X→Y}与F`都不等价<font color="#0000ff">。[没有冗余关系]      <br /></font>⑶ 对于F`中的任一函数依赖X→Y来说，F`-{X→Y}∪{Z→Y}与F`都不等价，其中Z为X的真子集<font color="#0000ff">。[左边属性没有冗余]      <br /></font>步骤：     <br />⑴ 将F中的所有以来变为右部是单属性的依赖。     <br />⑵ 依次考察F中的函数依赖。假设为X→Y，在F-{X→Y}中求X+，看X+是否包含Y，如果是则删去X→Y，否则不能删去X→Y。直到F中的最后一个。     <br />⑶ 逐个检查F中每个函数依赖左部的每个属性，消去冗余属性，判断XY→Z中属性Y是否冗余，即判断F-{XY→Z}∪{X→Z}与F是否等价。在F中求X+，如果中X+包含Z，则X→Z成立，XY→Z可以用X→Z代替。否则，Y不能消去。</p>
+<ul>
+<li><strong>无损联接分解</strong> </li>
+</ul>
+<p>多于两个的分解就太复杂了，两个的有公式判断：</p>
+<p>U1∩U2-&gt; U1-U2∈f+</p>
+<p>&#160;</p>
+<ul>
+<li><strong>保持函数依赖的分解</strong> </li>
+</ul>
+<p>用眼睛判断，比照原来的都能从分解结果中推理出来就可以。</p>
+<p>也就是说，对于多个分解，只要原来每个关系中属性都同时出现在分解后的某一个之中即可。</p>
+<p>&#160;</p>
+<ul>
+<li><strong>怎样得到候选码：</strong></li>
+</ul>
+<p>将左边出现的集合，去掉右边出现的，就可得到候选码。</p>

@@ -1,0 +1,23 @@
+---
+layout: post
+title: "【转】Forbidden关于无权限访问目录的问题"
+date: 2011-12-26 10:12:38.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- '404'
+meta:
+  views: '56'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>此文总结得较全面:</p>
+<p>转自:<a href="http://hi.baidu.com/tian%C2%BD%C0%DA/blog/item/2569ba0337e15b034bfb5191.html">http://hi.baidu.com/tian%C2%BD%C0%DA/blog/item/2569ba0337e15b034bfb5191.html</a></p>
+<p>问题：You don't have permission to access / on this server.   <br />说法一：<a href="http://hi.baidu.com/%D0%C7%BC%CA%C0%CB%D7%D31988/blog/item/449a1cfc676f7389b801a026.html">hi.baidu.com/%D0%C7%BC%CA%C0%CB%D7%D31988/blog/item/449a1cfc676f7389b801a026.html</a>    <br /><strong>&lt;Files ~&gt;     <br /><strong>AllowOverride AuthConfig FileInfo Indexs Limit Options       <br />Order allow ,deny        <br />Deny from all-----------------注意：就是这儿!!---&gt;把这行去掉或注释掉就行！！！        <br />&lt;/Files&gt;</strong></strong>    <br />不过原httpd.conf文件中是没有这一段的。只有    <br />&lt;FilesMatch &quot;^\.ht&quot;&gt;&#160;&#160; # 什么意思呢。匹配除.htt开头的文件？    <br />Order allow,deny    <br />Deny from all    <br />&lt;/FilesMatch&gt;    <br />经查，这一段是属于服务器安全配置方面的。《php和mysql web开发》中写到：通过在httpd.conf中引入适当的指令，隐藏一些不希望被看到的文件。例如，要防止inc文件被看到，则：    <br />&lt;Files ~ “\.inc$”&gt;    <br />Order allow,deny    <br />Deny from all    <br />&lt;/Files&gt;    <br />上面文章还讲到怎么去解决错误的方法，值得借鉴。好了，继续说 403 forbidden    <br />说法二：<a href="http://hi.baidu.com/hzw513/blog/item/ad85c0f56e5e0923bd310930.html">hi.baidu.com/hzw513/blog/item/ad85c0f56e5e0923bd310930.html</a>    <br />1、修改了httpd.conf中 documentRoot 的值；但没有修改下面不远处 &lt;Directory &quot;url&quot;&gt;&lt;/Directory&gt;中的url ；这个很好解决，直接改为一样，重启服务器就行了。    <br />2、你没有访问这个目录的权限；不过这种情况windows下很少。一般多在linux下。 解决方法就是 chmod 701&#160; /home/www ；如不行在参考其他情况。    <br />不过以上都不是我遇到的情况。我的目录文件夹从ftp上下载下来。权限都是777的。所以没有这种情况。    <br />说法三：<a href="http://hi.baidu.com/libk/blog/item/f9e32b34af4c90335ab5f5cd.html">hi.baidu.com/libk/blog/item/f9e32b34af4c90335ab5f5cd.html</a>    <br />经过以上验证后，确定不是以上问题。那么到底是什么原因呢。。。 忽然看到某个帖子的留言说“看apache日志”&#160; 忽然明白，到日志里面不就知道是什么问题了么！ 说实话我挺笨的。    <br />在 log/error.log中看到了    <br />“Options FollowSymLinks or SymLinksIfOwnerMatch is off which implies that RewriteRule directive is forbidden: F:/www/”&#160;&#160; <br />这样一段话，于是搜之；得到如上解答：    <br />1. 如果没有启用mod_rewrite，可以用Options None 来保证安全性。    <br />2. 如果启用了mod_rewrite, 那么Options就一定要启用FollowSymLinks或者SymLinksifOwnerMatch, 否则会出现Fobidden页面禁止访问的错误。    <br />查看错误日志会有这样的出错信息：(Options FollowSymLinks or SymLinksIfOwnerMatch is off which implies that RewriteRule directive is forbidden: /location/to/your/rewrite/url)    <br />查看 确认我的rewrite是打开的。可是options 却是 options indexes Multiviews&#160; ；于是改为 fllowsymlinks ；重启，真的就行了！    <br />不得不说原来如此。要多看看log啊。options具体选项详解参见<a href="http://hi.baidu.com/tian%C2%BD%C0%DA/blog/item/87c1f4be2ace600119d81f91.html">这里</a></p>

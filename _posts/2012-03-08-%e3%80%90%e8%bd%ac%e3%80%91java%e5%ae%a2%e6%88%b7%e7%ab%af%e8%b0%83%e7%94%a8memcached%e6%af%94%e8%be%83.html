@@ -1,0 +1,252 @@
+---
+layout: post
+title: "【转】JAVA客户端调用memcached比较"
+date: 2012-03-08 14:37:43.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- "分布式"
+tags:
+- memcached
+meta:
+  views: '1274'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><span style="widows: 2; text-transform: none; background-color: rgb(245,247,248); text-indent: 0px; font: 12px/15px 宋体, arial; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span">
+<div style="padding-bottom: 0px; line-height: 1.3; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" id="detail" class="detail">
+<div>
+<pre style="width: 902px; height: 88px" />
+<p>转自http://blog.chinaunix.net/space.php?uid=20787846&amp;do=blog&amp;id=1841943 , </p>
+<p>有趣的是这篇文章测试结果显示<a href="http://kazge.com/archives/751.html">上篇转载</a>的ali client性能有问题，那篇文章还说是优化了whalin，结果反而不如它，不知怎么回事！</p>
+<p><font color="#0000ff">蓝色字是博主加的加重标记或是注解。</font></p>
+</p></div>
+<p></p>
+<p style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 5px">&#160;</p>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content"><em><strong><font style="line-height: 1.5" size="3"><font style="line-height: 1.5; background-color: rgb(255,153,51)">1.memcached client for java客户端API：memcached client for java</font><span class="Apple-converted-space">&#160;</span> </p>
+<p></font></strong></em>网址：http://www.whalin.com/memcached<span class="Apple-converted-space">&#160;</span> </p>
+<p>最新版本：java_memcached-release_2.0.1<span class="Apple-converted-space">&#160;</span> </p>
+<p>操作示例：<span class="Apple-converted-space">&#160;</span> </p>
+<p></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="dp-highlighter">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="bar">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="tools">Java代码<a style="color: rgb(99,64,27); text-decoration: none" title="复制代码" href="http://lveyo.javaeye.com/blog/240146#"></a></div>
+</p></div>
+<ol style="list-style: decimal none outside; padding-bottom: 0px; line-height: 5px; margin: 0px; padding-left: 2em; padding-right: 0px; padding-top: 0px" class="dp-j">
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> com.danga.MemCached.*;&#160;&#160; </span></span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> org.apache.log4j.*;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">public</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">class</span><span style="line-height: 1.5"> TestMemcached {&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">public</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">static</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">void</span><span style="line-height: 1.5"> main(String[] args) {&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*初始化SockIOPool，管理memcached的连接池*/</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; String[] servers = { </span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;192.168.1.20:12111&quot;</span><span style="line-height: 1.5"> };&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; SockIOPool pool = SockIOPool.getInstance();&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setServers(servers);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setFailover(</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">true</span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setInitConn(</span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">10</font></span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setMinConn(</span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">5</font></span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setMaxConn(</span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">250</font></span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setMaintSleep(</span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">30</font></span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setNagle(</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">false</span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setSocketTO(</span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">3000</font></span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.setAliveCheck(</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">true</span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; pool.initialize();&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*建立MemcachedClient实例*/</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; MemCachedClient memCachedClient = </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">new</span><span style="line-height: 1.5"> MemCachedClient();&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">for</span><span style="line-height: 1.5"> (</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">int</span><span style="line-height: 1.5"> i = </span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">0</font></span><span style="line-height: 1.5">; i &lt; </span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">10</font></span><span style="line-height: 1.5">; i++) {&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*将对象加入到memcached缓存*/</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">boolean</span><span style="line-height: 1.5"> success = memCachedClient.set(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;&quot;</span><span style="line-height: 1.5"> + i, </span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;Hello!&quot;</span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*从memcached缓存中按key值取对象*/</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; String result = (String) memCachedClient.get(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;&quot;</span><span style="line-height: 1.5"> + i);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(String.format(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;set( %d ): %s&quot;</span><span style="line-height: 1.5">, i, success));&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(String.format(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;get( %d ): %s&quot;</span><span style="line-height: 1.5">, i, result));&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">}&#160; </span></li>
+</ol></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content"></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">
+<p><font style="line-height: 1.5; background-color: rgb(255,153,51)"><font style="line-height: 1.5" size="4"><strong>2.spymemcached</strong>客户端API：spymemcached client</font><span class="Apple-converted-space">&#160;</span> </p>
+<p></font>网址：http://code.google.com/p/spymemcached/<span class="Apple-converted-space">&#160;</span> </p>
+<p>最新版本：memcached-2.1.jar<span class="Apple-converted-space">&#160;</span> </p>
+<p>操作示例：<span class="Apple-converted-space">&#160;</span> </p>
+<p>用spymemcached将对象存入缓存<span class="Apple-converted-space">&#160;</span> </p>
+<p></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="dp-highlighter">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="bar">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="tools">Java代码<a style="color: rgb(99,64,27); text-decoration: none" title="复制代码" href="http://lveyo.javaeye.com/blog/240146#"></a></div>
+</p></div>
+<ol style="list-style: decimal none outside; padding-bottom: 0px; line-height: 5px; margin: 0px; padding-left: 2em; padding-right: 0px; padding-top: 0px" class="dp-j">
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> java.net.InetSocketAddress;&#160;&#160; </span></span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> java.util.concurrent.Future;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> net.spy.memcached.MemcachedClient;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">public</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">class</span><span style="line-height: 1.5"> MClient {&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">public</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">static</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">void</span><span style="line-height: 1.5"> main(String[] args){&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">try</span><span style="line-height: 1.5">{&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*建立MemcachedClient 实例，并指定memcached服务的IP地址和端口号*/</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; MemcachedClient mc = </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">new</span><span style="line-height: 1.5"> MemcachedClient(</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">new</span><span style="line-height: 1.5"> InetSocketAddress(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;192.168.1.20&quot;</span><span style="line-height: 1.5">, </span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">12111</font></span><span style="line-height: 1.5">));&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Future&lt;Boolean&gt; b = </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">null</span><span style="line-height: 1.5">;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*将key值，过期时间(秒)和要缓存的对象set到memcached中*/</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; b = mc.set(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;neea:testDaF:ksIdno&quot;</span><span style="line-height: 1.5">, </span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">900</font></span><span style="line-height: 1.5">, </span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;someObject&quot;</span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">if</span><span style="line-height: 1.5">(b.get().booleanValue()==</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">true</span><span style="line-height: 1.5">){&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; mc.shutdown();&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">catch</span><span style="line-height: 1.5">(Exception ex){&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ex.printStackTrace();&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">}&#160; </span></li>
+</ol></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content"></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">
+<p>用spymemcached从缓存中取得对象<span class="Apple-converted-space">&#160;</span> </p>
+<p></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="dp-highlighter">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="bar">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="tools">Java代码<a style="color: rgb(99,64,27); text-decoration: none" title="复制代码" href="http://lveyo.javaeye.com/blog/240146#"></a></div>
+</p></div>
+<ol style="list-style: decimal none outside; padding-bottom: 0px; line-height: 5px; margin: 0px; padding-left: 2em; padding-right: 0px; padding-top: 0px" class="dp-j">
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> java.net.InetSocketAddress;&#160;&#160; </span></span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> java.util.concurrent.Future;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">import</span><span style="line-height: 1.5"> net.spy.memcached.MemcachedClient;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5"></span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">public</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">class</span><span style="line-height: 1.5"> MClient {&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">public</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">static</span><span style="line-height: 1.5">&#160;</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">void</span><span style="line-height: 1.5"> main(String[] args){&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">try</span><span style="line-height: 1.5">{&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*建立MemcachedClient 实例，并指定memcached服务的IP地址和端口号*/</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; MemcachedClient mc = </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">new</span><span style="line-height: 1.5"> MemcachedClient(</span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">new</span><span style="line-height: 1.5"> InetSocketAddress(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;192.168.1.20&quot;</span><span style="line-height: 1.5">, </span><span style="line-height: 1.5; color: rgb(192,0,0)" class="number"><font style="line-height: 1.5" color="#c00000">12111</font></span><span style="line-height: 1.5">));&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(63,127,95)" class="comment">/*按照key值从memcached中查找缓存，不存在则返回null */</span><span style="line-height: 1.5">&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">Object b = mc.get(</span><span style="line-height: 1.5; color: rgb(42,0,255)" class="string">&quot;neea:testDaF:ksIdno &quot;</span><span style="line-height: 1.5">);&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; mc.shutdown();&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="line-height: 1.5; color: rgb(127,0,85); font-weight: bold" class="keyword">catch</span><span style="line-height: 1.5">(Exception ex){&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ex.printStackTrace();&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160;&#160;&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">&#160;&#160;&#160; }&#160;&#160; </span></li>
+<li style="list-style: decimal none outside; padding-bottom: 1px; line-height: 1.5; margin: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px"><span style="line-height: 1.5">}&#160; </span></li>
+</ol></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content"></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&#160;</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content"><font style="line-height: 1.5; background-color: rgb(255,153,51)" size="4"><strong>3.alisoft-xplatform-asf-cache-2.4</strong></font></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">这是国产的memcached client.我花时间测试过,配置简单,使用也简单,有很详细的中文文档和英文文档.<br />
+          <br />网址：<a style="color: rgb(99,64,27); text-decoration: none" href="http://blog.chinaunix.net/link.php?url=http://code.google.com%2Fp%2Fmemcache-client-forjava%2F">http://code.google.com/p/memcache-client-forjava/</a> </p>
+<p>最新版本: alisoft-xplatform-asf-cache-2.5.2.jar</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">使用例子<br />
+          </div>
+</p></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">memcached.xml</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">=========================</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br />
+        <br />&lt;memcached&gt; </p>
+<p>&#160;&#160; <span class="Apple-converted-space">&#160;</span> </p>
+<p>&#160;&#160;&#160; &lt;client name=&quot;mclient0&quot; compressEnable=&quot;true&quot; defaultEncoding=&quot;UTF-8&quot; socketpool=&quot;pool0&quot;&gt; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;errorHandler&gt;com.moit.xplatform.asf.cache.memcached.MemcachedErrorHandler&lt;/errorHandler&gt; </p>
+<p>&#160;&#160;&#160; &lt;/client&gt; </p>
+<p>&#160;&#160; <span class="Apple-converted-space">&#160;</span> </p>
+<p>&#160;&#160;&#160; &lt;client name=&quot;mclient1&quot; compressEnable=&quot;true&quot; defaultEncoding=&quot;UTF-8&quot; socketpool=&quot;pool1&quot;&gt; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;errorHandler&gt;com.moit.xplatform.asf.cache.memcached.MemcachedErrorHandler&lt;/errorHandler&gt; </p>
+<p>&#160;&#160;&#160; &lt;/client&gt; </p>
+<p>&#160;&#160; <span class="Apple-converted-space">&#160;</span> </p>
+<p>&#160;&#160;&#160; &lt;client name=&quot;mclient2&quot; compressEnable=&quot;true&quot; defaultEncoding=&quot;UTF-8&quot; socketpool=&quot;pool2&quot;&gt; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;errorHandler&gt;com.moit.xplatform.asf.cache.memcached.MemcachedErrorHandler&lt;/errorHandler&gt; </p>
+<p>&#160;&#160;&#160; &lt;/client&gt;</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&#160;&#160; <span class="Apple-converted-space">&#160;</span> </p>
+<p>&#160;&#160;&#160; &lt;socketpool name=&quot;pool0&quot; failover=&quot;true&quot; initConn=&quot;5&quot; minConn=&quot;5&quot; maxConn=&quot;250&quot; maintSleep=&quot;0&quot; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; nagle=&quot;false&quot; socketTO=&quot;3000&quot; aliveCheck=&quot;true&quot;&gt; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;servers&gt;192.168.3.251:11211,192.168.3.251:11211&lt;/servers&gt; </p>
+<p>&#160;&#160;&#160; &lt;/socketpool&gt; </p>
+<p>&#160;&#160; <span class="Apple-converted-space">&#160;</span> </p>
+<p>&#160;&#160;&#160; &lt;socketpool name=&quot;pool1&quot; failover=&quot;true&quot; initConn=&quot;5&quot; minConn=&quot;5&quot; maxConn=&quot;250&quot; maintSleep=&quot;0&quot; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; nagle=&quot;false&quot; socketTO=&quot;3000&quot; aliveCheck=&quot;true&quot;&gt; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;servers&gt;192.168.3.251:11211,192.168.3.251:11211&lt;/servers&gt; </p>
+<p>&#160;&#160;&#160; &lt;/socketpool&gt; </p>
+<p>&#160;&#160; <span class="Apple-converted-space">&#160;</span> </p>
+<p>&#160;&#160;&#160; &lt;socketpool name=&quot;pool2&quot; failover=&quot;true&quot; initConn=&quot;5&quot; minConn=&quot;5&quot; maxConn=&quot;250&quot; maintSleep=&quot;0&quot; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; nagle=&quot;false&quot; socketTO=&quot;3000&quot; aliveCheck=&quot;true&quot;&gt; </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;servers&gt;192.168.3.251:11211,192.168.3.251:11211&lt;/servers&gt; </p>
+<p>&#160;&#160;&#160; &lt;/socketpool&gt;</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&#160;&#160;&#160; &lt;cluster name=&quot;cluster1&quot;&gt;<br />
+        <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;memCachedClients&gt;mclient1,mclient2&lt;/memCachedClients&gt; </p>
+<p>&#160;&#160;&#160; &lt;/cluster&gt;</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&lt;/memcached&gt;<br />
+        </div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&#160;</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&#160; //用containsKey方法判断cache服务器按指定的key值是否存在。<br />
+        <br />&#160; System.out.println(&quot;是否包含了key的数据=&quot;+cache.containsKey(&quot;key&quot;)); </p>
+<p>&#160; if(cache.containsKey(&quot;key&quot;)) </p>
+<p>&#160; { </p>
+<p>&#160;&#160;&#160; System.out.println(&quot;包含了key的数据&quot;); </p>
+<p>&#160;&#160;&#160; System.out.println(&quot;从cache服务器获得key值&quot;); </p>
+<p>&#160; } </p>
+<p>&#160; else </p>
+<p>&#160; { </p>
+<p>&#160;&#160;&#160; System.out.println(&quot;没有包含了key的数据&quot;); </p>
+<p>&#160;&#160;&#160; System.out.println(&quot;cache服务器,没有数据,则去取数据库数据!&quot;); </p>
+<p>&#160; } </p>
+<p>&#160;<span class="Apple-converted-space">&#160;</span> </p>
+<p>&#160; 例子： </p>
+<p>&#160; static ICacheManager&lt;IMemcachedCache&gt; manager; </p>
+<p>&#160; <br />&#160; /** </p>
+<p>&#160;&#160; * 测试MemCached </p>
+<p>&#160;&#160; * @return </p>
+<p>&#160;&#160; */ </p>
+<p>&#160; public String memcache() </p>
+<p>&#160; {&#160; <br />&#160;&#160;&#160; manager = CacheUtil.getCacheManager(IMemcachedCache.class, </p>
+<p>&#160;&#160;&#160; MemcachedCacheManager.class.getName()); </p>
+<p>&#160;&#160;&#160; manager.start(); </p>
+<p>&#160;&#160;&#160; try </p>
+<p>&#160;&#160;&#160; { </p>
+<p>&#160;&#160;&#160;&#160;&#160; IMemcachedCache cache = manager.getCache(&quot;mclient0&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160; //根据key得到缓存数据 </p>
+<p>&#160;&#160;&#160;&#160;&#160; String a =(String)cache.get(&quot;key&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160; //用containsKey方法判断cache服务器按指定的key值是否存在。 </p>
+<p>&#160;&#160;&#160;&#160;&#160; System.out.println(&quot;是否包含了key的数据=&quot;+cache.containsKey(&quot;key&quot;)); </p>
+<p>&#160;&#160;&#160;&#160;&#160; if(cache.containsKey(&quot;key&quot;)) </p>
+<p>&#160;&#160;&#160;&#160;&#160; { </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(&quot;包含了key的数据&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(&quot;从cache服务器获得key值&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160; } </p>
+<p>&#160;&#160;&#160;&#160;&#160; else </p>
+<p>&#160;&#160;&#160;&#160;&#160; { </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(&quot;没有包含了key的数据&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(&quot;cache服务器,没有数据,则去取数据库数据!&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160; } </p>
+<p>&#160;&#160;&#160;&#160;&#160; //根据key删除服务器上的对应的缓存数据 </p>
+<p>&#160;&#160;&#160;&#160;&#160; cache.remove(&quot;key&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160; //根据key保存数据到服务器上 </p>
+<p>&#160;&#160;&#160;&#160;&#160; cache.put(&quot;key&quot;, &quot;你好!&quot;);&#160; <br />&#160;&#160;&#160;&#160;&#160; //设置带有过期时间的例子</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&#160;&#160;&#160;&#160;&#160; //过30分钟<br />
+        <br />&#160;&#160;&#160;&#160;&#160; Calendar calendar = Calendar.getInstance();//当前日期 </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; calendar.setTime(new Date()); </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; calendar.add(Calendar.MINUTE, 30);// </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; cache.remove(&quot;keytime&quot;); </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; cache.put(&quot;keytime&quot;, &quot;30分钟后过期&quot;,calendar.getTime()); </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(&quot;30分钟后过期=keytime=&quot;+cache.get(&quot;keytime&quot;)); </p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(&quot;cache服务器getTime=&quot;+calendar.getTime());&#160;&#160; <br />&#160;&#160; <br />&#160; }finally{ manager.stop();}</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">&#160;&#160;&#160;&#160; //jsp 使用请参考test.jsp文件<br />
+        <br />&#160;&#160;&#160;&#160; return &quot;testmempage&quot;; </p>
+<p>&#160; } </p>
+<p></div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">
+<p><strong>总结:三种API比较</strong><span class="Apple-converted-space">&#160;</span> </p>
+<p>memcached client for java：较早推出的memcached JAVA客户端API，应用广泛，运行比较稳定。<span class="Apple-converted-space">&#160;<font color="#0000ff"><strong>[注:这个是meetup正在使用的]</strong></font></span><strong><br />
+          <br /></strong>spymemcached：A simple, asynchronous, single-threaded memcached client written in java. 支持异步，单线程的memcached客户端，用到了java1.5版本的concurrent和nio，存取速度会高于前者，但是稳定性不好，测试中常报timeOut等相关异常。</div>
+<div style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px" class="blog_content">alisoft-xplatform-asf-cache-2.4 我开始采用,后来发现性能很差,尤其是调用频繁时特别容易出问题.我后来还是采用第一个.现在还没发现什么问题.<br />
+        <br />由于memcached client for java发布了新版本，性能上有所提高，并且运行稳定，所以建议使用memcached client for java。</div>
+</p></div>
+</p></div>
+<p></span></p>
+<p><a href="http://blog.chinaunix.net/space.php?uid=20787846&amp;do=blog&amp;frmd=0&amp;classid=43745&amp;view=me"></a></p>

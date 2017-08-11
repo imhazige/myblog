@@ -1,0 +1,45 @@
+---
+layout: post
+title: bootstrap的dialog
+date: 2013-06-05 22:33:14.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- bootstrap
+- jquery
+meta:
+  views: '5097'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>一个常用的dialog,在botstrap里面就特别别扭了，它本身带的只有模式对话框，而且有bug,</p>
+<p><a title="http://stackoverflow.com/questions/13649459/twitter-bootstrap-multiple-modal-error" href="http://stackoverflow.com/questions/13649459/twitter-bootstrap-multiple-modal-error">http://stackoverflow.com/questions/13649459/twitter-bootstrap-multiple-modal-error</a></p>
+<p>当使用多个modal方法时，就会出现此问题，火狐直接是假死，chrome还好报了个错，这个问题搅了我一下午，让人火大。</p>
+<p>&#160;</p>
+<p>那个替代的plugin也不是很好用，只是没报错，这些都是模式对话框，不能拖动，这就是boottrap的风格，你奈它何？</p>
+<p>&#160;</p>
+<p>默认的是，当用户点击任意除模式dialog上按钮的其他地方，对话框就会消失，不触发按钮事件，这让我觉得设计者是不是脑子被驴踢了？要修改这样的默认方式需要:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:a1e7ab00-5356-46f6-af23-7b6b724e5ee0" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">$(e).modal({
+					backdrop: 'static',
+  					keyboard: false
+				}).modal('show');</pre>
+</div>
+<p>这样就会出现动画提示用户点击按钮，但是如果你想去掉后面的那个黑色遮罩，backdrop必须是false,这怎么解决呢,多次尝试后发现解决方法:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:90785906-22f3-43e9-841c-6e2fe244c380" class="wlWriterEditableSmartContent">
+<pre name="code" class="css">.modal-backdrop.fade.in{
+	z-index: -20000 !important;
+}
+</pre>
+</div>
+<p>这个样式将遮罩层放到最低层，就看不到了。</p>
+<p>注意不能用display:none,这个方法在chrome下面有问题。</p>
+<p>&#160;</p>
+<p>反正是不好用，你想使用jqueryui的dialog,对不起，bootstrap的样式将其整的惨不忍睹，用不了……</p>

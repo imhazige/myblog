@@ -1,0 +1,211 @@
+---
+layout: post
+title: jmx初步 控制台检监控技术探索
+date: 2011-05-27 09:55:41.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- j2ee
+- java
+- jmx
+- monitor
+- sigar
+meta:
+  views: '554'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none" id="internal-source-marker_0.4619840918354815">jmx资源:</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">ibm J2EE专题:</span>     <br /><a href="http://www.ibm.com/developerworks/cn/java/j-jee/j2ee-services.html#J2EEZ296"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://www.ibm.com/developerworks/cn/java/j-jee/j2ee-services.html#J2EEZ296</span></a>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">中的jmx部分</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">其中</span>     <br /><a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse63/"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://www.ibm.com/developerworks/cn/java/j-lo-jse63/</span></a>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">这篇比较重要</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">Oracle的教程与example源代码</span>     <br /><a href="http://download.oracle.com/javase/1.5.0/docs/guide/jmx/tutorial/tutorialTOC.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://download.oracle.com/javase/1.5.0/docs/guide/jmx/tutorial/tutorialTOC.html</span></a>     <br /><a href="http://download.oracle.com/javase/1.5.0/docs/guide/jmx/examples.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://download.oracle.com/javase/1.5.0/docs/guide/jmx/examples.html</span></a>     <br /><a href="http://download.oracle.com/javase/1.5.0/docs/guide/management/agent.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://download.oracle.com/javase/1.5.0/docs/guide/management/agent.html</span></a>     <br /><a href="http://download.oracle.com/javase/1.5.0/docs/guide/management/agent.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline"></span></a>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">在其例子Basic中有个问题,rmiServer不好绑定，其原因是缺少LocateRegistry.createRegistry(connectorPort);这一句</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">具体见</span><a href="http://www.iteye.com/topic/358379"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"> </span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://www.iteye.com/topic/358379</span></a>     <br /><a href="http://www.iteye.com/topic/358379"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline"></span></a>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">基本概念:</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">MBean 规定了</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #0000ff; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">标准 MBean</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"> 也要实现一个接口，所有向外界公开的方法都要在这个接口中声明。否则，管理系统就不能从中获得相应的信息。此外，该接口的名字也有一定的规范：即在标准 MBean 类名之后加上“MBean”后缀。若 MBean 的类名叫做 MBeansName 的话，对应的接口就要叫做 MBeansNameMBean。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #0000ff; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">动态MBean</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">要实现DynamicMBean接口。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">MXBean(注意多个X)是</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #0000ff; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">OpenBean(1.6以后才有官方文档介绍)</span>&#160; <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">Open MBean 与其它动态 MBean 的唯一区别在于，前者对其公开接口的参数和返回值有所限制 —— 只能是基本类型或者 javax.management.openmbean包内的 ArrayType、CompositeType、TarbularType 等类型。这主要是考虑到管理系统的分布，很可能远端管理系统甚至 MBServer 层都不具有 MBean 接口中特殊的类。</span></p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"><font color="#0000ff">还有个区别，标准mbean要求接口和实现类在同一个包中,而open bean则没有这个要求。[</font>见<a title="http://blogs.oracle.com/jmxetc/entry/javax_management_standardmbean_when_and" href="http://blogs.oracle.com/jmxetc/entry/javax_management_standardmbean_when_and">http://blogs.oracle.com/jmxetc/entry/javax_management_standardmbean_when_and</a>]</span>&#160; <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #0000ff; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">Model Bean</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">具有持久化，日志等功能，但要看具体容器的支持。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">jmx客户端和jmx服务端：</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">客户端通过RMI连接服务端获取信息。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">服务端一般是某个容器或服务器的附加功能，它们依据jmx规范写出容器的管理Mbean。tomcat,mule都实现了。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">getPlatformMBeanServer是获得已存在的server,一般是本地虚拟机上的</span></p>
+<p><font color="#000000" face="Arial">如果注册在</font>&#160;<span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">getPlatformMBeanServer</span>上，则可通过增加JVM参数来增加jmx控制，参见<a title="http://kazge.com/archives/516.html" href="http://kazge.com/archives/516.html">http://kazge.com/archives/516.html</a></p>
+<p>这种方式与创建专门的MBeanServer所不同的是自动会包含Platform MBeans(java.lang/com.sun.management)Logging Management(java.util.logging)这些个MBean,参见</p>
+<p><a title="http://download.oracle.com/javase/1.5.0/docs/guide/management/overview.html" href="http://download.oracle.com/javase/1.5.0/docs/guide/management/overview.html">http://download.oracle.com/javase/1.5.0/docs/guide/management/overview.html</a>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">访问远程jvm的技术jstad:</span>     <br /><a href="http://download.oracle.com/javase/6/docs/technotes/tools/share/jstatd.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://download.oracle.com/javase/6/docs/technotes/tools/share/jstatd.html</span></a>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">注意里面的申明:可能在以后不支持。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: bold; text-decoration: none">NOTE:</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"> This utility is unsupported and may or may not be available in future versions of the JDK. It is not currently available on the Windows 98 and Windows ME platforms.</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">只能监控，不能操作。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">需要制定policy -J-Djava.security.policy 和hostname(nat环境下)-Djava.rmi.server.hostname=</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">否则会有问题</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">参见</span>     <br /><a href="http://hi.baidu.com/passedbylove/blog/item/b600b2a8b6ebc2bacb130cc5.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://hi.baidu.com/passedbylove/blog/item/b600b2a8b6ebc2bacb130cc5.html</span></a>     <br /><a href="http://hi.baidu.com/luohuazju/blog/item/36ddd6103a51b2f6c3ce79c0.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://hi.baidu.com/luohuazju/blog/item/36ddd6103a51b2f6c3ce79c0.html</span></a>     <br /><a href="http://hi.baidu.com/luohuazju/blog/item/36ddd6103a51b2f6c3ce79c0.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline"></span></a>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">visualvm用于监测远程机器:</span>     <br /><a href="http://java.net/projects/visualvm/content/jmx_connections.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://java.net/projects/visualvm/content/jmx_connections.html</span></a>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">但是如果远程jvm没有开放监测端口，可使用设置com.sun.management.jmxremote.*参数的办法，让每个你想检测的程序都开放一个检测端口（这个就不太好了，如果一个平台里面有许多应用，那么开那么多的端口本身就很耗资源。）</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">服务端注册/创建:</span>     </p>
+<div>
+<pre>         MBeanServer mbs = MBeanServerFactory.createMBeanServer(); 
+         String domain = mbs.getDefaultDomain(); 
+         
+         MemoryMXBean obean = ManagementFactory.getMemoryMXBean(); 
+         ObjectName on = <span style="color: #0000ff">new</span> ObjectName(domain+&quot;<span style="color: #8b0000">:type=abc</span>&quot;); <span style="color: #008000">//名字只是个key,只要客户端与之对应就找得到 </span>
+         mbs.registerMBean(obean, on); </pre>
+</div>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">客户端查找:</span> </p>
+<p></p>
+<div>
+<pre>MemoryMXBean proxy = JMX.newMXBeanProxy(mbsc, stdMBeanName, MemoryMXBean.<span style="color: #0000ff">class</span>); 
+<span style="color: #008000">//注意上面多了个X,因为是查找Open MBean,其他类型应该使用newMBeanProxy </span></pre>
+</div>
+<p>监听服务断开事件</p>
+<div>
+<pre>JMXConnector jmxc =...;
+jmxc.addConnectionNotificationListener(<span style="color: #0000ff">new</span> NotificationListener(){
+
+				<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> handleNotification(Notification notification, Object handback)
+				{			
+					<span style="color: #008000">//jmx.remote.connection.closed---Client has been closed</span>
+					log(notification.getType() + &quot;<span style="color: #8b0000">---</span>&quot; + notification.getMessage());					
+				}}, <span style="color: #0000ff">null</span>, <span style="color: #0000ff">null</span>);</pre>
+</div>
+<p>一旦出发close事件，则JMXConnector就不可用了，需要重新连接！ </p>
+<p></p>
+<p>
+  <br /><font color="#0000ff">对于每个jmx连接，都可以从其java.lang域中找到如CPU,内存之类的信息。</font></p>
+<p>
+  <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">查找功能:</span> </p>
+<p><a href="http://weblogs.java.net/blog/2008/04/25/query-language-jmx-api"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://weblogs.java.net/blog/2008/04/25/query-language-jmx-api</span></a> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">但是这里面有些是JDK7才支持。</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span></p>
+<p></p>
+<h5><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: bold; text-decoration: none">各中间件</span></h5>
+<h6><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 10pt; vertical-align: baseline; font-weight: bold; text-decoration: none">TOMCAT:</span></h6>
+<p><a href="http://tomcat.apache.org/tomcat-5.5-doc/monitoring.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://tomcat.apache.org/tomcat-5.5-doc/monitoring.html</span></a> </p>
+<p>MBean操作见<a title="http://kazge.com/archives/515.html" href="http://kazge.com/archives/515.html">http://kazge.com/archives/515.html</a> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">这上面只是说了ant来操作.</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">我的考虑是每机器建立一个总体服务集成所有本地的jmx服务，这种情况下只需要Tomcat提供本地可访问即可，也不必配置权限密码等。</span> </p>
+<p><strike><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">很简单，只要在tomcat启动脚本里设置JVM参数</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: bold; text-decoration: none">-Dcom.sun.management.jmxremote</span></strike><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"><strike>即可。这样就可在jconsole 里面看得到了。[</strike>这是错误的，我使用myeclipse启动所以看得见，而与加没加</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: bold; text-decoration: none">-Dcom.sun.management.jmxremote没关系,任何本地运行的java程序都应该在jconsole里面看得到，但是使用tomcat脚本启动tomcat5.5却看不到！myeclips为什么看得到，因为它是直接调用bootstrap.jar这个包启动的，至于这和脚本启动有什么区别，我还没搞清楚，因此，还是为Tomcat直接配置个jmx端口吧！！]</span></p>
+<p>Tomcat的jmx配置其文档上有，只是说加参数没有说清楚加在哪里,应该加在catalina.sh/bat中。 </p>
+<p>还没有发布app的mbean，只有通过web方式:</p>
+<p>Tomcat5.5 <a title="http://tomcat.apache.org/tomcat-5.5-doc/manager-howto.html" href="http://tomcat.apache.org/tomcat-5.5-doc/manager-howto.html">http://tomcat.apache.org/tomcat-5.5-doc/manager-howto.html</a></p>
+<p>Tomcat6 <a title="http://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html" href="http://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html">http://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html</a></p>
+<p>
+  <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">jconsole源码:</span> </p>
+<p><a href="http://www.java2s.com/Open-Source/Java-Document/6.0-JDK-Modules-sun/tools/sun.tools.jconsole.htm"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://www.java2s.com/Open-Source/Java-Document/6.0-JDK-Modules-sun/tools/sun.tools.jconsole.htm</span></a> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">LocalVirtualMachine里面：查找可attach的vm</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span></p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">下面两个方法从其源码里面整理出来</span> </p>
+<p></p>
+<div>
+<pre><span style="color: #008000">//这个方法是sun私有的，没有公开 </span>
+<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span> showMonitoredVMs() 
+{ 
+     MonitoredHost host; 
+     Set vms; 
+     <span style="color: #0000ff">try</span> 
+     { 
+         host = MonitoredHost.getMonitoredHost(<span style="color: #0000ff">new</span> HostIdentifier((String) <span style="color: #0000ff">null</span>)); 
+         vms = host.activeVms(); 
+     } 
+     <span style="color: #0000ff">catch</span> (java.net.URISyntaxException sx) 
+     { 
+         <span style="color: #0000ff">throw</span> <span style="color: #0000ff">new</span> InternalError(sx.getMessage()); 
+     } 
+     <span style="color: #0000ff">catch</span> (MonitorException mx) 
+     { 
+         <span style="color: #0000ff">throw</span> <span style="color: #0000ff">new</span> InternalError(mx.getMessage()); 
+     } 
+     <span style="color: #0000ff">for</span> (Object vmid : vms) 
+     { 
+         <span style="color: #0000ff">if</span> (vmid <span style="color: #0000ff">instanceof</span> Integer) 
+         { 
+             <span style="color: #0000ff">int</span> pid = ((Integer) vmid).intValue(); 
+             String name = vmid.toString(); <span style="color: #008000">// default to pid if name not available </span>
+             <span style="color: #0000ff">boolean</span> attachable = <span style="color: #0000ff">false</span>; 
+             String address = <span style="color: #0000ff">null</span>; 
+             <span style="color: #0000ff">try</span> 
+             { 
+                 MonitoredVm mvm = host.getMonitoredVm(<span style="color: #0000ff">new</span> VmIdentifier(name)); 
+                 <span style="color: #008000">// use the command line as the display name </span>
+                 name = MonitoredVmUtil.commandLine(mvm); 
+                 attachable = MonitoredVmUtil.isAttachable(mvm); 
+                 address = ConnectorAddressLink.importFrom(pid); 
+                 mvm.detach(); 
+                 log(&quot;<span style="color: #8b0000">----------------name[%s] attachable[%s] address[%s]----------</span>&quot;, name, attachable, address); 
+                 showConnectionMbeans(address); 
+             } 
+             <span style="color: #0000ff">catch</span> (Exception x) 
+             { 
+                 <span style="color: #008000">// ignore </span>
+             } 
+         } 
+     } 
+} 
+
+<span style="color: #008000">//这个方法sun定义了规范 </span>
+<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span> showAttachableVMs() 
+{ 
+     List&lt;VirtualMachineDescriptor&gt; vms = VirtualMachine.list(); 
+     <span style="color: #0000ff">for</span> (VirtualMachineDescriptor vmd : vms) 
+     { 
+         <span style="color: #0000ff">try</span> 
+         { 
+             Integer vmid = Integer.valueOf(vmd.id()); 
+             
+                 <span style="color: #0000ff">boolean</span> attachable = <span style="color: #0000ff">false</span>; 
+                 String address = <span style="color: #0000ff">null</span>; 
+                 <span style="color: #0000ff">try</span> 
+                 { 
+                     VirtualMachine vm = VirtualMachine.attach(vmd); 
+                     attachable = <span style="color: #0000ff">true</span>; 
+                     Properties agentProps = vm.getAgentProperties(); 
+                     address = (String) agentProps.get(&quot;<span style="color: #8b0000">com.sun.management.jmxremote.localConnectorAddress</span>&quot;); 
+                     vm.detach(); 
+                     log(&quot;<span style="color: #8b0000">name[%s] attachable[%s] address[%s]</span>&quot;, vmd.displayName(), attachable, address); 
+                 } 
+                 <span style="color: #0000ff">catch</span> (AttachNotSupportedException x) 
+                 { 
+                     <span style="color: #008000">// not attachable </span>
+                 } 
+                 <span style="color: #0000ff">catch</span> (IOException x) 
+                 { 
+                     <span style="color: #008000">// ignore </span>
+                 } 
+             
+         } 
+         <span style="color: #0000ff">catch</span> (NumberFormatException e) 
+         { 
+             <span style="color: #008000">// do not support vmid different than pid </span>
+         } 
+     } 
+} </pre>
+</div>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span></p>
+<p></p>
+<h6><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 10pt; vertical-align: baseline; font-weight: bold; text-decoration: none">MULE:</span></h6>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">这个花了我一些功夫，我想按照加JVM参数的方式来本地访问mule的Mbean,结果总是看不到任何mbean,最后发现mule加虚拟机参数是</span> </p>
+<p><a href="http://www.mulesoft.org/documentation/display/MULE3INSTALL/Passing+Additional+Arguments+to+the+JVM+to+Control+Mule"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: underline">http://www.mulesoft.org/documentation/display/MULE3INSTALL/Passing+Additional+Arguments+to+the+JVM+to+Control+Mule</span></a><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">mule -config xxx.config -M-Dcom.sun.management.jmxremote</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">它要多加个-M,即使你改launcher.bat里面的脚本加参数也要这样</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">另外要配置jmx自带的mbean&lt;management:jmx-server &gt;&lt;/management:jmx-server&gt;（参见手册,注意要加好对应的xml shcema,如果没加,mule报错说配置文件找不到,让你无法定位。）</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">连通后发现MBean domain很古怪，要想指定dmian需要加参数</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">-M-Dmule.serverId=YOUR_MULE_SERVER_ID</span></p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"><font color="#0000ff">这里比较纠结，所以，还是建议直接使用默认的配置&lt;management:jmx-default-config port=&quot;99999&quot; registerMx4jAdapter=&quot;true&quot;&gt;(registerMx4jAdapter是对mx4j的端口,默认9999,可以设置为false),然后启动mule,你可以看到mule启动日志里面写出了最终的暴露出来的jmx和rmi端口。但是这样就暴露了两个重复的端口，一个是你在启动脚本里指定的jmx端口，另外一个就是jmx-default-config配置的端口。</font></span></p>
+<p><font color="#0000ff"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">只有配置了上面jmx自带的agent,才能看到较多的jmx信息。</span> </p>
+<p></font></p>
+<h6><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 10pt; vertical-align: baseline; font-weight: bold; text-decoration: none">OPENFIRE:</span></h6>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">添加jvm参数见文档install-guide.html中Custom Parameers</span> 部分，各平台不一样。但是jmx连通后没有openfire的mbean。所以还得自己写插件。</p>
+<p>windows上 JVM参数可加在openfired.vmoptions (这个是install4j的配置) 中,linux上就不能，按照文档来，少走弯路。</p>
+<p></span></p>
+<h6><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 10pt; vertical-align: baseline; font-weight: bold; text-decoration: none">数据库:</span></h6>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">hibernate+JMX 主要是jbbc可进行的操作(性能状态，怎删改查)，要想用它启动数据库是不行的也是没必要的。hibernate自带的主要是</span> </p>
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span></p>
+<table style="border-bottom: medium none; border-left: medium none; border-collapse: collapse; border-top: medium none; border-right: medium none">
+<colgroup>
+<col width="191" />
+<col width="101" /></colgroup>
+<tbody>
+<tr style="height: 0px">
+<td style="border-bottom: #aaa 1px dotted; border-left: #aaa 1px dotted; padding-bottom: 7px; padding-left: 7px; padding-right: 7px; vertical-align: top; border-top: #aaa 1px dotted; border-right: #aaa 1px dotted; padding-top: 7px"><a href="http://docs.jboss.org/hibernate/core/3.6/javadocs/org/hibernate/jmx/HibernateServiceMBean.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: bold; text-decoration: underline">HibernateServiceMBean</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span></a></td>
+<td style="border-bottom: #aaa 1px dotted; border-left: #aaa 1px dotted; padding-bottom: 7px; padding-left: 7px; padding-right: 7px; vertical-align: top; border-top: #aaa 1px dotted; border-right: #aaa 1px dotted; padding-top: 7px"><a href="http://docs.jboss.org/hibernate/core/3.6/javadocs/org/hibernate/jmx/HibernateServiceMBean.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">可用性不大</span></a><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">，主要为hibernate配置</span></td>
+</tr>
+<tr style="height: 0px">
+<td style="border-bottom: #aaa 1px dotted; border-left: #aaa 1px dotted; padding-bottom: 7px; padding-left: 7px; padding-right: 7px; vertical-align: top; border-top: #aaa 1px dotted; border-right: #aaa 1px dotted; padding-top: 7px"><a href="http://docs.jboss.org/hibernate/core/3.6/javadocs/org/hibernate/jmx/StatisticsServiceMBean.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000099; font-size: 11pt; vertical-align: baseline; font-weight: bold; text-decoration: underline">StatisticsServiceMBean</span><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span></a></td>
+<td style="border-bottom: #aaa 1px dotted; border-left: #aaa 1px dotted; padding-bottom: 7px; padding-left: 7px; padding-right: 7px; vertical-align: top; border-top: #aaa 1px dotted; border-right: #aaa 1px dotted; padding-top: 7px"><a href="http://docs.jboss.org/hibernate/core/3.6/javadocs/org/hibernate/jmx/StatisticsServiceMBean.html"><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">监控</span></a><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span></td>
+</tr>
+</tbody>
+</table>
+<p>&#160;</p>
+<p><strong>环境系统：</strong></p>
+<p>java.lang.management<strong>包中提供的信息只是硬件静态信息，对于CPU时间只是本虚拟机的CPU时间,</strong></p>
+<p><strong>见<a href="http://download.oracle.com/javase/6/docs/jre/api/management/extension/com/sun/management/OperatingSystemMXBean.html#getProcessCpuTime%28%29" target="_blank">其文档</a></strong></p>
+<p>因此要获得整体机器的动态信心，还得另想办法:</p>
+<p>使用sigar<strong> </strong><a title="http://sourceforge.net/projects/sigar/" href="http://sourceforge.net/projects/sigar/"><strong>http://sourceforge.net/projects/sigar/</strong></a></p>
+<p>jdmk <a title="http://java.sun.com/products/jdmk/" href="http://java.sun.com/products/jdmk/">http://java.sun.com/products/jdmk/</a> 这个似乎不好用</p>
+<p>这个是较早的探索，如今sigar应该足够了！</p>
+<p>&#160;<a title="http://www.ibm.com/developerworks/cn/java/j-rtm3/index.html" href="http://www.ibm.com/developerworks/cn/java/j-rtm3/index.html">http://www.ibm.com/developerworks/cn/java/j-rtm3/index.html</a></p>

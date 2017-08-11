@@ -1,0 +1,70 @@
+---
+layout: post
+title: HtmlEditor key 事件
+date: 2011-06-09 13:58:59.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- extjs
+- javascript web 前端
+meta:
+  views: '48'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div>
+<div>
+<pre>ux.HtmlEditor = Ext.extend(Ext.form.HtmlEditor, {</pre>
+<p><!--CRLF--></p>
+<pre>          frame : <span style="color: #0000ff">true</span>,</pre>
+<p><!--CRLF--></p>
+<pre>          initComponent : <span style="color: #0000ff">function</span>() {</pre>
+<p><!--CRLF--></p>
+<pre>              ux.HtmlEditor.superclass.initComponent.call(<span style="color: #0000ff">this</span>);</pre>
+<p><!--CRLF--></p>
+<pre>              <span style="color: #0000ff">this</span>.addEvents(<span style="color: #006080">'submit'</span>);</pre>
+<p><!--CRLF--></p>
+<pre>          },</pre>
+<p><!--CRLF--></p>
+<pre>          initEditor : <span style="color: #0000ff">function</span>() {</pre>
+<p><!--CRLF--></p>
+<pre>             ux.HtmlEditor.superclass.initEditor.call(<span style="color: #0000ff">this</span>);</pre>
+<p><!--CRLF--></p>
+<pre>              <span style="color: #0000ff">if</span> (Ext.isGecko) {</pre>
+<p><!--CRLF--></p>
+<pre>                  Ext.EventManager.on(<span style="color: #0000ff">this</span>.doc, <span style="color: #006080">'keypress'</span>, <span style="color: #0000ff">this</span>.fireSubmit,</pre>
+<p><!--CRLF--></p>
+<pre>                          <span style="color: #0000ff">this</span>);</pre>
+<p><!--CRLF--></p>
+<pre>              }</pre>
+<p><!--CRLF--></p>
+<pre>              <span style="color: #0000ff">if</span> (Ext.isIE || Ext.isWebKit || Ext.isOpera) {</pre>
+<p><!--CRLF--></p>
+<pre>                  Ext.EventManager.on(<span style="color: #0000ff">this</span>.doc, <span style="color: #006080">'keydown'</span>, <span style="color: #0000ff">this</span>.fireSubmit,</pre>
+<p><!--CRLF--></p>
+<pre>                          <span style="color: #0000ff">this</span>);</pre>
+<p><!--CRLF--></p>
+<pre>              }</pre>
+<p><!--CRLF--></p>
+<pre>          },</pre>
+<p><!--CRLF--></p>
+<pre>          fireSubmit : <span style="color: #0000ff">function</span>(e) {</pre>
+<p><!--CRLF--></p>
+<pre>              <span style="color: #0000ff">if</span> (e.ctrlKey &amp;&amp; Ext.EventObject.ENTER == e.getKey()) {</pre>
+<p><!--CRLF--></p>
+<pre>                  <span style="color: #0000ff">this</span>.fireEvent(<span style="color: #006080">'submit'</span>, <span style="color: #0000ff">this</span>);</pre>
+<p><!--CRLF--></p>
+<pre>              }</pre>
+<p><!--CRLF--></p>
+<pre>          }</pre>
+<p><!--CRLF--></p>
+<pre>      });</pre>
+<p><!--CRLF--></div>
+</div>

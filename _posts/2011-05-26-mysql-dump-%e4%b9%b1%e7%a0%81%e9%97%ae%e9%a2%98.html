@@ -1,0 +1,33 @@
+---
+layout: post
+title: mysql dump 乱码问题
+date: 2011-05-26 02:29:44.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "数据库"
+tags:
+- mysql
+- "数据库"
+meta:
+  views: '86'
+  _oembed_e3478819de1051ab9f0b6a698f205037: "{{unknown}}"
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>将utf8编码的数据库使用mysqldump.exe来导出，得到的却是乱码</p>
+<p>明明设置了--default-character-set=utf8 任然如此，网上搜了些文章，例如 http://blog.derjohng.com/2006/01/18/backup-mysql-utf8-data/</p>
+<p>说的是改为--default-character-set=latin1，我试了一下，还是乱码。莫名其妙，想了想试试如下的命令</p>
+<p>&quot;D:\Program Files\MySQL\MySQL Server 5.5\bin\mysqldump.exe&quot; --user=root --password=root --default-character-set=gbk --skip-opt --add-drop-table --set-charset --dump-date --result-file=data.sql test </p>
+<p>这样导出的结果编码才是正确的。(注意不要丢掉--skip-opt 选项)</p>
+<p>问题是解决了，我还是莫名其妙。</p>
+<p>明明设置的是utf8,数据库my.ini里面默认也是utf8,哪里搞出个gbk来了？</p>
+<p>看官方文档，有这么一句话:</p>
+<p>http://dev.mysql.com/doc/refman/5.1/en/charset-configuration.html</p>
+<p>when <a href="http://dev.mysql.com/doc/refman/5.1/en/server-system-variables.html#sysvar_character_set_system">character_set_system</a> differs from <a href="http://dev.mysql.com/doc/refman/5.1/en/server-system-variables.html#sysvar_character_set_server">character_set_server</a> or <a href="http://dev.mysql.com/doc/refman/5.1/en/server-system-variables.html#sysvar_character_set_client">character_set_client</a>, and you input characters manually (as database object identifiers, column values, or both), these may be displayed incorrectly in output from the client or the output itself may be formatted incorrectly. In such cases, starting the mysql client with <a href="http://dev.mysql.com/doc/refman/5.1/en/mysql-command-options.html#option_mysql_default-character-set">--default-character-set=<em>system_character_set</em></a>—that is, setting the client character set to match the system character set—should fix the problem. </p>
+<p>似乎是要匹配文件系统字符集，也就是你的操作系统字符集。</p>

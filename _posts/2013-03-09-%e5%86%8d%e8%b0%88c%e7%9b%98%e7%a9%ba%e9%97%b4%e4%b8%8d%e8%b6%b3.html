@@ -1,0 +1,47 @@
+---
+layout: post
+title: "再谈c盘空间不足"
+date: 2013-03-09 16:34:48.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- "默认分类"
+tags:
+- windows
+meta:
+  views: '15'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>之前转载了c盘整理的文章，这次仍然c盘不足，发现一个较好的文件空间占用分析工具space_sniffer</p>
+<p>主页:</p>
+<p><a title="http://www.uderzo.it/main_products/space_sniffer/download.html" href="http://www.uderzo.it/main_products/space_sniffer/download.html">http://www.uderzo.it/main_products/space_sniffer/download.html</a></p>
+<p>下载:</p>
+<p><a title="http://www.uderzo.it/main_products/space_sniffer/files/spacesniffer_1_1_3_1.zip" href="http://www.uderzo.it/main_products/space_sniffer/files/spacesniffer_1_1_3_1.zip">http://www.uderzo.it/main_products/space_sniffer/files/spacesniffer_1_1_3_1.zip</a></p>
+<p>&#160;</p>
+<p>这个是免费的，这里有文章介绍:</p>
+<p><a title="http://www.iplaysoft.com/spacesniffer.html" href="http://www.iplaysoft.com/spacesniffer.html">http://www.iplaysoft.com/spacesniffer.html</a></p>
+<p>&#160;</p>
+<p>使用其扫一遍，发现这个itune占了2G,我就知道是这个原因，但一直不知道它到底是哪里占的空间，这下借助这个软件可以知道具体位置，删之。</p>
+<p>&#160;</p>
+<p>另外有个<a href="http://www.baidu.com/link?url=iH1_GJqjJ4zBBpC8yDF8xDhiqDSn1JZjFWsHhEoSNd85PkV8Xilxq1wlR83rynaE">hiberfil.sys</a> 文件也很大，他是windows的休眠备份文件，可以通过禁止休眠来删除：</p>
+<p>这里讲了两种方法禁止，我试过命令行，没成功，但是控制面板里是可以的，一下子又减少了3G.</p>
+<p><a title="http://jingyan.baidu.com/article/9113f81bcca4a22b3214c732.html" href="http://jingyan.baidu.com/article/9113f81bcca4a22b3214c732.html">http://jingyan.baidu.com/article/9113f81bcca4a22b3214c732.html</a></p>
+<p>&#160;</p>
+<p>上面两个方式一共减少了6G,这样就差不多了。</p>
+<p>&#160;</p>
+<p>另外还有几个明显很大的文件夹：</p>
+<p>C:\ProgramData</p>
+<p>C:\Users</p>
+<p>C:\Program Files</p>
+<p>这些没有提供设置来更改了路径，网上有些修改注册表的方法，不是很推荐。</p>
+<p><a title="http://www.360doc.com/content/12/1017/22/3145655_242113958.shtml" href="http://www.360doc.com/content/12/1017/22/3145655_242113958.shtml">http://www.360doc.com/content/12/1017/22/3145655_242113958.shtml</a></p>
+<p>&#160;</p>
+<p>也不建议自己手动删除这些文件夹，可能导致程序配置问题无法运行。</p>
+<p>我试过删除ProgramData,结果vmware station无法上网了，而且这个奇葩竟然把删除程序放在这个文件夹里，于是删除也删除不了，只好使用<a href="http://ishare.iask.sina.com.cn/f/14528142.html">http://ishare.iask.sina.com.cn/f/14528142.html</a> 这个来清理然后再重装。还不行的话那只有手动删除了 <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1308">http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1308</a></p>
+<p>不过这个也不一定解决问题，如果还不行（果然是奇葩），那你就只好一项项查找注册表vmware删除再试试了，我就是这样花时间试出来的。</p>

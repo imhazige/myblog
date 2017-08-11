@@ -1,0 +1,26 @@
+---
+layout: post
+title: Boolean.class 和 boolean.class
+date: 2011-07-29 11:46:11.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- java
+meta:
+  views: '25'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>Boolean.class 和 boolean.class是一样的吗？答案是大大的NO:</p>
+<p>Boolean.class.getCanonicalName()&#160; -&gt; “java.lang.Boolean”</p>
+<p>boolean.class.getCanonicalName()&#160; -&gt; “boolean”</p>
+<p>所以像这样的判断是不成立的：</p>
+<p>true.isAssignableFrom(Boolean.class)</p>
+<p>其它原始类型同理类推.</p>

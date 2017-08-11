@@ -1,0 +1,105 @@
+---
+layout: post
+title: "可重入锁ReentrantLock"
+date: 2012-03-23 17:57:45.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- lock
+- "锁"
+meta:
+  views: '291'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天学习一下可重入锁ReentrantLock：</p>
+<p>先来借别人的例子来看它怎么用：</p>
+<p>这是java DelayQueue的take方法：</p>
+<div>
+<pre /><p><span style="color: #0000ff">public</span> E take() <span style="color: #0000ff">throws</span> InterruptedException {
+
+                <span style="color: #0000ff">final</span> ReentrantLock lock = <span style="color: #0000ff">this</span>.lock;
+
+                lock.lockInterruptibly();
+
+                <span style="color: #0000ff">try</span> {
+
+                    <span style="color: #0000ff">for</span> (;;) {
+
+                        E first = q.peek();
+
+                        <span style="color: #0000ff">if</span> (first == <span style="color: #0000ff">null</span>) {
+
+                            available.await(); <font color="#008000">//此时已经释放锁了,因为是等待状态，也不存在同步问题</font></p><blockquote><p>                       <font color="#008000">//到这一步又获得了锁，可能是被signalAll方法唤醒的
+</font>                        } <span style="color: #0000ff">else</span> {
+
+                            <span style="color: #0000ff">long</span> delay =  first.getDelay(TimeUnit.NANOSECONDS);
+
+                            <span style="color: #0000ff">if</span> (delay &gt; 0) {
+
+                                <span style="color: #0000ff">long</span> tl = available.awaitNanos(delay);//释放锁到一定时间</p><p>                                <font color="#008000">//再次获得锁</font>  
+
+                            } <span style="color: #0000ff">else</span> {
+
+                                E x = q.poll();
+
+                                assert x != <span style="color: #0000ff">null</span>;
+
+                                <span style="color: #0000ff">if</span> (q.size() != 0)
+
+                                    available.signalAll(); <span style="color: #008000">//唤醒</span>
+
+                                <span style="color: #0000ff">return</span> x;
+
+                            }
+
+                        }
+
+                    }
+
+                } <span style="color: #0000ff">finally</span> {
+
+                    lock.unlock();
+
+                }
+
+            }</p></blockquote>
+</div>
+
+<p>这是offer方法:</p>
+
+<div>
+  <pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">boolean</span> offer(E e) {
+
+                <span style="color: #0000ff">final</span> ReentrantLock lock = <span style="color: #0000ff">this</span>.lock;
+
+                lock.lock();
+
+                <span style="color: #0000ff">try</span> {
+
+                    E first = q.peek();
+
+                    q.offer(e);
+
+                    <span style="color: #0000ff">if</span> (first == <span style="color: #0000ff">null</span> || e.compareTo(first) &lt; 0)
+
+                        available.signalAll(); </pre>
+<p><font color="#008000">//这里判断之前是空的，现在有元素了，应该唤醒，但是此时此方法还在保持锁</font></p>
+<p>                    <span style="color: #0000ff">return</span> <span style="color: #0000ff">true</span>;</p>
+<p>                } <span style="color: #0000ff">finally</span> {</p>
+<p>                    lock.unlock();</p>
+<p>                }</p>
+<p>            }
+</p></div>
+<p></p>
+<p>
+  <br />参见:<a href="http://tenyears.iteye.com/blog/48750">http://tenyears.iteye.com/blog/48750</a></p>
+<p>详见java.concurrency.in.practice一书第十三章
+  </p>

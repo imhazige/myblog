@@ -1,0 +1,328 @@
+---
+layout: post
+title: "【转】Java中WeakReference、WeakHashMap、SoftReference、ReferenceQueue的作用和使用场景"
+date: 2011-10-14 14:18:05.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- java
+meta:
+  views: '644'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><a title="http://blog.csdn.net/yhmhappy2006/article/details/6731108" href="http://blog.csdn.net/yhmhappy2006/article/details/6731108">http://blog.csdn.net/yhmhappy2006/article/details/6731108</a></p>
+<p><strong>详见以下测试代码及其注释：</strong></p>
+<div>
+<pre /><p><span style="color: #0000ff">package</span> test;
+
+<span style="color: #0000ff">import</span> <span style="color: #0000ff">static</span> junit.framework.Assert.assertFalse;
+<span style="color: #0000ff">import</span> <span style="color: #0000ff">static</span> junit.framework.Assert.assertNotNull;
+<span style="color: #0000ff">import</span> <span style="color: #0000ff">static</span> junit.framework.Assert.assertNull;
+<span style="color: #0000ff">import</span> <span style="color: #0000ff">static</span> junit.framework.Assert.assertSame;
+<span style="color: #0000ff">import</span> <span style="color: #0000ff">static</span> junit.framework.Assert.assertTrue;
+
+<span style="color: #0000ff">import</span> java.lang.ref.PhantomReference;
+<span style="color: #0000ff">import</span> java.lang.ref.Reference;
+<span style="color: #0000ff">import</span> java.lang.ref.ReferenceQueue;
+<span style="color: #0000ff">import</span> java.lang.ref.SoftReference;
+<span style="color: #0000ff">import</span> java.lang.ref.WeakReference;
+<span style="color: #0000ff">import</span> java.util.Map;
+<span style="color: #0000ff">import</span> java.util.WeakHashMap;
+
+<span style="color: #0000ff">import</span> org.junit.Test;
+
+<span style="color: #0000ff">class</span> VeryBig {
+	<span style="color: #0000ff">private</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">final</span> <span style="color: #0000ff">int</span> SIZE = 1000;
+	<span style="color: #0000ff">private</span> <span style="color: #0000ff">double</span>[] la = <span style="color: #0000ff">new</span> <span style="color: #0000ff">double</span>[SIZE];
+	<span style="color: #0000ff">private</span> String ident;
+
+	<span style="color: #0000ff">public</span> VeryBig(String id) {
+		ident = id;
+	}
+
+	<span style="color: #0000ff">public</span> VeryBig(String id, <span style="color: #0000ff">int</span> s) {
+		ident = id;
+		la = <span style="color: #0000ff">new</span> <span style="color: #0000ff">double</span>[s];
+	}
+
+	<span style="color: #0000ff">public</span> String toString() {
+		<span style="color: #0000ff">return</span> ident;
+	}
+
+	<span style="color: #0000ff">protected</span> <span style="color: #0000ff">void</span> finalize() {
+		System.out.println(&quot;<span style="color: #8b0000">Finalizing </span>&quot; + ident);
+	}
+}
+
+<span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> ReferencesTest {
+	<span style="color: #008000">/**
+	 * Strong Reference&lt;br&gt;
+	 * 是 Java 的默认引用实现, 它会尽可能长时间的存活于 JVM 内， 当没有任何强引用指向对象时， GC 执行后将会回收对象
+	 */</span>
+	@Test
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> strongReference() {
+		System.out.println(&quot;<span style="color: #8b0000">start test strongReference</span>&quot;);
+		Object referent = <span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">strongReference</span>&quot;);
+
+		<span style="color: #008000">/**
+		 * 通过赋值创建 StrongReference
+		 */</span>
+		Object strongReference = referent;
+
+		assertSame(referent, strongReference);
+
+		referent = <span style="color: #0000ff">null</span>;
+		System.gc();
+
+		<span style="color: #008000">/**
+		 * 由于对象还存在引用，因此gc后，对象未被回收
+		 */</span>
+		assertNotNull(strongReference);
+		System.out.println(&quot;<span style="color: #8b0000">end test strongReference</span>&quot;);
+	}
+
+	<span style="color: #008000">/**
+	 * WeakReference&lt;br&gt;
+	 * 顾名思义, 是一个弱引用, 当所引用的对象在 JVM 内不再有强引用时, GC后，弱引用被置成null，并回收所指的对象
+	 */</span>
+	@Test
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> weakReference() {
+		System.out.println(&quot;<span style="color: #8b0000">start test weakReference</span>&quot;);
+		Object referent = <span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">weakReference</span>&quot;);
+		WeakReference&lt;Object&gt; weakRerference = <span style="color: #0000ff">new</span> WeakReference&lt;Object&gt;(
+				referent);
+
+		assertSame(referent, weakRerference.get());
+
+		referent = <span style="color: #0000ff">null</span>;
+		System.gc();
+
+		<span style="color: #008000">/**
+		 * 一旦没有指向 referent 的强引用, weak reference 在 GC 后会被置成null，对象就可以被 回收了。。。
+		 */</span>
+		assertNull(weakRerference.get());
+		System.out.println(&quot;<span style="color: #8b0000">end test weakReference</span>&quot;);
+	}
+
+	<span style="color: #008000">/**
+	 * WeakHashMap&lt;br&gt;
+	 * 使用 WeakReference 作为 key， 一旦没有指向 key 的强引用, WeakHashMap 在 GC 后将自动删除相关的
+	 * entry
+	 * 
+	 * @throws InterruptedException
+	 */</span>
+	@Test
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> weakHashMap() <span style="color: #0000ff">throws</span> InterruptedException {
+		Map&lt;Object, Object&gt; weakHashMap = <span style="color: #0000ff">new</span> WeakHashMap&lt;Object, Object&gt;();
+		Object key = <span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">weakHashMap key</span>&quot;);
+		Object value = <span style="color: #0000ff">new</span> Object();
+		weakHashMap.put(key, value);
+
+		assertTrue(weakHashMap.containsValue(value));
+
+		key = <span style="color: #0000ff">null</span>;
+		System.gc();
+		<span style="color: #008000">/**
+		 * 等待无效 entries 进入 ReferenceQueue 以便下一次调用 getTable 时被清理
+		 */</span>
+		Thread.sleep(1000);
+
+		<span style="color: #008000">/**
+		 * 一旦没有指向 key 的强引用, WeakHashMap 在 GC 后将自动删除相关的 entry
+		 */</span>
+		assertFalse(weakHashMap.containsValue(value));
+	}
+
+	<span style="color: #008000">/**
+	 * SoftReference&lt;br&gt;
+	 * 
+	 * 与 WeakReference 的特性基本一致， 最大的区别在于 SoftReference会尽可能长的保留引用，不会在GC时就回收对象，而是直到
+	 * JVM 内存不足时才会被回收(虚拟机保证), 这一特性使得 SoftReference 非常适合缓存应用
+	 */</span>
+	@Test
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> softReference() {
+		Object referent = <span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">softReference</span>&quot;);
+		SoftReference&lt;Object&gt; softRerference = <span style="color: #0000ff">new</span> SoftReference&lt;Object&gt;(
+				referent);
+
+		assertNotNull(softRerference.get());
+
+		referent = <span style="color: #0000ff">null</span>;
+		System.gc();
+
+		<span style="color: #008000">/**
+		 * soft references 只有在 jvm OutOfMemory 之前才会被回收, 所以它非常适合缓存应用
+		 */</span>
+		assertNotNull(softRerference.get());
+
+		<span style="color: #008000">// make oom....</span>
+		<span style="color: #0000ff">try</span> {
+			<span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">oom </span>&quot;, 100000000);
+		} <span style="color: #0000ff">catch</span> (Throwable e) {
+
+		}
+
+		assertNull(softRerference.get());
+	}
+
+	<span style="color: #008000">/**<font color="#0000ff">原文中的这个例子没讲明白，见我后面添加的例子</font></span><span style="color: #008000">
+	 * PhantomReference&lt;br&gt;
+	 * 
+	 * Phantom Reference(幽灵引用) 与 WeakReference 和 SoftReference 有很大的不同, 因为它的
+	 * get() 方法永远返回 null, 这也正是它名字的由来
+	 */</span>
+	@Test
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> phantomReferenceAlwaysNull() {
+		Object referent = <span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">phantomReferenceAlwaysNull</span>&quot;);
+		ReferenceQueue&lt;Object&gt; q = <span style="color: #0000ff">new</span> ReferenceQueue&lt;Object&gt;();
+		PhantomReference&lt;Object&gt; phantomReference = <span style="color: #0000ff">new</span> PhantomReference&lt;Object&gt;(
+				referent, q);
+
+		<span style="color: #008000">/**
+		 * phantom reference 的 get 方法永远返回 null
+		 */</span>
+		assertNull(phantomReference.get());
+
+		assertNull(q.poll());
+		System.gc();
+		assertNull(q.poll());
+	}
+
+	<span style="color: #008000">/**
+	 * RererenceQueue&lt;br&gt;
+	 * 
+	 * 当一个 WeakReference 开始返回 null 时， 它所指向的对象已经准备被回收， 这时可以做一些合适的清理工作. 将一个
+	 * ReferenceQueue 传给一个 Reference 的构造函数， 当对象被回收时， 虚拟机会自动将这个weak ref插入到
+	 * ReferenceQueue 中， WeakHashMap 就是利用 ReferenceQueue 来清除 key 已经没有强引用的
+	 * entries
+	 * 
+	 * @throws InterruptedException
+	 */</span>
+	@Test
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> referenceQueueWithWeakReference() <span style="color: #0000ff">throws</span> InterruptedException {
+		Object referent = <span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">referenceQueueWithWeakReference</span>&quot;);
+		ReferenceQueue&lt;Object&gt; referenceQueue = <span style="color: #0000ff">new</span> ReferenceQueue&lt;Object&gt;();
+		Reference&lt;Object&gt; ref = <span style="color: #0000ff">new</span> WeakReference&lt;Object&gt;(referent,
+				referenceQueue);
+
+		assertFalse(ref.isEnqueued());
+		Reference&lt;? <span style="color: #0000ff">extends</span> Object&gt; polled = referenceQueue.poll();
+		assertNull(polled);
+
+		referent = <span style="color: #0000ff">null</span>;
+		System.gc();
+
+		assertTrue(ref.isEnqueued());
+		Reference&lt;? <span style="color: #0000ff">extends</span> Object&gt; removed = referenceQueue.remove();
+		assertNotNull(removed);
+		assertSame(ref, removed);
+		assertNull(removed.get());
+	}
+
+	@Test
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> referenceQueueWithSoftReference() <span style="color: #0000ff">throws</span> InterruptedException {
+		Object referent = <span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">referenceQueueWithWeakReference</span>&quot;);
+		ReferenceQueue&lt;Object&gt; referenceQueue = <span style="color: #0000ff">new</span> ReferenceQueue&lt;Object&gt;();
+		Reference&lt;Object&gt; ref = <span style="color: #0000ff">new</span> SoftReference&lt;Object&gt;(referent,
+				referenceQueue);
+
+		assertFalse(ref.isEnqueued());
+		Reference&lt;? <span style="color: #0000ff">extends</span> Object&gt; polled = referenceQueue.poll();
+		assertNull(polled);
+
+		referent = <span style="color: #0000ff">null</span>;
+		<span style="color: #008000">// make oom....</span>
+		<span style="color: #0000ff">try</span> {
+			<span style="color: #0000ff">new</span> VeryBig(&quot;<span style="color: #8b0000">oom </span>&quot;, 100000000);
+		} <span style="color: #0000ff">catch</span> (Throwable e) {
+
+		}
+		assertTrue(ref.isEnqueued());
+		Reference&lt;? <span style="color: #0000ff">extends</span> Object&gt; removed = referenceQueue.remove();
+		assertNotNull(removed);
+		assertSame(ref, removed);
+		assertNull(removed.get());
+	}
+}</p>
+</div>
+
+<br />
+
+<p>参考：</p>
+
+<p><a href="http://www.iteye.com/topic/401478">http://www.iteye.com/topic/401478</a></p>
+
+<p><a href="http://zhang-xzhi-xjtu.iteye.com/blog/484934">http://zhang-xzhi-xjtu.iteye.com/blog/484934</a></p>
+
+<p><a href="http://zhang-xzhi-xjtu.iteye.com/blog/413159">http://zhang-xzhi-xjtu.iteye.com/blog/413159</a></p>
+
+<p>&#160;</p>
+
+<p>--------------</p>
+
+<p>参考:</p>
+
+<p><a title="http://blog.csdn.net/huoyin/article/details/5891998" href="http://blog.csdn.net/huoyin/article/details/5891998">http://blog.csdn.net/huoyin/article/details/5891998</a></p>
+
+<p><a name="N100C9"><strong>SoftReference 类</strong></a></p>
+
+<p><code>SoftReference</code> 类的一个典型用途就是用于内存敏感的高速缓存。 <code>SoftReference</code> 的原理是：在保持对对象的引用时保证在 JVM 报告内存不足情况之前将清除所有的软引用。关键之处在于，垃圾收集器在运行时可能会（也可能不会）释放软可及对象。对象是否被释放取决于垃圾收集器的算法以及垃圾收集器运行时可用的内存数量。 </p>
+
+<p><a name="N100DA"><strong>WeakReference 类</strong></a></p>
+
+<p><code>WeakReference</code> 类的一个典型用途就是规范化映射（canonicalized mapping）。另外，对于那些生存期相对较长而且重新创建的开销也不高的对象来说，弱引用也比较有用。关键之处在于，垃圾收集器运行时如果碰到了弱可及对象，将释放 <code>WeakReference</code> 引用的对象。然而，请注意，垃圾收集器可能要运行多次才能找到并释放弱可及对象。 </p>
+
+<p><a name="N100EB"><strong>PhantomReference 类</strong></a></p>
+
+<p><code>PhantomReference</code> 类只能用于跟踪对被引用对象即将进行的收集。同样，它还能用于执行 pre-mortem 清除操作。 <code>PhantomReference</code> 必须与 <code>ReferenceQueue</code> 类一起使用。需要 <code>ReferenceQueue</code> 是因为它能够充当通知机制。当垃圾收集器确定了某个对象是虚可及对象时， <code>PhantomReference</code> 对象就被放在它的 <code>ReferenceQueue</code> 上。将 <code>PhantomReference</code> 对象放在 <code>ReferenceQueue</code> 上也就是一个通知，表明 <code>PhantomReference</code> 对象引用的对象已经结束，可供收集了。这使您能够刚好在对象占用的内存被回收之前采取行动。 </p>
+
+<p><font color="#0000ff">对于phantom类见此例:</font></p>
+
+<div>
+  <pre>	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span> main(<span style="color: #0000ff">String</span>[] args) <span style="color: #0000ff">throws</span> InterruptedException
+	{
+		Object test = <span style="color: #0000ff">new</span> Object();
+		ReferenceQueue&lt;Object&gt; q = <span style="color: #0000ff">new</span> ReferenceQueue&lt;Object&gt;();
+		PhantomReference&lt;Object&gt; p = <span style="color: #0000ff">new</span> PhantomReference&lt;Object&gt;(test, q);
+		Object lock = <span style="color: #0000ff">new</span> Object();
+		<span style="color: #0000ff">while</span> (<span style="color: #0000ff">true</span>)
+		{
+			System.out.println(&quot;<span style="color: #8b0000">Checking queue...</span>&quot;);			
+			<span style="color: #0000ff">if</span> (q.poll() != <span style="color: #0000ff">null</span>)
+			{
+				<span style="color: #0000ff">break</span>;
+			}
+			System.out.println(&quot;<span style="color: #8b0000">Still polling...</span>&quot;);
+			System.gc();
+			<span style="color: #0000ff">try</span>
+			{
+				Thread.sleep(500);
+			}
+			<span style="color: #0000ff">catch</span> (InterruptedException e)
+			{
+				System.out.println(&quot;<span style="color: #8b0000">Interrupted!</span>&quot;);
+				<span style="color: #0000ff">break</span>;
+			}
+			<span style="color: #008000">// Make the object garbage...</span>
+			test = <span style="color: #0000ff">null</span>;
+		}
+		System.out.println(&quot;<span style="color: #8b0000">Finished.</span>&quot;);
+	}</pre>
+</div>
+<p><font color="#0000ff">输出结果:</font></p>
+<p><font color="#0000ff">Checking queue...<br />
+    <br />Still polling...</p>
+<p>Checking queue...</p>
+<p>Still polling...</p>
+<p>Checking queue...</p>
+<p>Finished.</font></p>
+<p><font color="#0000ff">由上例可看出，GC后需要等待一段时间才能由ReferenceQueue中得知phantom引用已被GC了。<br />
+    <br /></font></p>

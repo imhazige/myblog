@@ -1,0 +1,70 @@
+---
+layout: post
+title: php面向对象高级功能
+date: 2011-11-21 14:41:07.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags: []
+meta:
+  views: '25'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>php不支持函数重载(但可以使用__call模拟)，不支持运算符重载，不支持多继承。</p>
+<p>延迟静态绑定(版本需要php5.3以后):</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+<a style="color: #0000ff" href="http://www.php.net/class">class</a> A {
+	static <a style="color: #0000ff" href="http://www.php.net/function">function</a> call() {
+		<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> __CLASS__;
+	}
+
+	static <a style="color: #0000ff" href="http://www.php.net/function">function</a> test() {
+		self :: call(); <span style="color: #008000">//不属于静态延迟，因为使用的是self表示自己</span>
+	}
+}
+
+<a style="color: #0000ff" href="http://www.php.net/class">class</a> B <a style="color: #0000ff" href="http://www.php.net/extends">extends</a> A {
+	static <a style="color: #0000ff" href="http://www.php.net/function">function</a> call() {
+		<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> __CLASS__;
+	}
+}
+
+B :: test(); 
+
+<a style="color: #0000ff" href="http://www.php.net/class">class</a> Employee {
+	public static $favSport = &quot;<span style="color: #8b0000">Football</span>&quot;;
+	public static <a style="color: #0000ff" href="http://www.php.net/function">function</a> watchTV() {
+		<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> &quot;<span style="color: #8b0000">Watching </span>&quot; . static :: $favSport; <span style="color: #008000">//属于静态绑定，使用的是static</span>
+	}
+}
+<a style="color: #0000ff" href="http://www.php.net/class">class</a> Executive <a style="color: #0000ff" href="http://www.php.net/extends">extends</a> Employee {
+	public static $favSport = &quot;<span style="color: #8b0000">Polo</span>&quot;;
+}
+
+<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> Executive :: watchTV();
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p>&#160;</p>
+<p>__autoload方法:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+	<a style="color: #0000ff" href="http://www.php.net/function">function</a> __autoload($name){
+		<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> '<span style="color: #8b0000">load :</span>'. $name;
+	}
+	
+	$a = new A();
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p></p>
+<p>在尝试初始化一个类A时，会调用__autoload方法，参数是类名。<br />
+  </p>
+<div>
+  </div>

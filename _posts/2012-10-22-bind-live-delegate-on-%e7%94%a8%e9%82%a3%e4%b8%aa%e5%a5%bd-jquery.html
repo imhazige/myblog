@@ -1,0 +1,39 @@
+---
+layout: post
+title: bind live delegate on 用那个好 JQuery
+date: 2012-10-22 11:32:54.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- jquery
+meta:
+  views: '138'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>bind是直接绑定到元素上。</p>
+<p>live,delegate,on都是可以采取冒泡的方式来判断，例如这样用:</p>
+<p>$(document).live</p>
+<p>$(document).delegate</p>
+<p>$(document).on</p>
+<p>这样做的好处是：</p>
+<p>1：不需要每个元素都绑定事件，性能上较好。</p>
+<p>2：不需要在绑定时间时就要求监听事件元素就存在，看下面的例子：</p>
+<p>&#160;&#160;&#160;&#160; $('#ul1 li').bind('click', f1); //会丢掉#ali  <br /> <br />
+<blockquote>
+<p>&#160;&#160;&#160; $('#ul1 li').live('click', f1);&#160; //会丢掉#ali     <br />&#160;&#160;&#160; $('#ul1').on('click','li', f1);      <br />&#160;&#160;&#160; $(document).on('click','li', f1);      <br />&#160;&#160;&#160; $('#ul1').append('&lt;li id=&quot;ali&quot;&gt;Last item&lt;/li&gt;');&#160;&#160;&#160;&#160;&#160;&#160;&#160; </p>
+</blockquote>
+<p>可知第一第二种方式就会丢掉#ali上的点击事件。</p>
+<p>&#160;</p>
+<p>到底用哪个好，这个可从JQuery的文档中直接找到答案：on比bind好,on是live/delegate的替代.</p>
+<p>所以推荐使用on</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://developer.51cto.com/art/201103/249694.htm">http://developer.51cto.com/art/201103/249694.htm</a></p>

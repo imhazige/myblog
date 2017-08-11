@@ -1,0 +1,70 @@
+---
+layout: post
+title: CSS选择子，兄弟选择,+和~
+date: 2012-04-25 14:36:08.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- css
+meta:
+  views: '22'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>首先我得承认，做了web这么多年，虽然javascript还可以，但是css和美工确实还是在水与不是很水之间徘徊，如我等做个项目从UI上一个icon到数据库里一个字段的长度都要自己搞定的码工，花在UI上面的时间相对其他部分较长，也是最头痛，总是眼巴巴的期望个美女美工哈（¯﹃¯），总也盼不来。后来了解到International Big Mouse这个公司做web的同事也是没有美工的，心想美工莫非神人也。</p>
+<p>ok废话不多说。</p>
+<p>兄弟选择器有+和~</p>
+<p>看下面的代码:</p>
+<div>
+<pre />
+<p><span style="color: #0000ff">&lt;</span><span style="color: #800000">div</span> <span style="color: #ff0000">class</span>=<span style="color: #0000ff">&quot;test&quot;</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">h3</span><span style="color: #0000ff">&gt;</span>这是一个标题<span style="color: #0000ff">&lt;/</span><span style="color: #800000">h3</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span>这是一个文字段落1<span style="color: #0000ff">&lt;/</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span>这是一个文字段落2<span style="color: #0000ff">&lt;/</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span></p>
+<p><span style="color: #0000ff">      </span><span style="color: #0000ff">&lt;</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span>这是一个文字段落2.1<span style="color: #0000ff">&lt;/</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">h3</span><span style="color: #0000ff">&gt;</span>这是一个标题<span style="color: #0000ff">&lt;/</span><span style="color: #800000">h3</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span>这是一个文字段落3<span style="color: #0000ff">&lt;/</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">h3</span><span style="color: #0000ff">&gt;</span>这是一个标题<span style="color: #0000ff">&lt;/</span><span style="color: #800000">h3</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span>这是一个文字段落4<span style="color: #0000ff">&lt;/</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span>这是一个文字段落5<span style="color: #0000ff">&lt;/</span><span style="color: #800000">p</span><span style="color: #0000ff">&gt;</span><br />
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">div</span><span style="color: #0000ff">&gt;</span></p>
+</div>
+<p></p>
+<p>样式 p+p{color:red;} 的效果</p>
+<blockquote>
+<div class="test">
+<h3>这是一个标题</h3>
+<p>这是一个文字段落1</p>
+<p><font color="#ff0000">这是一个文字段落2</font></p>
+<p><font color="#ff0000">这是一个文字段落2.1</font></p>
+<h3>这是一个标题</h3>
+<p>这是一个文字段落3</p>
+<h3>这是一个标题</h3>
+<p>这是一个文字段落4</p>
+<p><font color="#ff0000">这是一个文字段落5</font></p>
+</p></div>
+</blockquote>
+<p>样式p~p{color:red;} 的效果</p>
+<blockquote>
+<div class="test">
+<h3>这是一个标题</h3>
+<p>这是一个文字段落1</p>
+<p><font color="#ff0000">这是一个文字段落2</font></p>
+<p><font color="#ff0000">这是一个文字段落2.1</font></p>
+<h3>这是一个标题</h3>
+<p><font color="#ff0000">这是一个文字段落3</font></p>
+<h3>这是一个标题</h3>
+<p><font color="#ff0000">这是一个文字段落4</font></p>
+<p><font color="#ff0000">这是一个文字段落5</font></p>
+</p></div>
+</blockquote>
+<p>看到区别没:</p>
+<p>p+p效果是先找到p,然后找其后面<font color="#0000ff">紧接着</font>的p，这里的意思是说，<em><font size="1">这是一个文字段落3 </font></em>这个p与<font size="1"><em>这是一个文字段落1 </em></font>这个p 就不是紧接着的关系，因为中间被一个标题打断了,而段落5相对于段落4同理。</p>
+<p>p~p则不管这些，凡是第一个p后面的p元素，不管中间隔了几个其他元素，都会被此选择器选中。</p>

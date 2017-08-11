@@ -1,0 +1,102 @@
+---
+layout: post
+title: "青菜鸟时的笔记"
+date: 2011-06-10 16:58:18.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- Web前端
+tags:
+- java
+- javascript
+meta:
+  views: '25'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<h3 id="sites-page-title-header" align="left">&#160;</h3>
+<div class="sites-canvas-main">
+<div>
+<table class="sites-layout-name-one-column sites-layout-hbox zeroBorder" cellspacing="0">
+<tbody>
+<tr>
+<td class="sites-layout-tile sites-tile-name-content-1">
+<div dir="ltr">
+<table style="width: 902pt" class="zeroBorder" border="0" cellspacing="0" cellpadding="0" width="1202">
+<tbody>
+<tr style="height: 14.25pt">
+<td style="width: 902pt;height: 14.25pt" height="19" width="1202">EJB创建客户机包含客户接口，EJB项目包含客户机，则在部署时会自动生成实现类，EJB工程不要在ejbmodule里面放代码，不然自动生成会删除</td>
+</tr>
+<tr style="height: 42.75pt">
+<td style="width: 902pt;height: 42.75pt" height="57" width="1202">log的配置 使用common.logging的话 可在classpath中使用commons-logging.properties配置如下                       <br />org.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger (使用log4j实现)                        <br />另外，log4j中%l 不如 %c好,%l好像有bug,有时定位不到具体类</td>
+</tr>
+<tr style="height: 71.25pt">
+<td style="width: 902pt;height: 71.25pt" height="95" width="1202">对于引用工程运行时需要打包的问题，如rcp的打包和ejb的依赖，暂时的方法是：                       <br />rcp:将所有引用工程的源程序文件夹作为link source包含在编译源码中，这样开发阶段可直接运行，待发布时再分别打包，这样要在build面板中&quot;.&quot;中加入所有link source                        <br />ejb:除了link source,第三方包可加入源码编译文件夹，这样在eclipse发布时会将这些包发布到服务器，但是是在程序文件夹之下，所以如果不想                        <br />发布时直接放在根目录下，还要手动打包发布并修改manifest.mf对应（目前还未找到简便的方法）</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">checkboxtableviewer选中判断是依据元素equals判断的，所以要注意实现此方法和hashcode</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">checkboxtableviewer的静态方法newList会自动生成table,所以要先getTable再操纵这个table</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">rcp打包问题 使用引用打包总是有问题，手动将引用工程一个个打包才行</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">rcp打包乱码，如果使用多语言就好说&#160; 解决：eclipse编译使用ant build.prperties下 javacDefaultEncoding.. = UTF-8</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">显示不正常往往是layout或size的问题，之前一直不明白的resize不重绘的问题，是由于layout没有设置好，原来toolbar也要 layoutdata.且调用layout是重绘的最好办法。但是我发现如果是filllayout这会自动完成重绘，gridlayout则要在 resize事件中调用layout重绘。</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 42.75pt">
+<td style="width: 902pt;height: 42.75pt" height="57" width="1202">mysql是在windows下是作为服务运行，启动停止如服务。Windows服务命令:net start 服务名&#160; net stop 服务名                       <br />删除时数据文件夹是没有删除的，如果接着又安装mysql,数据文件夹又指向同一文件夹，则密码还是原来的密码，这一点要注意                        <br />可将原文件夹删除再装，以免安装时出错</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">jboss jndi datasource配置:添加-ds.xml配置即可，而hibernate配置需要设置jndi.class(class of the JNDI InitialContextFactory)</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">hibernate 的excuteUpdate不能保证同步缓存，比较笨拙的方法是session.clear[对于影响较大的数据]，或对单个数据evict可将数据从缓存中detach</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19">mysql4.1insert into select * 语句,使用了*号,但是数据并不是依据列名对应而是依据顺序对应</td>
+</tr>
+<tr style="height: 14.25pt">
+<td style="height: 14.25pt" height="19"></td>
+</tr>
+<tr style="height: 28.5pt">
+<td style="width: 902pt;height: 28.5pt" height="38" width="1202"> eclipse 3.3之后的虚拟table updateitem方法当item被replace后是不会调用的，这样有个好处就是结合hibernate分页功能,不用计算页索引                       <br />且用户的拖拉操作不一定会连续更新某个范围内的项数，所以直接更新index后面的pagesize个项数比较好。 </td>
+</tr>
+</tbody>
+</table></div>
+</td>
+</tr>
+</tbody>
+</table></div>
+</p></div>

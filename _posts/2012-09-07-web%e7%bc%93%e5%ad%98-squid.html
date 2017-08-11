@@ -1,0 +1,140 @@
+---
+layout: post
+title: web缓存-squid
+date: 2012-09-07 14:02:36.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- squid
+meta:
+  views: '270'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>安装:</p>
+<blockquote><p>cd /home/root      <br />wget <a href="http://www.squid-cache.org/Versions/v3/3.1/squid-3.1.20.tar.gz">http://www.squid-cache.org/Versions/v3/3.1/squid-3.1.20.tar.gz</a>       <br />tar zxvf squid-3.1.20.tar.gz       <br />cd squid-3.1.20       <br />./configure --prefix=/usr/local/squid       <br />make &amp;&amp; make install</p>
+</blockquote>
+<p>这个要说明一下，尝鲜不一定是好事，因为我此时先下了最新版本3.2.1安装，结果就报错，然后才转为安装3.1.20，一点问题都没有。这是经验之谈，最后那个版本号越大的越保险。</p>
+<p>&#160;</p>
+<p>配置文档:</p>
+<p><a href="http://www.squid-cache.org/Doc/config">http://www.squid-cache.org/Doc/config</a>&#160;</p>
+<p>结合实际应用场景的原理解释：</p>
+<p><a href="http://www.cnblogs.com/PeterBi/archive/2011/03/25/1995228.html">http://www.cnblogs.com/PeterBi/archive/2011/03/25/1995228.html</a>&#160;</p>
+<p>反向代理，负载均衡集群配置：</p>
+<p><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-squid/">http://www.ibm.com/developerworks/cn/linux/l-cn-squid/</a></p>
+<p><font color="#0000ff">上面的链接解决了我的疑惑，cache_peer 这个配置既可以配置兄弟代理服务器，也可以配置原始服务器。</font></p>
+<p>看这个配置会明白很多:</p>
+<pre>cache_effective_user squid 
+ cache_effective_group squid 
+ ######### 设定 squid 的主机名 , 如无此项 squid 将无法启动
+ visible_hostname squid1.nlc.gov.cn 
+ ############# 配置 squid 为加速模式 ################# 
+ http_port 80 accel vhost vport 
+ icp_port 3130 
+ ##### 配置 squid2、squid3 为其邻居，当 squid1 在其缓存中没有找到请求的资源时，
+          通过 ICP 查询去其邻居中取得缓存
+ cache_peer squid2.ibm.com.cn sibling 80 3130 
+ cache_peer squid3.ibm.com.cn sibling 80 3130 
+<font color="#0000ff"> ##### squid1 的三个父节点，originserver 参数指明是源服务器，
+ round-robin  参数指明 squid 通过轮询方式将请求分发到其中一台父节点；
+ squid 同时会对这些父节点的健康状态进行检查，如果父节点 down 了，
+那么 squid 会从剩余的 origin 服务器中抓取数据</font>
+ cache_peer 210.82.118.195 parent 8080 0 no-query originserver round-robin \ 
+                                              name=webServer1 
+ cache_peer 192.168.76.226 parent 8080 0 no-query originserver round-robin \ 
+                                              name=webServer2 
+ cache_peer 192.168.76.227 parent 8080 0 no-query originserver round-robin \ 
+                                            name=webServer3 
+ <font color="#0000ff">#### 将 wenjin.cache.ibm.com.cn 域的请求通过 RR 轮询方式转发到三个父节点中的一个</font>
+ cache_peer_domain webServer1 webServer2 webServer3 wenjin.cache.ibm.com.cn 
+ ##### 下面是一些访问控制、日志和缓存目录的设置
+ acl localnet src 192.168.76.223 192.168.76.224 192.168.76.225 
+ acl all src 0.0.0.0/0.0.0.0 
+ http_access allow all 
+ icp_access allow localnet 
+ cache_log /usr/local/squid/var/logs/cache.log 
+ access_log /usr/local/squid/var/logs/access.log squid 
+ cache_dir ufs /usr/local/squid/var/cache/ 1000 16 256 
+ ####### 对 squid 的一些优化 ############### 
+ maximum_object_size 10240 KB  ### 能缓存的最大对象为 10M 
+ maximum_object_size_in_memory 512 KB ### 内存中缓存的最大对象 512K 
+ cache_mem 256 MB  ###squid 用于缓存的内存量</pre>
+<p>&#160;</p>
+<p>Squid安装设试命令:<br />
+  <br />1，初始化你在 squid.conf 里配置的 cache 目录</p>
+<p>#/usr/local/squid/sbin/squid -z //初始化缓存空间</p>
+<p>如果有错误提示，请检查你的 cache目录的权限。</p>
+<p>2，对你的squid.conf 排错，即验证 squid.conf 的 语法和配置。</p>
+<p>#/usr/local/squid/sbin/squid -k parse</p>
+<p>如果squid.conf 有语法或配置错误，这里会返回提示你，如果没有返回，恭喜，可以尝试启动squid。</p>
+<p>3，在前台启动squid，并输出启动过程。</p>
+<p>#/usr/local/squid/sbin/squid -N -d1</p>
+<p>如果有到 ready to server reques，恭喜，启动成功。</p>
+<p>然后 ctrl + c，停止squid，并以后台运行的方式启动它。</p>
+<p>其实这种方式打印的就是cache.log的内容</p>
+<p><font color="#0000ff"> 这前三步是验证你是否能运行squid的重要步骤</font></p>
+<p>
+  <br />4，启动squid在后台运行。</p>
+<p>#/usr/local/squid/sbin/squid -s</p>
+<p>这时候可以 ps -A 来查看系统进程，可以看到俩个 squid 进程。</p>
+<p>5，停止 squid</p>
+<p>#/usr/local/squid/sbin/squid -k shutdown</p>
+<p>这个不用解释吧。</p>
+<p>6，重引导修改过的 squid.conf</p>
+<p>#/usr/local/squid/sbin/squid -k reconfigure //载入新的配置文件</p>
+<p>这个估计用的时候比较多，当你发现你的配置有不尽你意的时候，可以随时修改squid.conf，然后别忘记对你的 squid.conf排错，然后再执行此指令，即可让squid重新按照你的 squid.conf 来运行。</p>
+<p>7./usr/local/squid/sbin/squid -k rotate 轮循日志</p>
+<p>8，把squid添加到系统启动项</p>
+<p>编辑 /etc/rc.d/rc.local</p>
+<p>添加如下行： /usr/local/squid/sbin/squid -s</p>
+<p>利用Runc脚本........</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p><strong> 关于配置问题：</strong></p>
+<p>#设置cache 内存大小为1G</p>
+<p>cache_mem 1000 MB</p>
+<p>#设置cache_dir 地址，<font color="#0000ff">第一个数字参数不能小于cache_mem设置的大小，否则会出警告“WARNING cache_mem is larger than total disk cache space!”，</font>所以设为1000。16，256表示第一级和第二级目录。设置完了需用 squid -z来使cache目录生效。</p>
+<p>cache_dir ufs /var/spool/squid 1000 16 256</p>
+<p>&#160;</p>
+<p>注意</p>
+<p>acl localnet src 192.168.0.0<font color="#0000ff">/16 </font># RFC1918 possible internal network</p>
+<p>/16不是指0-16,16是指netmask </p>
+<p>&#160;</p>
+<p><strong>测试：</strong></p>
+<p>例如我有个应用在局域网192.168.0.2:10080/appweb/</p>
+<p>我这样配置</p>
+<p>cache_peer 192.168.0.2 parent 10080 no-query originserver</p>
+<p>那么我将我的浏览器启用代理，将其指向我配置的squid服务器和对应端口。</p>
+<p>那么我访问<a href="http://www.google.com/appweb/">www.google.com/appweb/</a></p>
+<p>嘿嘿，访问的其实是192.168.0.2:10080/appweb/</p>
+<p>因为这里配置缓存服务器是192.168.0.2:10080 </p>
+<p>然而要注意squid默认只是缓存get请求，如果<a href="http://www.google.com/appweb/">www.google.com/appweb/</a>有个post的ajax请求<a href="http://www.google.com/appweb/ajax">www.google.com/appweb/ajax</a>的话，squid还是会找实际的<a href="http://www.google.com/appweb/ajax">www.google.com/appweb/ajax</a>的。</p>
+<p>&#160;</p>
+<p>查看日志:</p>
+<p>tail -f /usr/local/squid/var/logs/access.log</p>
+<p>日志意义：</p>
+<p><a href="http://wiki.squid-cache.org/SquidFaq/SquidLogs#access.log">http://wiki.squid-cache.org/SquidFaq/SquidLogs#access.log</a></p>
+<p><a href="http://blog.csdn.net/starxu85/article/details/3256469">http://blog.csdn.net/starxu85/article/details/3256469</a></p>
+<p>发现日志里一个HIT也没有，晕！倒是有些TCP_REFRESH_UNMODIFIED/304</p>
+<p>从浏览器中看，似乎TCP_REFRESH_UNMODIFIED/304对应的资源是命中的。X-Cache <code>HIT from xxx.xxx.COM</code></p>
+<p><code>搞不懂。</code></p>
+<p></p>
+<p>squid命中又有很多因素，它和http 请求状态（头部信息）有很大关系，另外带参数的get请求也是默认不缓存的。</p>
+<p>&#160;</p>
+<p>另外测试squid，也可以配置一个dns服务器，然后使用浏览器来访问测试。</p>
+<p>参见DNS&#160; server配置 <a title="http://kazge.com/archives/896.html" href="http://kazge.com/archives/896.html">http://kazge.com/archives/896.html</a>。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://blog.51yip.com/server/638.html">http://blog.51yip.com/server/638.html</a> squid cache 服务器端的安装,配置</p>
+<p><a href="http://blog.51yip.com/apachenginx/898.html">http://blog.51yip.com/apachenginx/898.html</a> apache利用mod_cache缓存图片等</p>
+<p><a href="http://blog.51yip.com/cache/618.html">http://blog.51yip.com/cache/618.html</a> varnish cache 反向代理服务器和http加速器的安装和配置</p>
+<p><a href="http://www.cnblogs.com/sxwgf/archive/2012/03/10/2389470.html">http://www.cnblogs.com/sxwgf/archive/2012/03/10/2389470.html</a> 浅谈Squid在图片存储架构中的应用</p>
+<p><a href="http://os.51cto.com/art/201009/225813.htm">http://os.51cto.com/art/201009/225813.htm</a> 巧用Squid的ACL和访问列表实现高效访问控制</p>

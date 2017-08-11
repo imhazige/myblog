@@ -1,0 +1,24 @@
+---
+layout: post
+title: IE SaveAs命令问题
+date: 2011-07-14 15:00:43.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+meta:
+  views: '48'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天发现SaveAs命令不会将最新的dom的html保存。</p>
+<p>例如：使用脚本向一个iframe里面写日志doc.body.innerHTML += ‘&lt;div&gt;…&lt;/div&gt;’;</p>
+<p>这样写了很多行后，再调用doc.execCommand(‘SaveAs’,true,’abc.log’)保存.打开一看，什么都没有？</p>
+<p>解决办法是，在调用保存之前将完整的内容使用doc.write写入一遍。</p>

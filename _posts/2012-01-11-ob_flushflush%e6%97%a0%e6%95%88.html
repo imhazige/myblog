@@ -1,0 +1,60 @@
+---
+layout: post
+title: ob_flush,flush无效
+date: 2012-01-11 20:43:40.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- flush
+meta:
+  views: '316'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>想要先输出一段再输出一段，网上说如下的可以。</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+
+<a style="color: #0000ff" href="http://www.php.net/for">for</a> ($i=10; $i&gt;0; $i--)
+{
+ <a style="color: #0000ff" href="http://www.php.net/echo">echo</a> $i;
+ ob_flush();
+ <a style="color: #ffa500" href="http://www.php.net/flush">flush</a>();
+ <a style="color: #ffa500" href="http://www.php.net/sleep">sleep</a>(1);
+}
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p></p>
+<p>但是实际上浏览器没有按照预想的来，还是一次等待加载完。</p>
+<p>其他各种办法例如:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+<a style="color: #ffa500" href="http://www.php.net/ini_set">ini_set</a>('<span style="color: #8b0000">output_buffering</span>','<span style="color: #8b0000">on</span>');
+<a style="color: #ffa500" href="http://www.php.net/ini_set">ini_set</a>('<span style="color: #8b0000">zlib.output_compression</span>', 0);
+<a style="color: #ffa500" href="http://www.php.net/ob_implicit_flush">ob_implicit_flush</a>();
+<a style="color: #0000ff" href="http://www.php.net/for">for</a>($i=0;$i&lt;10;$i++) {
+      <a style="color: #0000ff" href="http://www.php.net/echo">echo</a> $i;
+      <a style="color: #0000ff" href="http://www.php.net/echo">echo</a> <a style="color: #ffa500" href="http://www.php.net/str_repeat">str_repeat</a>(&quot;<span style="color: #8b0000"> </span>&quot;, 500);
+      ob_flush();
+      <a style="color: #ffa500" href="http://www.php.net/flush">flush</a>();
+      <a style="color: #ffa500" href="http://www.php.net/sleep">sleep</a>(1);
+}
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p>并修改.htaccess gzip设置 <a href="http://www.absolutelytech.com/2010/01/31/solved-flush-ob_flush-not-working-in-php-disabling-gzip-through-htaccess/">http://www.absolutelytech.com/2010/01/31/solved-flush-ob_flush-not-working-in-php-disabling-gzip-through-htaccess/</a></p>
+<p><pre>SetEnv no-gzip dont-vary</pre></p>
+<p>照样不行。</p>
+<p>其实php文档已经说得很明白了,看flush函数说明，已经讲了包含服务器设置，浏览器缓存等等问题:</p>
+<p><b>flush()</b> may not be able to override the buffering scheme of your web server and it has no effect on any client-side buffering in the browser. It also doesn't affect PHP's userspace output buffering mechanism. This means you will have to call both <a href="mk:@MSITStore:F:%5Cprojects%5Cphp%5Cbook%5Cphp_manual_en.chm::/res/function.ob-flush.html">ob_flush()</a> and <b>flush()</b> to flush the ob output buffers if you are using those. </p>
+<p>Several servers, especially on Win32, will still buffer the output from your script until it terminates before transmitting the results to the browser. </p>
+<p>Server modules for Apache like mod_gzip may do buffering of their own that will cause <b>flush()</b> to not result in data being sent immediately to the client. </p>
+<p>Even the browser may buffer its input before displaying it. Netscape, for example, buffers text until it receives an end-of-line or the beginning of a tag, and it won't render tables until the &lt;/table&gt; tag of the outermost table is seen. </p>
+<p>Some versions of Microsoft Internet Explorer will only start to display the page after they have received 256 bytes of output, so you may need to send extra whitespace before flushing to get those browsers to display the page. </p>
+<p>因此，想通过这样的方式达到分步输出是不太靠谱的。</p>

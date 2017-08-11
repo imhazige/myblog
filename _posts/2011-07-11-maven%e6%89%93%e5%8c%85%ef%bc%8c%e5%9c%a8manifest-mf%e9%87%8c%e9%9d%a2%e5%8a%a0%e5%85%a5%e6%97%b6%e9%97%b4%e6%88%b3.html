@@ -1,0 +1,110 @@
+---
+layout: post
+title: maven打包，在manifest.mf里面加入时间戳
+date: 2011-07-11 15:52:12.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- maven
+meta:
+  views: '2627'
+  _edit_last: '1'
+  _oembed_3fcedc2f0d137a6e09768e1f5aa3a124: "{{unknown}}"
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>我不得不再次痛恨一番maven，用起来真是恶心：</p>
+<p>今天遇到这么个问题，我想在war包里面的manifest.mf文件中加入时间戳。怎么写pom?</p>
+<p>首先maven文档说，可以用那个maven-antrun-plugin来加入时间啊,照着它说的做:</p>
+<p><a href="http://maven.apache.org/plugin-developers/cookbook/add-build-time-to-manifest.html" title="http://maven.apache.org/plugin-developers/cookbook/add-build-time-to-manifest.html">http://maven.apache.org/plugin-developers/cookbook/add-build-time-to-manifest.html</a>&nbsp;（不推荐）</p>
+<p>打jar包倒没问题，可我要打war包就不行了。</p>
+<p>然后看到这么个插件buildnumber-maven-plugin:</p>
+<p>需要添加配置:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">plugin</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>org.codehaus.mojo<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>buildnumber-maven-plugin<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">executions</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">execution</span><span style="color: #0000ff">&gt;</span>
+						<span style="color: #0000ff">&lt;</span><span style="color: #800000">phase</span><span style="color: #0000ff">&gt;</span>validate<span style="color: #0000ff">&lt;/</span><span style="color: #800000">phase</span><span style="color: #0000ff">&gt;</span>
+						<span style="color: #0000ff">&lt;</span><span style="color: #800000">goals</span><span style="color: #0000ff">&gt;</span>
+							<span style="color: #0000ff">&lt;</span><span style="color: #800000">goal</span><span style="color: #0000ff">&gt;</span>create<span style="color: #0000ff">&lt;/</span><span style="color: #800000">goal</span><span style="color: #0000ff">&gt;</span>
+						<span style="color: #0000ff">&lt;/</span><span style="color: #800000">goals</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;/</span><span style="color: #800000">execution</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;/</span><span style="color: #800000">executions</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">configuration</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">format</span><span style="color: #0000ff">&gt;</span>{0,date,yyyyMMdd-HHmmss}<span style="color: #0000ff">&lt;/</span><span style="color: #800000">format</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">items</span><span style="color: #0000ff">&gt;</span>
+						<span style="color: #0000ff">&lt;</span><span style="color: #800000">item</span><span style="color: #0000ff">&gt;</span>timestamp<span style="color: #0000ff">&lt;/</span><span style="color: #800000">item</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;/</span><span style="color: #800000">items</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">buildNumberPropertyName</span><span style="color: #0000ff">&gt;</span>
+						current.timestamp
+					<span style="color: #0000ff">&lt;/</span><span style="color: #800000">buildNumberPropertyName</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;/</span><span style="color: #800000">configuration</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;/</span><span style="color: #800000">plugin</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p>然后在maven-war-plugin中添加入口:</p>
+<div>
+<pre></pre>
+<p><span style="color: #0000ff">&lt;</span><span style="color: #800000">plugin</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>org.apache.maven.plugins<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>maven-war-plugin<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">configuration</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">warName</span><span style="color: #0000ff">&gt;xxxxx</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">warName</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">archive</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">manifestEntries</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">Project</span>-<span style="color: #ff0000">name</span><span style="color: #0000ff">&gt;</span>${project.name}<span style="color: #0000ff">&lt;/</span><span style="color: #800000">Project</span>-name<span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">Project</span>-<span style="color: #ff0000">version</span><span style="color: #0000ff">&gt;</span> ${project.version} <span style="color: #0000ff">&lt;/</span><span style="color: #800000">Project</span>-version<span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">Build</span>-<span style="color: #ff0000">Time</span><span style="color: #0000ff">&gt;</span> <em><strong>${current.timestamp}</strong></em> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">Build</span>-Time<span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">manifestEntries</span><span style="color: #0000ff">&gt;</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">archive</span><span style="color: #0000ff">&gt;</span></p>
+<blockquote>
+<p><span style="color: #0000ff">&hellip;&hellip;</span></p>
+</blockquote>
+</div>
+<p>&nbsp;</p>
+<div>这样写还没完，直接打包会报错误：</div>
+<p>&nbsp;</p>
+<p>java.lang.NullPointerException: The scm url cannot be null. &nbsp;&nbsp;&nbsp; at org.apache.maven.scm.manager.AbstractScmManager.makeScmRepository(AbstractScmManager.java:183)</p>
+<p>&nbsp;</p>
+<p>查了查，说是要加个没用的scm节点才行:</p>
+<p>&nbsp;</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">scm</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">connection</span><span style="color: #0000ff">&gt;</span>scm:svn:http://127.0.0.1/none<span style="color: #0000ff">&lt;/</span><span style="color: #800000">connection</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">developerConnection</span><span style="color: #0000ff">&gt;</span>
+			scm:svn:https://127.0.0.1/none
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">developerConnection</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">tag</span><span style="color: #0000ff">&gt;</span>HEAD<span style="color: #0000ff">&lt;/</span><span style="color: #800000">tag</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>http://127.0.0.1/isaynone<span style="color: #0000ff">&lt;/</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">scm</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p>这里面的url都是无用，瞎写都可以。直接复制过去也可。</p>
+<p>这样就可以加入时间戳到manifest.mf里面去了。</p>
+<p>&nbsp;</p>
+<p>不过我真服了这样的解决办法。maven有多恶心就多恶心了！ <br />
+	&nbsp;</p>
+<p>&nbsp;</p>
+<p>----------</p>
+<p>这里补充一下jar包的情形：</p>
+<p>不要使用官方<a href="http://maven.apache.org/plugin-developers/cookbook/add-build-time-to-manifest.html" title="http://maven.apache.org/plugin-developers/cookbook/add-build-time-to-manifest.html">http://maven.apache.org/plugin-developers/cookbook/add-build-time-to-manifest.html</a></p>
+<p>这个办法容易遇到m2e的老问题 http://ljhzzyx.blog.163.com/blog/static/383803122013440345857/</p>
+<p>所以还是推荐使用buildnumber-maven-plugin的方式，大部分一样针对<span class="s3">maven</span>-jar-<span class="s3">plugin修改</span></p>
+<p class="p1"><span class="s1">&lt;</span>plugin<span class="s1">&gt;</span></p>
+<p class="p2"><span class="s1">&lt;</span><span class="s2">groupId</span><span class="s1">&gt;</span>org.apache.maven.plugins<span class="s1">&lt;/</span><span class="s2">groupId</span><span class="s1">&gt;</span></p>
+<p class="p2"><span class="s1">&lt;</span><span class="s2">artifactId</span><span class="s1">&gt;</span><span class="s3">maven</span>-jar-<span class="s3">plugin</span><span class="s1">&lt;/</span><span class="s2">artifactId</span><span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;</span>version<span class="s1">&gt;</span><span class="s4">2.2</span><span class="s1">&lt;/</span>version<span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;</span>configuration<span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;</span>archive<span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;</span>manifestEntries<span class="s1">&gt;</span></p>
+<p class="p2"><span class="s1">&lt;</span><span class="s2">Copyright</span><span class="s1">&gt;kzg</span>&nbsp;2013<span class="s1">&lt;/</span><span class="s2">Copyright</span><span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;</span>Project-name<span class="s1">&gt;</span><span class="s4">${project.name}</span><span class="s1">&lt;/</span>Project-name<span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;</span>Project-version<span class="s1">&gt;</span><span class="s4">${project.version}</span><span class="s1">&lt;/</span>Project-version<span class="s1">&gt;</span></p>
+<p class="p2"><span class="s1">&lt;</span><span class="s2">Build-Time</span><span class="s1">&gt;</span>${current.timestamp}<span class="s1">&lt;/</span><span class="s2">Build-Time</span><span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/</span>manifestEntries<span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/</span>archive<span class="s1">&gt;</span></p>
+<p class="p2"><span class="s1">&lt;</span><span class="s2">skip</span><span class="s1">&gt;</span>true<span class="s1">&lt;/</span><span class="s2">skip</span><span class="s1">&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/</span>configuration<span class="s1">&gt;</span></p>
+<p>&nbsp;</p>
+<p class="p1"><span class="s1">&lt;/</span>plugin<span class="s1">&gt;</span></p>
+<p><span><br />
+	</span></p>
+<p>&nbsp;</p>
+<p>还有个方法：</p>
+<p>http://m.oschina.net/blog/95181</p>

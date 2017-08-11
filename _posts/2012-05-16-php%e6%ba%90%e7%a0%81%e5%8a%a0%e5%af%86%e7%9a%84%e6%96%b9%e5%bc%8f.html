@@ -1,0 +1,74 @@
+---
+layout: post
+title: php源码加密的方式
+date: 2012-05-16 09:53:02.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- "源码加密"
+meta:
+  views: '137'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>方式大体有两种，扩展加密：</p>
+<p><a href="http://blog.csdn.net/kof820/article/details/5465910">http://blog.csdn.net/kof820/article/details/5465910</a></p>
+<p>php体系内的加密，字符串base64转换:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+<span style="color: #008000">//变量注意区分数字 &quot;0&quot; 和 字符&quot;O&quot;</span>
+$OOO000000=<a style="color: #ffa500" href="http://www.php.net/urldecode">urldecode</a>('<span style="color: #8b0000">%66%67%36%73%62%65%68%70%72%61%34%63%6f%5f%74%6e%64</span>');
+<span style="color: #008000">// 解码已编码的 URL 字符串, 解码结果是 fg6sbehpra4co_tnd</span>
+$OOO0000O0=$OOO000000{4}.$OOO000000{9}.$OOO000000{3}.$OOO000000{5};
+<span style="color: #008000">//然后把 解码后的字符分别 取得 4, 9, 3, 5 里面的值并连接在一起，结果是 base。</span>
+<span style="color: #008000">//下同， 最后的结果是 base64_decode</span>
+$OOO0000O0.=$OOO000000{2}.$OOO000000{10}.$OOO000000{13}.$OOO000000{16};
+$OOO0000O0.=$OOO0000O0{3}.$OOO000000{11}.$OOO000000{12}.$OOO0000O0{7}.$OOO000000{5};
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p></p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php eval($GLOBALS['<span style="color: #8b0000">OOO0000O0</span>']('<span style="color: #8b0000">JElJSUlJSUlJSUlJST0naGVhZGVyJzskSUlJSUlJSUlJbDExPSdpc19maWxlJzs=</span>'));
+<span style="color: #008000">// $GLOBALS 已经定义的变量，$GLOBALS['OOO0000O0'] 值就是 base64_decode, 然后用它解码后面的字符串，结果 是 $IIIIIIIIIIII='header';$IIIIIIIIIl11='is_file'; eval 执行解出来的字符串，并得到相应的变量</span>
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p></p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php <span style="color: #008000">/* */</span>
+$OOO000O00=$OOO000000{0}.$OOO000000{12}.$OOO000000{7}.$OOO000000{5}.$OOO000000{15};
+<span style="color: #008000">// 同上可得 $OOO000O00 = 'fopen'</span>
+$O0O000O00=$OOO000000{0}.$OOO000000{1}.$OOO000000{5}.$OOO000000{14};
+<span style="color: #008000">// $O0O000O00 = 'fget'</span>
+$O0O000O0O=$O0O000O00.$OOO000000{11};
+<span style="color: #008000">// $O0O000O0O = 'fgetc'</span>
+$O0O000O00=$O0O000O00.$OOO000000{3};
+<span style="color: #008000">// $O0O000O00 = 'fgets'</span>
+$O0O00OO00=$OOO000000{0}.$OOO000000{8}.$OOO000000{5}.$OOO000000{9}.$OOO000000{16};
+<span style="color: #008000">// $O0O00OO00 = 'fread'</span>
+$OOO00000O=$OOO000000{3}.$OOO000000{14}.$OOO000000{8}.$OOO000000{14}.$OOO000000{8};
+<span style="color: #008000">// $OOO00000O = 'strtr'</span>
+$OOO0O0O00=__FILE__;
+<span style="color: #008000">//取得当前文件路径和文件名</span>
+$OO00O0000=0x100;
+
+eval($OOO0000O0('<span style="color: #8b0000">JE8wMDBPME8wMD0kT09PMDAwTzAwKCRPT08wTzBPMDAsJ3JiJyk7JE8wTzAwT08wMCgkTzAwME8wTzAwLDB4NTI2KTskT08wME8wME8wPSRPT08wMDAwTzAoJE9PTzAwMDAwTygkTzBPMDBPTzAwKCRPMDAwTzBPMDAsMHgxN2MpLCdaQnhMYkZtQzYybHBja1hQYWRyR1VIOTRLN1FOUzVWdlJXenlpL2dPMEFUWU1EcXRvZkVJdStoZTNqd0oxOG5zPScsJ0FCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXowMTIzNDU2Nzg5Ky8nKSk7ZXZhbCgkT08wME8wME8wKTs=</span>'));
+<span style="color: #008000">/* 解出的结果是
+$O000O0O00=$OOO000O00($OOO0O0O00,'rb');$O0O00OO00($O000O0O00,0x526);$OO00O00O0=$OOO0000O0($OOO00000O($O0O00OO00($O000O0O00,0x17c),'ZBxLbFmC62lpckXPadrGUH94K7QNS5VvRWzyi/gO0ATYMDqtofEIu+he3jwJ18ns=','ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'));eval($OO00O00O0);
+
+还原得并等价替换可得
+$fp=fopen(__FILE__,'rb');
+fread($fp,0x526);
+$buf = fread($fp,0x17c);
+$str=base64_decode(strtr($buf,'ZBxLbFmC62lpckXPadrGUH94K7QNS5VvRWzyi/gO0ATYMDqtofEIu+he3jwJ18ns=','ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'));
+eval($str);
+*/</span>
+<a style="color: #0000ff" href="http://www.php.net/return">return</a>;<span style="color: #0000ff">?&gt;</span>eu~fQ\FRCgGpG@Lo`oQ2b8PcLBPcLBPcL+I5C2vSgHoNmFy7rRO4+8mrUfF4+1Opx6O6z3iGu8Pcb1oGIZopz6O6zoiGu8PcLZocb1olxdPGu1ocLZocb102b1oGIZoGu1ocxRiGIZocb1oGIZopxdPGIZoGIZocLZApx5QaOWcKi7DaIKENCByQ+WaK9dEd+H6XGdpk+FXUIH95/24VO/Aph5PcbFU9U+bS4dt7iH25rD07GkT5u0fXmjIPrSM2uFxaudFdi56rUApGb+XG+BdU/kUHH749F/QK92y7mHg7hWAQgDMN9jtSCFESed+5O53V40ocG6IkLUhkIRjlE1OlriAXh7yNm8I7rRiGIZocb1oGIZolGD/5gFMlxdPGIZoGIZoGIZAXo==xzd2rU/2rU/2rU/Mc9oRPrZidufPaiFcU+MOrU/2rU/2rU/2NLbf2+u02hfAKz8yNhjgQ9SqSmWo2EiJxg/g6xRirU/2rU/2rU/2NLFM6Lu8PrBuSOH/laAJ2b5cGu2BGFkN2u/2rU/2rU/2rU/2rr55lx2cNhkW5m/tNy0RQxjoQCZzlGD8xgHMShUlVEdCGb8xaUfG9E52rU/2rU/2rU/2rUiO4rRzGm8yK4dANh3w6m/qSedWNmozlGD8xR==kLHgJcZ[ZM</pre>
+</div>
+<p><a href="http://www.imaben.com/archives/231.html">http://www.imaben.com/archives/231.html</a></p>

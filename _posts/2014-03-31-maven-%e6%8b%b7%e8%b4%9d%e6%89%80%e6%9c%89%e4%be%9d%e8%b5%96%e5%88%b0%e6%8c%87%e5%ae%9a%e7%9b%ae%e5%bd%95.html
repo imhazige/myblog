@@ -1,0 +1,41 @@
+---
+layout: post
+title: maven 拷贝所有依赖到指定目录
+date: 2014-03-31 12:11:54.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- maven
+meta:
+  views: '38'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:8d0d8b1a-871b-4b05-a9c5-7c48a8a1b8cb" class="wlWriterEditableSmartContent">
+<pre name="code" class="xml">&lt;plugin&gt;
+           &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;
+           &lt;executions&gt;
+             &lt;execution&gt;
+               &lt;phase&gt;package&lt;/phase&gt;
+               &lt;goals&gt;
+                 &lt;goal&gt;copy-dependencies&lt;/goal&gt;
+               &lt;/goals&gt;
+               &lt;configuration&gt;
+                 &lt;outputDirectory&gt;${project.build.directory}/lib&lt;/outputDirectory&gt;
+               &lt;/configuration&gt;
+             &lt;/execution&gt;
+           &lt;/executions&gt;
+         &lt;/plugin&gt;</pre>
+</div>
+<p>&#160;</p>
+<p>其中 ${project.build.directory}是指当前工程的target目录，运行package则会将所有依赖包拷贝到lib目录下。</p>
+<p>&#160;</p>
+<p>参见：</p>
+<p><a title="http://stackoverflow.com/questions/97640/force-maven2-to-copy-dependencies-into-target-lib" href="http://stackoverflow.com/questions/97640/force-maven2-to-copy-dependencies-into-target-lib">http://stackoverflow.com/questions/97640/force-maven2-to-copy-dependencies-into-target-lib</a></p>

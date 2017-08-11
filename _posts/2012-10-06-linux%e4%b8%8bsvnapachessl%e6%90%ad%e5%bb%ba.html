@@ -1,0 +1,73 @@
+---
+layout: post
+title: linux下svn+apache+ssl搭建
+date: 2012-10-06 21:58:40.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- linux
+tags:
+- svn
+meta:
+  views: '66'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这几天折腾搭建了个SVN服务器，这里记录下。</p>
+<p>svn官方文档 <a href="http://svn.apache.org/repos/asf/subversion/tags/1.6.19/INSTALL">http://svn.apache.org/repos/asf/subversion/tags/1.6.19/INSTALL</a></p>
+<p>&#160;</p>
+<p><strong>我这里建立的是配合apache的，发现当前的apache没有dav,没有ssl,只好重新编译apache:</strong></p>
+<p>./configure -prefix=xxx/apache2_2 -enable-so <font color="#0000ff">-enable-dav&#160; --enable-ssl</font>&#160;&#160; --enable-rewrite -enable-mods-shared=all    <br />make clean &amp;&amp; make &amp;&amp; make install</p>
+<p>&#160;</p>
+<p>可以看到加载了dav,ssl (这里假设已经安装了openssl,如果没有还要安装openssl)</p>
+<p>&#160;</p>
+<p><strong>然后下载svn,编译安装</strong></p>
+<p>wget <a href="http://subversion.tigris.org/downloads/subversion-1.6.19.tar.gz">http://subversion.tigris.org/downloads/subversion-1.6.19.tar.gz</a>    <br />tar zxvf subversion-1.6.19.tar.gz</p>
+<p>wget <a href="http://subversion.tigris.org/downloads/subversion-deps-1.6.19.tar.gz">http://subversion.tigris.org/downloads/subversion-deps-1.6.19.tar.gz</a>    <br />tar zxvf subversion-deps-1.6.19.tar.gz</p>
+<p>cd subversion-1.6.19   <br />./configure --prefix=/xxxx/svn --with-apxs=/xxxx/apache2_2/bin/apxs <font color="#0000ff">--enable-dav</font> --enable-so &amp;&amp; make clean &amp;&amp; make &amp;&amp; make install</p>
+<p>&#160;</p>
+<p>查看svn是否装好</p>
+<p>/xxx/svn/bin/svnserve --version</p>
+<p>&#160;</p>
+<p>创建svn仓库根目录和一个仓库</p>
+<p>#根目录   <br />mkdir -p /xxxx/svn    <br />#创建个仓库    <br />svnadmin create /xxxx/svn/projects</p>
+<p>#创建密码用户名    <br />htpasswd -c /xxxxx/svn/mymeho ignet&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </p>
+<p>#上面的命令创建了一个ignet的svn用户,密码存储在文件/xxxxx/svn/mymeho中。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p><strong>配置apache </strong></p>
+<p>(如果只使用svnserve方式，则使用/xxxx/svn/projects/conf/svnserve.conf 中的配置，参见<a href="http://blog.51yip.com/server/901.html">http://blog.51yip.com/server/901.html</a>)</p>
+<p>LoadModule ssl_module modules/mod_ssl.so</p>
+<p>&lt;Location /mymesvnhoho/repos&gt;   <br />&#160;&#160;&#160; DAV svn    <br />&#160;&#160;&#160; SVNPath /xxxxx/svn/projects&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; #仓库目录    <br />&#160;&#160;&#160; <br />&#160;&#160;&#160; SSLRequireSSL&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; #需要ssl方式    <br />&#160;&#160;&#160; <br />&#160;&#160;&#160; AuthType Basic&#160;&#160;&#160; <br />&#160;&#160;&#160; AuthName &quot;my svn&quot;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; #取个名字    <br />&#160;&#160;&#160; AuthUserFile /xxxx/svn/mymeho&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; #指定用户密码文件    <br />&#160;&#160;&#160; Require valid-user    <br />&lt;/Location&gt;</p>
+<p>&#160;</p>
+<p><strong>ssl相关:</strong></p>
+<p>#创建私钥</p>
+<p>openssl genrsa 4096 &gt; svn.mymeho.key<strong>&#160; </strong></p>
+<p>#创建自签名证书30年</p>
+<p>openssl req -new -key svn.mymeho.key -x509 -days 10950 -out svn.mymeho.crt</p>
+<p>&#160;</p>
+<p>apache ssl配置</p>
+<p>&#160;</p>
+<p>Listen 20080</p>
+<p>NameVirtualHost *:880   <br />&lt;VirtualHost *:880&gt;    <br />&#160;&#160;&#160; SSLEngine On     <br />&#160;&#160;&#160; SSLCertificateFile conf/ssl/svn.mymeho.crt&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; #指向证书    <br />&#160;&#160;&#160; SSLCertificateKeyFile conf/ssl/svn.mymeho.key&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; #指向私钥    <br />&#160;&#160;&#160; DirectoryIndex index.php index.html</p>
+<p>&#160;&#160;&#160; #这里880端口专门用于svn,如果指明了目录(DocumentRoot)则需要配置Directory权限,否则无法访问，这些和普通apache一样。   <br />&#160;&#160;&#160; ServerName 127.0.0.1:880    <br />&lt;/VirtualHost&gt;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>启动apache</p>
+<p>apache2_2/bin/apachectl start</p>
+<p>&#160;</p>
+<p>到这里就配置好了。</p>
+<p>&#160;</p>
+<p>我测试了一下我的服务器提交速度，惨不忍睹，不堪使用，这里只是尝试一下。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://mark.koli.ch/2010/03/howto-setting-up-your-own-svn-server-using-apache-and-mod-dav-svn.html">http://mark.koli.ch/2010/03/howto-setting-up-your-own-svn-server-using-apache-and-mod-dav-svn.html</a></p>

@@ -1,0 +1,32 @@
+---
+layout: post
+title: eclipse 打开文件所在目录
+date: 2012-05-22 17:27:16.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- eclipse
+meta:
+  views: '157'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>首先这个功能myeclipse自带有。但是myeclipse6.0太落伍了，之后的版本又太慢了。</p>
+<p>点击一个文件，想定位到文件所在文件夹，有个插件</p>
+<p>EasyExplorer 从 <a href="http://sourceforge.net/projects/easystruts">http://sourceforge.net/projects/easystruts</a></p>
+<p>另外一种方法是:</p>
+<p>Run–&gt;External Tools–&gt;Open External Tools Dialog…</p>
+<p>new 一个 program</p>
+<p>location 里面填 ：C:\WINDOWS\explorer.exe</p>
+<p>Arguments 里面填: ${container_loc}</p>
+<p>在common tab页中Allocate Console选项去掉，以免每次打开还开个控制台。</p>
+<p>本人忘性大，本文烂笔头类型，勿拍！</p>
+<p>参见:</p>
+<p><a href="http://blog.csdn.net/xzknet/article/details/4627713">http://blog.csdn.net/xzknet/article/details/4627713</a></p>

@@ -1,0 +1,23 @@
+---
+layout: post
+title: http抓包分析工具
+date: 2012-03-16 17:24:43.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- "抓包"
+meta:
+  views: '130'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>web开发有时需要用到抓包工具分析请求与返回，通常，firefox的firebug已经够用。但是对于跨页面的请求则不行，如unload事件中的请求。这时可使用httpfox这个插件来监视,它的菜单在tools/web developer中，我开始还找半天。</p>
+<p>其余的如果不是监视到本机服务器的请求，可以使用wireshark,但是我发现有时貌似不准，Fiddler更不行了。</p>
+<p>它们两个都不好监视对本机服务器的http请求,像rawcap这样的更是不靠谱，输入到文件，用notepad++打开全是乱码。</p>

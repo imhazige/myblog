@@ -1,0 +1,38 @@
+---
+layout: post
+title: tomcat session引出的问题
+date: 2011-11-10 17:53:37.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- java
+- session
+- tomcat
+meta:
+  views: '156'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这次碰到一个奇怪的问题，为测试要求，将同一个应用A部署到两个端口的tomcat中，访问地址如下:</p>
+<p><a href="http://localhost:10001/A">http://localhost:10001/A</a></p>
+<p><a href="http://localhost:10002/A">http://localhost:10002/A</a></p>
+<p>结果单独打开一个没问题，同时打开两个就都运行不了。</p>
+<p>查看服务端日志，认定是session过期。</p>
+<p>从客户端看，发现这两个A应用的sessionid交替变换！</p>
+<p>这才明白，由于session是基于cookie的，cookie按照domain+path来找,是不区分端口号的！所以两个应用的sessionid冲突了！</p>
+<p>所以流程就变成了这样:</p>
+<p>浏览器请求10001 A--&gt;服务端 java:getSession()-&gt;创建cookie[name=sessionid,domain=localhost,path=A,value=c1]</p>
+<p>浏览器请求10002 A--&gt;服务端 java:getSession()-&gt;创建cookie[name=sessionid,domain=localhost,path=A,value=c2]</p>
+<p>浏览器请求10001 A,在http请求头中请求发送cookie[sessionid=c2]<font color="#0000ff">(这里就冲突了，sessionid被10002 A改了)</font><font color="#000000">-&gt;服务端 java:getSession<font color="#0000ff">()(使用name=c2找不到，于是创建新的)</font>-&gt;创建cookie[name=sessionid,domain=localhost,path=A,value=c3]</font></p>
+<p>浏览器请求10002 A,在http请求头中请求发送cookie[sessionid=c3]<font color="#0000ff">(这里又冲突了，sessionid被10001 A改了)</font><font color="#000000">-&gt;服务端 java:getSession<font color="#0000ff">()(使用name=c3找不到，于是创建新的)</font>-&gt;创建cookie[name=sessionid,domain=localhost,path=A,value=c4]</font></p>
+<p><font color="#000000">周而复始的互相刷sessionid,两个服务器就在那不停地清过期session,又创建新的session。</font></p>
+<p><font color="#000000"></font></p>
+<p><font color="#000000">这种情况在web应用中一般不会出现，但是在内部测试环境中可能出现！</font></p>
+<p><font color="#0000ff"></font></p>

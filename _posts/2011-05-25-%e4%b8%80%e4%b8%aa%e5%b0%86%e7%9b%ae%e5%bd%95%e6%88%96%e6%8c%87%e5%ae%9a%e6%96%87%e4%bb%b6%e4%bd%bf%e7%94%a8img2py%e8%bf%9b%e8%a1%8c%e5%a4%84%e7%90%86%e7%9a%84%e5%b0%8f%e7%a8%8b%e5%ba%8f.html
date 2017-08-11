@@ -1,0 +1,50 @@
+---
+layout: post
+title: "一个将目录或指定文件使用img2py进行处理的小程序"
+date: 2011-05-25 09:00:52.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- python
+tags:
+- python
+meta:
+  views: '46'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><a href="http://blog.donews.com/limodou/archive/2005/08/10/503300.aspx">[Python学习]一个将目录或指定文件使用img2py进行处理的小程序</a></p>
+<p>img2py 可以将图片文件存成文本文件，但它不支持多个文件处理，这特别在我的目录下有许多的文件，如果一个个处理的话，会非常麻烦。于是为了解决目录及支持多个文件的问题，我编写了下面的小程序，希望对你有用。</p>
+<blockquote><p>import wx.tools.img2py as img2py     <br />import getopt      <br />import sys      <br />import os      <br />import os.path</p>
+<p>def usage():     <br />&#160;&#160;&#160; print &quot;&quot;&quot;      <br />%s [-d directory][-h] -o outputfile files      <br />&quot;&quot;&quot; % sys.argv[0]      <br />def main():      <br />&#160;&#160;&#160; if len(sys.argv) == 1:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; usage()      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; sys.exit(1)      <br />&#160;&#160;&#160; try:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; opts, fileArgs = getopt.getopt(sys.argv[1:], &quot;d:o:h&quot;)      <br />&#160;&#160;&#160; except getopt.GetoptError:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; usage()      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; sys.exit(1)</p>
+<p>&#160;&#160;&#160; imagedir = ''     <br />&#160;&#160;&#160; outputfile = ''      <br />&#160;&#160;&#160; for opt, val in opts:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; if opt == &quot;-h&quot;:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; usage()      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; sys.exit(1)      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; elif opt == &quot;-d&quot;:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; imagedir = val      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; elif opt == &quot;-o&quot;:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; outputfile = val</p>
+<p>&#160;&#160;&#160; convert(outputfile, imagedir, fileArgs)</p>
+<p>def isImageFile(filename):     <br />&#160;&#160;&#160; f, ext = os.path.splitext(filename)      <br />&#160;&#160;&#160; if os.path.isfile(filename) and ext.lower() in ('.gif', '.png', '.bmp', '.jpg', '.ico'):      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; return True      <br />&#160;&#160;&#160; else:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; return False      <br />def convert(outputfile, dir='', imagefiles=[]):      <br />&#160;&#160;&#160; files = []      <br />&#160;&#160;&#160; files.extend(imagefiles)      <br />&#160;&#160;&#160; if dir:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; f = [os.path.join(dir, x) for x in os.listdir(dir) if os.path.isfile(os.path.join(dir, x))]      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; files.extend(f)      <br />&#160;&#160;&#160; files = list(set([x for x in files if isImageFile(x)]))      <br />&#160;&#160;&#160; for i, x in enumerate(files):      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; name = os.path.splitext(os.path.basename(x))[0].lower()      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; cmd =[]      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; if i != 0:      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; cmd.append('-a')      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; cmd.append('-n')      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; cmd.append(name.capitalize())      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; cmd.append(x)      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; cmd.append(outputfile)      <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; os.system(&quot;img2py %s&quot; % &quot; &quot;.join(cmd))       <br />if __name__ == '__main__':      <br />&#160;&#160;&#160; main()</p>
+</blockquote>
+<p>我们在写gui程序的时候，经常会用到一些图标图片资 源，对此有几种解决办法，有人喜欢用zip模块将其打包，用的时候取出来，因为python读取zip文件也是很方便的，有人则干脆不打包，直接放在一个 子目录中，用的时候直接读取。而我则喜欢将其转换为.py文件，作为模块调用。</p>
+<p>我在看wxPython程序的例程的时候，[<b>encode_bitmaps.py</b>]发现它的图片是从一个模块(.py文件)中调入的，于是很好奇，顺藤摸瓜，于是发现：</p>
+<p>wxPython安装好之后，会在 wx\tools 目录下安装一些工具，其中名为img2py.py的工具。   <br />这个工具可以很方便的将我们程序中所用到的图片或者图标资源转换成py文件，这样我们在需要使用这些图片资源的时候，只需要    <br />import 这些扩展名为.py的模块文件即可</p>
+<p>在命令行下输入img2py.py并回车，可以查看详细的帮助信息。而一般情况下，我们所要做的，只是将图片转换为.py文件</p>
+<p>例如，我有一个ico文件，想用其作为我程序的托盘图标</p>
+<p>那么我可以这样做</p>
+<p>首先，将其转换为 .py 文件</p>
+<p>img2py.py myicon.ico myicon.py</p>
+<p>然后，在程序中导入这个模块</p>
+<p>import myicon</p>
+<p>最后，当我需要用它的时候，只需要：</p>
+<p>icon = myicon.geticonIcon()</p>
+<p>注意，如果你的myicon.py中没有geticonIcon()方法，只需要加入如下一行语句即可：</p>
+<p>geticonIcon = icon.GetIcon</p>
+<p>怎么样，是不是很方便？</p>
+<p>在 wx\tools 目录下还有一些其他的工具，具体用法还有待大家发掘</p>
+<p>--------------------------------------------------</p>
+<p>目的：   <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; 即为img2py的用处，img2py是将图像转为以py文件存储的程序，简化了程序过程中读文件的处理。    <br />开发环境：eclipse+pydev插件    <br />步骤：    <br />1，在 eclipse工程中增加个含有main函数的模块，用来处理图片到py,代码如下：    <br />'''    <br />Created on 2009-6-16    <br />@author: fengxuanshuo</p>
+<p>This is a way to save the startup time when running img2py on lots of   <br />files...</p>
+<p>'''   <br />import sys    <br />from wx.tools import img2py</p>
+<p>command_lines = [   <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &quot;-a -F -n book&#160;&#160; pictures/right_menu/222.png&#160;&#160; ../main/images.py&quot;,    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &quot;-a -F -n boo&#160;&#160; pictures/right_menu/111.png&#160;&#160; ../main/images.py&quot;,    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &quot;-a -F -n ook_red&#160;&#160; pictures/right_menu/000.png&#160;&#160; ../main/images.py&quot;,    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ]</p>
+<p>if __name__ == '__main__':   <br />&#160;&#160;&#160; for line in command_lines:    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; args = line.split()    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; img2py.main(args)    <br />其中command_lines为命令行执行内容，程序需要的图片都可以处理，而且目标文件可以有多个，名字自己取。    <br />2，执行新增加的模块，就会发现 main目录多了个images.py文件。    <br />3，更新eclipse pydev工程：pydev插件并没有常用的那个add file to project选项，不过有pydev-&gt;source format python files.    <br />4，然后再原工程里面就可以用图片py文件了（可能有些版本，在生成py文件的时候不会加import相关库的语句，需要手动添加）    <br />5，images.py 在wxpython demo 中的用法    <br />定义全局变量 images: images =None    <br />在app里面声明全局的images : globel images    <br />import imgaes as i    <br />images = i    <br />其他py文件类似，这么做的好处在demo的注释里面说了，不罗嗦了，over</p>

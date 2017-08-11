@@ -1,0 +1,25 @@
+---
+layout: post
+title: unable to find valid certification path to requested target 问题
+date: 2011-10-13 17:04:02.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags: []
+meta:
+  views: '550'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>证书已经导入了，在eclipse里面跑得好好的,怎么打包后使用命令java –jar xxx.jar跑起来就出这个错！</p>
+<p>仔细想想，证书导入时是使用的%java_home%变量定位jre的目录的，而自己的path里面却指向了另一个jre,解决办法是:</p>
+<p>“%java_home%/bin/java” –jar xxx.jar</p>
+<p>或者把变量中的java path指向%java_home%相同的地方。</p>
+<p>&#160;</p>
+<p>怎样导入证书参见:<a title="http://kazge.com/archives/400.html" href="http://kazge.com/archives/400.html">http://kazge.com/archives/400.html</a></p>

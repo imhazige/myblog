@@ -1,0 +1,31 @@
+---
+layout: post
+title: ATT SDK 使用笔记
+date: 2012-08-09 10:26:04.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- voip
+tags:
+- attsdk
+meta:
+  views: '14'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这两天试用了下ATT SDK, <a title="https://devconnect-api.att.com/" href="https://devconnect-api.att.com/">https://devconnect-api.att.com/</a>用武汉话总结—稀烂. </p>
+<blockquote><p>1 每个开发组织（每个组织下可有多个开发者）每年要99美刀，这个倒是和苹果看齐了，还没开始先宰你一刀。</p>
+<p>2 我尝试SMS 和 MMS，结果发现只支持ATT 用户,这是文档上写明了的。</p>
+<p>3 还没发现call 的api。</p>
+<p>4 奇怪的oath。步骤比较复杂。它的示例代码getToken.jsp还有bug。</p>
+</blockquote>
+<p>SpeechToText Api结果加入了语义分析结果,例如_PHONE (123)256-7890. _END_PHONE，这简直被驴踢了。如果想要原始结果还要自己写代码去掉。 其结果比Nuance Dragon差：</p>
+<blockquote><p>1 花费时间要长, 估计是花在web seartch上了</p>
+<p>2 翻译结果没有Nuance精确。我怀疑它这就是用的Nuance。</p>
+<p>3 一般只返回一个结果。</p>
+</blockquote>

@@ -1,0 +1,48 @@
+---
+layout: post
+title: jconsole CPU Usage Jmx
+date: 2011-09-15 15:18:21.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- CPU Usage
+- jconsole
+- jmx
+meta:
+  _edit_last: '1'
+  views: '254'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>打开JConsole可看到CPU Usage这一项，但是它指的是JVM的使用CPU,MBean里面是没有提供这一项的,怎么得到?</p>
+<p>使用如下代码:</p>
+<div>
+<pre>long nanoBefore = System.nanoTime();
+<span style="color: #0000ff">long</span> cpuBefore = osMBean.getProcessCpuTime();
+
+<span style="color: #008000">// for the sake of the example do some</span>
+<span style="color: #008000">// CPU consuming task here - e.g.</span>
+<span style="color: #008000">// use BigInteger and Math.sqrt()</span>
+<span style="color: #008000">//</span>
+BigInteger acc = <span style="color: #0000ff">new</span> BigInteger(&quot;<span style="color: #8b0000">0</span>&quot;);
+<span style="color: #0000ff">final</span> <span style="color: #0000ff">int</span> max = 1000000;
+<span style="color: #0000ff">for</span> (<span style="color: #0000ff">long</span> i=0; i&lt;max; i++) {&#160;&#160;&#160;&#160; <span style="color: #0000ff">final</span> <span style="color: #0000ff">double</span> d = Double.parseDouble(&quot;<span style="color: #8b0000">1</span>&quot;+i);&#160;&#160;&#160;&#160; <span style="color: #0000ff">final</span> <span style="color: #0000ff">double</span> sq = Math.sqrt(d);&#160;&#160;&#160;&#160; <span style="color: #0000ff">final</span> BigInteger b = <span style="color: #0000ff">new</span> BigInteger(&quot;<span style="color: #8b0000"></span>&quot;+(<span style="color: #0000ff">long</span>)sq);&#160;&#160;&#160;&#160; acc = acc.add(b);
+}
+
+<span style="color: #0000ff">long</span> cpuAfter = osMBean.getProcessCpuTime();
+<span style="color: #0000ff">long</span> nanoAfter = System.nanoTime();
+
+<span style="color: #0000ff">long</span> percent;
+<span style="color: #0000ff">if</span> (nanoAfter &gt; nanoBefore)&#160;&#160;&#160;&#160; percent = ((cpuAfter-cpuBefore)\*100L)/&#160;&#160;&#160; (nanoAfter-nanoBefore);
+<span style="color: #0000ff">else</span> percent = 0;
+
+System.out.println(&quot;<span style="color: #8b0000">Cpu usage: </span>&quot;+percent+&quot;<span style="color: #8b0000">%</span>&quot;);</pre>
+</div>
+<p>其实这个是不太准的，各平台nanoTime实现不一样，结果可能会让人莫名其妙！</p>

@@ -1,0 +1,435 @@
+---
+layout: post
+title: "设计模式"
+date: 2011-10-05 17:41:55.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "设计模式"
+tags:
+- "设计模式"
+meta:
+  views: '78'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>参见 </p>
+<p><a title="http://zh.wikipedia.org/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F_%28%E8%AE%A1%E7%AE%97%E6%9C%BA%29" href="http://zh.wikipedia.org/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F_%28%E8%AE%A1%E7%AE%97%E6%9C%BA%29">http://zh.wikipedia.org/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F_%28%E8%AE%A1%E7%AE%97%E6%9C%BA%29</a></p>
+<p><a title="http://blog.csdn.net/name_110/article/category/911282" href="http://blog.csdn.net/name_110/article/category/911282">http://blog.csdn.net/name_110/article/category/911282</a></p>
+<p><a title="http://coolshell.cn/articles/3320.html" href="http://coolshell.cn/articles/3320.html">http://coolshell.cn/articles/3320.html</a></p>
+<p>&#160;</p>
+<table class="wikitable">
+<tbody>
+<tr>
+<th>模式名称</th>
+<th>描述</th>
+<th>《<a class="mw-redirect" title="设计范例" href="/wiki/%E8%AE%BE%E8%AE%A1%E8%8C%83%E4%BE%8B">设计模式</a>》中提及</th>
+<th>《<a title="代码大全" href="/wiki/%E4%BB%A3%E7%A2%BC%E5%A4%A7%E5%85%A8">代码大全</a>》中提及<sup id="cite_ref-McConnell2004_0-0" class="reference"><a href="#cite_note-McConnell2004-0">[1]</a></sup></th>
+</tr>
+<tr>
+<td colspan="4"><b><a title="创建型模式" href="/wiki/%E5%89%B5%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F">创建型模式</a></b></td>
+</tr>
+<tr>
+<td><a class="mw-redirect" title="抽象工厂模式" href="/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F">抽象工厂模式</a></td>
+<td>
+<p>为一个产品族提供了统一的创建接口。当需要这个产品族的某一系列的时候，可以从抽象工厂中选出相应的系列创建一个具体的工厂类。</p>
+<p><img src="{{ site.baseurl }}/assets/677px-Abstract_factory_UML.svg.png" /> </p>
+<p>见 <a href="http://kazge.com/archives/646.html">http://kazge.com/archives/646.html</a></p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a class="mw-redirect" title="工厂方法模式" href="/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F">工厂方法模式</a></td>
+<td>
+<p>定义一个接口用于创建对象，但是让子类决定初始化哪个类。工厂方法把一个类的初始化下放到子类。</p>
+<ul>
+<li>java.lang.Proxy#newProxyInstance() </li>
+<li>java.lang.Object#toString() </li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a class="mw-redirect" title="生成器模式" href="/wiki/%E7%94%9F%E6%88%90%E5%99%A8%E6%A8%A1%E5%BC%8F">生成器模式</a></td>
+<td>
+<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+<ul>
+<li>java.lang.StringBuilder#append() </li>
+<li>java.lang.StringBuffer#append()</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="惰性初始模式" href="/wiki/%E6%83%B0%E6%80%A7%E5%88%9D%E5%A7%8B%E6%A8%A1%E5%BC%8F">惰性初始模式</a></td>
+<td>
+<p>推迟对象的创建、数据的计算等需要耗费较多资源的操作，只有在第一次访问的时候才执行。</p></p>
+</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="对象池模式" href="/wiki/%E5%AF%B9%E8%B1%A1%E6%B1%A0%E6%A8%A1%E5%BC%8F">对象池模式</a></td>
+<td>通过回收利用对象避免获取和释放资源所需的昂贵成本。</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="原型模式" href="/wiki/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F">原型模式</a></td>
+<td>
+<p>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+<ul>
+<li>java.lang.Object#clone() </li>
+<li>java.lang.Cloneable</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="单例模式" href="/wiki/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F">单例模式</a></td>
+<td>
+<p>确保一个类只有一个实例，并提供对该实例的全局访问。</p>
+<p>java.lang.Runtime#getRuntime()</p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a class="new" title="多例模式" href="/w/index.php?title=%E5%A4%9A%E4%BE%8B%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">多例模式</a></td>
+<td>确保一个类只有命名的实例，并提供对这些实例的全局访问。</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="资源获取为初始化" href="/w/index.php?title=%E8%B5%84%E6%BA%90%E8%8E%B7%E5%8F%96%E4%B8%BA%E5%88%9D%E5%A7%8B%E5%8C%96&amp;action=edit&amp;redlink=1">资源获取为初始化</a></td>
+<td>通过绑定到合适对象的生命周期来确保资源被适当地释放。</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td colspan="4"><b><a title="结构型模式" href="/wiki/%E7%B5%90%E6%A7%8B%E5%9E%8B%E6%A8%A1%E5%BC%8F">结构型模式</a></b></td>
+</tr>
+<tr>
+<td><a title="适配器模式" href="/wiki/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F">适配器模式</a></td>
+<td>
+<p>将某个类的接口转换成客户端期望的另一个接口表示。适配器模式可以消除由于接口不匹配所造成的类兼容性问题。 </p>
+<p>&#160;<a href="http://kazge.com/wp-content/uploads/2011/11/Snap11.jpg"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb1.jpg" width="429" height="349" /></a> </p>
+<ul>
+<li>java.util.Arrays#asList() </li>
+<li>javax.swing.JTable(TableModel) </li>
+<li>java.io.InputStreamReader(InputStream) </li>
+<li>java.io.OutputStreamWriter(OutputStream) </li>
+<li>javax.xml.bind.annotation.adapters.XmlAdapter#marshal() </li>
+<li>javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal()</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a title="桥接模式" href="/wiki/%E6%A9%8B%E6%8E%A5%E6%A8%A1%E5%BC%8F">桥接模式</a></td>
+<td>
+<p>将一个抽象与实现解耦，以便两者可以独立的变化。 JDBC</p>
+<p><img src="{{ site.baseurl }}/assets/r_jdbc.jpg" /> </p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a class="new" title="组合模式" href="/w/index.php?title=%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">组合模式</a></td>
+<td>
+<p>把多个对象组成树状结构来表示局部与整体，这样用户可以一样的对待单个对象和对象的组合。</p>
+<p>UI组件</p>
+<p>&#160;<a href="http://kazge.com/wp-content/uploads/2011/11/Snap2.jpg"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb.jpg" width="495" height="232" /></a> </p>
+<ul>
+<li>javax.swing.JComponent#add(Component) </li>
+<li>java.awt.Container#add(Component) </li>
+<li>java.util.Map#putAll(Map) </li>
+<li>java.util.List#addAll(Collection) </li>
+<li>java.util.Set#addAll(Collection)</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a title="修饰模式" href="/wiki/%E4%BF%AE%E9%A5%B0%E6%A8%A1%E5%BC%8F">修饰模式</a></td>
+<td>
+<p>向某个对象动态地添加更多的功能。修饰模式是除类继承外另一种扩展功能的方法。</p>
+<p>&#160;<a href="http://kazge.com/wp-content/uploads/2011/11/Snap3.jpg"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="Snap3" border="0" alt="Snap3" src="{{ site.baseurl }}/assets/Snap3_thumb.jpg" width="485" height="310" /></a> </p>
+<ul>
+<li>java.io.BufferedInputStream(InputStream) </li>
+<li>java.io.DataInputStream(InputStream) </li>
+<li>java.io.BufferedOutputStream(OutputStream) </li>
+<li>java.util.zip.ZipOutputStream(OutputStream) </li>
+<li>java.util.Collections#checked[List|Map|Set|SortedSet|SortedMap]()</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a title="外观模式" href="/wiki/%E5%A4%96%E8%A7%80%E6%A8%A1%E5%BC%8F">外观模式</a></td>
+<td>
+<p>为子系统中的一组接口提供一个一致的界面， 外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</p>
+<ul>
+<li><strike>java.lang.Class </strike></li>
+<li><strike>javax.faces.webapp.FacesServlet</strike></li>
+</ul>
+<p>我看不出来这两个的facade模式。一个大颗粒的服务函数是否就可以说是门面模式？</p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a title="享元模式" href="/wiki/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F">享元</a></td>
+<td>
+<p>通过共享以便有效的支持大量小颗粒对象。</p>
+<ul>
+<li>Ext.fly</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="代理模式" href="/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F">代理</a></td>
+<td>
+<p>为其他对象提供一个代理以控制对这个对象的访问。</p>
+<ul>
+<li>RMI</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td colspan="4"><b><a title="行为型模式" href="/wiki/%E8%A1%8C%E7%82%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F">行为型模式</a></b></td>
+</tr>
+<tr>
+<td><a class="new" title="黑板系统" href="/w/index.php?title=%E9%BB%91%E6%9D%BF%E7%B3%BB%E7%BB%9F&amp;action=edit&amp;redlink=1">黑板</a></td>
+<td>广义的观察者在系统范围内交流信息，允许多位读者和写者。</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="责任链模式" href="/wiki/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F">责任链</a></td>
+<td>
+<p>为解除请求的发送者和接收者之间耦合，而使多个对象都有机会处理这个请求。将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它。</p>
+<p>javax.servlet.Filter#doFilter()</p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="命令模式" href="/wiki/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F">命令</a></td>
+<td>
+<p>将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可取消的操作。</p>
+<ul>
+<li>java.lang.Runnable </li>
+<li>javax.swing.Action</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="解释器模式" href="/w/index.php?title=%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">解释器</a></td>
+<td>
+<p>给定一个语言, 定义它的文法的一种表示，并定义一个解释器, 该解释器使用该表示来解释语言中的句子。</p>
+<p>java.text.Format</p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="迭代器模式" href="/wiki/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F">迭代器</a></td>
+<td>
+<p>提供一种方法顺序访问一个聚合对象中各个元素, 而又不需暴露该对象的内部表示。</p>
+<ul>
+<li>java.util.Iterator </li>
+<li>java.util.Enumeration</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a class="new" title="中介者模式" href="/w/index.php?title=%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">中介者</a></td>
+<td>
+<p>包装了一系列对象相互作用的方式，使得这些对象不必相互明显作用，从而使它们可以松散偶合。当某些对象之间的作用发生改变时，不会立即影响其他的一些对象之间的作用，保证这些作用可以彼此独立的变化。</p>
+<ul>
+<li>java.util.concurrent.ExecutorService#&lt;T&gt; Future&lt;T&gt; submit(Callable&lt;T&gt; task)</li>
+</ul>
+<p>让一个复杂的交互变得简单明了，买房者与售房者在中介介入下，是不能直接联系的，双方只会和中介联系。</p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="备忘录模式" href="/w/index.php?title=%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">备忘录</a></td>
+<td>
+<p>备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捉住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。</p>
+<ul>
+<li>java.io.Serializable</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="空对象模式" href="/wiki/%E7%A9%BA%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F">空对象</a></td>
+<td>
+<p>通过提供默认对象来避免空引用。</p>
+<ul>
+<li>java.util.Collections#emptyList() </li>
+<li>java.util.Collections#emptyMap() </li>
+<li>java.util.Collections#emptySet()</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a title="观察者模式" href="/wiki/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F">观察者模式</a></td>
+<td>
+<p>在对象间定义一个一对多的联系性，由此当一个对象改变了状态，所有其他相关的对象会被通知并且自动刷新。</p>
+<ul>
+<li>java.util.EventListener</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a class="new" title="规格模式" href="/w/index.php?title=%E8%A7%84%E6%A0%BC%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">规格</a></td>
+<td>以布尔形式表示的可重绑定的商业逻辑。</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="状态模式" href="/w/index.php?title=%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">状态</a></td>
+<td>
+<p>让一个对象在其内部状态改变的时候，其行为也随之改变。状态模式需要对每一个系统可能取得的状态创立一个状态类的子类。当系统的状态变化时，系统便改变所选的子类。</p>
+<ul>
+<li>java.util.Iterator</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a title="策略模式" href="/wiki/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F">策略</a></td>
+<td>
+<p>定义一个算法的系列，将其各个分装，并且使他们有交互性。策略模式使得算法在用户使用的时候能独立的改变。</p>
+<ul>
+<li>java.util.Comparator#compare()</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a class="mw-redirect" title="模板方法模式" href="/wiki/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F">模板方法</a></td>
+<td>
+<p>模板方法模式准备一个抽象类，将部分逻辑以具体方法及具体构造子类的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。先构建一个顶级逻辑框架，而将逻辑的细节留给具体的子类去实现。</p>
+<p>jsf中绘制一个组件：</p>
+<ul>
+<li>renderBegin</li>
+<li>renderChildren</li>
+<li>renderEnd</li>
+</ul>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+</tr>
+<tr>
+<td><a title="访问者模式" href="/wiki/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F">访问者</a></td>
+<td>
+<p>封装一些施加于某种数据结构元素之上的操作。一旦这些操作需要修改，接受这个操作的数据结构可以保持不变。访问者模式适用于数据结构相对未定的系统，它把数据结构和作用于结构上的操作之间的耦合解脱开，使得操作集合可以相对自由的演化。</p>
+<p><img src="{{ site.baseurl }}/assets/624px-Visitor_UML_class_diagram.svg.png" /></p>
+<p>访问者对被访问者结构不熟悉，首先需要被访问者允许它来访问（accept），然后由被访问者领着访问者依次访问内部结构，针对每个结构做出不同操作。</p>
+</td>
+<td style="text-align: center; background: #90ff90; color: black; vertical-align: middle" class="table-yes">是</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td colspan="4"><b><a title="并发型模式" href="/wiki/%E4%BD%B5%E7%99%BC%E5%9E%8B%E6%A8%A1%E5%BC%8F">并发型模式</a></b></td>
+</tr>
+<tr>
+<td><a class="new" title="主动对象" href="/w/index.php?title=%E4%B8%BB%E5%8A%A8%E5%AF%B9%E8%B1%A1&amp;action=edit&amp;redlink=1">主动对象</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="阻碍模式" href="/w/index.php?title=%E9%98%BB%E7%A2%8D%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">阻碍</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="双重检查锁定模式" href="/w/index.php?title=%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81%E5%AE%9A%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">双重检查锁定</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="守卫模式" href="/w/index.php?title=%E5%AE%88%E5%8D%AB%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">守卫</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="领导者/追随者模式" href="/w/index.php?title=%E9%A2%86%E5%AF%BC%E8%80%85/%E8%BF%BD%E9%9A%8F%E8%80%85%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">领导者/追随者</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="mw-redirect" title="管程" href="/wiki/%E7%AE%A1%E7%A8%8B">监测对象模式</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="读写锁模式" href="/w/index.php?title=%E8%AF%BB%E5%86%99%E9%94%81%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">读写锁</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="调度模式" href="/w/index.php?title=%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">调度</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="线程池模式" href="/w/index.php?title=%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">线程池模式</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="线程特定存储模式" href="/w/index.php?title=%E7%BA%BF%E7%A8%8B%E7%89%B9%E5%AE%9A%E5%AD%98%E5%82%A8%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">线程特定存储</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+<tr>
+<td><a class="new" title="反应器模式" href="/w/index.php?title=%E5%8F%8D%E5%BA%94%E5%99%A8%E6%A8%A1%E5%BC%8F&amp;action=edit&amp;redlink=1">反应器</a></td>
+<td></td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+<td style="text-align: center; background: #ff9090; color: black; vertical-align: middle" class="table-no">否</td>
+</tr>
+</tbody>
+</table>

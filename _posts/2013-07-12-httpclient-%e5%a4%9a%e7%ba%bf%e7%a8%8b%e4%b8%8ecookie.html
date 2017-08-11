@@ -1,0 +1,128 @@
+---
+layout: post
+title: httpclient 多线程与cookie
+date: 2013-07-12 18:00:02.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- cookie
+- httpclient
+meta:
+  views: '360'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>HttpClient4.2之后,PoolingClientConnectionManager说是实现了池的连接管理，也是线程安全的，这个对于cookie来说则不是。</p>
+<p>&#160;</p>
+<p><strong>场景：</strong></p>
+<p>请求同一个链接，但是需要以不同的session 来请求，那么使用PoolingClientConnectionManager产生的同一个httpclient去访问，会使用相同的cookie。</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:e2d039c5-e99c-4ba9-8912-6ae39ef0b2f3" class="wlWriterEditableSmartContent">
+<pre name="code" class="java">PoolingClientConnectionManager connManager = new PoolingClientConnectionManager(
+				registry);
+
+		httpClient = new DefaultHttpClient(connManager, params);
+
+		return httpClient;</pre>
+</div>
+<p>向上面的代码，一般是公用这个httpclient, 这样做对于cookie来说就不是多线程安全的了。即使你每次设置了cookie header,也是存在这个问题。这个并不是PoolingClientConnectionManager的原因，而是共用了httpclient造成的。</p>
+<p>&#160;</p>
+<p><strong>解决方案:</strong></p>
+<p>使用BasicClientConnectionManager,并且每次都创建httpclient,因为每次都创建httpclient,当然就没必要使用复杂的PoolingClientConnectionManager。</p>
+<p>&#160;</p>
+<p>每次登录请求后response.getHeaders(&quot;Set-Cookie&quot;);获得cookie Header[]</p>
+<p>再次请求时将cookie 加入请求header即可。</p>
+<p>&#160;</p>
+<p>上面的方法对于一般场景可以，但是今天我测试登陆j_spring_security_check这样的验证则不行，还是参照这里</p>
+<p><a href="http://codeblow.com/questions/how-do-you-connect-with-an-online-url-which-requires-spring-security/">http://codeblow.com/questions/how-do-you-connect-with-an-online-url-which-requires-spring-security/</a></p>
+<p>其窍门是，先要获取一次取得原始cookie,然后第二次请求登陆链接，传入登陆参数，第三次再请求要访问的页面。这三次请求要使用同一个httpclient(非poolmanager)。</p>
+<p>&#160;</p>
+<p>我作了修改写了个公用函数，考虑到有些情况需要登出，在完成获取数据后再登出，一共是四步，真是纠结的方案……</p>
+<p>&#160;</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:3e3b0b4e-95f1-4e52-bac3-69017d448201" class="wlWriterEditableSmartContent">
+<pre name="code" class="java">public static String getWithLogin(String loginUrl,String url,String logoutUrl,Map map) {
+		DefaultHttpClient httpclient = (DefaultHttpClient) HttpClientUtils
+				.getHttpClient(true);
+		try {
+			//init cookie
+			HttpGet httpget = new HttpGet(url);
+	        HttpResponse httpClientResponse = httpclient.execute(httpget);
+	        HttpEntity entity = httpClientResponse.getEntity();
+	        EntityUtils.consume(entity);
+	        
+			//login
+			HttpPost httppost = new HttpPost(loginUrl);
+
+			// Prepare post parameters
+			if (null != map &amp;&amp; !map.isEmpty()){
+				Iterator it = map.entrySet().iterator();
+
+				List&lt;NameValuePair&gt; params = new LinkedList&lt;NameValuePair&gt;();
+
+				while (it.hasNext()) {
+					Map.Entry en = (Map.Entry) it.next();
+					if (null == en.getValue()) {
+						continue;
+					}
+					String key = en.getKey().toString();
+					String value = en.getValue().toString();
+					params.add(new BasicNameValuePair(key, value));
+				}
+				httppost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+			}
+
+			httpClientResponse = httpclient.execute(httppost);
+			//check if logined
+			
+
+			// check response body
+			entity = httpClientResponse.getEntity();
+			String result = EntityUtils.toString(entity);
+			EntityUtils.consume(entity);
+			int statusCode = httpClientResponse.getStatusLine().getStatusCode();
+			if (200 != statusCode &amp;&amp; 302 != statusCode){
+				throw new RuntimeException(statusCode + ":" + result);
+			}
+
+			//get data
+			httpget = new HttpGet(url);
+			httpClientResponse = httpclient.execute(httpget);
+			entity = httpClientResponse.getEntity();
+
+			result = EntityUtils.toString(entity);
+			EntityUtils.consume(entity);
+			statusCode = httpClientResponse.getStatusLine().getStatusCode();
+			
+			//logout
+			if (null != logoutUrl){
+				try {
+					httpget = new HttpGet(logoutUrl);
+					httpClientResponse = httpclient.execute(httpget);
+					entity = httpClientResponse.getEntity();
+
+					EntityUtils.consume(entity);
+				} catch (Exception e) {
+					Log.warn(e,"log out fail to" + logoutUrl);
+				}
+			}
+						
+			if (200 != statusCode){
+				throw new RuntimeException(statusCode + ":" + result);
+			}			
+			
+			
+			return result;
+		} catch (Exception e) {
+			throw ExceptionUtils.silence(e);
+		} finally {
+			httpclient.getConnectionManager().shutdown();
+		}
+
+	}</pre>
+</div>

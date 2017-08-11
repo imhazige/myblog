@@ -1,0 +1,64 @@
+---
+layout: post
+title: "打印金字塔，有没有更好的方案？"
+date: 2011-11-16 17:22:27.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags: []
+meta:
+  views: '31'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>打印如下:</p>
+<p>_____1_____   <br />____2_2____    <br />___3_3_3___    <br />__4_4_4_4__    <br />_5_5_5_5_5_    <br />6_6_6_6_6_6</p>
+<p>&#160;</p>
+<p>我的代码:</p>
+<div>
+<pre>		<span style="color: #0000ff">int</span> t = 6;
+		<span style="color: #0000ff">int</span> mm = t - 1;
+		<span style="color: #0000ff">int</span> m = mm * 2 + 1;
+
+		<span style="color: #0000ff">for</span> (<span style="color: #0000ff">int</span> i = 0; i &lt; t; i++)
+		{
+			<span style="color: #0000ff">boolean</span> b = <span style="color: #0000ff">false</span>;
+			<span style="color: #0000ff">int</span> st = 0;
+			<span style="color: #0000ff">int</span> pi = i + 1;
+			<span style="color: #0000ff">int</span> count = 0;
+			<span style="color: #0000ff">for</span> (<span style="color: #0000ff">int</span> j = 0; j &lt; m; j++)
+			{
+				<span style="color: #0000ff">if</span> (b)
+				{
+					<span style="color: #0000ff">if</span> (count &gt;= pi)
+					{
+
+					}
+					<span style="color: #0000ff">else</span> <span style="color: #0000ff">if</span> ((j - st) % 2 == 0)
+					{
+						System.out.<span style="color: #0000ff">print</span>(pi);
+						count += 1;
+						<span style="color: #0000ff">continue</span>;
+					}
+				}
+				<span style="color: #0000ff">else</span> <span style="color: #0000ff">if</span> (i == <span style="color: #0000ff">Math</span>.abs(j - mm))
+				{
+					System.out.<span style="color: #0000ff">print</span>(pi);
+					count += 1;
+					b = <span style="color: #0000ff">true</span>;
+					st = j;
+					<span style="color: #0000ff">continue</span>;
+				}
+				System.out.<span style="color: #0000ff">print</span>('_');
+			}
+			System.out.println();
+		}
+	</pre>
+</div>
+<p>诸君有没有更好的方案？</p>

@@ -1,0 +1,70 @@
+---
+layout: post
+title: openfire 插件开发
+date: 2011-05-26 02:23:20.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- Web
+tags:
+- java
+- openfire
+meta:
+  views: '1034'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>此blog可行<a href="http://www.blogjava.net/jyleon/articles/255623.html">http://www.blogjava.net/jyleon/articles/255623.html</a></p>
+<p>补充几点：</p>
+<p>下载的openfire包目录/openfire/documentation/plugin-dev-guide.html中介绍了怎么开发插件.</p>
+<p>要将源代码放在openfire的源代码目录中用其build.xml来编译。</p>
+<p>在3.6.3中，最终打成的包是.pack文件，似乎插件里面getResourseAsSream方法不能用。</p>
+<p>在3.6.4中，最终打成的包是.jar( zip格式)，penfire启动后会解压缩生成目录，可看到插件被作为一个jar包放在lib目录下。所以只要第一次使用build命令打包，在以后直接将工程打成jar包放到lib目录下即可：测试是可行的。</p>
+<p>但是注意，不能将发布的插件jar包删除，删除了的话，对应的文件夹也会被openfire自动删除。</p>
+<p>两个可能有用的方法:</p>
+<p>JiveGlobals.getHomeDirectory()</p>
+<p>Log.getLogDirectory()</p>
+<p>&#160;</p>
+<p>再回过来详细介绍一下，之前做过的又忘了，好些东西都重来了一遍。</p>
+<p>现在已目前最新的包openfire-3.7.1为例:</p>
+<p>将源码下下来66M多，不知为什么一下增加这么多了。</p>
+<p>期目录结构如下图:</p>
+<p><a href="http://kazge.com/wp-content/uploads/2012/03/Snap1.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb.gif" width="189" height="244" /></a></p>
+<p>将我们的插件以文档（documentation\docs\plugin-dev-guide.html#Using the Openfire Build Script）规定的格式存放，</p>
+<p>
+<legend style="widows: 2; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px; letter-spacing: normal; font: 13px arial, helvetica, sans-serif; white-space: normal; orphans: 2; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px">Plugin Structure</legend></p>
+<pre style="padding-bottom: 1em; widows: 2; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px; margin: 0px; padding-left: 1em; letter-spacing: normal; padding-right: 1em; font: 9pt &#39;courier new&#39;, monospaced; orphans: 2; color: rgb(0,0,0); word-spacing: 0px; padding-top: 1em; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px">myplugin/
+ |- <font color="#0000ff">plugin.xml</font>      &lt;- Plugin definition file
+ |- readme.html     &lt;- Optional readme file for plugin
+ |- changelog.html  &lt;- Optional changelog file for plugin
+ |- logo_small.gif  &lt;- Optional small (16x16) icon associated with the plugin (can also be a .png file)
+ |- logo_large.gif  &lt;- Optional large (32x32) icon associated with the plugin (can also be a .png file)
+ |- classes/        &lt;- Resources your plugin needs (i.e., a properties file)
+ |- <font color="#0000ff">lib</font>/            &lt;- Libraries your plugin needs
+ |- src/
+     |- database    &lt;- Optional database scripts for your plugin
+     |- <font color="#0000ff">java</font>        &lt;- Java source code for your plugin
+     |   |- com
+     |       |- mycompany
+     |           |- *.java
+     |- web
+         |- *.jsp      &lt;- JSPs your plugin uses for the admin console
+         |- images/    &lt;- Any images your JSP pages need (optional)
+         |- WEB-INF
+             |- web.xml    &lt;- Optional file where custom servlets can be registered</pre>
+<p>将myplugin整个文件夹放在src\plugins中。</p>
+<p>然后在其build文件夹中可找到build.xml，使用如下命令可单独编译单个plugin,<font color="#0000ff">但应在编译单个plugin之前至少运行一次plugins任务，负责无法编译单个plugin,报错为lib文件夹找不到，webapp目录找不到</font> :</p>
+<p><em>ant plugin</em> -Dplugin=myplugin</p>
+<p>运行命令即可在work\plugins中找到编译好的plugin。</p>
+<p>如果你在eclipse中，可右键点击build.xml, run as/Ant Build …/ 注意是三个点的那个才有更多选项。</p>
+<p><a href="http://kazge.com/wp-content/uploads/2012/03/Snap3.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap3" border="0" alt="Snap3" src="{{ site.baseurl }}/assets/Snap3_thumb.gif" width="644" height="253" /></a></p>
+<p><a href="http://kazge.com/wp-content/uploads/2012/03/Snap4.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap4" border="0" alt="Snap4" src="{{ site.baseurl }}/assets/Snap4_thumb.gif" width="644" height="387" /></a></p>
+<p>这样配置和上面的命令行方式效果一样。</p>
+<p>&#160;</p>
+<p>openfire提供离线消息发送，但是不提供历史消息存储。因此需要写插件来保存历史记录。</p>

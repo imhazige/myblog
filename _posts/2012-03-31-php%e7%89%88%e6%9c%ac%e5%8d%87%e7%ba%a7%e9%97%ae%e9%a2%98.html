@@ -1,0 +1,63 @@
+---
+layout: post
+title: php版本升级问题
+date: 2012-03-31 17:48:21.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- "升级"
+meta:
+  views: '68'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>升级到5.3注意的问题:</p>
+<p>增加了Deprecated 错误级别 <a href="http://php.net/manual/en/migration53.deprecated.php">http://php.net/manual/en/migration53.deprecated.php</a></p>
+<h4>Deprecated features in PHP 5.3.x</h4>
+<p>PHP 5.3.0 introduces two new error levels: <strong><code>E_DEPRECATED</code></strong> and <strong><code>E_USER_DEPRECATED</code></strong>. The <strong><code>E_DEPRECATED</code></strong> error level is used to indicate that a function or feature has been deprecated. The <strong><code>E_USER_DEPRECATED</code></strong> level is intended for indicating deprecated features in user code, similarly to the <strong><code>E_USER_ERROR</code></strong> and <strong><code>E_USER_WARNING</code></strong> levels.</p>
+<p>The following is a list of deprecated INI directives. Use of any of these INI directives will cause an <strong><code>E_DEPRECATED</code></strong> error to be thrown at startup.</p>
+<ul>
+<li><a href="http://www.php.net/manual/en/network.configuration.php#ini.define-syslog-variables">define_syslog_variables</a> </li>
+<li><a href="http://www.php.net/manual/en/ini.core.php#ini.register-globals">register_globals</a> </li>
+<li><a href="http://www.php.net/manual/en/ini.core.php#ini.register-long-arrays">register_long_arrays</a> </li>
+<li><a href="http://www.php.net/manual/en/ini.sect.safe-mode.php#ini.safe-mode">safe_mode</a> </li>
+<li><a href="http://www.php.net/manual/en/info.configuration.php#ini.magic-quotes-gpc">magic_quotes_gpc</a> </li>
+<li><a href="http://www.php.net/manual/en/info.configuration.php#ini.magic-quotes-runtime">magic_quotes_runtime</a> </li>
+<li><a href="http://www.php.net/manual/en/sybase.configuration.php#ini.magic-quotes-sybase">magic_quotes_sybase</a> </li>
+<li>Comments starting with '#' are now deprecated in .INI files. </li>
+</ul>
+<p>Deprecated functions:</p>
+<ul>
+<li><a href="http://www.php.net/manual/en/function.call-user-method.php">call_user_method()</a> (use <a href="http://www.php.net/manual/en/function.call-user-func.php">call_user_func()</a> instead) </li>
+<li><a href="http://www.php.net/manual/en/function.call-user-method-array.php">call_user_method_array()</a> (use <a href="http://www.php.net/manual/en/function.call-user-func-array.php">call_user_func_array()</a> instead) </li>
+<li><a href="http://www.php.net/manual/en/function.define-syslog-variables.php">define_syslog_variables()</a> </li>
+<li><a href="http://www.php.net/manual/en/function.dl.php">dl()</a> </li>
+<li><a href="http://www.php.net/manual/en/function.ereg.php">ereg()</a> (use <a href="http://www.php.net/manual/en/function.preg-match.php">preg_match()</a> instead) </li>
+<li><a href="http://www.php.net/manual/en/function.ereg-replace.php">ereg_replace()</a> (use <a href="http://www.php.net/manual/en/function.preg-replace.php">preg_replace()</a> instead) </li>
+<li><a href="http://www.php.net/manual/en/function.eregi.php">eregi()</a> (use <a href="http://www.php.net/manual/en/function.preg-match.php">preg_match()</a> with the <em>'i'</em> modifier instead) </li>
+<li><a href="http://www.php.net/manual/en/function.eregi-replace.php">eregi_replace()</a> (use <a href="http://www.php.net/manual/en/function.preg-replace.php">preg_replace()</a> with the <em>'i'</em> modifier instead) </li>
+<li><a href="http://www.php.net/manual/en/function.set-magic-quotes-runtime.php">set_magic_quotes_runtime()</a> and its alias, <a href="http://www.php.net/manual/en/function.magic-quotes-runtime.php">magic_quotes_runtime()</a> </li>
+<li><a href="http://www.php.net/manual/en/function.session-register.php">session_register()</a> (use the <var><var><a href="http://www.php.net/manual/en/reserved.variables.session.php">$_SESSION</a></var></var> superglobal instead) </li>
+<li><a href="http://www.php.net/manual/en/function.session-unregister.php">session_unregister()</a> (use the <var><var><a href="http://www.php.net/manual/en/reserved.variables.session.php">$_SESSION</a></var></var> superglobal instead) </li>
+<li><a href="http://www.php.net/manual/en/function.session-is-registered.php">session_is_registered()</a> (use the <var><var><a href="http://www.php.net/manual/en/reserved.variables.session.php">$_SESSION</a></var></var> superglobal instead) </li>
+<li><a href="http://www.php.net/manual/en/function.set-socket-blocking.php">set_socket_blocking()</a> (use <a href="http://www.php.net/manual/en/function.stream-set-blocking.php">stream_set_blocking()</a> instead) </li>
+<li><a href="http://www.php.net/manual/en/function.split.php">split()</a> (use <a href="http://www.php.net/manual/en/function.preg-split.php">preg_split()</a> instead) </li>
+<li><a href="http://www.php.net/manual/en/function.spliti.php">spliti()</a> (use <a href="http://www.php.net/manual/en/function.preg-split.php">preg_split()</a> with the <em>'i'</em> modifier instead) </li>
+<li><a href="http://www.php.net/manual/en/function.sql-regcase.php">sql_regcase()</a> </li>
+<li><a href="http://www.php.net/manual/en/function.mysql-db-query.php">mysql_db_query()</a> (use <a href="http://www.php.net/manual/en/function.mysql-select-db.php">mysql_select_db()</a> and <a href="http://www.php.net/manual/en/function.mysql-query.php">mysql_query()</a> instead) </li>
+<li><a href="http://www.php.net/manual/en/function.mysql-escape-string.php">mysql_escape_string()</a> (use <a href="http://www.php.net/manual/en/function.mysql-real-escape-string.php">mysql_real_escape_string()</a> instead) </li>
+<li>Passing locale category names as strings is now deprecated. Use the LC_* family of constants instead. </li>
+<li>The <em><code>is_dst</code></em> parameter to <a href="http://www.php.net/manual/en/function.mktime.php">mktime()</a>. Use the new timezone handling functions instead. </li>
+</ul>
+<p>Deprecated features:</p>
+<ul>
+<li>Assigning the return value of <a href="http://www.php.net/manual/en/language.oop5.basic.php#language.oop5.basic.new">new</a> by reference is now deprecated. </li>
+<li>Call-time pass-by-reference is now deprecated. </li>
+</ul>

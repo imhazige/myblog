@@ -1,0 +1,43 @@
+---
+layout: post
+title: apache每两个小时重启问题
+date: 2012-05-08 13:56:43.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- apache
+- cpanel
+meta:
+  views: '112'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天遇到一个问题，发现cpanel主机上apache每两个小时重启一次，在apache error_log的记录就是:</p>
+<p>[notice] Graceful restart requested, doing restart, 开始以为是什么计划任务造成的，找了crontab和cpanel cron job都没有问题，网上一查，原来是apache log的问题：</p>
+<p>这里详细讲述了解决方案: <a href="http://kb.liquidweb.com/how-and-why-enabling-apaches-piped-logging/">http://kb.liquidweb.com/how-and-why-enabling-apaches-piped-logging/</a></p>
+<p>简述步骤：</p>
+<p>查看cpanel和apache版本：</p>
+<p>Cpanel 需要 11.25.0-R43471 或以后</p>
+<p>Apache 需要2 或以后</p>
+<p>查看cpanel版本: </p>
+<p>cat /usr/local/cpanel/version</p>
+<p>查看apache版本:</p>
+<p>/usr/local/apache/bin/httpd –v</p>
+<p>备份apache httpd.conf配置:</p>
+<p>cp /usr/local/apache/conf/httpd.conf /usr/local/apache/conf/httpd.prepipedlogging</p>
+<p>修改/var/cpanel/cpanel.config，添加此行:</p>
+<p>enable_piped_logs=1</p>
+<p>让cpanel加载此修改:</p>
+<p>/usr/local/cpanel/whostmgr/bin/whostmgr2 –updatetweaksettings</p>
+<p>重新编译apache配置(这个是cpanel的功能，依据cpanel配置生成apache配置)</p>
+<p>/scripts/rebuildhttpdconf</p>
+<p>重启apache</p>
+<p>/etc/init.d/httpd stop   <br />/etc/init.d/httpd start</p>
+<p>这就可以了。</p>

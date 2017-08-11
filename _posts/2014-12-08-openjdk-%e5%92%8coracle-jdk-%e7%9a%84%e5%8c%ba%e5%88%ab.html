@@ -1,0 +1,43 @@
+---
+layout: post
+title: OpenJDK 和Oracle JDK 的区别
+date: 2014-12-08 17:12:46.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- jdk
+meta:
+  views: '548'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这篇 <a title="http://blog.sina.com.cn/s/blog_5cfd3adf0101a9db.html" href="http://blog.sina.com.cn/s/blog_5cfd3adf0101a9db.html">http://blog.sina.com.cn/s/blog_5cfd3adf0101a9db.html</a> 文章讲了一些，但是不完全正确。</p>
+<p>&#160;</p>
+<p>参考<a title="https://blogs.oracle.com/henrik/entry/moving_to_openjdk_as_the" href="https://blogs.oracle.com/henrik/entry/moving_to_openjdk_as_the">https://blogs.oracle.com/henrik/entry/moving_to_openjdk_as_the</a> 这里</p>
+<p>Oracle 基于 OpenJDK 代码创建 Reference Implementation (RI)</p>
+<p>&#160;</p>
+<p>Oracle&#160; 创建RI 是基于BCL协议而openJDK是GPLv2</p>
+<p>具体Oracle的商业限制 要看<a title="http://www.oracle.com/technetwork/java/javase/terms/products/index.html" href="http://www.oracle.com/technetwork/java/javase/terms/products/index.html">http://www.oracle.com/technetwork/java/javase/terms/products/index.html</a></p>
+<p>BCL 在这里 <a title="http://www.oracle.com/technetwork/java/javase/terms/license/index.html" href="http://www.oracle.com/technetwork/java/javase/terms/license/index.html">http://www.oracle.com/technetwork/java/javase/terms/license/index.html</a></p>
+<p>&#160;</p>
+<p>哎妈太麻烦，现在linux系统上默认装的都是OpenJDK</p>
+<p>但是据说OpenJDK问题有点小多。</p>
+<p>&#160;</p>
+<p>一般的使用Oracle JDK并不违反什么商业限制：</p>
+<p>就我所知的JMX 用第三方查看器查看javax.management包下的或是自己开发的MBean是没有违反限制的 jvisualvm是第三方工具 jconsole是免费的；</p>
+<p>&#160;</p>
+<p>但是Java Flight Recorder 和 Java Mission Control 却是要收费的，晕。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>参见：</p>
+<p><a title="https://blogs.oracle.com/henrik/entry/moving_to_openjdk_as_the" href="https://blogs.oracle.com/henrik/entry/moving_to_openjdk_as_the">https://blogs.oracle.com/henrik/entry/moving_to_openjdk_as_the</a></p>
+<p><a title="http://blog.sina.com.cn/s/blog_5cfd3adf0101a9db.html" href="http://blog.sina.com.cn/s/blog_5cfd3adf0101a9db.html">http://blog.sina.com.cn/s/blog_5cfd3adf0101a9db.html</a></p>

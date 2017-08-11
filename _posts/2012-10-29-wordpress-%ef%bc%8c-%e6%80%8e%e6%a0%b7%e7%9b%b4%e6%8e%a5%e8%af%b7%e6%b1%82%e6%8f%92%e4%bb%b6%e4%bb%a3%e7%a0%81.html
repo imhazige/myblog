@@ -1,0 +1,74 @@
+---
+layout: post
+title: wordpress ， 怎样直接请求插件代码
+date: 2012-10-29 14:50:26.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- plugin
+- wordpress
+meta:
+  views: '59'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>&#160;</p>
+<p>在wordpress插件中有些页面需要http可以访问，例如ajax,restful service。</p>
+<p><strong>最简单的方法是引用wp-config.php这个文件。</strong></p>
+<p>但是这样做也有局限性：</p>
+<blockquote><p>wordpress2.6之后，允许移动wp-conetent文件夹(<a href="http://willnorris.com/2009/05/wordpress-plugin-pet-peeve-hardcoding-wp-content">http://willnorris.com/2009/05/wordpress-plugin-pet-peeve-hardcoding-wp-content</a>)，wp-config.php也不一定就在站点根目录下，所以你的引用代码可能不适合所有wordpress站点。</p>
+</blockquote>
+<p>&#160;</p>
+<p>&#160;</p>
+<p><strong>第二种方法则是较为简单:使用parse_request</strong></p>
+<p>通过parse_request这个action来在wordpress流程之前处理请求，并且使用exit来终止后续默认的wordpress处理。</p>
+<p>示例代码:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:7aafd823-cf98-4b03-a1a9-f0bb3ee24855" class="wlWriterEditableSmartContent">
+<pre name="code" class="php:firstline[1]">function my_plugin_parse_request($wp) {
+	// only process requests with "my-plugin=ajax-handler"
+	if (array_key_exists('my-plugin', $wp-&gt;query_vars) &amp;&amp; $wp-&gt;query_vars['my-plugin'] == 'ajax-handler') {
+		header('Content-Type: text/plain');
+		global $wp;
+		
+		if(isset($wp)){
+			echo "got wp";
+//			print_r($wp);
+
+			$cats = get_categories('orderby=count&amp;order=desc');
+			
+			print_r($cats);
+		}
+		exit;
+	}
+}
+add_action('parse_request', 'my_plugin_parse_request');
+
+function my_plugin_query_vars($vars) {
+	$vars[] = 'my-plugin';
+	return $vars;
+}
+add_filter('query_vars', 'my_plugin_query_vars');</pre>
+</div>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>上面的例子可通过<code><a href="http://example.com/index.php?my-plugin=ajax-handler">http://example.com/index.php?my-plugin=ajax-handler</a></code> 或 <code><a href="http://example.com/?my-plugin=ajax-handler">http://example.com/?my-plugin=ajax-handler</a> 来访问。可以看到，$wp,get_categories都可以使用。</code></p>
+<p><code></code></p>
+<p><code><strong>第三种方法:使用wp这个action</strong></code></p>
+<p><code>与第二种不同的是，action这个’wp’是在wordpress默认流程处理之后的流程。</code></p>
+<p><code></code></p>
+<p><code><strong>第四种方法：使用WP_Rewrite</strong> <a title="http://codex.wordpress.org/Function_Reference/WP_Rewrite" href="http://codex.wordpress.org/Function_Reference/WP_Rewrite">http://codex.wordpress.org/Function_Reference/WP_Rewrite</a></code></p>
+<p><code>这种方法很强大，但是也比较复杂，因为考虑到其他插件作者可能或者用户有可能与你定义的permalink冲突，你就要处理这些情况。</code></p>
+<p><code></code></p>
+<p>&#160;</p>
+<p>各种用法对于不同需求各有用途。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://willnorris.com/2009/06/wordpress-plugin-pet-peeve-2-direct-calls-to-plugin-files">http://willnorris.com/2009/06/wordpress-plugin-pet-peeve-2-direct-calls-to-plugin-files</a></p>

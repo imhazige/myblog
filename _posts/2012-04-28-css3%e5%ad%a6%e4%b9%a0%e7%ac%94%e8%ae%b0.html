@@ -1,0 +1,74 @@
+---
+layout: post
+title: css3学习笔记
+date: 2012-04-28 15:25:00.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- css3
+meta:
+  _edit_last: '1'
+  views: '44'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>主要依照<a href="http://www.w3schools.com/css3/css3_intro.asp">http://www.w3schools.com/css3/css3_intro.asp</a> 进行。</p>
+<p>1:边框圆角阴影</p>
+<table width="100%">
+<tbody>
+<tr>
+<th align="left">Property</th>
+<th align="left">Description</th>
+</tr>
+<tr>
+<td><a href="http://www.w3schools.com/cssref/css3_pr_border-image.asp">border-image</a></td>
+<td>包含多个<a href="file:///C:/cssref/css3_pr_border-image.asp">border-image</a>-* 样式的快捷方式           <br />以图片作为边框，这个要设计好图片，效果像是将border图片从中间扒开圈在目标元素上。           </p>
+<p>在线演示:           <br /><a href="http://www.w3schools.com/cssref/playit.asp?filename=playcss_border-image">http://www.w3schools.com/cssref/playit.asp?filename=playcss_border-image</a>           </p>
+<p>自己动手：           <br /><a href="http://www.w3schools.com/css3/tryit.asp?filename=trycss3_border-image">http://www.w3schools.com/css3/tryit.asp?filename=trycss3_border-image</a></td>
+</tr>
+<tr>
+<td><a href="http://www.w3schools.com/cssref/css3_pr_border-radius.asp">border-radius</a></td>
+<td>圆角 这个很好用，也非常有用          <br />这个属性配合box-shadow就可以修饰成漂亮的box,再也不需要一堆图片和元素来拼凑了。           </p>
+<p>其相当于四个属性:           <br /> 
+<p>border-top-left-radius            <br />border-top-right-radius</p>
+<p>border-bottom-right-radius            <br />border-bottom-left-radius</p>
+<p>如果想制造一个古怪的box例如右下角是个方角，则设置为border-bottom-right-radius 0 ， 不过这样的古怪box就不能使用<a href="http://www.w3schools.com/cssref/css3_pr_box-shadow.asp">box-shadow</a>绘制对应的不规则阴影了。</p>
+<p>如果是个等高宽的元素，设置其border-radius:100%;的话，则是个圆形。但是可能会出现这种情况:</p>
+<p><a href="http://kazge.com/wp-content/uploads/2012/04/Snap12.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb2.gif" width="152" height="99" /></a>             <br />其样式为:</p>
+<div>
+<pre>&lt;<span style="color: #800000">style</span> <span style="color: #800000">type</span>=&quot;<span style="color: #800000">text</span>/<span style="color: #800000">css</span>&quot;&gt; 
+<span style="color: #800000">div</span>
+{
+<span style="color: #ff0000">border</span>:<span style="color: #0000ff">2px solid #a1a1a1</span>;
+<span style="color: #ff0000">padding</span>:<span style="color: #0000ff">10px 40px</span>; 
+<span style="color: #ff0000">background</span>:<span style="color: #0000ff">#dddddd</span>;
+<span style="color: #ff0000">width</span>:<span style="color: #0000ff">50px</span>;
+<span style="color: #ff0000">height</span>:<span style="color: #0000ff">50px</span>;
+<span style="color: #ff0000">border-radius</span>:<span style="color: #0000ff">100%</span>;
+}
+&lt;/<span style="color: #800000">style</span>&gt;</pre>
+</p></div>
+<p>如果设置为像素单位，当大于一个临界点后效果就没什么变化了。 </p>
+<p>看到没，显示的border只会在实际的盒式模型的border之内。 </p>
+<p>自己动手: </p>
+<p><a title="http://www.w3schools.com/css3/tryit.asp?filename=trycss3_border-radius" href="http://www.w3schools.com/css3/tryit.asp?filename=trycss3_border-radius">http://www.w3schools.com/css3/tryit.asp?filename=trycss3_border-radius</a></td>
+</tr>
+<tr>
+<td><a href="http://www.w3schools.com/cssref/css3_pr_box-shadow.asp">box-shadow</a></td>
+<td>阴影<br />
+        <br />好用也实用。 </p>
+<p>它可以雾化阴影边框 </p>
+<p>在线演示: </p>
+<p><a href="http://www.w3schools.com/cssref/playit.asp?filename=playcss_box-shadow">http://www.w3schools.com/cssref/playit.asp?filename=playcss_box-shadow</a> </p>
+<p>自己动手： </p>
+<p><a title="http://www.w3schools.com/css3/tryit.asp?filename=trycss3_box-shadow" href="http://www.w3schools.com/css3/tryit.asp?filename=trycss3_box-shadow">http://www.w3schools.com/css3/tryit.asp?filename=trycss3_box-shadow</a></td>
+</tr>
+</tbody>
+</table>

@@ -1,0 +1,26 @@
+---
+layout: post
+title: mysql_函数引出的问题
+date: 2012-09-11 21:57:04.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- mysql
+meta:
+  views: '10'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这次碰到个问题，写的php代码访问时总是超时，凭经验判断是数据库问题。</p>
+<p>但是逐步调试下去，发现是mysql_real_escape_string导致超时。</p>
+<p>后来才发现,php文档里写了，这样的函数是需要数据库连接的，我这个调用是在数据库连接建立之前，所以php一直尝试获取最近的连接,但是又没有，结果就超时了。</p>
+<p>同样的问题存在mysql_开头的函数中。</p>
+<p>另外的问题是mysql_insert_id没有返回值，发现是之前的insert操作执行后马上关闭了连接，导致再打开一个新连接再调用mysql_insert_id就会没有返回值。</p>
+<p>所以mysql_insert_id应该与insert 语句使用同一个连接。</p>

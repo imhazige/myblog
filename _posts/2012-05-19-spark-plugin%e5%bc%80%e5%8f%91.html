@@ -1,0 +1,49 @@
+---
+layout: post
+title: spark plugin开发
+date: 2012-05-19 10:46:43.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- im
+- xmpp
+meta:
+  views: '214'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>两年前开发过spark,那时是改源码，当时改的很头疼，感觉它的代码很乱，一个功能的修改需要触动很多地方的代码，这么个基本的归纳结构都没做好。它的plugin设计的不好，我们没法只好改源码。</p>
+<p>然而，我发现现在脑子里已完全不记得当时的细节了，哎……， 只能重新来过了。</p>
+<p>目前是2.6.3:</p>
+<p>主页: <a href="http://www.igniterealtime.org/projects/spark/sparkplug-kit.jsp">http://www.igniterealtime.org/projects/spark/sparkplug-kit.jsp</a></p>
+<p>插件开发手册：<a href="http://www.igniterealtime.org/builds/sparkplug_kit/docs/latest/sparkplug_dev_guide.html">http://www.igniterealtime.org/builds/sparkplug_kit/docs/latest/sparkplug_dev_guide.html</a></p>
+<p>源码: <a href="http://www.igniterealtime.org/downloads/source.jsp">http://www.igniterealtime.org/downloads/source.jsp</a>&#160;</p>
+<p>其中spark源码:&#160; </p>
+<p>Spark:    <br /><tt>svn co http://svn.igniterealtime.org/svn/repos/spark/trunk spark</tt></p>
+<p><tt>之前的版本可以这样获得:<a title="http://svn.igniterealtime.org/svn/repos/spark/trunk/" href="http://svn.igniterealtime.org/svn/repos/spark/tags/spark_2_6_0">http://svn.igniterealtime.org/svn/repos/spark/tags/spark_2_6_0</a></tt></p>
+<p>现在可以直接在Eclipse中开发插件而不需要发布到spark中，它提供的sparkplugkit提供调试环境。</p>
+<p>To setup a project to run Spark within your IDE, you will need to the following:</p>
+<ul>
+<li>It is required that you use the <b>1.4 JRE</b> to build Spark. </li>
+<li>Add all *.jar files in the Sparkplugs/spark/lib and Sparkplugs/spark/lib/windows directories to your classpath. </li>
+<li>Add the resource directory (Sparkplugins/spark/resource) to your classpath for the native libraries. </li>
+<li>Main Class - org.jivesoftware.Spark </li>
+<li>VM Parameters - -Dplugin=path_to_your_plugin.xml file. This allows you to run your plugins within your IDE without deploying. </li>
+<li>That's it. </li>
+</ul>
+<p>建好工程后引用Sparkplugs/spark/lib and Sparkplugs/spark/lib/windows 里面的所有jar包。</p>
+<p>还要添加Sparkplugins/spark/resource中的资源。</p>
+<p>启动类是org.jivesoftware.Spark </p>
+<p>需要添加vm参数 -Dplugin=path_to_your_plugin.xml </p>
+<p>我下载其example,运行不起来，报错:</p>
+<p>Exception in thread &quot;AWT-EventQueue-0&quot; java.lang.NullPointerException    <br />&#160;&#160;&#160; at org.jivesoftware.LoginDialog$ImagePanel.getPreferredSize(LoginDialog.java:815)</p>
+<p>网上查不到原因，即使是官方论坛也没人回答，最后我用了一天时间从它的svn上用比蜗牛还慢的速度下了下来，从它的源码里面终于跑了起来。它的引用包在源码的build\lib中，带着一堆报错，终于看到登陆界面了。</p>
+<p>另外一个问题是，没有找到哪里下载之前版本的sparkplug_kit, 这样如果代码是依赖之前的spark api,那就悲剧了，你不能用最新的sparkplug_kit来写plugin。</p>
+<p>我真不知道这样的更新方式怎么用得起来！而且我是依赖2.6.0的api,到2.6.3就改的一塌糊涂，这TM还叫api吗？</p>

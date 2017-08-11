@@ -1,0 +1,30 @@
+---
+layout: post
+title: "还是烂一下笔头，多表查询等同内联查询"
+date: 2012-03-09 23:24:47.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- "数据库"
+tags: []
+meta:
+  views: '35'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>其实我们常用的</p>
+<div>
+<pre><a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=select&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">select</a> * <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=from&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">from</a> t1 , t2 <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=where&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">where</a> t1.id = t2.rid </pre>
+</div>
+<p>等同于</p>
+<div>
+<pre><a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=select&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">select</a> * <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=from&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">from</a> t1 <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=inner&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">inner</a> <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=join&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">join</a> t2 <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=on&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">on</a> t1.id = t2.rid</pre>
+</div>
+<p>一时清醒容易，总是清醒难了，万一遇到哪个二货，又要被鄙视了，故此烂一下笔头，莫见笑哈！</p>
+<p>参见:</p>
+<p><a href="http://www.cnblogs.com/iceword/archive/2010/03/24/1694149.html">http://www.cnblogs.com/iceword/archive/2010/03/24/1694149.html</a></p>

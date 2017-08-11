@@ -1,0 +1,65 @@
+---
+layout: post
+title: php session 相关问题
+date: 2012-10-16 17:44:40.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- session
+meta:
+  views: '33'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>两篇较好的文章：</p>
+<p><a href="http://www.nowamagic.net/php/php_SessionPrinciple.php">http://www.nowamagic.net/php/php_SessionPrinciple.php</a></p>
+<p><a href="http://hi.baidu.com/kkwtre/item/75a0209c314a0cdb1a49df59">http://hi.baidu.com/kkwtre/item/75a0209c314a0cdb1a49df59</a></p>
+<p><a href="http://php.net/manual/en/function.session-start.php">http://php.net/manual/en/function.session-start.php</a></p>
+<p>&#160;</p>
+<p>默认session是使用的文件系统，使用之前都应该先调用session_start()来准备。</p>
+<p>session_name()是获得/设置session对应的cookie名(用于存储sessionid)</p>
+<p>session_id()适用于获得/设置session的id</p>
+<p>&#160;</p>
+<p>使用步骤:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:6df61829-8f23-48cb-b72e-3ac530a08652" class="wlWriterEditableSmartContent">
+<pre name="code" class="php:firstline[1]">&lt;?php
+session_start();
+
+echo 'Welcome to page #1';
+
+$_SESSION['favcolor'] = 'green';
+$_SESSION['animal']   = 'cat';
+$_SESSION['time']     = time();
+
+?&gt;</pre>
+</div>
+<p>&#160;</p>
+<p>注销session:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:6f24fa45-1179-4207-9255-fbe00a53fad0" class="wlWriterEditableSmartContent">
+<pre name="code" class="php:firstline[1]">&lt;?php
+	session_start();
+	session_unset();
+	session_destroy();
+	session_write_close();
+	setcookie(session_name(), '', 0, '/');
+	session_regenerate_id(true);
+?&gt;</pre>
+</div>
+<p>&#160;</p>
+<p>注意:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:0c0270bd-de87-406f-8ed5-1cd737be5db8" class="wlWriterEditableSmartContent">
+<pre name="code" class="php:firstline[1]">&lt;?php 
+session_destroy();
+session_write_close();	
+?&gt;</pre>
+</div>
+<p>&#160;</p>
+<p>这两个方法会导致后面对$_SESSION的操作不起作用，所以，要想达到清除之前session重新开启session的效果，这两句话则不应调用。</p>
+<p>对于集群而言,道理都是一样,session概念的内容还是存储在数据库或memcache中来达到透明效果较好。</p>

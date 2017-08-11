@@ -1,0 +1,77 @@
+---
+layout: post
+title: "【转】启用SQL Server 2005 Express的sa用户名"
+date: 2012-11-21 20:52:30.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- ".net"
+- "数据库"
+tags:
+- sqlserver
+meta:
+  views: '22'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>最近重操旧业用.net, sql使用2005, 真是忘得一干二净了，这篇文章图文并茂，与2008也差不多。</p>
+<p>转自:<a href="http://www.weste.net/2009/5-20/21173876541.html">http://www.weste.net/2009/5-20/21173876541.html</a></p>
+<p>&#160;</p>
+<p>默认情况下，SQL Server 2005 Express Edition、Evaluation Edition 和 Developer Edition 只允许本地客户端连接（当然包括默认安装的VS2008、VS2005、Express Web、VWD2005、VWD2008所附带的SQL Server 2005 Express）。Enterprise Edition（企业版）、Standard Edition（标准版） 和 Workgroup Edition（工作组版） 还可侦听 TCP/IP 上的远程客户端连接。</p>
+<p>由于，SQL Server 2005 Express Edition是可以免费分发的，它的安装包分为两种：“SQL Server 2005 Express Edition SP2”和“具有高级服务的 SQL Server 2005 Express Edition SP2”，其下载位置：<a href="http://msdn2.microsoft.com/zh-cn/express/bb410792.aspx"><u>http://msdn2.microsoft.com/zh-cn/express/bb410792.aspx</u></a>。为了可视化管理，Microsoft还提供了“SQL Server Management Studio Express”，本文就是基于这个管理工具编写的教程，该管理工具的下载链接：<a href="http://msdn2.microsoft.com/zh-cn/express/bb410792.aspx"><u>http://msdn2.microsoft.com/zh-cn/express/bb410792.aspx</u></a>。</p>
+<p><strong>一、安装SQL Server 2005 Express Edition SP2、Microsoft XML Core Services 6.0 和 Microsoft XML Core Services 6.0 Service Pack 1 安全更新程序 (KB933579)和SQL Server Management Studio Express Edition</strong></p>
+<p>从上述下载地址下载：SQL Server 2005 Express Edition SP2（SQLEXPR32_CHS.EXE，40.6 MB）和SQL Server Management Studio Express（SQLServer2005_SSMSEE.msi，44.7 MB）</p>
+<p>1、运行SQLEXPR32_CHS.EXE</p>
+<p><img src="{{ site.baseurl }}/assets/0411132916.jpg" /></p>
+<p>在安装SQL Server 2005 Express Edition SP2的最后，安装程序会给出一个安装总结，强烈建议大家阅读，它会告诉我们很多的信息，不要轻易放过。下面，我将其对我们用的配置信息摘录如下：</p>
+<ul>
+<li>配置和管理 SQL Server Express     <br />为提高可管理性和安全性，SQL Server 2005 对系统上的 SQL Server 外围应用进行了更严格的控制。若要使外围应用最小化，请将以下默认配置应用于 SQL Server 实例：
+<ul>
+<li>禁用 TCP/IP 连接 </li>
+<li>禁用 Named Pipes </li>
+<li>必须手动启动 SQL Browser </li>
+<li>禁用 OPENROWSET 和 OPENDATASOURCE </li>
+<li>禁用 CLR 集成 </li>
+<li>禁用 OLE 自动化 </li>
+<li>禁用 xp_cmdshell         <br />若要启用或禁用功能和服务，请运行“开始”菜单中的“SQL Server 外围应用配置器”工具。</li>
+</ul>
+</li>
+</ul>
+<p>安装完后，我们可以看到如下的开始菜单项：</p>
+<p><img src="{{ site.baseurl }}/assets/0411134831.jpg" width="500" /></p>
+<p>它包含三个配置工具，我们今天等下要用到“SQL Server配置管理器”和“SQL Server外围应用配置器”。</p>
+<p>2、运行SQLServer2005_SSMSEE.msi</p>
+<p>为了便于管理，我们安装SQL Server Management Studio Express Edition。</p>
+<p><img src="{{ site.baseurl }}/assets/0411140005.jpg" width="500" /></p>
+<p>安装 SQL Server Management Studio Express 之前，必须先安装 MSXML 6.0。下载其中文版，安装之。</p>
+<p>注意必须安装2007年8月14日的Microsoft XML Core Services 6.0 和 Microsoft XML Core Services 6.0 Service Pack 1 安全更新程序 (KB933579)，否则不能正常安装SQL Server Management Studio Express，其下载地址：<a href="http://www.microsoft.com/downloads/details.aspx?displaylang=zh-cn&amp;FamilyID=70c92e77-9e5a-41b1-a9d2-64443913c976"><u>http://www.microsoft.com/downloads/details.aspx?displaylang=zh-cn&amp;FamilyID=70c92e77-9e5a-41b1-a9d2-64443913c976</u></a></p>
+<p><u><img src="{{ site.baseurl }}/assets/0411142808.jpg" /></u></p>
+<p>有了它才能正常安装SQL Server Management Studio Express。</p>
+<p><img src="{{ site.baseurl }}/assets/0411143507.jpg" width="500" /></p>
+<p><strong>二、配置SA</strong></p>
+<p>在默认情况下，SQL Server 2005 Express是采用集成的Windows安全验证且禁用了sa登录名。为了工作组环境下不使用不方便的Windows集成安全验证，我们要启用SQL Server 2005 Express的混合安全验证，也就是说由SQL Server来验证用户而不是由Windows来验证用户。</p>
+<p>1、使用SQL Server Management Studio Express。</p>
+<p><img src="{{ site.baseurl }}/assets/0411145410.jpg" width="500" /></p>
+<p>当我们启动SQL Server Management Studio Express时，首先它要连接到我们的SQL Server 2005 Express，我们在安装SQL Server 2005 Express时，默认的实例为SQLExpress，服务器名称的组成为：机器名\实例名，因此，本例的服务名称为W2K3-C \SQLEXPRESS（注：安装SQL Server 2005 Express的机器名为W2K3-C）。第一次使用SQL Server Management Studio Express，由于我们必须采用Windows身份验证，这是默认安装时决定的。</p>
+<p>a) 设置SQL Server 2005 Express的身份验证方式</p>
+<p><img src="{{ site.baseurl }}/assets/0411152434.jpg" /></p>
+<p><img src="{{ site.baseurl }}/assets/0411152513.jpg" width="500" /></p>
+<p><img src="{{ site.baseurl }}/assets/0411152628.jpg" /></p>
+<p>b) 设置sa的密码并启用sa登录名</p>
+<p><img src="{{ site.baseurl }}/assets/0411170039.jpg" /></p>
+<p><img src="{{ site.baseurl }}/assets/0411154029.jpg" width="500" /></p>
+<p>由于我们不知道sa的密码，所以我们须设置一个！不要关闭这个窗口，接着选择左侧的“状态”，默认情况下，sa登录名是禁用的，因此，我们必须启用sa登录名，选择右侧的登录下的“启用”</p>
+<p><img src="{{ site.baseurl }}/assets/0411154903.jpg" /></p>
+<p>最后，我们点击窗口下面的“确定”按钮。好了，到此为止，SQL Server 2005 Express服务器已经可以让sa登录了，不过，要重新启动一下，让配置生效。</p>
+<p><img src="{{ site.baseurl }}/assets/0411160428.jpg" /></p>
+<p>c) 验证sa登录</p>
+<p>我们在桌面上新建一个文本文件，文件名为TestSQL.UDL，双击这个文件打开“数据链接属性”对话框，点击“提供程序”选项卡，如下图：</p>
+<p><img src="{{ site.baseurl }}/assets/0411161106.jpg" /></p>
+<p>点击“下一步”按钮进入“高级”选项卡，输入数据源为：W2K3-C\SQLEXPRESS，即我们安装的SQL Server 2005 Express实例，并选择“使用指定的用户名称和密码”，输入登录名sa和sa的密码，最后，我们点击“测试连接”按钮，测试sa登录。我们惊喜的看到连接成功！为了下一次使用方便，勾选“允许保存密码”，最后，点击“确定”按钮保存这个数据链接。</p>
+<p><img src="{{ site.baseurl }}/assets/0411161828.jpg" /></p>
+<p><img src="{{ site.baseurl }}/assets/0411161854.jpg" /></p>

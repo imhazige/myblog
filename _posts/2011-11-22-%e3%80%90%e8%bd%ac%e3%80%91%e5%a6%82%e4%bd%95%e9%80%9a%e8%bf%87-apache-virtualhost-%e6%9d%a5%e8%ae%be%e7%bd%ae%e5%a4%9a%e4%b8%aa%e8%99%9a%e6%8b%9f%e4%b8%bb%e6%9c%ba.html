@@ -1,0 +1,125 @@
+---
+layout: post
+title: "如何通过 apache VirtualHost 来设置多个虚拟主机"
+date: 2011-11-22 21:11:41.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+- Web
+tags: []
+meta:
+  views: '1177'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>本机调试php,开发的方法：</p>
+<p>httpd.conf 需要添加监听端口:</p>
+<p>Listen 10080   <br />Listen 10085</p>
+<p> 然后添加</p>
+<div>
+<pre>NameVirtualHost 127.0.0.1:10080
+
+&lt;VirtualHost 127.0.0.1:10080&gt; 
+DocumentRoot &quot;<span style="color: #8b0000">F:/projects/php/wb</span>&quot; 
+ServerName 127.0.0.1:10080
+&lt;/VirtualHost&gt;
+
+NameVirtualHost 127.0.0.1:10085
+&lt;VirtualHost 127.0.0.1:10085&gt; 
+DocumentRoot &quot;<span style="color: #8b0000">F:/projects/php/wb/abc/public_html</span>&quot; 
+ServerName 127.0.0.1:10085
+&lt;/VirtualHost&gt;
+
+
+&lt;Directory &quot;<span style="color: #8b0000">F:/projects/php/wb/abc/public_html</span>&quot;&gt;    
+    AddHandler fcgid-script .php  
+    FcgidWrapper &quot;<span style="color: #8b0000">D:/server/php-5.3.3-nts/php-cgi.exe</span>&quot; .php
+    Options execCGI 
+    AllowOverride None
+    Order allow,deny
+    Allow from all    
+&lt;/Directory&gt;
+
+&lt;Directory &quot;<span style="color: #8b0000">F:/projects/php/wb</span>&quot;&gt;    
+    AddHandler fcgid-script .php  
+    FcgidWrapper &quot;<span style="color: #8b0000">D:/server/php-5.3.3-nts/php-cgi.exe</span>&quot; .php
+    Options execCGI 
+    AllowOverride None
+    Order allow,deny
+    Allow from all    
+&lt;/Directory&gt;</pre>
+</div>
+<p>可以看到，针对每个端口都配置了NameVirtualHost ，</p>
+<p>对每个端口配置了VirtualHost ，针对每个目录配置了脚本解析引擎。而且10085配置的目录是在10080配置的目录之下，这也是可以的！</p>
+<p>&lt;IfModule dir_module&gt;<br />
+  <br />&#160;&#160;&#160; DirectoryIndex index.html index.php</p>
+<p>&lt;/IfModule&gt;</p>
+<p>这样的配置对两个端口都有效。</p>
+<p>
+  </p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>下面的转自 <a href="http://hi.baidu.com/fc_lamp/blog/item/c6905b1134d3f91b213f2ec4.html">http://hi.baidu.com/fc_lamp/blog/item/c6905b1134d3f91b213f2ec4.html</a></p>
+<p><strong>如何通过 apache VirtualHost 来设置多个虚拟主机（在本地 </strong><strong>通过 apache VirtualHost 来设置虚拟主机</strong><strong>）</strong></p>
+<p>(多个域名指向同一个IP)<strong><br />
+    <br /></strong></p>
+<p>在开始之前，我们看看这个资料：</p>
+<p>Apache 虚拟主机说明：<br />
+  <br />虚拟主机和分为两种：</p>
+<p>1： 基与（ip）的虚拟主机</p>
+<p>基于IP的虚拟主机使用链接的IP地址来决定相应的虚拟主机。</p>
+<p>你就需要为每个主机设定一个独立的IP地址。</p>
+<p>2：基与（域名）的虚拟主机<br />
+  <br />根据客户端提交的HTTP头中的关于主机名的部分决定的。</p>
+<p>很多虚拟主机可以享用同一个IP地址。</p>
+<p>具体使用：</p>
+<p>你只需要配置你的DNS服务器将每个主机名映射到正确的IP地址。</p>
+<p>也就是添加（主机记录）。</p>
+<p>然后配置你httpd 另其辨识不同的主机名就可以了。</p>
+<p>基于域名的虚拟主机也可以缓解IP地址不足的问题。</p>
+<p>基于域名的虚拟主机使用的模块。（core）</p>
+<p>相关配置语法：</p>
+<p>DocumentRoot</p>
+<p>NameVirtualHost</p>
+<p>ServerAlias</p>
+<p>ServerName</p>
+<p>ServerPath</p>
+<p>VirtualHost</p>
+<p>为了使用基于域名的虚拟主机，你必须指定服务器IP地址（和可能的端口）来使主机接受请求。</p>
+<p>1、以用NameVirtualHost指令来进行配置。 如果服务器上所有的IP地址都会用到， 你可以用*作为NameVirtualHost的参数。</p>
+<p>请注意，在NameVirtualHost指令中指明了IP地址并不会使服务器侦听那个IP地址。 这里设定的IP地址必须对应服务器上的一个网络接口。</p>
+<p>2、下一步就是为你建立的每个主机设定&lt;VirtualHost&gt;配置块。<br />
+  <br />•VirtualHost&gt;的参数与NameVirtualHost指令的参数是一样的 （比如说，一个IP地址，或是*代表的所有地址）。</p>
+<p>•每个&lt;VirtualHost&gt;定义块中，至少都会有一个ServerName指令来指定伺服哪个主机和一个DocumentRoot指令来说明这个主机的内容存在于文件系统的什么地方。</p>
+<p>以此来区别不同的虚拟主机。</p>
+<p>什么情况不能用：<br />
+  <br />SSL protocol 决定了基于域名的虚拟主机无法成为SSL安全服务器。</p>
+<p>操作系统和网络设备实现的带宽管理技术无法在主机共享一个IP的情况下区别它们。</p>
+<p>以上信息来至：<a href="http://bbs.51cto.com/thread-23274-1-1.html">http://bbs.51cto.com/thread-23274-1-1.html</a></p>
+<p>看了以上资料后，我们再来实现一下：首先这里由于我们只是在本地测试，所以我们的IP与域名的映射做法与提供商的不一样。</p>
+<p>如果你的是WIN 操作系统，可这样做：</p>
+<p>1 首先打开HOSTS文件：（你可以在 C:\WINDOWS\system32\drivers\etc 这个目录下找到它）</p>
+<p>&#160;&#160; 进行这样编辑：</p>
+<p>&#160;&#160; 127.0.0.1&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; www.one.com<br />
+  <br />&#160;&#160; 127.0.0.1&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; www.two.com</p>
+<p>这样做的原因在于：Windows 系统会先检查自己的Hosts文件中是否有这个网络域名映射关系。如果有，则调用这个IP地址映射，如果没有，再向已知的DNS服务器提出域名解析。也就 是说hosts文件实际上可以看成是一个本机的DNS系统，它可以负责把域名解释成IP地址，它的优先权比DNS服务器要高。</p>
+<p>让具体你可以参考这篇文章<a href="http://hi.baidu.com/fc_lamp/blog/item/fd596f138d583dddc2fd7867.html">《域名访问提示，域名纠错系统等问题如何解决》</a></p>
+<p>2 在打开apache的config文件：一般情况下你可以在apache的安装目录(conf/)里找到 httpd.conf文件进行设置，也可能是在 conf/extra/httpd-vhosts.conf 文件里</p>
+<p>然后进行这样编辑：</p>
+<p>#这里默认是80端口</p>
+<p>NameVirtualHost 127.0.0.1<br />
+  <br />&lt;VirtualHost 127.0.0.1&gt;</p>
+<p>&#160;&#160;&#160; DocumentRoot &quot;这里是你的网站根目录&quot;</p>
+<p>&#160;&#160;&#160; ServerName www.one.com</p>
+<p>&lt;/VirtualHost&gt;</p>
+<p>&lt;VirtualHost 127.0.0.1&gt;</p>
+<p>&#160;&#160;&#160; DocumentRoot &quot;这里是你的网站根目录&quot;</p>
+<p>&#160;&#160;&#160; ServerName&#160; www.two.com</p>
+<p>&lt;/VirtualHost&gt;</p>
+<p>然后：重启apache 就OK了</p>

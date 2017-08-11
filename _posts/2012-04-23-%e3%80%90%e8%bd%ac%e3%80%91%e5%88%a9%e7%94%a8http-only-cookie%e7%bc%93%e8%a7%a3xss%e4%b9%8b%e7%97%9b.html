@@ -1,0 +1,56 @@
+---
+layout: post
+title: "【转】利用HTTP-only Cookie缓解XSS之痛"
+date: 2012-04-23 11:04:13.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+- "安全"
+tags:
+- xss
+meta:
+  views: '35'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<blockquote>
+<p>转自<a href="http://netsecurity.51cto.com/art/200902/111143.htm">http://netsecurity.51cto.com/art/200902/111143.htm</a> ,作者康凯 。这篇文章讲了典型的xss攻击的步骤。</p>
+</blockquote>
+<p>【51CTO.com 独家特稿】在Web安全领域，跨站脚本攻击时最为常见的一种攻击形式，也是长久以来的一个老大难问题，而本文将向读者介绍的是一种用以缓解这种压力的技术，即HTTP-only cookie。</p>
+<p>我们首先对HTTP-only cookie和跨站脚本攻击做了简单的解释，然后详细说明了如何利用HTTP-only cookie来保护敏感数据，最后介绍了实现HTTP-only cookie时确定浏览器版本的具体问题。</p>
+<p><strong>一、XSS与HTTP-only Cookie简介</strong></p>
+<p>跨站点脚本攻击是困扰Web服务器安全的常见问题之一。跨站点脚本攻击是一种服务器端的安全漏洞，常见于当把用户的输入作为HTML提交时，服务器端没有进行适当的过滤所致。跨站点脚本攻击可能引起泄漏Web 站点用户的敏感信息。为了降低跨站点脚本攻击的风险，微软公司的Internet Explorer 6 SP1引入了一项新的特性。</p>
+<p>这个特性是为Cookie提供了一个新属性，用以阻止客户端脚本访问Cookie。</p>
+<p>像这样具有该属性的cookie被称为HTTP-only cookie。包含在HTTP-only cookie中的任何信息暴露给黑客或者恶意网站的几率将会大大降低。下面是设置HTTP-only cookie的一个报头的示例：</p>
+<p>Set-Cookie: USER=123; expires=Wednesday, 09-Nov-99 23:12:40 GMT; HttpOnly</p>
+<p>上面我们介绍了HTTP-only Cookie；下面我们开始向读者介绍跨站点脚本攻击、允许通过脚本访问的cookie所带来的潜在危险以及如何通过HTTP-only来降低跨站点脚本攻击的风险。&#160;&#160; </p>
+<p>跨站点脚本攻击是一种服务器端常见的安全漏洞，它使得黑客可以欺骗用户从而导致用户在某个Web 站点上的敏感信息的泄漏。下面通过一个简单的示例来解释一个跨站点脚本攻击的相关步骤。</p>
+<p><strong>二、跨站点脚本攻击示例</strong></p>
+<p>为了解释跨站点脚本攻击是如何被黑客利用的，我们假想了下面的一个例子：</p>
+<p>A证券公司运行了一个Web 站点，该站点允许您跟踪某股票的最新价格。为了提高用户体验，登录A证券公司的Web 站点之后，你将被重定向到<a href="http://www.azhengquan.com/default.asp?name%20=%20%3C%20script%20%3E%20evilScript()%3C%20/%20script">www.azhengquan.com/default.asp?name = &lt; script &gt; evilScript()&lt; / script</a> &gt;张三，并且有一个服务器端脚本生成一个欢迎页面，内容为“欢迎您回来，张三！”。</p>
+<p>你的股票数据被存放在一个数据库中，并且Web 站点会在你的计算机上放置一个cookie，其中包含了对这个数据库非常重要的数据。每当你访问A证券公司站点时，浏览器都会自动发送该cookie。</p>
+<p>一个黑客发现A证券公司公司的Web 站点存在一个跨站点脚本攻击缺陷，所以他决定要利用这点来收集你所持股票的名称等敏感信息。黑客会您你发送一封电子邮件，声称您中奖了，并且需要点击某个链接如“点击这里”来领取奖品。注意，该链接将超链接到<a href="http://www.azhengquan.com/default.asp?name">www.azhengquan.com/default.asp?name</a>=&lt; script &gt;evilScript()&lt; / script &gt; 当您点击这个链接，映入眼帘您的将是“欢迎您回来！”—— 等等，您的姓名哪里去了？事实上，单击电子邮件内的链接之后，你实际上就是在通知A证券公司公司的Web 站点，你的姓名是&lt; script&#160; &gt; evilScript()&lt;&#160; /script &gt;。Web服务器把用这个“名字”生成的HTML返回给你，但是你的浏览器会把这个“名字”作为脚本代码解释，脚本执行后便出现了我们前面看到的一幕。一般情况下，支持客户端脚本是浏览器的典型功能之一。如果这个脚本命令浏览器向黑客的计算机发回一个cookie，即使这个cookie包含有您的股票的有关信息，您的浏览器也会老老实实地执行。最后，那些来自A证券公司的Web 站点的指令获取了那个包含敏感信息的cookie。</p>
+<p>下面是跨站脚本攻击的示意图，它详细的展示了攻击的五个步骤。首先，用户点击了黑客发来的电子邮件中的一个嵌入的链接（第1步）。由于跨站点脚本攻击缺陷的原因，这样会导致用户的浏览器向Web 站点发送一个请求（第2步）；服务器端根据该请求会生成一个包含恶意脚本的响应，并将其发回给用户的浏览器（第3步）。当用户的机器执行返回的恶意代码时（第4步），就会将用户的敏感数据发送给黑客的计算机（第5步）。</p>
+<p><a href="http://images.51cto.com/files/uploadimg/20090223/150253432.gif"><img border="0" alt="" src="{{ site.baseurl }}/assets/150253432.gif" width="498" /></a></p>
+<p>图1</p>
+<p>我们可以看到，这个过程只需要用户单击了一个链接，然后就会有指令发送给Web服务器，然后Web服务器生成一个嵌入恶意脚本的网页；浏览器运行这个来自受信任的源的脚本，却致使信息泄漏给黑客的计算机。跨站点脚本攻击有许多不同的形式，这里只是其中的一种。</p>
+<p><strong>三、用HTTP-only Cookie保护数据</strong></p>
+<p>为了缓解跨站点脚本攻击带来的信息泄露风险，Internet Explorer 6 SP1为Cookie引入了一个新属性。这个属性规定，不许通过脚本访问cookie。使用HTTP-only Cookie后，Web 站点就能排除cookie中的敏感信息被发送给黑客的计算机或者使用脚本的Web站点的可能性。</p>
+<p>Cookie通常是作为HTTP 应答头发送给客户端的，下面的例子展示了相应的语法（注意，HttpOnly属性对大小写不敏感）：</p>
+<p>Set-Cookie: =[; =]    <br />[; expires=][; domain=]     <br />[; path=][; secure][; HttpOnly]</p>
+<p>即使应答头中含有HttpOnly属性，当用户浏览有效域中的站点时，这个cookie仍会被自动发送。但是，却不能够在Internet Explorer 6 SP1中使用脚本来访问该cookie，即使起初建立该cookie的那个Web 站点也不例外。这意味着，即使存在跨站点脚本攻击缺陷，并且用户被骗点击了利用该漏洞的链接，Internet Explorer也不会将该cookie发送给任何第三方。这样的话，就保证了信息的安全。    <br />注意，为了降低跨站点脚本攻击带来的损害，通常需要将HTTP-only Cookie和其他技术组合使用。如果单独使用的话，它无法全面抵御跨站点脚本攻击。</p>
+<p><strong>四、支持HTTP-only Cookie的浏览器</strong></p>
+<p>如果Web 站点为不支持HTTP-only Cookie的浏览器建立了一个HTTP-only cookie的话，那么该cookie不是被忽略就是被降级为普通的可以通过脚本访问的cookie。这还是会导致信息容易被泄露。</p>
+<p>对于公司内部网中的web页面，管理员可以要求所有用户都是由支持HTTP-only Cookie的浏览器，这样能保证信息不会由于跨站点脚本攻击缺陷而泄露。</p>
+<p>对于公共Web 站点，由于需要支持各种各样的浏览器，这时可以考虑使用客户端脚本来确定不同访问者所使用的浏览器的版本。Web 站点可以通过向支持～的浏览器发送敏感信息以减轻跨站点脚本攻击对Cookie的威胁。对于那些使用不支持HTTP-only Cookie的浏览器的访问者，可以限制为其提供的信息或功能，并要求升级他们的软件。</p>
+<p>当确定Internet Explorer的版本时，重要的是记住Internet Explorer 6 SP1 的用户代理字符串跟Internet Explorer 6的用户代理字符串是一样的。客户端脚本还必须使用navigator对象的appMinorVersion属性检测主版本号，这样才能确定出客户端是否安装了Internet Explorer 6 SP1。</p>
+<p><strong>五、小结</strong></p>
+<p>在Web安全领域，跨站脚本攻击时最为常见的一种攻击形式，也是长久以来的一个老大难问题，而本文将向读者介绍一种用以缓解这种压力的技术，即HTTP-only cookie。我们首先对HTTP-only cookie和跨站脚本攻击做了简单的解释，然后详细说明了如何利用HTTP-only cookie来保护敏感数据，最后介绍了实现HTTP-only cookie时确定浏览器版本的具体问题。</p>
+<p>【51CTO.COM 独家特稿，转载请注明出处及作者！】</p>
+<p><font color="#0000ff">[PS:参见</font><a href="http://www.infoq.com/cn/articles/cookie-security"><font color="#0000ff">http://www.infoq.com/cn/articles/cookie-security</font></a><font color="#0000ff">]</font></p>

@@ -1,0 +1,28 @@
+---
+layout: post
+title: form action属性默认值与method属性相关的一个问题
+date: 2012-09-29 10:59:27.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- html
+meta:
+  views: '145'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>form大家都很熟悉，都用老的了。这次我就碰到这么个问题，我想使用form来提交查询参数，但是要达到刷新页面这些参数还在的效果，那么最好是使用get方法来提交了。但是我不希望设置action,这样就不用关心原来的url了，而且不会冲掉之前的url参数。</p>
+<p>但是get方法和post方法不一样：</p>
+<p>get方法下，会将input里面的值添加到url后面，<font color="#0000ff">原来的参数会冲掉</font>。</p>
+<p>post方法下，会将input里面的值作为http内容提交，因此不会影响原来的url也不会冲掉参数。</p>
+<p>就是这个区别，会对你的编程思路造成影响。如果使用get,那么你还需要将之前的想办法参数手动保留下来，例如将参数写入input。</p>
+<p>如果用post，你可能需要注意重置一些参数。</p>
+<p>&#160;</p>
+<p>明天国庆，节日快乐！</p>

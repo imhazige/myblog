@@ -1,0 +1,33 @@
+---
+layout: post
+title: jdk7动态语言支持，java是到底是不是动态语言？
+date: 2013-09-12 11:43:23.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- apple
+- java
+- object c
+tags: []
+meta:
+  views: '92'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>最近看objectc，它是动态语言，<a title="http://en.wikipedia.org/wiki/Objective-C#Dynamic_typing" href="http://en.wikipedia.org/wiki/Objective-C#Dynamic_typing">http://en.wikipedia.org/wiki/Objective-C#Dynamic_typing</a></p>
+<p>&#160;</p>
+<p>又这篇文章看到jdk7中jvm对动态语言的支持<a title="http://www.oracle.com/technetwork/issue-archive/2010/10-may/o30java-099612.html" href="http://www.oracle.com/technetwork/issue-archive/2010/10-may/o30java-099612.html">http://www.oracle.com/technetwork/issue-archive/2010/10-may/o30java-099612.html</a></p>
+<p>&#160;</p>
+<p>中文翻译</p>
+<p><a title="http://developer.51cto.com/art/200907/139414.htm" href="http://developer.51cto.com/art/200907/139414.htm">http://developer.51cto.com/art/200907/139414.htm</a></p>
+<p>&#160;</p>
+<p>这篇文章明确指出java是静态语言（编译时类型检查），但是jdk7支持了JSR292，所以jvm支持动态语言。以前的jruby和jpython实现在jvm上都比较吃力，现在由于JSR292就方便多了。</p>
+<p>&#160;</p>
+<p>但是动态语言的定义我还比较模糊，像javascript通过eval可以执行代码，类型可以运行时定义，这个无可厚非是动态类型语言。然而object c的动态从文档上看主要是运行时决定对象类型（消息调用机制），并不能运行时定义类型吧。但它就是动态语言（运行时类型检查）。</p>
+<p>&#160;</p>
+<p>总之java是静态语言。</p>

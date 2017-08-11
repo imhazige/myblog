@@ -1,0 +1,32 @@
+---
+layout: post
+title: https 跨域问题
+date: 2011-06-30 11:33:10.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- ajax
+- https
+meta:
+  views: '667'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>http转向https后，原来相对ajax请求仍然是有效地，因为他们是一个域。</p>
+<p>例如部署了web项目abc.war到tomcat下面，原来请求<a href="http://localhost:8080/abc/index.html">http://localhost:8080/abc/index.html</a></p>
+<p>这个页面有ajax请求test.ajax 好，一切ok.</p>
+<p>然后你配置了tomcat https端口为8043,你再请求<a href="https://localhost:8043/abc/index.html">https://localhost:8043/abc/index.html</a></p>
+<p>发现ajax请求也变为<a href="https://localhost:8043/abc/test.ajax">https://localhost:8043/abc/test.ajax</a>,一切仍然ok.过渡很平滑是不是。</p>
+<p>但是如果你在<a href="http://localhost:8080/abc/index.html">http://localhost:8080/abc/index.html</a>里面请求<a href="https://localhost:8043/abc/test.ajax">https://localhost:8043/abc/test.ajax</a> 那就是跨域了，会执行错误。</p>
+<p>另外ie对跨域的要求更严格：</p>
+<p>比如给一个图片赋值img.src=’url’</p>
+<p>在<a href="http://localhost:8080/abc/index.html">http://localhost:8080/abc/index.html</a> 中将img.src付给https域，则会提示是否允许。</p>
+<p>而在https域中将img.src付给http域或其他域则直接导致脚本错误。</p>
+<p>这就导致使用https 情况下new Image().src跨域的方式行不通了。</p>

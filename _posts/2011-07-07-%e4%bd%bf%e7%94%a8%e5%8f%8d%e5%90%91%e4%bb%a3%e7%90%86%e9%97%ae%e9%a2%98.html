@@ -1,0 +1,39 @@
+---
+layout: post
+title: "使用反向代理问题"
+date: 2011-07-07 11:43:45.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- java
+- web
+meta:
+  views: '28'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>之前写了函数如下:</p>
+<div>
+<pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> String buildUrl(String strHost, String strContext, String argAbsolutePath)
+	{
+		<span style="color: #0000ff">if</span> (!argAbsolutePath.startsWith(&quot;<span style="color: #8b0000">/</span>&quot;))
+		{
+			argAbsolutePath = &quot;<span style="color: #8b0000">/</span>&quot; + argAbsolutePath;
+		}
+		<span style="color: #0000ff">return</span> MessageFormat.format(&quot;<span style="color: #8b0000">http://{0}{1}{2}</span>&quot;, <span style="color: #0000ff">new</span> Object[] { strHost, strContext, argAbsolutePath });
+	}</pre>
+</div>
+<p>什么意思大家应该懂，以前一直都没问题，现在用上反向代理后，就出问题了。</p>
+<p>从请求头获得的host居然是相对于反向代理服务器的地址。</p>
+<p>使用的是apache，发现可以通过设置ProxyPreserveHost 为On来不改变原始host值。</p>
+<p>当然即使不开ProxyPreserveHost 选项apache也会加个<code>X-Forwarded-Host</code>来获得原始host,不过这个头不是标准http头。</p>
+<p>这样的话还是有问题的，你只获得了host还有后面的原始context部分怎么得呢？</p>
+<p>这就要求使用相对定位来安排资源。
+  </p>

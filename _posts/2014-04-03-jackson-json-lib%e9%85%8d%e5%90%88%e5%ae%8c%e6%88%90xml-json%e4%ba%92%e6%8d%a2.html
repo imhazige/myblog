@@ -1,0 +1,88 @@
+---
+layout: post
+title: jackson json-lib配合完成xml json互换
+date: 2014-04-03 18:07:58.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- Jackson
+- json
+- xml
+meta:
+  views: '139'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>前段时间优化性能，将原来用的json-lib转换为了jackson，现在要解析xml，发现jaconson解析xml有问题，它对数组元素直解析最后一个，真不知是出于什么考虑？</p>
+<p>&#160;</p>
+<p>而json-lib则没有这个问题，但是json-lib输出的json格式有些多余的双引号转义，不是很标准，它生成的json是无法让jackson解析的。</p>
+<p>&#160;</p>
+<p>尝试了xstream，要自己写代码解析，不能用。</p>
+<p>&#160;</p>
+<p>最后只好两个结合起来用：</p>
+<p>&#160;</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:95e3f4be-ffee-4d15-aec2-dda1c3b05351" class="wlWriterEditableSmartContent">
+<pre name="code" class="java">  public static Map&lt;String,Object&gt; parseXml(String xml){
+        try
+        {
+            xml = xml.replaceAll("&gt;\s+&lt;", "&gt;&lt;");
+            JSON json1 = (new XMLSerializer()).read(xml);
+            String resoult = null;
+            Map&lt;String,Object&gt; map = null;
+            if(json1.isArray())
+            {
+                JSONArray jsonarray = (JSONArray)json1;
+                map = (Map&lt;String,Object&gt;)jsonarray.get(0);
+            }else{
+                map = (Map&lt;String,Object&gt;)json1;
+            } 
+
+            return map;
+        }
+        catch (Exception e)
+        {
+            throw ExceptionUtils.silence(e);
+        }
+    }
+</pre>
+</div>
+<p>&#160;</p>
+<p>转换为map后就好说了，再用jackson来转换为string</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:d5ddfec2-16de-4640-8b42-77833859897c" class="wlWriterEditableSmartContent">
+<pre name="code" class="java">public static String toJsonString(Object obj) {
+		if (null == obj) {
+			return "null";
+		}
+		StringWriter writer = new StringWriter();
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			mapper.writeValue(writer, obj);
+		} catch (Exception e) {
+			throw ExceptionUtils.silence(e);
+		}
+
+		return writer.toString();
+	}</pre>
+</div>
+<p>&#160;</p></p>
+<p>maven依赖：</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:cc8dadf3-39c6-4daf-ac60-d33f83597e0b" class="wlWriterEditableSmartContent">
+<pre name="code" class="xml">&lt;dependency&gt;
+			&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+			&lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
+			&lt;version&gt;2.2.3&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;net.sf.json-lib&lt;/groupId&gt;
+			&lt;artifactId&gt;json-lib&lt;/artifactId&gt;
+			&lt;version&gt;2.4&lt;/version&gt;
+			&lt;classifier&gt;jdk15&lt;/classifier&gt;
+		&lt;/dependency&gt;</pre>
+</div>

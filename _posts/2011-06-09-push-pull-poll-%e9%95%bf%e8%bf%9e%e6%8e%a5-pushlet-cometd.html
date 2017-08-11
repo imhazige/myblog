@@ -1,0 +1,122 @@
+---
+layout: post
+title: push pull poll 长连接 websocket pushlet cometd
+date: 2011-06-09 16:16:07.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+- Web前端
+tags:
+- comet
+- javascript web 前端
+meta:
+  views: '2229'
+  _oembed_a920150c767e80b356fd2a5e5b604662: "{{unknown}}"
+  _oembed_0aa360c8a55da7fd48bc4457a935c4bb: "{{unknown}}"
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>IBM总结文章:</p>
+<p>http://www.ibm.com/developerworks/cn/web/wa-lo-comet/</p>
+<p>&#160;</p>
+<p>里面推荐的pushlet之前使用过的，这次再看一下，看源码和试验ajax push实质仍然是pull技术。?</p>
+<p>它的脚本库没有考虑到其他脚本库，使用window.onEvent来作为回调，不是很好。</p>
+<p>示例不是很好，只写了pull方式的。</p>
+<p>不建议用，看到用的人没多少,网上的帖子都是粘来粘去，没有实际的例子，日期很早，最近的没有。</p>
+<p>看他的文档也写的不清楚，看了一天没看明白，还是不知道怎么用。确定不是自己理解力问题。</p>
+<p>&#160;</p>
+<p>webqq通过观察应该是长轮询,再看到这边篇帖子的大讨论:</p>
+<p>http://www.iteye.com/topic/785931?page=7</p>
+<p>主要以下几点：</p>
+<p>认为是长轮询实现</p>
+<p>认为长轮询较好： </p>
+<p>长轮询的优势是，如果没有消息，客户端N秒才会有一次请求。    <br />如果有消息，也会立即发送到客户端。（如果刚好回应完一个请求时有新消息... 还是有一定延时）     <br />与iframe + script方式的长连接相比，它实现更简单，也不会在浏览器下显示“正在加载”信息。</p>
+<p>按个人理解，使用带部分缓冲的长轮询能减少服务器开锁    <br />即有新消息并不立即返回，而是等待一定时间，以免消息频繁时过多轮询。[这又存在延迟的问题] </p>
+<p>长连接存在进度条一直加载的问题。</p>
+<p>&#160;</p>
+<p>服务端要配合使用nio(tomcat6.jetty支持)较好，否则压力较大。</p>
+<p>别的实现有使用cometD的。</p>
+<p>&#160;</p>
+<p>之前自己做过长连接，主要问题是浏览器一直在转，让人很不舒服，而且容易崩溃。</p>
+<p>flash主要是防火墙的问题。</p>
+<p>&#160;</p>
+<p>长轮询比较好实现，注意客户端要延长超时时间。</p>
+<p>一般的长poll是不需要comet就可以实现的，只不过Tomcat6之后支持Bayeux协议可以使用nio/异步servlet来提高性能。</p>
+<p>Ext.Ajax.request({    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; url : 'LongPoll',     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; timeout:360000,//延长超时     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; success : function(response, opts) {     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; console.log('finish');     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; dorq();     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; },     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; failure : function(response, opts) {     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; console.log('server-side failure with status code '     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; + response.status);     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; }     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; });</p>
+<p>&#160;</p>
+<p>这里有一些列很好的文章:</p>
+<p><strong>反向Ajax:</strong></p>
+<p>第1部分：Comet介绍 <a href="http://kb.cnblogs.com/page/112185/">http://kb.cnblogs.com/page/112185/</a></p>
+<p><strong></strong></p>
+<blockquote><p>Forever Iframe</p>
+<p> Forever Iframe（永存的Iframe）技术涉及了一个置于页面中的隐藏Iframe标签，该标签的src属性指向返回服务器端事件的servlet路径。每次在事件到达时，servlet写入并刷新一个新的script标签，该标签内部带有JavaScript代码，iframe的内容被附加上这一script标签，标签中的内容就会得到执行。</p>
+<p> 1. 优点：实现简单，在所有支持iframe的浏览器上都可用。</p>
+<p> 2. 缺点： 没有方法可用来实现可靠的错误处理或是跟踪连接的状态，因为所有的连接和数据都是由浏览器通过HTML标签来处理的，因此你没有办法知道连接何时在哪一端已被断开了。</p>
+<p>Multi-part XMLHttpRequest</p>
+</blockquote>
+<blockquote><p>1. 优点：只打开了一个持久连接，这就是节省了大部分带宽使用率的Comet技术。</p>
+<p>2. 缺点：并非所有的浏览器都支持multi-part标志。某些被广泛使用的库，比如说用Java实现的CometD，被报告在缓冲方面有问题。例如，一些数据块（多个部分）可能被缓冲，然后只有在连接完成或是缓冲区已满时才被发送，而这有可能会带来比预期要高的延迟。</p>
+</blockquote>
+<p><font color="#0000ff">流方式,服务端要知道客户端是否关闭也是个问题，否则客户端已经断开，服务端仍在运行，可能的解决办法是心跳，那不跟poll差不多了。</font></p>
+<p>第2部分: WebSocket <a href="http://kb.cnblogs.com/page/112616/">http://kb.cnblogs.com/page/112616/</a></p>
+<p>第3部分：Web服务器和Socket.IO <a href="http://kb.cnblogs.com/page/114594/">http://kb.cnblogs.com/page/114594/</a></p>
+<p>第4部分：Atmosphere和CometD <a href="http://kb.cnblogs.com/page/116653/">http://kb.cnblogs.com/page/116653/</a></p>
+<blockquote><p>Atmosphere和CometD都是稳定的、开源的反向Ajax解决方案，我们在Ovea选用的是CometD，因为我们在一个集群环境内部为移动设备开发可伸缩的事件驱动应用，我们完全掌控基础设施（我们使用Jetty）。不过，在没有额外开发的情况下，如果你正在出售web应用且希望你的反向Ajax功能在尽可能多的服务器上都可运作的话，CometD可能不是最好的选择。但现在随着越来越多的Web应用开始支持Servlet 3.0规范，CometD的局限性呈下降趋势。说到传输层，余下的主要差异则取决于对WebSocket的支持。</p>
+</blockquote>
+<p><font color="#0000ff">关于servlet 3.0 参见 </font><a href="http://kazge.com/archives/635.html"><font color="#0000ff">http://kazge.com/archives/635.html</font></a><font color="#0000ff"> ，在此文中主要指异步servlet处理。Ovea是php网站，但是使用java的CometD来做comet服务？</font></p>
+<p><font color="#0000ff">作者还是倾向于cometD,但是cometD要求jetty6以上以及任何支持Servlet 3.0规范的服务器中</font></p>
+<p>第5部分：事件驱动的Web开发 <a href="http://kb.cnblogs.com/page/117099/">http://kb.cnblogs.com/page/117099/</a></p>
+<p>comet有多种实现，long poll，长连接，上面的文章仍然推荐long poll。</p>
+<p>cometD可以使用websocket作为传输协议。</p>
+<p>WebSockets与Bayeux/CometD <a href="http://www.infoq.com/cn/news/2010/05/websockets-bayeux">http://www.infoq.com/cn/news/2010/05/websockets-bayeux</a></p>
+<p>文中提到的Greg Wilkins是jetty作者</p>
+<p><a href="http://www.htmlgoodies.com/html5/tutorials/making-html5-websockets-work.html#fbid=x32iZkQSYda">http://www.htmlgoodies.com/html5/tutorials/making-html5-websockets-work.html#fbid=x32iZkQSYda</a></p>
+<p>此文中写道支持websocket的浏览器有：</p>
+<table border="1" cellspacing="0" summary="WebSocket Support in Modern Browsers" cellpadding="3">
+<tbody>
+<tr>
+<th>IE</th>
+<th>Firefox</th>
+<th>Chrome</th>
+<th>Safari</th>
+<th>Opera</th>
+</tr>
+<tr>
+<td>10~</td>
+<td>6.0</td>
+<td>14.0</td>
+<td>5.0 (partial support*)</td>
+<td>11.0 (partial support*)</td>
+</tr>
+</tbody>
+</table>
+<p>支持webscoket的服务容器有</p>
+<p>Java的Jetty(原文竟然写作Betty)&#160; Oracle的Glassfish</p>
+<p>php 的Wamp and XAMPP, lighttpd的mod_websocket</p>
+<p>python的<a href="http://www.tornadoweb.org/">Tornado</a></p>
+<p>nodejs + <a href="http://socket.io/">http://socket.io/</a>&#160; (socket.io是javascript库，包括服务端和客户端,所以要在nodejs上跑了)</p>
+<p>微软的那就不说了</p>
+<p>&#160;</p>
+<h3><font color="#0000ff">再来总结一下：</font></h3>
+<p>Well，本来是想找到关于websocket的有利消息，但是让我失望了。原因是:</p>
+<p>1:目前主流的php服务器支持不行:apache,ngix不支持, java中的tomcat7,jboss7,webshpere8都还没支持。</p>
+<p>2:浏览器支持也不给力:目前只FF6,Chrome14支持，况且websocket还只是个html5草案。</p>
+<p>3:假使花个大力气做出来了，然后你发现其实long poll也能同样做的更好，不知你会怎么想。</p>
+<h5>再来看看CometD这个东西:</h5>
+<p>引用<a href="http://kb.cnblogs.com/page/116653/">http://kb.cnblogs.com/page/116653/</a> 中的话:</p>
+<blockquote><p>1. 优点</p>
+<p>从客户端到服务器端，以及从一个独立的Java客户端到服务器端，CometD提供了一个完整的解决方案。框架有详尽的文档说明，有一个很好的API，且非常容易使用。最重要的是，它拥有一种事件驱动的方法。CometD和Bayeux是许多事件驱动应用的构成部分，其他的反向Ajax框架并未提供任何的事件驱动机制，使得最终用户不得不开发自己的定制解决方案。</p>
+<p>javascript有dojo和jquery的支持。</p>
+<p>CometD支持许多必需的功能，比如说重连接、可靠的超时检测、回退、批处理、消息确认，以及更多你不会在其他反向Ajax框架中找得到的功能。CometD可让你实现最可靠的、低延时的通信。</p>
+<p>2. 缺点      <br />除了Jetty for Comet（Tomcat）之外，CometD目前并未支持任何的Servlet 2.5容器，其也不支持Glassfish/Grizzly WebSocket。</p>
+</blockquote>
+<p>我的观点:</p>
+<p>java实现,所以，关php什么事？关那么多的php 应用什么事？这不过是java众多框架中的又一个。</p>
+<p>不支持Servlet 2.5容器,我自己实现long poll还不是一样？啊，对，它在上面封装了一层，不过这个转换服务器的情况真的很可能发生吗？即使会，转换的工作会很难吗？它的封装对性能有影响吗？</p>
+<p>我难道有点势力吗，用了java鄙视.net,用了php轻视java?</p>

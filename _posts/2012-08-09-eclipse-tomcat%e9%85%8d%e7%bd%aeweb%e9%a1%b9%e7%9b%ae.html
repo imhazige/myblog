@@ -1,0 +1,37 @@
+---
+layout: post
+title: Eclipse Tomcat配置Web项目
+date: 2012-08-09 10:49:59.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- eclipse
+- tomcat
+meta:
+  views: '115'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>现在越来越感到jee版本要求越来越高，我最顺手的myeclipse6 渐渐会碰到越来越多的兼容问题，是时候改用高版本eclipse了。</p>
+<p>以前用WASD6来开发，最要命的就是部署web,那个真是没有myeclipse的发布方便。</p>
+<p>这个eclipse里的WTP似乎就是WASD里面得东西(Eclipse本身就是IBM贡献的)，特不好用。</p>
+<p>这次记一下，以免忘记了。</p>
+<p>配置Tomcat我就不细说了，在servers中New一个，这个简单。</p>
+<p>主要是添加web项目属性:</p>
+<p><a href="http://kazge.com/wp-content/uploads/2012/08/Snap2.gif"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb.gif" width="1028" height="683" /></a> </p>
+<p>注意选择版本，可看到上图中的警告，web mudule3.0需要jdk6以上。</p>
+<p>再就是，web根目录默认是WebContent，这个似乎是和WSAD一样的。我还没试过哪里可以改这个选项。</p>
+<p>然后就可以通过Servers里面配置的Tomcat来Publish,Start,Stop项目了。</p>
+<p>这里Tomcat运行的目录并不是Tomcat安装目录下的webapps,而在Eclipse工作区</p>
+<p>/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps 中</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://www.cnblogs.com/jspace/archive/2011/04/04/2004947.html">http://www.cnblogs.com/jspace/archive/2011/04/04/2004947.html</a></p>
+<p><a href="http://blog.csdn.net/suixingbugai/article/details/6238526">http://blog.csdn.net/suixingbugai/article/details/6238526</a></p>

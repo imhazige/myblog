@@ -1,0 +1,153 @@
+---
+layout: post
+title: highcharts使用
+date: 2013-07-03 17:34:11.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- highcharts
+- javascript
+meta:
+  views: '312'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>之前用Rapheal画图表,自己写，一个两个还好，这次要画六个图表就有点够呛了，发现highchart挺不错的。</p>
+<p>这里是几个web图表比较:</p>
+<p><b><a href="http://socialcompare.com/en/comparison/javascript-graphs-and-charts-libraries">http://socialcompare.com/en/comparison/javascript-graphs-and-charts-libraries</a></b></p>
+<p><strong></strong></p>
+<p>highchart还是蛮多人支持的,只不过商业用途需要收费:</p>
+<p><b><a href="http://shop.highsoft.com/highcharts.html">http://shop.highsoft.com/highcharts.html</a></b></p>
+<p><strong></strong></p>
+<p>在线文档:</p>
+<p><a href="http://api.highcharts.com/highcharts">http://api.highcharts.com/highcharts</a></p>
+<p>&#160;</p>
+<p>这个在线demo可以直接jsfiddle编辑</p>
+<p><a href="http://www.highcharts.com/demo/">http://www.highcharts.com/demo/</a></p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>数据的格式:</p>
+<p><b><a href="http://api.highcharts.com/highcharts#series.data">http://api.highcharts.com/highcharts#series.data</a></b></p>
+<p><strong></strong></p>
+<p><strong>每个点附加自定义数据</strong></p>
+<p>如果你想传自定义数据，则应传对象,但要有y,(如果x轴不是category,则要传x)</p>
+<p>这样如果每个point格式为{x:1,y:2,mydata:’abc’},则在tooltip的formatter回调中可这样this.point.mydata获得mydata(shared为false时，一般建议shared为false,除非每个tip里要获得所有此x坐标上y点，这时就是this.point[i].mydata。)</p>
+<p>x,y轴都可以是datetime类型，但是传入的值应该是Date.getTime()的值。</p>
+<p>tickInterval是定义间隔的，但是如果是负数则会显示不正常。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p><strong>gauge chart</strong></p>
+<p>需要highharts-more.js,point.push方法如果传入的是{}则会改变指针颜色，可能是个bug,传数值就不会变。</p>
+<p>相关示例:</p>
+<p><a href="http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/plotoptions/gauge-dial/">http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/plotoptions/gauge-dial/</a></p>
+<p><a href="http://jsfiddle.net/CVJLV/">http://jsfiddle.net/CVJLV/</a></p>
+<p>但是这两个都不能解决update传入object问题,最后只好设置全局样式：</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:65b47a2a-979b-47e5-9f31-7800240331b3" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">Highcharts.setOptions({
+
+colors : ['#000', '#0d233a', '#8bbc21', '#910000',
+
+'#1aadce', '#492970', '#f28f43', '#77a1e5',
+
+'#c42525', '#a6c96a']
+
+});
+</pre>
+</div>
+<p>因为从源码里看只有colors 这个设置里第一个color是指针的颜色，改为#000(黑色即可)。</p>
+<p>这样你就可以向push方法里传object而指针颜色不变了。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p><strong>添加自定义button例子:</strong></p>
+<p><a href="http://jsfiddle.net/highcharts/2F4pJ/">http://jsfiddle.net/highcharts/2F4pJ/</a></p>
+<p><a href="http://stackoverflow.com/questions/9218490/highcharts-add-a-custom-image-button">http://stackoverflow.com/questions/9218490/highcharts-add-a-custom-image-button</a></p>
+<p>button配置:</p>
+<p><a href="http://api.highcharts.com/highcharts#exporting.buttons.contextButton.symbol">http://api.highcharts.com/highcharts#exporting.buttons.contextButton.symbol</a></p>
+<p>button的提示是_titleKey这个配置，但是它的值是lang里面的key,所以需要: </p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:0333e64c-611b-43bb-a398-93877daadabd" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">Highcharts.setOptions({ 
+
+lang : { 
+
+'Zoom Out' : 'Zoom Out' 
+
+} 
+
+}); 
+</pre>
+</div>
+<p>然后把Zoom Out这个设置为button的是_titleKey</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p><strong>从缩小到放大 </strong></p>
+<p>放大官方不支持,可通过方法</p>
+<p><a href="http://api.highcharts.com/highcharts#Axis.setExtremes()">http://api.highcharts.com/highcharts#Axis.setExtremes()</a></p>
+<p>来实现。基本思路是每次selection事件中存储上次的min,max值，每次实现放大时就设置axis的setExtremes为存储的值。</p>
+<p>例如:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:910e2f9f-86d3-4c3c-901a-57883b7d22d5" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">chartops.chart.events = {
+			selection : function(event) {
+				if (event.resetSelection) {
+					zoomInStack = [];
+					lastZoomData = false;
+				} else {
+					if (lastZoomData) {
+						zoomInStack.push(lastZoomData);
+					}
+					lastZoomData = [[event.xAxis[0].min, event.xAxis[0].max],
+							[event.yAxis[0].min, event.yAxis[0].max]];
+				}
+			}
+		};</pre>
+</div>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:15afaf3f-5280-4c5c-a619-cd71ad4ed2a3" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">		chartops.exporting = {
+			buttons : {
+				customButton : {
+					_titleKey : 'Zoom Out',
+					onclick : function() {
+						var hc = $(chartEl).highcharts();
+						if (!zoomInStack.length) {
+							hc.zoomOut();
+//							log('no length');
+							return;
+						}
+						var mm = zoomInStack.pop();
+						lastZoomData = false;
+						if (!mm) {
+//							log('no stack');
+							hc.zoomOut();
+							return;
+						}
+
+						hc.xAxis[0].setExtremes(mm[0][0], mm[0][1], false);
+						hc.yAxis[0].setExtremes(mm[1][0], mm[1][1]);
+//						log('zoomout', mm);
+					},
+					text : '[-]'
+				}
+			}
+		};</pre>
+</div>
+<p>chart.zoomOut这个方法是相当于resetZoom,回到原始比例,这个方法没有公开。</p>
+<p>隐藏resetZoom按钮:</p>
+<p>&#160;</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:2e6fb3e9-4688-44f2-93b9-f79b9762f038" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">chartops.chart.resetZoomButton = {
+			theme : {
+				display : 'none'
+			}
+		};</pre>
+</div>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>其实搞这么麻烦，也可以考虑<a href="http://www.fusioncharts.com/demos/gallery/#zoom-line">http://www.fusioncharts.com/demos/gallery/#zoom-line</a></p>
+<p>但是fushioncharts默认的样式觉得没有highcharts好看。</p>

@@ -1,0 +1,196 @@
+---
+layout: post
+title: jasig CAS 实战
+date: 2011-08-16 10:00:47.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- CAS
+- sso
+meta:
+  _oembed_f028f87b883659ee410c0f46b0d0a36b: "{{unknown}}"
+  _oembed_efcc99cef8adc7192d60260b8d7c901a: "{{unknown}}"
+  views: '1002'
+  _oembed_1dd63afa17ef8e55d9be0879e0cc455c: "{{unknown}}"
+  _oembed_52cebc8072903d6c425951f84ae64fbb: "{{unknown}}"
+  _oembed_9d0e8afe831a400587069c01b90eb6dd: "{{unknown}}"
+  _oembed_5aa77f97d79ac24e2e4445914248bf42: "{{unknown}}"
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>官网:</p>
+<p><a title="http://www.jasig.org/cas" href="http://www.jasig.org/cas">http://www.jasig.org/cas</a></p>
+<p><a title="http://www.jasig.org/cas/public-api" href="http://www.jasig.org/cas/public-api">http://www.jasig.org/cas/public-api</a> 这一页谈到为什么使用final关键字屏蔽了扩展，晕吧！</p>
+<p>用户手册: <a title="https://wiki.jasig.org/display/CASUM/Home" href="https://wiki.jasig.org/display/CASUM/Home">https://wiki.jasig.org/display/CASUM/Home</a></p>
+<p>使用clientfilter <a title="https://wiki.jasig.org/display/CASC/Using+CASFilter" href="https://wiki.jasig.org/display/CASC/Using+CASFilter">https://wiki.jasig.org/display/CASC/Using+CASFilter</a></p>
+<p>获取跟多用户信息: <a title="http://www.open-open.com/home/space-124-do-blog-id-791.html" href="http://www.open-open.com/home/space-124-do-blog-id-791.html">http://www.open-open.com/home/space-124-do-blog-id-791.html</a></p>
+<p><a title="http://www.ibm.com/developerworks/web/library/wa-singlesign/" href="http://www.ibm.com/developerworks/web/library/wa-singlesign/">http://www.ibm.com/developerworks/web/library/wa-singlesign/</a></p>
+<p><a title="http://www.iteye.com/topic/544899" href="http://www.iteye.com/topic/544899">http://www.iteye.com/topic/544899</a></p>
+<p>&#160;</p>
+<p>RESTFull Login: <a title="https://wiki.jasig.org/display/CASUM/RESTful+API" href="https://wiki.jasig.org/display/CASUM/RESTful+API">https://wiki.jasig.org/display/CASUM/RESTful+API</a></p>
+<p>这个文档写的不全，增加的maven引用没有完全写出来，为了能让在maven下跑起来，可费了不少功夫。</p>
+<p>下面是最终可跑的pom</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span style="color: #0000ff">?&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">project</span> <span style="color: #ff0000">xmlns</span>=<span style="color: #0000ff">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+	<span style="color: #ff0000">xmlns</span>:<span style="color: #ff0000">xsi</span>=<span style="color: #0000ff">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+	<span style="color: #ff0000">xsi</span>:<span style="color: #ff0000">schemaLocation</span>=<span style="color: #0000ff">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">modelVersion</span><span style="color: #0000ff">&gt;</span>4.0.0<span style="color: #0000ff">&lt;/</span><span style="color: #800000">modelVersion</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>edu.university.cas<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>cas-server<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">packaging</span><span style="color: #0000ff">&gt;</span>war<span style="color: #0000ff">&lt;/</span><span style="color: #800000">packaging</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>1.0-SNAPSHOT<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">build</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">plugins</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">plugin</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>maven-compiler-plugin<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">configuration</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">target</span><span style="color: #0000ff">&gt;</span>1.5<span style="color: #0000ff">&lt;/</span><span style="color: #800000">target</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">source</span><span style="color: #0000ff">&gt;</span>1.5<span style="color: #0000ff">&lt;/</span><span style="color: #800000">source</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">encoding</span><span style="color: #0000ff">&gt;</span>UTF-8<span style="color: #0000ff">&lt;/</span><span style="color: #800000">encoding</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;/</span><span style="color: #800000">configuration</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;/</span><span style="color: #800000">plugin</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">plugin</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>maven-war-plugin<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;</span><span style="color: #800000">configuration</span><span style="color: #0000ff">&gt;</span>				
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">warName</span><span style="color: #0000ff">&gt;</span>cas-server<span style="color: #0000ff">&lt;/</span><span style="color: #800000">warName</span><span style="color: #0000ff">&gt;</span>	
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">packagingExcludes</span><span style="color: #0000ff">&gt;</span>
+						**/spring-web-2.*,
+					<span style="color: #0000ff">&lt;/</span><span style="color: #800000">packagingExcludes</span><span style="color: #0000ff">&gt;</span>
+				<span style="color: #0000ff">&lt;/</span><span style="color: #800000">configuration</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;/</span><span style="color: #800000">plugin</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">plugins</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">build</span><span style="color: #0000ff">&gt;</span>
+
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependencies</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>org.jasig.cas<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>cas-server-support-jdbc<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>${cas.version}<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">scope</span><span style="color: #0000ff">&gt;</span>runtime<span style="color: #0000ff">&lt;/</span><span style="color: #800000">scope</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>	
+
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>org.jasig.cas<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>cas-server-webapp<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>${cas.version}<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">type</span><span style="color: #0000ff">&gt;</span>war<span style="color: #0000ff">&lt;/</span><span style="color: #800000">type</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">scope</span><span style="color: #0000ff">&gt;</span>runtime<span style="color: #0000ff">&lt;/</span><span style="color: #800000">scope</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>org.jasig.cas<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>cas-server-integration-restlet<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>${cas.version}<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">type</span><span style="color: #0000ff">&gt;</span>jar<span style="color: #0000ff">&lt;/</span><span style="color: #800000">type</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>mysql<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>mysql-connector-java<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>5.1.6<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>commons-pool<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>commons-pool<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>20030825.183949<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>commons-dbcp<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>commons-dbcp<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>20030825.184428<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+      		<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>com.noelios.restlet<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+      		<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>com.noelios.restlet<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+      		<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>1.1.1<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+    	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+		
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependencies</span><span style="color: #0000ff">&gt;</span>
+
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">properties</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">cas.version</span><span style="color: #0000ff">&gt;</span>3.4.2<span style="color: #0000ff">&lt;/</span><span style="color: #800000">cas.version</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">properties</span><span style="color: #0000ff">&gt;</span>
+
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">repositories</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">repository</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">id</span><span style="color: #0000ff">&gt;</span>ja-sig<span style="color: #0000ff">&lt;/</span><span style="color: #800000">id</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>
+				http://oss.sonatype.org/content/repositories/releases/
+			<span style="color: #0000ff">&lt;/</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">repository</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">repository</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">id</span><span style="color: #0000ff">&gt;</span>restlet<span style="color: #0000ff">&lt;/</span><span style="color: #800000">id</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>
+				http://maven.restlet.org/
+			<span style="color: #0000ff">&lt;/</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">repository</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">repositories</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">project</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p>上面的mysql以及jdbc support引用是由于我这个例子要使用mysql数据库验证才需要。</p>
+<p>&#160;</p>
+<p>
+  </p>
+<p><a title="http://denger.iteye.com/blog/973068" href="http://denger.iteye.com/blog/973068">http://denger.iteye.com/blog/973068</a></p>
+<p>最佳实践[自己编译]:</p>
+<p><a title="https://wiki.jasig.org/display/CASUM/Best+Practice+-+Setting+Up+CAS+Locally+using+the+Maven2+WAR+Overlay+Method" href="https://wiki.jasig.org/display/CASUM/Best+Practice+-+Setting+Up+CAS+Locally+using+the+Maven2+WAR+Overlay+Method">https://wiki.jasig.org/display/CASUM/Best+Practice+-+Setting+Up+CAS+Locally+using+the+Maven2+WAR+Overlay+Method</a></p>
+<p>这种方式基本是本地覆盖源码的配置达到定制化而又能与最新的源码同步。</p>
+<p>实际上只能覆盖配置，要自己扩展类还是很麻烦，引用的包没有。</p>
+<p>&#160;</p>
+<p>实践中在使用https时会遇到证书的问题(在tomcat里面验证成功跳转时什么错也没报却找不到页面的情况也是这个原因)，参见</p>
+<p><a title="http://hi.baidu.com/qq295361921/blog/item/489945d174d4f387a1ec9cfb.html" href="http://hi.baidu.com/qq295361921/blog/item/489945d174d4f387a1ec9cfb.html">http://hi.baidu.com/qq295361921/blog/item/489945d174d4f387a1ec9cfb.html</a></p>
+<p><a title="http://kazge.com/archives/400.html" href="http://kazge.com/archives/400.html">http://kazge.com/archives/400.html</a></p>
+<p>&#160;</p>
+<h2>总结一下：</h2>
+<h6>1 怎样使用已有的用户系统来验证?</h6>
+<p>way 1:需要配置deployerConfigContext.xml</p>
+<p>将bean id=&quot;authenticationManager&quot;中的&lt;property name=&quot;authenticationHandlers&quot;&gt;中的</p>
+<p>bean&#160;&#160;&#160;&#160;&#160;&#160;&#160; class=&quot;org.jasig.cas.authentication.handler.support.SimpleTestUsernamePasswordAuthenticationHandler&quot; </p>
+<p>替换为:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">bean</span> <span style="color: #ff0000">class</span>=<span style="color: #0000ff">&quot;org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler&quot;</span><span style="color: #0000ff">&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">property</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">&quot;dataSource&quot;</span> <span style="color: #ff0000">ref</span>=<span style="color: #0000ff">&quot;casDataSource&quot;</span> <span style="color: #0000ff">/&gt;</span>
+					<span style="color: #0000ff">&lt;</span><span style="color: #800000">property</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">&quot;sql&quot;</span> <span style="color: #ff0000">value</span>=<span style="color: #0000ff">&quot;select password from user where user=?&quot;</span> <span style="color: #0000ff">/&gt;</span>
+				    <span style="color: #0000ff">&lt;</span><span style="color: #800000">property</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">&quot;passwordEncoder&quot;</span> <span style="color: #ff0000">ref</span>=<span style="color: #0000ff">&quot;myPasswordEncoder&quot;</span><span style="color: #0000ff">/&gt;</span>
+				<span style="color: #0000ff">&lt;/</span><span style="color: #800000">bean</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p>从中可以看出，可以将数据源配置为你想使用的用户数据库，将上面的sql换为返回对应password的语句。</p>
+<p>如果想要更灵活的自定义，那就干脆直接实现AbstractUsernamePasswordAuthenticationHandler或者更高层次的接口。</p>
+<p>way 2:看看这个也许有用，我没试过： <a title="https://wiki.jasig.org/display/CAM/Home" href="https://wiki.jasig.org/display/CAM/Home">https://wiki.jasig.org/display/CAM/Home</a></p>
+<h6>2 怎样添加权限控制？</h6>
+<p>举个例子，我要不同用户访问不同应用的权限不同，张三可以访问A服务，李四可以访问B服务，王二麻子可以访问A和B服务,怎么做？</p>
+<p>有个点可以控制:</p>
+<p>在web-inf/applicationContext.xml中定制自己的CentralAuthenticationService,要实现CentralAuthenticationService接口，应该在grantServiceTicket方法中对权限进行判断。这种逻辑当然不能在AuthenticationHandler里面做了,因为张三要访问B服务的话，身份验证应该是可以通过，只是没有权限，就不能给他访问B服务的票了。</p>
+<h6>3 怎样自定义登陆界面？</h6>
+<p>way1 :修改casserver自带的登陆界面，这个在securityContext.xml中配置</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">bean</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;casProcessingFilter&quot;</span> <span style="color: #ff0000">class</span>=<span style="color: #0000ff">&quot;org.springframework.security.cas.web.CasAuthenticationFilter&quot;</span>
+		<span style="color: #ff0000">p</span>:<span style="color: #ff0000">authenticationManager</span>-<span style="color: #ff0000">ref</span>=<span style="color: #0000ff">&quot;casAuthenticationManager&quot;</span>
+		<span style="color: #ff0000">p</span>:<span style="color: #ff0000">filterProcessesUrl</span>=<span style="color: #0000ff">&quot;/services/j_acegi_cas_security_check&quot;</span><span style="color: #0000ff">&gt;</span>
+        <span style="color: #0000ff">&lt;</span><span style="color: #800000">property</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">&quot;authenticationSuccessHandler&quot;</span><span style="color: #0000ff">&gt;</span>
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">bean</span> <span style="color: #ff0000">class</span>=<span style="color: #0000ff">&quot;org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler&quot;</span>
+                <span style="color: #ff0000">p</span>:<span style="color: #ff0000">alwaysUseDefaultTargetUrl</span>=<span style="color: #0000ff">&quot;true&quot;</span>
+                <span style="color: #ff0000">p</span>:<span style="color: #ff0000">defaultTargetUrl</span>=<span style="color: #0000ff">&quot;/services/manage.html&quot;</span> <span style="color: #0000ff">/&gt;</span>
+        <span style="color: #0000ff">&lt;/</span><span style="color: #800000">property</span><span style="color: #0000ff">&gt;</span>
+        <span style="color: #0000ff">&lt;</span><span style="color: #800000">property</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">&quot;authenticationFailureHandler&quot;</span><span style="color: #0000ff">&gt;</span>
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">bean</span> <span style="color: #ff0000">class</span>=<span style="color: #0000ff">&quot;org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler&quot;</span><span style="color: #0000ff">&gt;</span>
+                <span style="color: #0000ff">&lt;</span><span style="color: #800000">constructor</span>-<span style="color: #ff0000">arg</span> <span style="color: #ff0000">index</span>=<span style="color: #0000ff">&quot;0&quot;</span> <span style="color: #ff0000">value</span>=<span style="color: #0000ff">&quot;</span></pre>
+<p><font color="#008000">/authorizationFailure.html</font>&quot; <span style="color: #0000ff">/&gt;</span><br />
+            <span style="color: #0000ff">&lt;/</span><span style="color: #800000">bean</span><span style="color: #0000ff">&gt;</span><br />
+        <span style="color: #0000ff">&lt;/</span><span style="color: #800000">property</span><span style="color: #0000ff">&gt;</span><br />
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">bean</span><span style="color: #0000ff">&gt;</span>
+</div>
+<p></p>
+<p>way2 : 修改spring webflow参考 <a title="http://hi.baidu.com/fallenlord/blog/item/b031e83e87159cca7c1e7127.html" href="http://hi.baidu.com/fallenlord/blog/item/b031e83e87159cca7c1e7127.html">http://hi.baidu.com/fallenlord/blog/item/b031e83e87159cca7c1e7127.html</a> xml的恐怖可见一斑。</p>
+<p>我不明白这才几个可以数出来简单的跳转逻辑，要用webflow来配置一大堆xml，说是易于扩展吧结果却又这么麻烦。让别人还要专门画个图还不一定搞得清楚。</p>
+<h6>4 怎样logout</h6>
+<p>见文档<a title="https://wiki.jasig.org/display/CASC/CAS+Client+for+Java+3.1" href="https://wiki.jasig.org/display/CASC/CAS+Client+for+Java+3.1">https://wiki.jasig.org/display/CASC/CAS+Client+for+Java+3.1</a> ，没有可用的函数来logout,建议的做法是，使用链接指向cas server 的logout。</p>
+<p>&#160;</p>
+<p><font color="#0000ff">感觉yale这个实现里面很学院派，很繁琐。他们的做法也很古板。是个古里古怪的东西！按说理论也不是那么复杂，为什么就这样用的不舒服呢！希望有替代品！！</font></p>

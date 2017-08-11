@@ -1,0 +1,146 @@
+---
+layout: post
+title: CodeIgniter 入门
+date: 2011-12-23 17:38:43.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- CodeIgniter
+meta:
+  views: '347'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>主页 <a href="http://codeigniter.com/">http://codeigniter.com/</a></p>
+<p>网上想要比较cakephp和CodeIgniter,答案是萝卜白菜各有所爱。</p>
+<p>cakephp模仿ROR,没用过ROR的学习曲线要大些。</p>
+<p>CodeIgniter适合小型项目，性能比较好，因为没有过多累赘。</p>
+<p>cakephp中型项目，性能稍逊。但是特性较CodeIgniter多。</p>
+<p>&#160;</p>
+<p>CodeIgniter文档较详细:</p>
+<p>下载包中user_guide文件夹/index.html有，但是那个tablecontent一开始没注意到，它在页面顶部，点击出来下拉目录，囧。</p>
+<p>照着文档读一遍，两个小时就够了，简单吧。</p>
+<p>笔记:</p>
+<p>以其index.php来作为你项目入口,</p>
+<p>&#160;</p>
+<p>apache配置中需要配置文件夹</p>
+<p>Options execCGI <strong>FollowSymLinks</strong>     <br />AllowOverride <strong>All</strong></p>
+<ul>
+<li><strong>       </strong><br />
+<h3>静态页面控制:</h3>
+</li>
+</ul>
+<p>默认连接方式是http://example.com/[controller-class]/[controller-method]/[arguments]</p>
+<p>那么 http://example.com/news/latest/10 就会找到news这个控制器类调用其latest方法，传入10这个参数。</p>
+<p>这个配置是在application/config/routes.php中</p>
+<p>注意，例如这样的配置</p>
+<p>routes[‘welcome’] = ‘welcome’</p>
+<p>将会在controller中寻找welcome 文件夹中(或下面的controller子文件夹)的welcome.php文件中的Welcome类。文件名必须小写,类名必须以大写字母开头。</p>
+<p>&#160;</p>
+<h3>URL Helper类问题:</h3>
+<p>这里面的方法都是依据config.php中配置的$config['base_url']来的，</p>
+<p>因此如果你配置的是abc.com,那么即使用户使用<a href="http://www.abc.com">www.abc.com</a>访问，返回的都是不带www的url,包括</p>
+<p>current_url()这个方法也是如此，显然这个方法是个鸡肋，遇到ajax请求就跨域了，因为<a href="http://www.abc.com">www.abc.com</a>和abc.com是跨子域的。</p>
+<p>&#160;</p>
+<p>异常处理:</p>
+<p>他的异常在index.php中设置，不知道是什么原因，在其他地方再设置就没什么作用了，一旦出错就显示一堆错误，只能使用ob_end_clean();把它的输出清除掉。</p>
+<p>&#160;</p>
+<p>日志：</p>
+<h4>system\libraries\Log.php log_message('<var>level</var>', '<samp>message</samp>')</h4>
+<p>日志显示级别在config.php中配置</p>
+<p>$config['log_threshold'] = 4;</p>
+<p>$config['log_path'] = ''; //空表示在站点目录下logs文件夹中，以php为扩展名</p>
+<p>&#160;</p>
+<p>CI有个session过期的bug,因为它是每隔一段时间更新session对应的cookie(这是为了安全起见),所以可能造成前后两个ajax请求的session对应的cookie不一样:</p>
+<p>1:请求A调用时正好导致更新cookie</p>
+<p>2:请求B此时还是使用老cookie,由于A请求改了cookie,则会导致找不到session。</p>
+<p>参见:<a href="http://codeigniter.com/forums/viewthread/102456/">http://codeigniter.com/forums/viewthread/102456/</a></p>
+<p>这上面也没好的办法，要么是注释更新cookie的代码，要么将$config['sess_time_to_update']&#160;&#160;&#160;&#160; = 300;设置为很长就不会调用更新cookie的方法。</p>
+<p>参见<a href="http://www.path8.net/tn/archives/2526">http://www.path8.net/tn/archives/2526</a></p>
+<p>CI可通过数据库保存session,但是无论怎样，都是依赖客户端的cookie配合的，所以定时更新cookie的方法让session长期不过期的目标不好实现。</p>
+<p>下面是自定义的Session类,CI可以自定义核心类：</p>
+<p>user_guide/general/core_classes.html</p>
+<p>放在application/core/即可，会自动加载的,要以MY_开头,要继承想要扩展的父类。</p>
+<p>下面是MY_Session类:</p>
+<div>
+<pre>&lt;?php
+&lt;?php
+<span style="color: #0000ff">if</span> (!defined('BASEPATH'))
+	exit ('No direct script access allowed');
+
+<span style="color: #008000">/**
+ * ------------------------------------------------------------------------
+ * CI Session Class Extension for AJAX calls.
+ * ------------------------------------------------------------------------
+ *
+ * Save as application/libraries/MY_Session.php
+ */</span>
+
+<span style="color: #0000ff">if</span> (!function_exists('is_ajax_request')) {
+	<span style="color: #0000ff">function</span> is_ajax_request() {
+		<span style="color: #0000ff">return</span> (!empty ($_SERVER['HTTP_X_REQUESTED_WITH']) &amp;&amp; strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+	}
+}
+
+<span style="color: #0000ff">class</span> MY_Session <span style="color: #0000ff">extends</span> CI_Session {
+
+	<span style="color: #008000">// --------------------------------------------------------------------</span>
+
+	<span style="color: #008000">/**
+	 * sess_update()
+	 *
+	 * Do not update an existing session on ajax calls
+	 *
+	 * @access    public
+	 * @return    void
+	 */</span>
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">function</span> sess_update() {
+		<span style="color: #008000">//still have the problem</span>
+<span style="color: #008000">//		return;</span>
+		<span style="color: #0000ff">if</span> (!is_ajax_request()) {
+			<span style="color: #0000ff">parent</span> :: sess_update();
+		}<span style="color: #0000ff">else</span>{
+		}
+	}
+
+	<span style="color: #008000">// --------------------------------------------------------------------</span>
+
+	<span style="color: #008000">/**
+	 * sess_destroy()
+	 *
+	 * Clear's out the user_data array on sess::destroy.
+	 *
+	 * @access    public
+	 * @return    void
+	 */</span>
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">function</span> sess_destroy() {
+		$<span style="color: #0000ff">this</span>-&gt;userdata = array ();
+
+		<span style="color: #0000ff">parent</span> :: sess_destroy();
+	}
+
+}
+
+<span style="color: #008000">// ------------------------------------------------------------------------</span>
+<span style="color: #008000">/* End of file MY_Session.php */</span>
+<span style="color: #008000">/* Location: ./application/libraries/MY_Session.php */</span>
+?&gt;</pre>
+</div>
+<p>我使用之后发现还是有问题，要从根本上解决还是要将sess_update这个方法不起作用，但是这样的话降低了安全性，CI主要是为了cookie安全才定时刷新cookie的。</p>
+<p>is_ajax_request这个方法判断的头对于jquery 来说是靠谱的，因为jq加了这个头，但是别的库就没有。在后来的CI版本中添加了input-&gt;is_ajax_request方法。</p>
+<p>
+  <br />配置hook</p>
+<p>user_guide/general/hooks.html</p>
+<p>首先需要在application/config/config.php中设置$config['enable_hooks'] = TRUE;</p>
+<p>然后在application/config/hooks.php中设置扩展</p>
+<p>这里可以配置pre_controller的hook,即controllers被调用之前的hook</p>
+<p>$hook['pre_controller'][] = array (<br />
+  <br />&#160;&#160;&#160; 'class' =&gt; 'MYClass'</p>
+<p>);</p>

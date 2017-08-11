@@ -1,0 +1,37 @@
+---
+layout: post
+title: openfire整合LDAP (Active Directory)
+date: 2012-07-23 10:37:16.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- ldap
+- openfire
+meta:
+  views: '277'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这次成功的将openfire整合windows的Active Directory:</p>
+<p>Active Directory服务器在windows 2000 server,windows 2003上才有，可安装虚拟机，见<a title="http://kazge.com/archives/856.html" href="http://kazge.com/archives/856.html">http://kazge.com/archives/856.html</a>.</p>
+<p>我在windows2000 server上 安装Active Directory服务: (<a title="http://ask.zol.com.cn/q/22451.htm" href="http://ask.zol.com.cn/q/22451.html">http://ask.zol.com.cn/q/22451.html</a>) 。</p>
+<p>按照Active Directoy服务设置向导来，默认的就可以，关于DNS服务器的设置我略过了，没有管它，这样可能会有问题，但是对于openfire整合AD的测试是没有太大影响的。</p>
+<p>安装好AD server后，在Users下建立测试用户test1,设置密码。</p>
+<p>然后将openfire的openfire.xml中的setup设置为false,这样再启动 openfire,进入控制台会开始安装步骤。</p>
+<p>具体怎么安装依据其文档中专门的documentation/docs/ldap-guide.html来即可。</p>
+<p>&#160;</p>
+<p>比较迷惑可能会是Base DN 和 Administrator DN.</p>
+<p>因为它的文档写错了，注意Base DN中示例 cn=Users<font color="#ff8000">;</font>dc=activedirectory,dc=jivesoftware,dc=com</p>
+<p>注意橙色的分号应该是逗号cn=Users,dc=activedirectory,dc=jivesoftware,dc=com</p>
+<p>在配置管理员这一部中需要设置AD 中存在的账户为管理员。</p>
+<p>这样一步步下来就配置好了，openfire会将配置记录在ofproperty表中。</p>
+<p><font color="#0000ff">注意，在安装过程中如果重启了openfire，必须要重新登陆控制台，否则会安装出错。</font></p>
+<p>&#160;</p>
+<p>稍微看了一下源码，似乎只是用AD来进行登录验证和用户系统。</p>

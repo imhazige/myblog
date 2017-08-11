@@ -1,0 +1,78 @@
+---
+layout: post
+title: ie 纠结汇总
+date: 2011-06-09 11:19:58.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+meta:
+  views: '113'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none" id="internal-source-marker_0.3931499070591987">IE8中点击锚记，如果a标记的target不是_blank，且href不是#,则会触发window的onload和onbeforeunload.</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">也就是说--经常的写法href=&quot;javascript:void(0)&quot;也是会触发事件，估计MS是被石头敲了。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>------------------------------------------------------</p>
+<p>onload事件问题:    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">下面的写法：</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">&lt;script type=&quot;text/javascript&quot;&gt;</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">function ops(){</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">var win = window.open('','_blank');</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">win.onload = function(){</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">alert('ok');</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">};</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">win.location.href = 'test.html';</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">}</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">&lt;/script&gt;</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">&lt;/head&gt;</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">&lt;body&gt;</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">&lt;div class=&quot;bb&quot; onclick=&quot;ops();&quot;&gt;</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">圆角三边 这里是内容</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">&lt;/div&gt;</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">&lt;/body&gt;</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">火狐里面是可以alert的，但是ie8就不行。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">解决办法是子窗体调父窗体的方法模拟回调。（IE真是让人纠结。）</span> </p>
+<p>另外的:</p>
+<p>window的onload事件比较容易触发不了，往往出现在初始化页面时此时你认为还没有onload但是</p>
+<p>document.readyState 已经是 &quot;complete&quot;了，所以此时添加的onload事件不会触发。    <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>-----------------------------------------------------------------     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">Ie8 window.open函数指定 location=no status=no 不起作用的原因是：ie8安全设置里需要加入站点为可信任站点，这种前提下，location=no status=no才会起作用。</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>----------------------------------------------------------------     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">默认div overflow-y:auto时，当出现滚动条时,用户想要选择文字，他向上滚动滚动条也应该滚动，但是如果设置了overflow-x:hidden，ie就白痴的不滚动了，FF下面是滚动的。</span>     <br />------------------------------------------------------------     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">window 的onblur事件：当这个窗口的某个元素获得焦点时，竟然也会触发window的onblur事件。（不一定是所有的情况会出现这个问题，具体那种情况下会出现这个问题还不知道）做chat时窗口消息提示出现问题就是这个原因，还好ie特别的有document的onfocusin 和onfocus out事件可以替代，因为页面元素获得焦点不会触发document的onblur事件[也可能是触发，但是最终也会触发 onfocusin,:onfocusout-&gt;onfocusin]</span>     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none"></span>------------------------------------------------------------     <br /><span style="background-color: transparent; font-style: normal; font-family: arial; color: #000000; font-size: 11pt; vertical-align: baseline; font-weight: normal; text-decoration: none">在unbeforeload 和 ununload事件里发送ajax请求的话，ie会无法传送post值，解决办法是使用header来传参，但是header有大小限制，数据量太大的话就不会被服务器接收。也可使用ajax的同步请求来解决。使用new Image().src的方式也可以，但感觉不是很稳定。</span></p>
+<p>------------------------------------------------------------</p>
+<p>IE TEXTAREA javascript换行问题：</p>
+<p>IE TEXTAREA javascript换行 txt.value+='\r\n';光标会显示没有换行（其实已经换行了），FF,chrome是好的，ie(6,7,8)有此bug,解决方案:将event.keyCode = 13让文本换行。</p>
+<p>-------------------------------------------------------------------- </p>
+<p>ie 下的checkbox点击总觉得怪怪的，有时明明点了却没效果。</p>
+<p>如果要将某个元素disable掉,el.disabled = true;这样写到是没问题。</p>
+<p>但是要将原来disabled 的元素enable的话，<font color="#800000">el.disabled = false; </font>在IE下就有点怪了，有时可以有时又不行。</p>
+<p>解决方法是删除掉disabled 属性 <font color="#800000">el.removeAttribute('disabled');</font></p>
+<p>-----------------------------------------------------------------</p>
+<p>scrollLeft</p>
+<p>一般ie还是支持这个的，有的版本(ie7beta)</p>
+<p>在面顶部声明为： DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;&#160; &quot;http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd&quot;&gt; 就会有问题.</p>
+<p>但是往往在你加载页面时得到的scrollLeft为0,要等到页面全部初始化好后才能得到正确的值。</p>
+<p>--------------------------------------------------------------------</p>
+<p>ie6 option selected属性问题：</p>
+<p>ie6下设置option的selected属性会导致脚本错误:option.selected = true;//error</p>
+<p>解决办法：<tt>option.setAttribute('selected', true)</tt>; //work</p>
+<p>-----------------------------------------------------------------------------------</p></p>
+<p>其实IE对于非表单物件一样可以用getElementsByName,只不过要求那个element 的Name和Id 都存在并且相同. 否则就取不到。</p>
+<p>&lt;div id=&quot;spn&quot; name=&quot;spn&quot;&gt;...&lt;/div&gt;    <br />&lt;div id=&quot;spn&quot; name=&quot;spn&quot;&gt;...&lt;/div&gt; </p>
+<p>------------------------------------------------------------------------------------</p>
+<p>title换行,这个只有IE可以,使用<font color="#0000ff">&amp;#13;<font color="#000000">来代表换行</font>。</font></p>
+<p><font color="#0000ff">但是用包含这个字符的html使用extjs模板会导致非IE浏览器下模板编译错误！ </font></p>
+<p><font color="#000000">---------------------------------------------------------------------------</font></p>
+<p><font color="#000000">对于下面的html:</font></p>
+<div>
+<pre>&lt;div id=&quot;<span style="color: #8b0000">content</span>&quot;&gt;
+  	&lt;div <span style="color: #0000ff">class</span>=&quot;<span style="color: #8b0000">line</span>&quot;&gt;
+    &lt;div id=&quot;<span style="color: #8b0000">c1</span>&quot; <span style="color: #0000ff">class</span>=&quot;<span style="color: #8b0000">ct</span>&quot;&gt;&lt;div id=&quot;<span style="color: #8b0000">holder1</span>&quot; <span style="color: #0000ff">class</span>=&quot;<span style="color: #8b0000">holder</span>&quot;&gt;1&lt;/div&gt;&lt;/div&gt;
+    &lt;div id=&quot;<span style="color: #8b0000">c2</span>&quot; <span style="color: #0000ff">class</span>=&quot;<span style="color: #8b0000">ct</span>&quot;&gt;&lt;div id=&quot;<span style="color: #8b0000">holder2</span>&quot; <span style="color: #0000ff">class</span>=&quot;<span style="color: #8b0000">holder</span>&quot;&gt;2&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;</pre>
+</div>
+<p>想让div#c1,div#c2横向排列,如果这样写:</p>
+<div>
+<pre>.<span style="color: #800000">ct</span>{
+	<span style="color: #800000">float</span>: <span style="color: #800000">left</span>;
+}</pre>
+</div>
+<p>ok,那是没问题的。</p>
+<p>但是如果这样写:</p>
+<div>
+<pre>.<span style="color: #800000">line</span>&gt;<span style="color: #800000">div</span>{
+	<span style="color: #800000">float</span>: <span style="color: #800000">left</span>;
+}</pre>
+</div>
+<p>你会发现c1,c2仍然换行了。这个问题只有ie才有。</p>
+<p>
+  </p></p>
+<p>
+  </p>
+<p><font color="#0000ff"><font color="#000000"><br />
+      <br /></font></font></p>

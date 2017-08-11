@@ -1,0 +1,37 @@
+---
+layout: post
+title: phprpc,xml,json,hessian 协议？
+date: 2011-07-29 15:14:16.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- Web
+tags:
+- rpc
+- web
+meta:
+  views: '316'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>找到了关于几种序列化与反序列化的比较：</p>
+<p><a title="http://phprpc.group.iteye.com/group/wiki/1489-net-in-php-binary-soap-xml-json-hessian-serialization-such-as-the-efficiency-of-contrast" href="http://phprpc.group.iteye.com/group/wiki/1489-net-in-php-binary-soap-xml-json-hessian-serialization-such-as-the-efficiency-of-contrast">http://phprpc.group.iteye.com/group/wiki/1489-net-in-php-binary-soap-xml-json-hessian-serialization-such-as-the-efficiency-of-contrast</a></p>
+<p>其中涉及到phprpc,xml,json,hessian。最后得出结论是phprpc最有效率。(这大概是做着自己写的文章,phprpc是国人作品。)</p>
+<p>对于我喜欢的json,效率居然这样惨淡，真让我有点怀疑。但是细想一下，这里比较的宿主语言不是javascript,确实可能存在这个问题。</p>
+<p>先到phprpc-java上面看看<a title="http://phprpc.org/zh_CN/docs/#[[PHPRPC%20for%20Java]]" href="http://phprpc.org/zh_CN/docs/#[[PHPRPC%20for%20Java]]">http://phprpc.org/zh_CN/docs/#[[PHPRPC%20for%20Java]]</a></p>
+<p>哎呀终于找到组织了，淋漓精致的把webservice和“专家”们批判了一遍。看得我呵呵地笑。</p>
+<p>看看hessian和phprpc <a title="http://www.iteye.com/topic/349461" href="http://www.iteye.com/topic/349461">http://www.iteye.com/topic/349461</a></p>
+<p>这位仁兄已经搜罗了一大片：<a title="http://hi.baidu.com/liapiao/blog/item/6fe0e412565d8b15203f2e60.html" href="http://hi.baidu.com/liapiao/blog/item/6fe0e412565d8b15203f2e60.html">http://hi.baidu.com/liapiao/blog/item/6fe0e412565d8b15203f2e60.html</a></p>
+<p>在我的观点来看，phprpc还需要在推广上加把力，一般正规项目的技术选型，都愿意选择有强大支持的组织。这一点上，phprpc(似乎由国内的一家公司开发)和hessian(由开发resin的公司<a href="http://www.caucho.com/" target="_blank">caucho</a> 开发)相比较那还要见仁见智了。</p>
+<p>--------------</p>
+<p>见我的</p>
+<p>hessian实践:<a title="http://kazge.com/archives/450.html" href="http://kazge.com/archives/450.html">http://kazge.com/archives/450.html</a></p>
+<p>phprpc实践:<a title="http://kazge.com/archives/452.html" href="http://kazge.com/archives/452.html">http://kazge.com/archives/452.html</a></p>
+<p>-------------- </p>
+<p>综合考虑，虽然都不是银弹,但是我比较欣赏phprpc。</p>

@@ -1,0 +1,48 @@
+---
+layout: post
+title: maven 依赖类文件夹
+date: 2012-06-01 09:50:27.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- maven
+meta:
+  views: '65'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天六一，宝宝和大家都节日快乐。</p>
+<p>使用maven要添加依赖，必须依赖是maven工程。现在我有个非maven工程怎么办，尝试了直接在build path中引用，结果找不到类，找了一下有没有对应插件，像这样的写法在maven3中又不支持：</p>
+<div>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:9a189ad1-5412-4c7f-856c-35ae04dcbb8c" class="wlWriterEditableSmartContent">
+<pre name="code" class="xml:firstline[1]">		&lt;dependency&gt;
+			&lt;groupId&gt;class-folder&lt;/groupId&gt;
+			&lt;artifactId&gt;class-folder&lt;/artifactId&gt;
+			&lt;scope&gt;system&lt;/scope&gt;
+			&lt;systemPath&gt;E:/project/classes&lt;/systemPath&gt;
+		&lt;/dependency&gt;</pre>
+</div>
+</div>
+<p>最后想起老办法，在build path中增加link source指向引用工程的源码文件夹即可。</p>
+<p>测试test和run都可以。<br />
+  </p>
+<p>&#160;</p>
+<p>顺便提一下本地包的依赖写法:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:955eb904-6c6d-4a94-a288-bde011907bc2" class="wlWriterEditableSmartContent">
+<pre name="code" class="xml:firstline[1]">		&lt;dependency&gt;
+	      &lt;groupId&gt;xxx&lt;/groupId&gt;
+	      &lt;artifactId&gt;xxx&lt;/artifactId&gt;
+	      &lt;version&gt;2.0&lt;/version&gt;
+	      &lt;scope&gt;system&lt;/scope&gt;
+	      &lt;systemPath&gt;${basedir}/src/main/webapp/WEB-INF/lib/xxx.jar&lt;/systemPath&gt;
+	    &lt;/dependency&gt;</pre>
+</div>
+<p>其中basedir 指代项目根目录，version可随便写，但是必须要。
+  </p>

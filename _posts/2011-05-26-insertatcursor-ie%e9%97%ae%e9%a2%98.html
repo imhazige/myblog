@@ -1,0 +1,72 @@
+---
+layout: post
+title: insertAtCursor IE问题
+date: 2011-05-26 02:31:47.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+meta:
+  views: '125'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>&#160;</p>
+<p>IE bug,丢失焦点后，记不住上次的位置。</p>
+<p>所以如下的解决方案对于IE还是有bug(总是在开始添加了,因为往往是用户点击个按钮调用此函数，但是此时text已经丢失焦点了。)</p>
+<div>
+<pre><span style="color: #0000ff">function</span> insertAtCursor(myField, myValue){
+
+<span style="color: #008000">//IE support</span>
+
+<span style="color: #0000ff">if</span>(<span style="color: #0000ff">document</span>.selection){
+
+myField.<span style="color: #0000ff">focus</span>();
+
+sel = <span style="color: #0000ff">document</span>.selection.createRange();
+
+sel.text= myValue;
+
+}
+
+<span style="color: #008000">//MOZILLA/NETSCAPE support</span>
+
+elseif(myField.selectionStart || myField.selectionStart=='0'){
+
+<span style="color: #0000ff">var</span> startPos = myField.selectionStart;
+
+<span style="color: #0000ff">var</span> endPos = myField.selectionEnd;
+
+myField.value= myField.value.substring(0, startPos)
+
++ myValue 
+
++ myField.value.substring(endPos, myField.value.<span style="color: #0000ff">length</span>);
+
+}<span style="color: #0000ff">else</span>{
+
+myField.value+= myValue;
+
+}
+
+}</pre>
+</div>
+<p>下面的链接就是说的这个问题:</p>
+<p><a href="http://forums.ext.net/showthread.php?8348-SOLVED-HtmlEditor-insertAtCursor-bug-on-IE-in-8.2-and-1.0">http://forums.ext.net/showthread.php?8348-SOLVED-HtmlEditor-insertAtCursor-bug-on-IE-in-8.2-and-1.0</a></p>
+<p>解决方案是记住上次的位置。</p>
+<p>在text每次的mousup,keyup事件中记住选择位置。</p>
+<div>
+<pre><span style="color: #0000ff">function</span> h_up(e) { 
+            <span style="color: #0000ff">if</span> (isIE) { 
+                <span style="color: #008000">//IE's bug, restore position </span>
+                cursel = <span style="color: #0000ff">document</span>.selection.createRange(); 
+            } 
+        }   </pre>
+</div>

@@ -1,0 +1,30 @@
+---
+layout: post
+title: hibernate杂项
+date: 2011-05-30 08:25:26.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- "数据库"
+tags:
+- hibernate
+- "笔记"
+meta:
+  views: '19'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>使用hibernate自动生成工具时 会自动加catorry    <br />如:     <br />&lt;hibernate-mapping&gt;     <br />&#160;&#160;&#160; &lt;class name=&quot;co.iplatform.management.data.Health&quot; table=&quot;tservice_health&quot; catalog=”xxx”&gt;     <br />但是往往你刚开始用的数据库名是暂时的，与产品库不一样，所以发布时要注意改正这些名字。( 如果不一致mysql报错却是什么拒绝访问某表，根本不知道是数据库选错了)     <br />一般的不需要catalog比较好，在数据库连接字符串里指定默认数据库就行了。     <br />数据库表名大小写敏感？反正mysql是这样的aBc != abc     <br />乱码问题，数据库要设置好编码， 连接也需要写好编码 例如 :     <br />jdbc:mysql://localhost:13306/moviebug?useUnicode=true&amp;amp;characterEncoding=UTF-8     <br />还不行，则要查找其他原因 </p>
+<p>--------------------</p>
+<p>native sql</p>
+<p><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">以前查询把查询放在事务里面就可以保证取得最新数据，这次在management console里面就遇到问题，调用native sql后查询的还是旧数据。</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">hibernate说当调用commit或session.flush时会同步数据，网上说commit是先flush在提交。</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">不管怎样，flush一定会同步数据，这是最保险的做法。</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">且查询不一定需要放在事务里面（某些情况除外）。</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">对于使用了native sql的情况，要注意，hibernate并不知道native sql会对数据产生影响，所以，执行了native sql后要session.flush而且要clear。</span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">-------------------------</span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>    <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>    </p>
+<p> <span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>

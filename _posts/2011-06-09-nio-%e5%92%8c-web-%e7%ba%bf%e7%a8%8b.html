@@ -1,0 +1,26 @@
+---
+layout: post
+title: nio 和 web 线程
+date: 2011-06-09 11:35:37.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- java
+- nio
+meta:
+  views: '16'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>见文章 <a href="http://kazge.com/archives/275.html " target="_blank">http://kazge.com/archives/275.html</a> 讲得比较详细。</p>
+<p>再看 <a href="http://www.ibm.com/developerworks/cn/java/j-nioserver/" target="_blank">http://www.ibm.com/developerworks/cn/java/j-nioserver/</a></p>
+<p>看看 <a title="http://zddava.iteye.com/blog/835244" href="http://zddava.iteye.com/blog/835244">http://zddava.iteye.com/blog/835244</a></p>
+<p><strike>综上所述，我认为nio并不能对web 服务器性能提高很大因为每个servlet还是一个线程，这样与没有使用nio的情况是一样的。??</strike></p>
+<p>现在看看<a title="http://kazge.com/archives/596.html" href="http://kazge.com/archives/596.html">http://kazge.com/archives/596.html</a>，这篇文章分析的比较细。nio跟更像是多路io,性能还是能够提升的！</p>

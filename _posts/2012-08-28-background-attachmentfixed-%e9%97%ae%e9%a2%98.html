@@ -1,0 +1,56 @@
+---
+layout: post
+title: background-attachment:fixed 问题
+date: 2012-08-28 18:08:51.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags: []
+meta:
+  views: '328'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天发现background-attachment:fixed原来不是这么简单：</p>
+<p>见:<a href="http://reference.sitepoint.com/css/background-attachment">http://reference.sitepoint.com/css/background-attachment</a></p>
+<p>The value fixed stops the background-image from scrolling with its containing block. <font color="#0000ff">Note that although the fixed background-image may be applied to elements throughout the document, its background-position is always placed in relation to the viewport</font>. This means the background-image is only visible when its background-position coincides with the content, padding, or border area of the element to which it is applied. Thus, a fixed background-image doesn’t move with elements that have a scrollbar—see overflow—because it’s placed in relation to the viewport.</p>
+<p>我真是晕，fixed的情况下，不管background-attachment:fixed设置到哪个元素，其background-position是依据body来定位的。</p>
+<p>使用background-attachment:scroll则是相对本元素定位。</p>
+<p>测试FF,IE8,Chrome都是这样。</p>
+<p>&#160;</p>
+<p>可依据这个例子来看:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">style</span> <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;text/css&quot;</span><span style="color: #0000ff">&gt;</span>
+.hi
+{ 
+  height:200px;
+  width:200px;
+  border:1px solid blue;
+  background-image:url('eg_bg_03.gif');
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-position:left top;
+  padding: 0px;
+}
+
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">style</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span>
+
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">div</span> <span style="color: #ff0000">style</span>=<span style="color: #0000ff">&quot;height: 500px;&quot;</span><span style="color: #0000ff">&gt;</span>i<span style="color: #0000ff">&lt;/</span><span style="color: #800000">div</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">div</span> <span style="color: #ff0000">class</span>=<span style="color: #0000ff">&quot;hi&quot;</span><span style="color: #0000ff">&gt;</span>
+zheli
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">div</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p>你会发现背景图没看到。</p>

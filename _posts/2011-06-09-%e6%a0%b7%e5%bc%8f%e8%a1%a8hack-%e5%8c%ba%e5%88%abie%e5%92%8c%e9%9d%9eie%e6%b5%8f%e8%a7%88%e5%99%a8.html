@@ -1,0 +1,52 @@
+---
+layout: post
+title: "样式表hack-区别IE和非IE浏览器"
+date: 2011-06-09 14:48:25.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- web html css 前端
+meta:
+  views: '70'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><font face="verdana,helvetica,arial"><font color="#303030"><b>只看第一个就差不多了:</b></font></font></p>
+<p><b>     <br /></b></p>
+<p><font face="verdana,helvetica,arial"><font color="#303030"><b>1.区别IE和非IE浏览器</b> </font></font></p>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>        <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">blue</font><font color="#000000">;</font>&#160;<font color="#008000">/*非IE</font><font color="#008000"> 背景藍色</font><font color="#008000">*/</font>        <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">red \9</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE6、IE7、IE8背景紅色</font><font color="#008000">*/</font>        <br /><font color="#000000">}</font> </font></b></div>
+<p> <b>   <br />2.区别IE6,IE7,IE8,FF </b>
+<div><b>【区别符号】：「\9」、「*」、「_」     <br />【示例】：      <br /></b>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">blue</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">Firefox 背景变蓝色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">red \9</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE8 背景变红色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">*background</font><font color="#000000">:</font><font color="#0000ff">black</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE7 背景变黑色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">_background</font><font color="#000000">:</font><font color="#0000ff">orange</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE6 背景变橘色</font><font color="#008000">*/</font>          <br /><font color="#000000">}</font> </font></b></div>
+<p>   <b>【说明】：因为IE系列浏览器可读「\9」，而IE6和IE7可读「*」(米字号)，另外IE6可辨识「_」(底线)，因此可以依照顺序写下来，就会让浏 览器正确的读取到自己看得懂得CSS语法，所以就可以有效区分IE各版本和非IE浏览器(像是Firefox、Opera、Google Chrome、Safari等)。</b></div>
+<p> <b>   <br />3.区别IE6、IE7、Firefox (方法 1) </b>
+<div><b>【区别符号】：「*」、「_」     <br />【示例】：      <br /></b>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">blue</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">Firefox背景变蓝色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">*background</font><font color="#000000">:</font><font color="#0000ff">black</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE7 背景变黑色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">_background</font><font color="#000000">:</font><font color="#0000ff">orange</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE6 背景变橘色</font><font color="#008000">*/</font>          <br /><font color="#000000">}</font> </font></b></div>
+<p>   <b>【说明】：IE7和IE6可读「*」(米字号)，IE6又可以读「_」(底线)，但是IE7却无法读取「_」，至于Firefox(非IE浏览器)则完全 无法辨识「*」和「_」，因此就可以透过这样的差异性来区分IE6、IE7、Firefox</b></div>
+<p> <b>   <br />4.区别IE6、IE7、Firefox (方法 2) </b>
+<div><b>【区别符号】：「*」、「!important」     <br />【示例】：      <br /></b>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">blue</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">Firefox 背景变蓝色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">*background</font><font color="#000000">:</font><font color="#0000ff">green !important</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE7 背景变绿色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">*background</font><font color="#000000">:</font><font color="#0000ff">orange</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE6 背景变橘色</font><font color="#008000">*/</font>          <br /><font color="#000000">}</font> </font></b></div>
+<p>   <b>【说明】：IE7可以辨识「*」和「!important」，但是IE6只可以辨识「*」，却无法辨识「!important」，至于Firefox可以 读取「!important」但不能辨识「*」因此可以透过这样的差异来有效区隔IE6、IE7、Firefox。</b></div>
+<p> <b>   <br />5.区别IE7、Firefox </b>
+<div><b>【区别符号】：「*」、「!important」     <br />【示例】：      <br /></b>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">blue</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">Firefox 背景变蓝色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">*background</font><font color="#000000">:</font><font color="#0000ff">green !important</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE7 背景变绿色</font><font color="#008000">*/</font>          <br /><font color="#000000">}</font> </font></b></div>
+<p>   <b>【说明】：因为Firefox可以辨识「!important」但却无法辨识「*」，而IE7则可以同时看懂「*」、「!important」，因此可以 两个辨识符号来区隔IE7和Firefox。</b></div>
+<p> <b>   <br />6.区别IE6、IE7 (方法 1) </b>
+<div><b>【区别符号】：「*」、「_」     <br />【示例】：      <br /></b>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>          <br /><font color="#ff0000">*background</font><font color="#000000">:</font><font color="#0000ff">black</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE7 背景变黑色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">_background</font><font color="#000000">:</font><font color="#0000ff">orange</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE6 背景变橘色</font><font color="#008000">*/</font>          <br /><font color="#000000">}</font> </font></b></div>
+<p>   <b>【说明】：IE7和IE6都可以辨识「*」(米字号)，但IE6可以辨识「_」(底线)，IE7却无法辨识，透过IE7无法读取「_」的特性就能轻鬆区隔 IE6和IE7之间的差异。</b></div>
+<p> <b>   <br />7.区别IE6、IE7 (方法 2) </b>
+<div><b>【区别符号】：「!important」     <br />【示例】：      <br /></b>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">black !important</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE7 背景变黑色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">orange</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE6 背景变橘色</font><font color="#008000">*/</font>          <br /><font color="#000000">}</font> </font></b></div>
+<p>   <b>【说明】：因为IE7可读取「!important;」但IE6却不行，而CSS的读取步骤是从上到下，因此IE6读取时因无法辨识 「!important」而直接跳到下一行读取CSS，所以背景色会呈现橘色。</b></div>
+<p> <b>   <br />8.区别IE6、Firefox </b>
+<div><b>【区别符号】：「_」     <br />【示例】：      <br /></b>
+<div style="background-color: #eeeeee"><b><font size="2"><font color="#800000">#tip </font><font color="#000000">{</font>          <br /><font color="#ff0000">background</font><font color="#000000">:</font><font color="#0000ff">black</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">Firefox 背景变黑色</font><font color="#008000">*/</font>          <br /><font color="#ff0000">_background</font><font color="#000000">:</font><font color="#0000ff">orange</font><font color="#000000">;</font>&#160;<font color="#008000">/*</font><font color="#008000">IE6 背景变橘色</font><font color="#008000">*/</font>          <br /><font color="#000000">}</font> </font></b></div>
+<p>   <b>【说明】：因为IE6可以辨识「_」(底线)，但是Firefox却不行，因此可以透过这样的差异来区隔Firefox和IE6，有效达成CSS hack。</b></div>

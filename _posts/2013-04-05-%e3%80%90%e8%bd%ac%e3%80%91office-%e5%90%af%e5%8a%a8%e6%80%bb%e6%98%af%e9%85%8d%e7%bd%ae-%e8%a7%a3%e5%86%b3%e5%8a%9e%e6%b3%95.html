@@ -1,0 +1,25 @@
+---
+layout: post
+title: "【转】office 启动总是配置 解决办法"
+date: 2013-04-05 12:15:49.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "默认分类"
+tags:
+- win7
+meta:
+  views: '11'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>（改注册表的办法是生效的，其他没试验，应该也有效） </p>
+<p>解决方法： 1. 注册&#160; 如若是Office 2003的对应问题，在运行对话框中输入： reg add HKCU\Software\Microsoft\Office\11.0\Word\Options /v NoReReg /t REG_DWORD /d 1 回车即可&#160; 若是Office 2007的对应问题，在运行对话框中输入： reg add HKCU\Software\Microsoft\Office\12.0\Word\Options /v NoReReg /t REG_DWORD /d 1 回车即可&#160; </p>
+<p>2. 改文件，也最简单&#160; 打开“我的电脑”——“C盘”——“Program Files\Common Files\Microsoft Shared\OFFICE12\Office Setup Controller”——找到一个“SETUP.EXE”的文件，对此文件重命名&#160; 3. 改注册表&#160; 开始-》运行-》输入regedit-》打开注册列表，找到HKEY_LOCAL_MACHINE\SOFTWARE\Classes，右键—》权限—》高级，选下面第二张图中第二个选项CREATOR OWNER ,点编辑，在完全控制，允许那边打钩！确定！这时可能防火墙会跳出警告，你点放过，重启，OK！解决问题！</p>
+<p>&#160;</p>
+<p><font color="#0000ff">注册表测试可用</font></p>

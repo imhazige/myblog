@@ -1,0 +1,171 @@
+---
+layout: post
+title: "【转】安全的session管理"
+date: 2011-08-29 14:30:26.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- session
+- web
+- "安全"
+meta:
+  views: '530'
+  _edit_last: '3'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div class="right_page">
+<p>好文章，转载以备份。原文出自<a href="http://knowledge.twisc.ntust.edu.tw/doku.php?id=3%E4%BC%BA%E6%9C%8D%E7%AB%AF%E5%AE%89%E5%85%A8:3-1%E4%BC%BA%E6%9C%8D%E5%99%A8%E7%AE%A1%E7%90%86:%E5%AE%89%E5%85%A8%E7%9A%84session%E7%AE%A1%E7%90%86" target="_blank">这里</a>。</p>
+<p>&nbsp;</p>
+<h2><a id="前言" name="前言">前言</a></h2>
+<div class="level2">
+<p>session 的管理對網站應用程式非常的重要，不適當或不夠嚴謹的管理也會造成安全上的問題，以下針對 session 管理相關的安全問題分項探討。</p>
+<p>&nbsp;</p>
+</div>
+<h2><a id="使用_framework_內建的_session_manager" name="使用_framework_內建的_session_manager">使用 Framework 內建的 Session Manager</a></h2>
+<div class="level2">
+<p>藉由 session 限制與維護使用者的行為是網路安全很重要的一環。大多數的人會使用網站應用程式框架內建的 session 管理，有些人會使用 <acronym title="Practical Extraction and Report Language">Perl</acronym> CGI。網站開發者應盡量避免自行開發 session 管理，因為自行開發常常會藏有許多漏洞，而框架內建的 session 管理經過多次測試與修復相對上較為安全。此外這些框架會持續維護其安全性，因此要確保做好更新與安裝修補程式的動作。</p>
+<ul>
+<li class="level1">
+<div class="li">密碼強度<br />
+Session handler 的一個重點是 session token 或 session ID 的密碼強度，Session handler 產生的 token 必須是無法預知並且長度夠長讓人無法猜測的到。Session tokens 必須每個使用者都不同、無法預測、能抵抗反向工程。</div>
+</li>
+<li class="level1">
+<div class="li">適當的 Key Space<br />
+一個加密的演算法也可能因為 Key space 不夠大造成攻擊者使用暴力解來取得內容。因此 token 的 Key space 必須足夠大來防禦暴力攻擊法，並且注意電腦計算能力與寬頻能力已隨著時代進步。</div>
+</li>
+<li class="level1">
+<div class="li">Session Identifier（session ID）<br />
+Session Identifier 應該使用最大可用的 character set，如果一個 session ID 要由 8 characters of 7 bits 組成，有效密鑰長度為56位，但如果使用的 character set 只有整數可用 4 bits表示，有效密鑰長度就只有32位。因此一個好的 session ID 應盡量使用越多 characters 越好，但一些特殊字元有轉譯的麻煩，所以大多的 frameworks 採用 A-Z 和 0-9 有些還添加了小寫 a-z。</div>
+</li>
+</ul>
+</div>
+<h2><a id="驗證由客戶端傳來的_session_id" name="驗證由客戶端傳來的_session_id">驗證由客戶端傳來的 Session ID</a></h2>
+<div class="level2">
+<p>所有由客戶端傳來的資料都必須經過編碼和驗證，許多 frameworks 會驗證和編碼從 GET 和 POST 而來的 input，但未充分編碼從客戶端 cookie 傳來的 session ID 值。下面的 <a class="urlextern" title="http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API" rel="nofollow" href="http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API">ESAPI</a> code 片段使用 ESAPI 中的 method 來驗證 session ID 的值：</p>
+<div>
+<pre><span style="color: #0000ff;">public</span> String getRequestedSessionId() {
+     String id = request.getRequestedSessionId();
+     String clean = "<span style="color: #8b0000;"> </span>";
+     <span style="color: #0000ff;">try</span> {
+          clean = ESAPI.validator().getValidInput( "<span style="color: #8b0000;">Requested cookie: </span>" + id, id, "<span style="color: #8b0000;">HTTPJSESSIONID</span>", 50, <span style="color: #0000ff;">false</span> );
+     } <span style="color: #0000ff;">catch</span> (ValidationException e ) {
+          <span style="color: #008000;">// already logged</span>
+     }
+     <span style="color: #0000ff;">return</span> clean;
+ }</pre>
+<p>&nbsp;</p>
+</div>
+<p>&nbsp;</p>
+</div>
+<h2><a id="確保_idle_和_timeouts_時間夠短" name="確保_idle_和_timeouts_時間夠短">確保 idle 和 timeouts 時間夠短</a></h2>
+<div class="level2">
+<p>根據業務需求和安全性的考量，session 必須有一有限的壽命，在一定時間後過期。網站應用程式必須將靜止一段時間的 session 設為過期，刪除此 session 並一併更改 session cookie 的內容。</p>
+<p>&nbsp;</p>
+</div>
+<h2><a id="在使用者登出後銷毀_session" name="在使用者登出後銷毀_session">在使用者登出後銷毀 session</a></h2>
+<div class="level2">
+<p>當使用者登出後網站應用程式需讓 session 無效或者移除此 session，並且如果隨後有別的使用者登入必須取得不同的 session ID。要做到這樣的機制，當使用者 logout 時必須改寫 session cookies 註明已過期並銷毀 session。以下是 ESAPI code 的例子：</p>
+<div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span> logout() {
+     ESAPI.httpUtilities().killCookie( ESAPI.currentRequest(), ESAPI.currentResponse(), HTTPUtilities.REMEMBER_TOKEN_COOKIE_NAME );
+
+     HttpSession session = ESAPI.currentRequest().getSession(<span style="color: #0000ff;">false</span>);
+     <span style="color: #0000ff;">if</span> (session != <span style="color: #0000ff;">null</span>) {
+          session.invalidate();
+     }
+     ESAPI.httpUtilities().killCookie(ESAPI.currentRequest(), ESAPI.currentResponse(), "<span style="color: #8b0000;">JSESSIONID</span>");
+     loggedIn = <span style="color: #0000ff;">false</span>;
+     logger.info(Logger.SECURITY, "<span style="color: #8b0000;">Logout successful</span>" );
+     ESAPI.authenticator().setCurrentUser(User.ANONYMOUS);
+}</pre>
+<p>&nbsp;</p>
+</div>
+<p>&nbsp;</p>
+</div>
+<div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span> killCookie(HttpServletRequest request, HttpServletResponse response, String name) {
+     String path = "<span style="color: #8b0000;">//</span>";
+     String domain="<span style="color: #8b0000;"> </span>";
+     Cookie cookie = ESAPI.httpUtilities().getCookie(request, name);
+     <span style="color: #0000ff;">if</span> ( cookie != <span style="color: #0000ff;">null</span> ) {
+          path = cookie.getPath();
+          domain = cookie.getDomain();
+     }
+     SafeResponse safeResponse = <span style="color: #0000ff;">new</span> SafeResponse( response );
+     safeResponse.addCookie(name, "<span style="color: #8b0000;">deleted</span>", 0, domain, path);
+}</pre>
+<p>&nbsp;</p>
+</div>
+<div class="level2"></div>
+<h2><a id="輪換_session_id" name="輪換_session_id">輪換 Session ID</a></h2>
+<div class="level2">
+<p>對於高安全性網站，網站應用程式在處理重要的程序之前，或是經過某一段時間和幾次 requests 後，必須重新產生 session ID。中等或低等的網站，在使用者權限改變時也應該重新產生 session ID ，例如從訪客變成登入的會員或從登入者變成管理者。以下是 ESAPI code 重新產生 Session ID 的例子：</p>
+<div>
+<pre><span style="color: #0000ff;">public</span> HttpSession changeSessionIdentifier(HttpServletRequest request) <span style="color: #0000ff;">throws</span> AuthenticationException {
+
+     <span style="color: #008000;">// get the current session</span>
+     HttpSession session = request.getSession();
+
+     <span style="color: #008000;">// make a copy of the session content</span>
+     Map temp = <span style="color: #0000ff;">new</span> HashMap();
+     Enumeration e = session.getAttributeNames();
+     <span style="color: #0000ff;">while</span> (e != <span style="color: #0000ff;">null</span> &amp;&amp; e.hasMoreElements()) {
+          String name = (String) e.nextElement();
+          Object value = session.getAttribute(name);
+          temp.put(name, value);
+     }
+
+     <span style="color: #008000;">// kill the old session and create a new one</span>
+     session.invalidate();
+     HttpSession newSession = request.getSession();
+
+     <span style="color: #008000;">// copy back the session content</span>
+     Iterator i = temp.entrySet().iterator();
+     <span style="color: #0000ff;">while</span> (i.hasNext()) {
+          Map.Entry entry = (Map.Entry) i.next();
+          newSession.setAttribute((String) entry.getKey(), entry.getValue());
+     }
+     <span style="color: #0000ff;">return</span> newSession;
+}</pre>
+<p>&nbsp;</p>
+</div>
+<p>&nbsp;</p>
+</div>
+<h2><a id="保護_session_id" name="保護_session_id">保護 Session ID</a></h2>
+<div class="level2">
+<p>如果可以的話，網站應用程式應該都以 HTTPS 的方式傳輸。如果無法，至少包含敏感性資料的頁面或處理程序要使用 HTTPS； 如果 HTTPS 無法保護整個網站的 session，在 HTTPS 傳輸時必須搭配 session ID，將此 session ID 和網站伺服器的 session 做配對檢查。</p>
+<p>如果必須藉由 <acronym title="Uniform Resource Locator">URL</acronym> 參數來傳遞 session ID 時，必須使用 POST。如果 cookies 用來儲存並由 HTTPS 傳送 session ID 時，必須被設為”安全”這樣就不會經過 non-<acronym title="Secure Sockets Layer">SSL</acronym> 的管道。</p>
+<p>網站應用程式必須提供登出的機制，並確保登出後此 session 過期和被銷毀。</p>
+<p>&nbsp;</p>
+</div>
+<h2><a id="作者列表" name="作者列表">作者列表</a></h2>
+<div class="level2">
+<ol>
+<li class="level1">
+<div class="li">2011/03/21 姚辰旻 初稿</div>
+</li>
+</ol>
+</div>
+<h2><a id="參考資料" name="參考資料">參考資料</a></h2>
+<div class="level2">
+<ol>
+<li class="level1">
+<div class="li">OWASP <a class="urlextern" title="http://www.owasp.org/index.php/Guide_Table_of_Contents" rel="nofollow" href="http://www.owasp.org/index.php/Guide_Table_of_Contents">http://www.owasp.org/index.php/Guide_Table_of_Contents</a></div>
+</li>
+<li class="level1">
+<div class="li">ESAPI <a class="urlextern" title="http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API" rel="nofollow" href="http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API">http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API</a></div>
+</li>
+</ol>
+</div>
+<p class="li">&nbsp;</p>
+<p class="li">PS:</p>
+<p class="li">ESAPI的站点都访问不了？</p>
+</div>

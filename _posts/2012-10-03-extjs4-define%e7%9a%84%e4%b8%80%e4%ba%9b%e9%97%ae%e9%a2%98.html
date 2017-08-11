@@ -1,0 +1,89 @@
+---
+layout: post
+title: extjs4 define的一些问题
+date: 2012-10-03 17:08:26.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- extjs4
+meta:
+  views: '346'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天同<b>bryntum</b>.com的Mats讨论了一些Extjs4的问题：</p>
+<p><strong>1: Ext.define中的属性定义要注意，不要用object或array类型</strong></p>
+<p>例如:</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:882dcd92-417a-4c03-b1ee-a3f3732e3688" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">Ext.define('MyPanel', {
+    extend : 'Ext.Panel',
+	fd1:{
+		p1:1,
+		p2:2
+	}
+});</pre>
+</div>
+<p>这样定义的类MyPanel创建的所有实例的fd1属性会指向同一个json对象。这是因为目前Extjs的实现的属性copy没有深拷贝,同样的问题存在于通过config定义的属性。</p>
+<p>&#160;</p>
+<p>解决方案：</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:6a6e87da-c6c7-4d87-b31d-2ed8ff2af622" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">constructor: function() {
+				arguments[0].fd1 = {p1:1,p2:2};				
+				this.callParent(arguments);
+			}</pre>
+</div>
+<p>即通过在构造器中设置实例属性来达到目的。</p>
+<p>Mats说这不是bug,而是prototype本身就是这样的。但是我觉得真是容易上当，这样的解决方案也很不方便。</p>
+<p>&#160;</p>
+<p><strong>2: 怎样在config中设置scope?</strong></p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:57675f9d-8e54-44be-b8ce-f486b27ed8c0" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">Ext.define('MyPanel', {
+    extend : 'Ext.Panel',
+
+    sayHello : function() { console.log('Hello world'); },
+
+    tbar : [
+        { 
+            text : 'Click to say hello',
+            handler : this.sayHello,
+            scope : this
+        }
+    ],
+
+    ... // stores, columns defined below
+});
+</pre>
+</div>
+<p>上面代码的错误是scope:this,中的this在此语境下是window,但是怎样将scope设置为MyPanel实例？</p>
+<p>解决方法原理同上面，在构造其中将this传入。</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:ea9410f2-371c-4e0c-bee2-7c23d87c1b44" class="wlWriterEditableSmartContent">
+<pre name="code" class="js">Ext.define('MyPanel', {
+    extend : 'Ext.Panel',
+	sayHello : function() { console.log('Hello world'); },
+    constructor : function() {
+    	arguments[0].tbar = [
+	        { 
+	            text : 'Click to say hello',
+	           	handler : this.sayHello,
+	            scope: this
+	        }
+	    ];
+    	this.callParent(arguments);
+	}
+});</pre>
+</div>
+<p>&#160;</p>
+<p>另外还有其他几点：</p>
+<p>a. 使用事件的优化（性能方面）：</p>
+<blockquote>
+<p>a1. 对于列表li的事件，可由其上级元素ul监听，通过switch来判断具体由哪个触发。</p>
+<p>a2. 举个例子，在store的load事件中来操作grid,但是要注意，grid可能被销毁，而store却可能存在。所以这里要注意处理。</p>
+</blockquote>
+<p>b. instanceof 右边的类需要判断是否存在，对于Extjs4动态加载的情况这一点很重要。</p>

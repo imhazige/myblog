@@ -1,0 +1,111 @@
+---
+layout: post
+title: "我的css排版实践"
+date: 2011-05-25 09:20:06.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- web css
+meta:
+  views: '32'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;</p>
+<p>&lt;html&gt;</p>
+<p>&#160; &lt;head&gt;</p>
+<p>&#160;&#160;&#160; &lt;title&gt;float_clear.html&lt;/title&gt;</p>
+<p>&#160;&#160;&#160; &lt;meta http-equiv=&quot;keywords&quot; content=&quot;keyword1,keyword2,keyword3&quot;&gt;</p>
+<p>&#160;&#160;&#160; &lt;meta http-equiv=&quot;description&quot; content=&quot;this is my page&quot;&gt;</p>
+<p>&#160;&#160;&#160; &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=gbk&quot;&gt;</p>
+<p>&#160;&#160;&#160; &lt;!--&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./styles.css&quot;&gt;--&gt;</p>
+<p>&lt;style type=&quot;text/css&quot;&gt;</p>
+<p>body {text-align: center;}</p>
+<p>div {border: 1px solid black}</p>
+<p>.topdiv {width: 960px;margin: 0 auto}</p>
+<p>.clearfix:after {</p>
+<p>&#160;&#160; content: &quot;.&quot;;</p>
+<p>&#160;&#160; display: block;</p>
+<p>&#160;&#160; height: 0;</p>
+<p>&#160;&#160; clear: both;</p>
+<p>&#160;&#160; visibility: hidden;</p>
+<p>}</p>
+<p>.clearfix {display: inline-block;}</p>
+<p>&lt;/style&gt;</p>
+<p>&#160; &lt;/head&gt;</p>
+<p>&#160; &lt;body&gt;</p>
+<p>&#160;&#160; &lt;span&gt;居中显示&quot;margin: 0 auto&quot;即可,ie则需要在body上加上text-align:center&lt;/span&gt;</p>
+<p>&#160;&#160;&#160; &lt;div class=&quot;topdiv&quot; &gt;</p>
+<p>&#160;&#160;&#160;&#160; &lt;div&gt;正确的方法</p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;top&lt;/div&gt; </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;&quot;&gt;left&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;width: 90%&quot;&gt;center&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;right&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;bottom&lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160;&#160; &lt;/div&gt;</p>
+<p>&#160;&#160;&#160;&#160; &lt;div&gt;正确的方法</p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;top&lt;/div&gt; </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;;width: 8%&quot;&gt;left&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;width: 82%&quot;&gt;center&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;right&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;bottom&lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160;&#160; &lt;/div&gt;</p>
+<p>&#160;&#160;&#160;&#160; &lt;div&gt;错误的方法，且浏览器表现不同,right的边框为红色</p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;top&lt;/div&gt; </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;width: 2%&quot;&gt;left&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;width: 90%&quot;&gt;center&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;width: 8%;border-color: red&quot;&gt;right&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;bottom&lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160;&#160; &lt;/div&gt; </p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;&quot;&gt;浮动撑出</p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;top&lt;/div&gt; </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left&quot;&gt;left&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;width: 980px&quot;&gt;center&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;span class=&quot;clearfix&quot;&gt;使用clear无效&lt;/span&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;right&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;bottom&lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160;&#160; &lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: left;&quot;&gt;浮动撑出,解决方法--父元素设置float</p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;top&lt;/div&gt; </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left&quot;&gt;left&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;width: 980px&quot;&gt;center&lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;right&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;bottom&lt;/div&gt;&#160;&#160;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160;&#160; &lt;/div&gt;</p>
+<p>&#160;&#160;&#160;&#160; &lt;div &gt;我觉得最好的</p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;top&lt;/div&gt;</p>
+<p>&#160;&#160;&#160;&#160; &lt;div style=&quot;float: left;&quot;&gt;</p>
+<p>&#160;&#160;&#160;&#160; 一行的使用一个div包含，这样可以做到下面不超出 </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left&quot;&gt;left&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;width: 90%&quot;&gt;center&lt;br/&gt;</p>
+<p>&#160;&#160;&#160; 宽度一般排版的时候会知道，不应该超出,所以最好分配宽度 &lt;br/&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160; 122222222222222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 1222222222 22222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 1222222222222222222222 22222222222222222222222222</p>
+<p>&#160;&#160;&#160; 1222222222222222 22222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222222222222 222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 1222222222 22222222222222222222 222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222 222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 12222222222222222222222 2222222222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222222222222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 1222222222222222 22222222222222222222222222222222</p>
+<p>&#160;&#160;&#160; 122222222222222222222222222222222222222222222222&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160; &lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: left;&quot;&gt;right&lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;/div&gt;</p>
+<p>&#160;&#160;&#160; &lt;div style=&quot;float: none;&quot;&gt;换行的话使用float: none;bottom&lt;/div&gt;&#160;&#160;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160;&#160; &lt;/div&gt;&#160;&#160;&#160;&#160; </p>
+<p>&#160;&#160;&#160; &lt;/div&gt;</p>
+<p>&#160; &lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>

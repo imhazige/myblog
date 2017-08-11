@@ -1,0 +1,74 @@
+---
+layout: post
+title: PHP 数组合并 + 与 array_merge 的区别
+date: 2012-11-03 17:07:30.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags: []
+meta:
+  views: '25'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这是个小知识点，但是爱忘记，我都找过几次了，特此烂笔头：</p>
+<p>&#160;</p>
+<p><strong>+ :</strong></p>
+<p>首先出现的会覆盖后出现的</p>
+<p>&#160;</p>
+<p><strong>array_merge:</strong></p>
+<p>后出现的会覆盖前面出现的。但是如果是数字索引，则是叠加效果。</p>
+<p>&#160;</p>
+<p><strong>示例:</strong></p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:62dec83a-adbc-404a-a2ee-f6a8ecc41d46" class="wlWriterEditableSmartContent">
+<pre name="code" class="xml">$array1 = Array(
+    0 =&gt; 111
+);
+ 
+$array2 = Array(
+    0 =&gt; 222,
+    1 =&gt; 3333
+);
+ 
+array_merge 后:
+Array
+(
+    [0] =&gt; 111
+    [1] =&gt; 222
+    [2] =&gt; 3333
+)
+ 
++ 后:
+Array
+(
+    [0] =&gt; 111
+    [1] =&gt; 3333
+)</pre>
+</div>
+<p>&#160;</p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:4566b9b5-9e9b-4d52-b345-2ddbbe2bf542" class="wlWriterEditableSmartContent">
+<pre name="code" class="php">$array1 = Array(
+    0 =&gt; 111
+);
+ 
+$array2 = Array(
+    'h' =&gt; 222,
+    1 =&gt; 3333
+);
+array_merge 和 + 的结果是一样:
+Array
+(
+    [0] =&gt; 111
+    [h] =&gt; 222
+    [1] =&gt; 3333
+)</pre>
+</div>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://www.isyang.net/html/y2011/194.html">http://www.isyang.net/html/y2011/194.html</a></p>

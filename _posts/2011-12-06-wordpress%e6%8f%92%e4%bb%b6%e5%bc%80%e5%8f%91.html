@@ -1,0 +1,57 @@
+---
+layout: post
+title: wordpress插件开发
+date: 2011-12-06 20:40:16.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- wordpress
+- "插件"
+meta:
+  views: '87'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<h3>在线文档：</h3>
+<p><a href="http://codex.wordpress.org/zh-cn:%E5%87%BD%E6%95%B0%E5%8F%82%E8%80%83">http://codex.wordpress.org/zh-cn:%E5%87%BD%E6%95%B0%E5%8F%82%E8%80%83</a></p>
+<p><a href="http://phpdoc.wordpress.org/trunk/">http://phpdoc.wordpress.org/trunk/</a></p>
+<p>开发插件 <a href="http://codex.wordpress.org/zh-cn:%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E6%8F%92%E4%BB%B6">http://codex.wordpress.org/zh-cn:%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E6%8F%92%E4%BB%B6</a></p>
+<p>怎样在admin中添加菜单 <a href="http://codex.wordpress.org/Adding_Administration_Menus">http://codex.wordpress.org/Adding_Administration_Menus</a></p>
+<p>&#160;</p>
+<p>admin管理中添加脚本和样式表资源：<a href="http://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts">http://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts</a></p>
+<p>plugins_url的调用需要注意场合，应该在hook方法中调用，否则得不到值。</p>
+<p>遇到的headers already sent问题:</p>
+<p>插件在本地运行的好好的，发送到网站上启用后报：<em>这个插件</em><em>在启用的过程中产生</em>了xx <em>个字符的异常输出</em>。插件是可以运行的，但是退出admin时就一大堆headers already sent(xxxx 第xx行),连xmlrpc也不能用了。删除插件就没这个问题。</p>
+<p>我在网上查，发现php utf-8 bom这个问题。</p>
+<p>php utf-8的 BOM 问题解决&#160; <a href="http://blog.csdn.net/ok7758521ok/article/details/1756052">http://blog.csdn.net/ok7758521ok/article/details/1756052</a></p>
+<p>我就以为是这个问题，但是用unicode 16进制查看却没有发现bom头。</p>
+<p>后来才发现eclipse utf-8格式本身就是不带bom头的。 <a href="http://stackoverflow.com/questions/2905582/working-with-utf-8-files-in-eclipse">http://stackoverflow.com/questions/2905582/working-with-utf-8-files-in-eclipse</a></p>
+<p>Both <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=78455">bug 78455</a> (&quot;Provide an option to force writing a BOM to UTF-8 files&quot;) and <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=136854">bug 136854</a> don't leave much hope for such an option.</p>
+<blockquote><p><strong>The support for encoding in the workspace is based on what is available from Java</strong>.       <br />For any given resource in the workspace, it is possible to obtain a charset string that can be used with any Java APIs that take charset strings.       <br />Examples are:</p>
+<ul>
+<li>'<code>US-ASCII</code>', </li>
+<li>'<code>UTF-8</code>', </li>
+<li>'<code>Cp1252</code>', </li>
+<li>'<code>UTF-16</code>' (Big Endian, BOM inserted automatically), </li>
+<li>'<code>UTF-16BE</code>' (Big Endian, BOM not inserted automatically), </li>
+<li>'<code>UTF-16LE</code>' (Little Endian, BOM not inserted automatically). </li>
+</ul>
+<p><strong>For Java encodings, except for the 'UTF-16' encoding, <font style="background-color: #ffff00">BOMs are not inserted</font> (when writing) or discarded (when reading) for free</strong>.       <br />Even if this is puzzling to end users, this is how all Java applications work.       <br /><strong>If applications want to support creating UTF-8 files with BOMs to match their users' expectations, they need to provide such capability on their own</strong> (as neither Java nor the Resources model will help with that).       <br />Eclipse does provide some improvements towards detecting BOMs, but not with generating or skipping them.</p>
+</blockquote>
+<p>真是冤大头，我还用notepad++的格式/转为utf-8 wihout BOM转换了一下，确实不是这个原因。</p>
+<p>最后发现那个报错已经说明了是哪一行，那一行是个php code之外的空白，把空白删除了就可以了！</p>
+<p>再查查wordpress plugin资料，原来插件主文件代码里是要注意空白的。如果在展示上有空白，建议写在另外的php文件中在require进来。</p>
+<p><a href="http://codex.wordpress.org/WordPress_Coding_Standards">http://codex.wordpress.org/WordPress_Coding_Standards</a></p>
+<blockquote><h5>Remove Trailing Spaces</h5>
+<p><b>Important:</b> Make sure you remove trailing whitespace after closing PHP tags.</p>
+<p>Also remove trailing spaces at the end of each line of code.</p>
+</blockquote>
+<p>&#160;</p>
+<p>在wp-setting.php中32 行设置默认时区 date_default_timezone_set( 'PRC' );</p>

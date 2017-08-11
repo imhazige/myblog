@@ -1,0 +1,36 @@
+---
+layout: post
+title: "我来说说行高 line-height 和 内联 inline 以及字体"
+date: 2012-09-06 14:01:52.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- css
+meta:
+  views: '32'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>这次碰到个问题，我使用了一个span元素，样式定义为</p>
+<p>line-height:1.5;</p>
+<p>使用firebug查看，box高度并没有变化，但是其父元素的高度却增加了。</p>
+<p>捣鼓了半天才明白，原来span默认是内联，<font color="#0000ff">内联元素的height和line-height不会对其box高度起作用。</font></p>
+<p><font color="#0000ff">但是line-height虽不影响本身，但是会影响<strong>最近的block显示的祖先元素</strong>box高度。（因为line-height定义是相邻行文字基线间的距离。）</font></p>
+<p>height则不会影响本身和祖先元素。</p>
+<p>如果将span设置为block显示，那么height和line-heigt将会影响到元素本身box高度。</p>
+<p>还发现如果是html5 DOCTYPE效果不会一样，似乎高度要高一点。</p>
+<p>&#160;</p>
+<p>然后看看字体，从英文排版到中文排版，line-height是一样的，不回因为字体改变而影响高度，但是主要的问题是安全的中文字体好看的真是没有。</p>
+<p>&#160;</p>
+<p>目前公认最安全的是arial，兼顾中西，win和mac。但是arial也不是很好看，而且字体大小最好不要小于12px,否则看着像蚂蚁团，模糊不清。</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://www.cnblogs.com/rainman/archive/2011/08/05/2128068.html">http://www.cnblogs.com/rainman/archive/2011/08/05/2128068.html</a> 深入理解CSS中的行高</p>
+<p><a href="http://dancewithnet.com/2009/11/22/default-web-font-style/">http://dancewithnet.com/2009/11/22/default-web-font-style/</a>&#160; 默认Web字体样式</p>

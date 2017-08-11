@@ -1,0 +1,113 @@
+---
+layout: post
+title: "【转】OAUTH协议简介"
+date: 2012-03-15 11:26:30.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- oauth
+meta:
+  views: '46'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>好文，忍不住转载了,转自<a href="http://blog.csdn.net/hereweare2009/article/details/3968582">http://blog.csdn.net/hereweare2009/article/details/3968582</a> ，蓝色字是我加的注解或是着重提示。 <span style="text-align: left; widows: 2; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px; font: 14px/26px arial; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(51,51,51); word-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span">
+<p><span style="font-size: x-small"><span class="Apple-converted-space">&#160;</span><span style="font-size: small">摘要：OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAUTH的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAUTH是安全的。同时，任何第三方都可以使用OAUTH认证服务，任何服务提供商都可以实现自身的OAUTH认证服务，因而OAUTH是开放的。业界提供了OAUTH的多种实现如PHP，JavaScript，Java，Ruby等各种语言开发包，大大节约了程序员的时间，因而OAUTH是简易的。目前互联网很多服务如Open API，很多大头公司如Google，Yahoo，Microsoft等都提供了OAUTH认证服务，这些都足以说明OAUTH标准逐渐成为开放资源授权的标准。</span></span></p>
+<p><span style="font-size: small"><span style="font-size: large"><strong><span style="font-size: large"><span style="font-size: small">一、</span>O</span>AUTH</strong><strong>产生的背景</strong></span></span></p>
+<p>&#160;&#160; <span class="Apple-converted-space">&#160;</span><span style="font-size: small">典型案例：如果一个用户拥有两项服务：一项服务是图片在线存储服务A，另一个是图片在线打印服务B。如下图所示。由于服务A与服务B是由两家不同的服务提供商提供的，所以用户在这两家服务提供商的网站上各自注册了两个用户，假设这两个用户名各不相同，密码也各不相同。当用户要使用服务B打印存储在服务A上的图片时，用户该如何处理？法一：用户可能先将待打印的图片从服务A上下载下来并上传到服务B上打印，这种方式安全但处理比较繁琐，效率低下；法二：用户将在服务A上注册的用户名与密码提供给服务B，服务B使用用户的帐号再去服务A处下载待打印的图片，这种方式效率是提高了，但是安全性大大降低了，服务B可以使用用户的用户名与密码去服务A上查看甚至篡改用户的资源。</span></p>
+<p style="text-align: center"><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" alt="" src="{{ site.baseurl }}/assets/1-1.jpg" width="469" height="295" /></p>
+<p>&#160;<span style="font-size: small">&#160;&#160; 很多公司和个人都尝试解决这类问题，包括Google、Yahoo、Microsoft，这也促使OAUTH项目组的产生。OAuth是由Blaine Cook、Chris Messina、Larry Halff 及David Recordon共同发起的，目的在于为API访问授权提供一个开放的标准。OAuth规范的1.0版于2007年12月4日发布。通过官方网址：</span><a style="color: rgb(51,102,153); text-decoration: none" href="http://oauth.net/"><span style="font-size: small">http://oauth.net</span></a><span style="font-size: small">可以阅读更多的相关信息。</span></p>
+<p><span style="font-size: large"><strong>二、OAUTH</strong><strong>简介</strong></span></p>
+<p>&#160;<span style="font-size: small">&#160;&#160; 在官方网站的首页，可以看到下面这段简介：</span></p>
+<p><span style="font-size: small">&#160;&#160; <span class="Apple-converted-space">&#160;</span><strong>An open protocol to allow secure API authorization in a simple and standard method from desktop and web applications.</strong></span></p>
+<p><strong></strong></p>
+<p><span style="font-size: small">&#160;&#160;&#160; 大概意思是说OAUTH是一种开放的协议，为桌面程序或者基于BS的web应用提供了一种简单的，标准的方式去访问需要用户授权的API服务。OAUTH类似于Flickr Auth、Google's AuthSub、Yahoo's BBAuth、 Facebook Auth等。OAUTH认证授权具有以下特点：</span></p>
+<p><span style="font-size: small">1. 简单：不管是OAUTH服务提供者还是应用开发者，都很容易于理解与使用；</span></p>
+<p><span style="font-size: small">2. 安全：没有涉及到用户密钥等信息，更安全更灵活；</span></p>
+<p><span style="font-size: small">3. 开放：任何服务提供商都可以实现OAUTH，任何软件开发商都可以使用OAUTH；</span></p>
+<p>&#160;<span style="font-size: large">三、<strong>OAUTH</strong><strong>相关术语</strong></span></p>
+<p>&#160;<span style="font-size: small">&#160;&#160; 在弄清楚OAUTH流程之前，我们先了解下OAUTH的一些术语的定义：</span></p>
+<ul>
+<li><span style="font-size: small"><strong>OAUTH</strong><strong>相关的三个URL</strong><strong>：</strong></span>
+<ul>
+<li><span style="font-size: small">Request Token URL: 获取未授权的Request Token服务地址；</span></li>
+<li><span style="font-size: small">User Authorization URL: 获取用户授权的Request Token服务地址；</span></li>
+<li><span style="font-size: small">Access Token URL: 用授权的Request Token换取Access Token的服务地址；</span></li>
+</ul>
+</li>
+</ul>
+<p><strong></strong></p>
+<ul>
+<li><span style="font-size: small"><strong>OAUTH</strong><strong>相关的参数定义：</strong><strong></strong></span>
+<ul>
+<li><span style="font-size: small">oauth_consumer_key: 使用者的ID，OAUTH服务的直接使用者是开发者开发出来的应用。所以该参数值的获取一般是要去OAUTH服务提供商处注册一个应用，再获取该应用的oauth_consumer_key。如Yahoo该值的注册地址为：</span><a style="color: rgb(51,102,153); text-decoration: none" href="https://developer.yahoo.com/dashboard/"><span style="font-size: small">https://developer.yahoo.com/dashboard/</span></a></li>
+<li><span style="font-size: small">oauth_consumer_secret：oauth_consumer_key对应的密钥。</span></li>
+<li><span style="font-size: small">oauth_signature_method: 请求串的签名方法，应用每次向OAUTH三个服务地址发送请求时，必须对请求进行签名。签名的方法有：HMAC-SHA1、RSA-SHA1与PLAINTEXT等三种。</span></li>
+<li><span style="font-size: small">oauth_signature: 用上面的签名方法对请求的签名。</span></li>
+<li><span style="font-size: small">oauth_timestamp: 发起请求的时间戳，其值是距1970 00:00:00 GMT的秒数，必须是大于0的整数。本次请求的时间戳必须大于或者等于上次的时间戳。</span></li>
+<li><span style="font-size: small">oauth_nonce: 随机生成的字符串，用于防止请求的重放，防止外界的非法攻击。</span></li>
+<li><span style="font-size: small">oauth_version: OAUTH的版本号，可选，其值必须为1.0。</span></li>
+</ul>
+</li>
+</ul>
+<p><strong><span style="font-size: small">&#160;</span><span style="font-size: small"> OAUTH HTTP</span></strong><span style="font-size: small"><strong>响应代码：</strong><strong></strong></span></p>
+<ul>
+<li><span style="font-size: small">HTTP 400 Bad Request 请求错误</span>
+<ul>
+<li><span style="font-size: small">Unsupported parameter 参数错误</span></li>
+<li><span style="font-size: small">Unsupported signature method 签名方法错误</span></li>
+<li><span style="font-size: small">Missing required parameter 参数丢失</span></li>
+<li><span style="font-size: small">Duplicated OAuth Protocol Parameter 参数重复</span></li>
+</ul>
+</li>
+<li><span style="font-size: small">HTTP 401 Unauthorized 未授权</span>
+<ul>
+<li><span style="font-size: small">Invalid Consumer Key 非法key</span></li>
+<li><span style="font-size: small">Invalid / expired Token 失效或者非法的token</span></li>
+<li><span style="font-size: small">Invalid signature 签名非法</span></li>
+<li><span style="font-size: small">Invalid / used nonce 非法的nonce</span></li>
+</ul>
+</li>
+</ul>
+<p><strong><span style="font-size: large">四、OAUTH</span></strong><strong><span style="font-size: large">认证授权流程</span></strong></p>
+<p>&#160;<span style="font-size: small">&#160;&#160; 在弄清楚了OAUTH的术语后，我们可以对OAUTH认证授权的流程进行初步认识。其实，简单的来说，OAUTH认证授权就三个步骤，三句话可以概括：</span></p>
+<p><span style="font-size: small">1. 获取未授权的Request Token</span></p>
+<p><span style="font-size: small">2. 获取用户授权的Request Token</span></p>
+<p><span style="font-size: small">3. 用授权的Request Token换取Access Token</span></p>
+<p><span style="font-size: small">&#160;&#160;&#160; 当应用拿到Access Token后，就可以有权访问用户授权的资源了。大家肯能看出来了，这三个步骤不就是对应OAUTH的三个URL服务地址嘛。一点没错，上面的三个步骤中，每个步骤分别请求一个URL，并且收到相关信息，并且拿到上步的相关信息去请求接下来的URL直到拿到Access Token。具体的步骤如下图所示：</span></p>
+<p><strong><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" alt="" src="{{ site.baseurl }}/assets/1-2.jpg" width="740" height="576" />&#160;</strong></p>
+<p><span style="font-size: small">具体每步执行信息如下：</span></p>
+<p><span style="font-size: small">A. 使用者（第三方软件）向OAUTH服务提供商请求未授权的Request Token。向Request Token URL发起请求，请求需要带上的参数见上图。</span></p>
+<p><span style="font-size: small">B. OAUTH服务提供商同意使用者的请求，并向其颁发未经用户授权的oauth_token与对应的oauth_token_secret，并返回给使用者。</span></p>
+<p><span style="font-size: small">C. 使用者向OAUTH服务提供商请求用户授权的Request Token。向User Authorization URL发起请求，请求带上上步拿到的未授权的token与其密钥。</span></p>
+<p><span style="font-size: small">D. OAUTH服务提供商将引导用户授权。该过程可能会提示用户，你想将哪些受保护的资源授权给该应用。此步可能会返回授权的Request Token也可能不返回。如Yahoo OAUTH就不会返回任何信息给使用者。</span></p>
+<p><span style="font-size: small">E. Request Token 授权后，使用者将向Access Token URL发起请求，将上步授权的Request Token换取成Access Token。请求的参数见上图，这个比第一步A多了一个参数就是Request Token。</span></p>
+<p><span style="font-size: small">F. OAUTH服务提供商同意使用者的请求，并向其颁发Access Token与对应的密钥，并返回给使用者。</span></p>
+<p><span style="font-size: small">G. 使用者以后就可以使用上步返回的Access Token访问用户授权的资源。</span></p>
+<p><span style="font-size: small">&#160;&#160;&#160; 从上面的步骤可以看出，用户始终没有将其用户名与密码等信息提供给使用者（第三方软件），从而更安全。用OAUTH实现背景一节中的典型案例：当服务B（打印服务）要访问用户的服务A（图片服务）时，通过OAUTH机制，服务B向服务A请求未经用户授权的Request Token后，服务A将引导用户在服务A的网站上登录，并询问用户是否将图片服务授权给服务B。用户同意后，服务B就可以访问用户在服务A上的图片服务。整个过程服务B没有触及到用户在服务A的帐号信息。如下图所示，图中的字母对应OAUTH流程中的字母：</span></p>
+<p>&#160;</p>
+<p style="text-align: center"><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" alt="" src="{{ site.baseurl }}/assets/1-3.jpg" width="408" height="375" /></p>
+<p><strong><span style="font-size: large">五、OAUTH</span></strong><strong><span style="font-size: large">服务提供商</span></strong></p>
+<p>&#160;<span style="font-size: small">&#160;&#160; OAUTH标准提出到现在不到两年，但取得了很大成功。不仅提供了各种语言的版本库，甚至Google，Yahoo，Microsoft等等互联网大头都实现了OAUTH协议。由于OAUTH的client包有很多，所以我们就没有必要在去自己写，避免重复造轮子，直接拿过来用就行了。我使用了这些库去访问Yahoo OAUTH服务，很不错哦！下面就贴出一些图片跟大家一起分享下！</span></p>
+<p><span style="font-size: small">&#160;&#160;&#160; 下图是OAUTH服务提供商引导用户登录（若用户开始没有登录）</span></p>
+<p style="text-align: center"><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" alt="" src="{{ site.baseurl }}/assets/1-4.jpg" width="760" height="551" /></p>
+<p>&#160;&#160; </p>
+<p>&#160;<span style="font-size: small">&#160;&#160; 下图是提示用户将要授权给第三方应用，是否同意授权的页面</span></p>
+<p><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" alt="" src="{{ site.baseurl }}/assets/1-5.jpg" width="744" height="511" /></p>
+<p>&#160;</p>
+<p>&#160;<span style="font-size: small">&#160;&#160; 下图提示用户已授权成功的信息</span></p>
+<p><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" alt="" src="{{ site.baseurl }}/assets/1-6.jpg" width="740" height="305" /></p>
+<p>&#160;</p>
+<p>&#160;<span style="font-size: small">&#160;&#160; 一些服务提供商不仅仅仅实现了OAUTH协议上的功能，还提供了一些更友好的服务，比如管理第三方软件的授权服务。下图就是YAHOO管理软件授权的页面，用户可以取消都某些应用的授权。</span></p>
+<p><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" alt="" src="{{ site.baseurl }}/assets/1-7.jpg" width="755" height="476" /></p>
+<p> </span>
+<p><font color="#0000ff">参见:</font></p>
+<p><a title="http://kazge.com/archives/765.html" href="http://kazge.com/archives/765.html"><font color="#0000ff">http://kazge.com/archives/765.html</font></a></p>
+<p><a title="http://kazge.com/archives/496.html" href="http://kazge.com/archives/496.html"><font color="#0000ff">http://kazge.com/archives/496.html</font></a></p>

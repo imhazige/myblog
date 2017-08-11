@@ -1,0 +1,43 @@
+---
+layout: post
+title: maven 导致文件损坏的问题
+date: 2011-05-26 05:33:00.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- maven
+meta:
+  views: '135'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>1 ：gzip格式打包时被损坏:</p>
+<p>今天花了一天时间，找出一个原来运行得好好的程序无法运行的原因：maven打包时将包资源里的gzip格式文件搞坏了。结果发布到产品环境下的gzip资源总是不可用，我勒个去！maven你怎么不去屎啊！</p>
+<p>2：编译时图片（主要是png图片）资源拷贝损坏：</p>
+<p>写swing程序时，放在源代码文件夹内的图片资源在生成到target/classes/文件夹下时出现损坏。</p>
+<p>出现异常：</p>
+<div>
+<pre>sun.awt.image.PNGImageDecoder$PNGException: crc corruption</pre>
+</div>
+<p>原来是是将资源编译了</p>
+<p>解决办法:</p>
+<p>pom里面设置资源不编译:(但是maven默认就是false,不知怎么回事。)</p>
+<div>
+<pre><span style="color: #0000ff">      &lt;</span><span style="color: #800000">build</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">resources</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">resource</span><span style="color: #0000ff">&gt;</span>
+	        <span style="color: #0000ff">&lt;</span><span style="color: #800000">directory</span><span style="color: #0000ff">&gt;</span>src/main/resources<span style="color: #0000ff">&lt;/</span><span style="color: #800000">directory</span><span style="color: #0000ff">&gt;</span>
+	        <span style="color: #0000ff">&lt;</span><span style="color: #800000">filtering</span><span style="color: #0000ff">&gt;</span>false<span style="color: #0000ff">&lt;/</span><span style="color: #800000">filtering</span><span style="color: #0000ff">&gt;</span>
+      	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">resource</span><span style="color: #0000ff">&gt;</span>
+      	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">resources</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">finalName</span><span style="color: #0000ff">&gt;xxx</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">finalName</span><span style="color: #0000ff">&gt;</span>		
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">build</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p>记住要清空再编译就发现图片好了。</p>

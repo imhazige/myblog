@@ -1,0 +1,49 @@
+---
+layout: post
+title: "在ie下，<button>标记恐怕还存在几个不大不小的问题。"
+date: 2011-06-10 17:03:22.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+meta:
+  views: '53'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p style="margin-left: 0px;margin-right: 0px"><font size="3">在ie下，&lt;button&gt;标记恐怕还存在几个不大不小的问题。</font></p>
+<ol style="margin-left: 2em;margin-right: 0px">
+<li><font size="2">在一个表单里，如果有一个以上&quot;submit&quot;类型的&lt;button&gt;标签存在，在表单被提交时，不管你点击哪个&lt;button&gt;，所有&lt;button&gt;的值都会被post/get。</font></li>
+<li><font size="2">&lt;button&gt;的缺省type属性被设置为&quot;button&quot;，但是在A级别浏览器下，应该设置为&quot;submit&quot;才对</font></li>
+<li><font size="2">如果你用javascript去访问&lt;button&gt;的value属性，IE却返回了&lt;button&gt;的innerHTML属性，很让人恼火。 (可以使用&quot;getAttributeNode&quot;方法来避免.)</font></li>
+</ol>
+<p style="margin-left: 0px;margin-right: 0px"><font size="3">例如，一段<a href="http://www.ooso.net/archives/index.php?tag=html">HTML</a>:</font></p>
+<div class="igBar"><font size="2"><a href="http://www.ooso.net/archives/352#"><b>PLAIN TEXT</b></a></font></div>
+<div class="syntax_hilite"><font size="2"><span class="langName"><b>CODE:</b></span></font>
+<div>
+<div class="code">
+<ol style="margin-left: 2em;margin-right: 0px">
+<li>
+<div style="font-weight: normal"><font size="2">&lt;form&gt;</font></div>
+</li>
+<li>
+<div style="font-weight: normal"><font size="2">&lt;button type=<span>&quot;submit&quot;</span> value=<span>&quot;1&quot;</span> name=<span>&quot;action-1&quot;</span>&gt;text <span>1</span>&lt;/button&gt;</font></div>
+</li>
+<li>
+<div style="font-weight: normal"><font size="2">&lt;button type=<span>&quot;submit&quot;</span> value=<span>&quot;2&quot;</span> name=<span>&quot;action-2&quot;</span>&gt;text <span>2</span>&lt;/button&gt;</font></div>
+</li>
+<li>
+<div style="font-weight: normal"><font size="2">&lt;/form&gt;</font></div>
+</li>
+</ol></div>
+</p></div>
+</p></div>
+<p style="margin-left: 0px;margin-right: 0px">
+<p style="margin-left: 0px;margin-right: 0px"><font size="3">在IE下，上面两个button的数据都会被提交。并且ie会提交这两个button的innerText而不是value。而其它浏览器仅仅提交你点击的那个button。</font></p>

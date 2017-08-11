@@ -1,0 +1,24 @@
+---
+layout: post
+title: setCapture这个事,move,drag
+date: 2011-07-06 13:39:35.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+- web css javascript
+meta:
+  views: '118'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>setCapture一般用在drag move,resize的实现上。它只能在IE上使用，目的是为了捕获onclick, ondblclick, onmousedown, onmouseup, onmousemove, onmouseout, 和onmouseover这类鼠标事件，不让目标节点失去捕获。</p>
+<p>又是你可能会看到像dragmove这样的实现将mousemove这样的事件监听到document上面，这样的做法是过时的。在IE下只要你调用了setCapture,就不会出现鼠标移出目标节点就捕获不到事件的事情了。对于非IE浏览器或者IE9之后的IE,只要使用addEventListener就可以达到同样的效果。但是当鼠标快速移动时，IE里面还是要表现好很多,特别是有iframe的情况，IE根本不受鼠标移到iframe上的影响。而其他浏览器则由于鼠标事件属于iframe的dom造成移动停止。</p>
+<p>改进方案是按照extjs的做法,移动时将原来的element隐藏，而只构建一个与原来element同样大小，位置的element.对此element进行移动，再将新的位置结果赋值给原来的element。</p>
