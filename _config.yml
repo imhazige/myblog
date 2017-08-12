@@ -1,8 +1,28 @@
-baseurl: https://imhazige.github.io/myblog
+url: https://imhazige.github.io
 
-# paginate: 20
+baseurl: /myblog
+
+theme: jekyll-theme-hydejack
+
+paginate: 10
+paginate_path: '/page-:num/'
+
+title:  Ka's Blog
+
+author:
+  name:  Ka
+  email: imhazige@gmail.com
+
+copyright:           '&copy; 2011 - 2017. All rights reserved.'
+
+tagline:             Ka's Blog.
+
+# A short description of the page, used in the sidebar and as fallback for the meta description tag.
+# Markdown enabled, but don't use more than one paragraph (enforced by `>`)
+description:         >
+  Ka's blog description...
 
 #plugins : ["jekyll-paginate","jekyll-sitemap"]
 
-theme: jekyll-theme-hydejack
+
 
