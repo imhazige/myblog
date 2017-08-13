@@ -43,9 +43,3 @@ node_modules
 .sass-cache
 .jekyll-metadata
 *.gem
-.babelrc
-.eslintignore
-.eslintrc
-package-lock.json
-package.json
-_sass
