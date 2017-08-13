@@ -1,4 +1,4 @@
-#source "https://gems.ruby-china.org/"
+source "https://gems.ruby-china.org/"
 gem 'github-pages'
 # gem 'jekyll-paginate'
 
@@ -7,3 +7,4 @@ gem 'github-pages'
 #gem "pygments.rb"
 
 gem "jekyll-theme-hydejack"
+
