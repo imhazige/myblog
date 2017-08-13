@@ -9,7 +9,7 @@
   {% assign pages = pages | where: "menu", true | sort: "order" %}
 
   {% for node in pages %}
-    {% if node.tile != 'hide' and node.tile != 'hidejack' %}
+    {% if node.tile != 'Hyde' and node.tile != 'Hydejack' %}
     <li>
       <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url | relative_url }}">{{ node.title }}</a>
     </li>
