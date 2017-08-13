@@ -2,32 +2,31 @@
 #  User configuration
 # -----------------------------------------------------------------------------
 
-title:               Hydejack
+title:               Ka's Blog
 
 # The unique resource location of your page.
 # Set to `https://<username>.github.io` when hosting on GitHub Pages
-url:                 https://qwtel.com
+url:                 https://imhazige.github.io
 
 # Set to '' when hosting a blog on GitHub Pages, ie on `//<username>.github.io`
 # Set to '/<reponame>' when using the `gh-pages` branch of a repository
-baseurl:             /hydejack
+baseurl:             /myblog
 
 # A very short description of your page
-tagline:             A pretentious two-column Jekyll theme.
+tagline:             IT software.
 
 # A short description of the page, used in the sidebar and as fallback for the meta description tag.
 # Markdown enabled, but don't use more than one paragraph (enforced by `>`)
 description:         >
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  Open `_config.yml` to edit this text.
+  Some description to do...
 
 # This should be the same author as first entry in `_data/authors.yml`
 author:
-  name:              <firstname> <lastname>
-  email:             <mail@domain.tld>
+  name:              Ka
+  email:             imhazige@gmail.com
 
 # Fallback image and color
-image:               /hydejack/assets/img/nap.jpg
+image:               /myblog/assets/img/nap.jpg
 color:               '#4f86aa'
 
 # The font used for headings. Expects a string that is a valid CSS font-family value.
@@ -51,13 +50,13 @@ google_analytics:    <UA-XXXXXXXX-X>
 disqus_shortname:    <username>
 
 # This text will appear in the footer of every page. Markdown enabled.
-copyright:           '&copy; 2017. All rights reserved.'
+copyright:           '&copy; 2013 - 2017. All rights reserved.'
 
 # Format of the permalinks
 permalink:           pretty
 
 # Pagination configuration (used by the `blog` layout)
-paginate:            5
+paginate:            10
 paginate_path:       '/page-:num/'
 
 # If you are upgrading form a v5 verison of Hydejack, uncomment the two lines below,
