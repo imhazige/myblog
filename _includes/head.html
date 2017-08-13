@@ -54,7 +54,8 @@
 <link rel="apple-touch-icon" href="{{ 'apple-touch-icon.png' | relative_url }}">
 <!-- Place favicon.ico in the root directory -->
 
-<link rel="dns-prefetch" href="{{'/assets/style.css' | relative_url }}">
+{% capture me_style_url %}{% link assets/style.css %}{% endcapture %}
+<link rel="stylesheet" href="{{ me_style_url | relative_url }}">
 
 {% comment %}
 The links below are only here because we want to use the `href` property in JS (see `_js/src/katex.js`).
