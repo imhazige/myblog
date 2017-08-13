@@ -1,0 +1,152 @@
+---
+layout: post
+title: xmpphp 的一些补丁
+date: 2012-03-19 17:17:06.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- xmpp
+meta:
+  views: '300'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>xmpphp对于注册新用户，添加好友等功能暂时还没有，以下是我在网上找到的补丁：</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+
+	public <a style="color: #0000ff" href="http://www.php.net/function">function</a> registerNewUser($username, $password = NULL, $email='<span style="color: #8b0000"></span>') {
+		<a style="color: #0000ff" href="http://www.php.net/if">if</a> (!isset ($password))
+			$password = $this-&gt;genRandomString(15);
+
+		$id = '<span style="color: #8b0000">reg_</span>' . $this-&gt;getID();
+		$xml = &quot;<span style="color: #8b0000">&lt;iq type='set' id='$id'&gt;</span>
+				                &lt;query xmlns='<span style="color: #8b0000">jabber:iq:register</span>'&gt;
+				                    &lt;username&gt;&quot;<span style="color: #8b0000"> . $username . </span>&quot;&lt;/username&gt;
+				                    &lt;password&gt;&quot;<span style="color: #8b0000"> . $password . </span>&quot;&lt;/password&gt;
+				                    &lt;email&gt;$email&lt;/email&gt;
+				                    &lt;name&gt;&lt;/name&gt;
+				                &lt;/query&gt;
+				            &lt;/iq&gt;&quot;<span style="color: #8b0000">;</span>
+		$this-&gt;addIdHandler($id, '<span style="color: #8b0000">register_new_user_handler</span>');
+		$this-&gt;<a style="color: #ffa500" href="http://www.php.net/send">send</a>($xml);
+	}
+
+	<span style="color: #008000">/**
+	* Handler for new user registration
+	*
+	* @param XML Object $xml
+	*/</span>
+	public <a style="color: #0000ff" href="http://www.php.net/function">function</a> register_new_user_handler($xml) {
+		<span style="color: #008000">//dpm($xml);</span>
+		<span style="color: #008000">//var_dump($xml);</span>
+		<a style="color: #0000ff" href="http://www.php.net/switch">switch</a> ($xml-&gt;attrs['<span style="color: #8b0000">type</span>']) {
+			<a style="color: #0000ff" href="http://www.php.net/case">case</a> '<span style="color: #8b0000">error</span>' :
+				$this-&gt;event('<span style="color: #8b0000">new_user_registered</span>', '<span style="color: #8b0000">error</span>');
+				<a style="color: #0000ff" href="http://www.php.net/break">break</a>;
+			<a style="color: #0000ff" href="http://www.php.net/case">case</a> '<span style="color: #8b0000">result</span>' :
+				<span style="color: #008000">// dpm($xml-&gt;subs);</span>
+				$query = $xml-&gt;sub('<span style="color: #8b0000">query</span>');
+				$username = '<span style="color: #8b0000"></span>';
+				$password = '<span style="color: #8b0000"></span>';
+				<a style="color: #0000ff" href="http://www.php.net/if">if</a> (!$query-&gt;subs){
+					<a style="color: #0000ff" href="http://www.php.net/break">break</a>;
+				}
+				<a style="color: #0000ff" href="http://www.php.net/if">if</a> (!<a style="color: #ffa500" href="http://www.php.net/is_array">is_array</a>($query-&gt;subs)) {
+					<a style="color: #0000ff" href="http://www.php.net/foreach">foreach</a> ($query-&gt;subs <a style="color: #0000ff" href="http://www.php.net/as">as</a> $<a style="color: #ffa500" href="http://www.php.net/key">key</a> =&gt; $value) {
+						<a style="color: #0000ff" href="http://www.php.net/switch">switch</a> ($value-&gt;name) {
+							<a style="color: #0000ff" href="http://www.php.net/case">case</a> '<span style="color: #8b0000">username</span>' :
+								$username = $value-&gt;data;
+								<a style="color: #0000ff" href="http://www.php.net/break">break</a>;
+
+							<a style="color: #0000ff" href="http://www.php.net/case">case</a> '<span style="color: #8b0000">password</span>' :
+								$password = $value-&gt;data;
+								<a style="color: #0000ff" href="http://www.php.net/break">break</a>;
+						}
+					}
+				}
+				$this-&gt;event('<span style="color: #8b0000">new_user_registered</span>', <a style="color: #ffa500" href="http://www.php.net/array">array</a> (
+					'<span style="color: #8b0000">jid</span>' =&gt; $username . &quot;<span style="color: #8b0000">@{$this-&gt;server}</span>&quot;,
+					'<span style="color: #8b0000">password</span>' =&gt; $password
+				));
+			<a style="color: #0000ff" href="http://www.php.net/default">default</a> :
+				$this-&gt;event('<span style="color: #8b0000">new_user_registered</span>', '<span style="color: #8b0000">default</span>');
+		}
+	}
+
+	<span style="color: #008000">/**
+	 * Add contact to your roster
+	 */</span>
+	public <a style="color: #0000ff" href="http://www.php.net/function">function</a> addRosterContact($jid, $name, $groups = <a style="color: #ffa500" href="http://www.php.net/array">array</a> ()) {
+		<span style="color: #008000">// return if there is no jid specified</span>
+		<a style="color: #0000ff" href="http://www.php.net/if">if</a> (!$jid)
+			<a style="color: #0000ff" href="http://www.php.net/return">return</a>;
+		<span style="color: #008000">// set name to the jid if none is specified</span>
+		<a style="color: #0000ff" href="http://www.php.net/if">if</a> (!$name) {
+			$name = $jid;
+		}
+		$id = $this-&gt;getID();
+		$xml = &quot;<span style="color: #8b0000">&lt;iq type='set' id='$id'&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;query xmlns='jabber:iq:roster'&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;item jid='$jid' name='$name'&gt;</span>&quot;;
+		<a style="color: #0000ff" href="http://www.php.net/foreach">foreach</a> ($groups <a style="color: #0000ff" href="http://www.php.net/as">as</a> $group) {
+			$xml .= &quot;<span style="color: #8b0000">&lt;group&gt;$group&lt;/group&gt;</span>&quot;;
+		}
+		$xml .= &quot;<span style="color: #8b0000">&lt;/item&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;/query&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;/iq&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;presence to='</span>&quot; . $jid . &quot;<span style="color: #8b0000">' type='subscribe'/&gt;</span>&quot;;
+		$this-&gt;addIdHandler($id, '<span style="color: #8b0000">add_roster_contact_handler</span>');
+		$this-&gt;<a style="color: #ffa500" href="http://www.php.net/send">send</a>($xml);
+	}
+
+	<span style="color: #008000">/**
+	* @param XML Object $xml
+	*/</span>
+	protected <a style="color: #0000ff" href="http://www.php.net/function">function</a> add_roster_contact_handler($xml) {
+		<span style="color: #008000">// do anything you wish here</span>
+		$this-&gt;event('<span style="color: #8b0000">contact_added</span>');
+	}
+
+	<span style="color: #008000">/**
+	*
+	* @param $jid
+	*       Contact you wish to remove
+	*/</span>
+
+	public <a style="color: #0000ff" href="http://www.php.net/function">function</a> deleteRosterContact($jid) {
+		$id = $this-&gt;getID();
+		$xml = &quot;<span style="color: #8b0000">&lt;iq type='set' id='$id'&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;query xmlns='jabber:iq:roster'&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;item jid='</span>&quot; . $jid . &quot;<span style="color: #8b0000">' subscription='remove' /&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;/query&gt;</span>&quot;;
+		$xml .= &quot;<span style="color: #8b0000">&lt;/iq&gt;</span>&quot;;
+		$this-&gt;addIdHandler($id, '<span style="color: #8b0000">delete_roster_contact_handler</span>');
+		$this-&gt;<a style="color: #ffa500" href="http://www.php.net/send">send</a>($xml);
+	}
+
+	<span style="color: #008000">/**
+	*
+	* @param XML Object $xml
+	*/</span>
+	protected <a style="color: #0000ff" href="http://www.php.net/function">function</a> delete_roster_contact_handler($xml) {
+		<span style="color: #008000">// do any handling you wish here</span>
+		$this-&gt;event('<span style="color: #8b0000">contact_removed</span>');
+	}
+
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p>注册用户需要先通过一个已有账户登陆(admin账户最保险)再调用registerNewUser.</p>
+<p>&#160;</p>
+<p>
+  <br />参见:</p>
+<p><a href="http://hi.baidu.com/txjlrk/blog/item/ff3edc0c3eca28326059f3a7.html">http://hi.baidu.com/txjlrk/blog/item/ff3edc0c3eca28326059f3a7.html</a></p>
+<p><a href="http://anandafit.info/2011/05/10/register-new-xmpp-users-with-xmpphp/">http://anandafit.info/2011/05/10/register-new-xmpp-users-with-xmpphp/</a></p>
+<p><a href="http://code.google.com/p/xmpphp/issues/detail?id=64">http://code.google.com/p/xmpphp/issues/detail?id=64</a></p>

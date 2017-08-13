@@ -1,0 +1,43 @@
+---
+layout: post
+title: branch,tag,version,patch 分支，标签，版本，补丁
+date: 2011-10-31 10:38:44.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- "软件工程"
+tags:
+- "版本控制"
+meta:
+  views: '134'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>版本控制工具中平时使用的较多的是提交commit，更新update……,对于分支，标签，版本，补丁这些概念不是经常用，这篇文章介绍了分支版本，标签的使用场景：</p>
+<p>CVS Branch 和 Merge 在 Eclipse 中的使用 <a title="http://blog.csdn.net/sanshiqiduer/article/details/2423936" href="http://blog.csdn.net/sanshiqiduer/article/details/2423936">http://blog.csdn.net/sanshiqiduer/article/details/2423936</a></p>
+<p>Branch：</p>
+<p>我们在version Release_1_0建立一个branch,比如叫做“Release_1_0_Branch”, 这时CVS会同时建立一个regular tag “Root_of_Releas_1_0_Branch”，这个“Root_of_Releas_1_0_Branch” tag的用途是为了以后branch 合并到main trunk时提供一个参考点。</p>
+<p>之后开发新版本的人员就基于main trunk工作，而fix bug的人员就基于Release_1_0_Branch工作。   <br />一旦在Release_1_0_Branch上将Release_1_0的bug修复了，我们就可以将Release_1_0_Branch合并到main trunk中来，从而一次性remove the bugs。</p>
+<p>Merge：</p>
+<p>fix bug之后，这时我们要把 Brank&#160; merge main trunk 了。</p>
+<p>1、选择 project -&gt; Right click your project name, choose Replace With &gt; Another Branch or Version from the context menu,   <br /> Then select the HEAD to replace with your current version in your workplace。</p>
+<p>2、Select the project and choose Team &gt; Merge.</p>
+<p>在随后出现的对话框中，你首先选择regular tag ”Root_of_Releas_1_0_Branch”，然后在下一步中选择你的Branch“Release_1_0_Branch”。</p>
+<p>3、Synchronize view中的操作</p>
+<p>在第二步结束后，Synchronize view中将显示“all the differences between the branch and your workspace version(that is the HEAD version)”,你必须在Synchronize view中通过菜单中提供的“Update, Override and Update, or Mark as Merged”手工决定合并到你工作区的change。</p>
+<p>4、在所有期望的changes都被merge到你的工作区后，你就可以“commit”the changes to the repository了。</p>
+<p>&#160;</p>
+<p><strong>tag作用：</strong>     <br />1.指示你正工作在那个branch上。（因为每个branch都有一个tag.     <br />2.如果你不想更新一个大目录树的一部分，你可以利用sticky&#160;&#160; tag.     <br />(sticky&#160;&#160; tag的定义：If&#160;&#160; you&#160;&#160; check&#160;&#160; out&#160;&#160; a&#160;&#160; certain&#160;&#160; revision&#160;&#160; (such&#160;&#160; as&#160;&#160; 1.4)&#160;&#160; it&#160;&#160; will&#160;&#160; become&#160;&#160; sticky.&#160; Subsequent&#160;&#160; cvs&#160;&#160; update&#160;&#160; commands&#160;&#160; will&#160;&#160; not&#160;&#160; retrieve&#160;&#160; the&#160;&#160; latest&#160;&#160; revision&#160;&#160; until&#160;&#160; you&#160;&#160; reset&#160;&#160; the&#160;&#160; tag&#160;&#160; with&#160;&#160; cvs&#160;&#160; update&#160;&#160; -A.)     <br /><strong></strong></p>
+<p><strong>什么情况下用branch：</strong>     <br />若release1.0已经发布，现在正在开发2.0.这时发现在1.0中发现严重bug,但2.0的code还没有稳定，你就要从1.0建立一个branch.创建branch的时也要指定一个tag，同时文件的版本号都会改变。     </p>
+<h2>补丁程序(patch)</h2>
+<p>是一个包含了某一资源的资源库实例和该资源的工作空间实例之间差别的文件。补丁程序可表示出一个单独文件(或完整项目)中的差别。补丁程序允许您共享尚未提交到CVS的更改。有很多原因使得补丁程序非常有用。</p>
+<p>●&#160;&#160;&#160;&#160;&#160;&#160; 由于您没有向CVS提交资源的权限，所以您需要将该补丁程序发送给具有资源提交权限的人，然后再由他向CVS提交资源。</p>
+<p>●&#160;&#160;&#160;&#160;&#160;&#160; 您需要为所遇到的问题准备一个应急修改或临时工作空间。</p>
+<p>●&#160;&#160;&#160;&#160;&#160;&#160; 在将重要的更改提交到CVS之前，您可能想让别人对您的更改进行校验。在这种情况下，您可以将补丁程序发送给校验人以让他们进行测试。</p>
+<p>通过使用快捷菜单Team | Create Patch…，我们就可以创建补丁文件。该操作会调用Create Patch向导来指导您完成补丁文件的创建。若要应用某补丁程序，则使用快捷菜单Team | Apply Patch…。该操作会调用Apply Patch向导。Eclipse联机文档Workbench User Guide的<em>Working with patches</em> 一节中有关上述两个操作的描述非常精彩。</p>
+<p><font color="#0000ff">补丁生成的是一个文本文件。包含了本地环境与已提交版本的区别，使用apply可以依据已提交版本再次生成本地环境。</font></p>

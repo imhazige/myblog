@@ -1,0 +1,63 @@
+---
+layout: post
+title: google analytics Core Reporting API 使用
+date: 2012-06-20 15:07:40.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+- Web
+tags:
+- google
+meta:
+  views: '584'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>v3 overview</p>
+<p><a href="https://developers.google.com/analytics/devguides/reporting/core/v3/">https://developers.google.com/analytics/devguides/reporting/core/v3/</a></p>
+<p>php client</p>
+<p><a href="https://code.google.com/p/google-api-php-client/">https://code.google.com/p/google-api-php-client/</a></p>
+<p>文档</p>
+<p><a href="https://developers.google.com/analytics/">https://developers.google.com/analytics/</a></p>
+<p>v3 api 文档</p>
+<p><a href="https://developers.google.com/apis-explorer/#s/analytics/v3/">https://developers.google.com/apis-explorer/#s/analytics/v3/</a></p>
+<p>&#160;</p>
+<p>可参照此教程来</p>
+<p><a href="https://developers.google.com/analytics/resources/tutorials/hello-analytics-api">https://developers.google.com/analytics/resources/tutorials/hello-analytics-api</a></p>
+<p>其实最重要的一步就是oauth2.0验证了，这个是所有google api都需要的。</p>
+<p>使用google的api&#160; client 库还比较方便。</p>
+<p>&#160;</p>
+<p><strong>大体流程是</strong>，需要在 <a title="https://code.google.com/apis/console/" href="https://code.google.com/apis/console/">https://code.google.com/apis/console/</a> 注册你的工程，这一步为以后请求api打基础。</p>
+<p>创建项目，按照步骤来，在Api Acess选项，创建oauth client2.0 client ID。</p>
+<p><strong>Branding Information</strong></p>
+<p>界面填的信息是当你的web程序跳转到google认证页面时，google显示给用户看的，这样可以让用户知道是什么程序需要访问Ta的google账户，这个和openid有些像。</p>
+<p><strong>Client ID Settings</strong></p>
+<p>此界面需要你选择程序类型</p>
+<p>Web application</p>
+<p>Service account</p>
+<p>Installed application</p>
+<p>其中Service account是针对不需要访问google用户信息的程序，也就是不需要用户认证界面。像云存储，就不需要于某个用户关联。</p>
+<p>这里使用google analytics还是需要用户信息的，所以应该选择Web application。</p>
+<p>在Your site or hostname这一项中需要注意，这个链接是用于用户认证后google返回token的回调页面(http get,code参数带token)，所以应该点击more options填上你希望google认证后跳转的页面，这个页面自然要负责将google的token保存在某个地方以便（一段时间内）下次使用。</p>
+<p>点击创建clientid这时就为你创建好了用于api调用的oauth信息。</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+$client-&gt;setClientId('<span style="color: #8b0000">insert_your_oauth2_client_id</span>');
+$client-&gt;setClientSecret('<span style="color: #8b0000">insert_your_oauth2_client_secret</span>');
+$client-&gt;setRedirectUri('<span style="color: #8b0000">insert_your_oauth2_redirect_uri</span>');
+$client-&gt;setDeveloperKey('<span style="color: #8b0000">insert_your_developer_key</span>');
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<div>其中setDeveloperKey中设置的就是app key。</div>
+<p>这样关键的oauth步骤就完成了,在其后就是查询api调用了。</p>
+<p>&#160;</p>
+<p><a href="https://developers.google.com/analytics/devguides/reporting/core/v3/reference">https://developers.google.com/analytics/devguides/reporting/core/v3/reference</a></p>
+<p>DataGaServiceResource-&gt;data_ga-&gt;get方法是这样定义的:</p>
+<p>public function get($ids, $start_date, $end_date, $metrics, $optParams = array())</p>
+<p>我所碰到的问题是，有用户自定义的dimension,如果在dimensions参数中包含了此维，那么只会返回有此维值得结果，相当于sql 中where条件中的and is not null了。故在写此维数据时，如果没有值也应该写个字符串’(not set)’,以免查询时没有此维值得记录被过滤掉了。</p>

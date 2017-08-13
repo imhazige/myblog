@@ -1,0 +1,78 @@
+---
+layout: post
+title: "【转】Ari Zilka谈Ehcache的进程内堆外缓存BigMemory"
+date: 2011-08-25 09:52:38.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+- "分布式"
+tags:
+- bigmomery
+- Ehanche
+- java
+- "集群"
+meta:
+  views: '175'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div>
+<pre>转自infoq,文章不错，而且译得也不错。</pre>
+</div>
+<p></p>
+<h1><a href="http://www.infoq.com/cn/news/2010/11/tc-bigmemory" rel="permalink">Ari Zilka谈Ehcache的进程内堆外缓存BigMemory</a></h1>
+<p class="info">作者 <strong><a class="editorlink f_taxonomyEditor" href="http://www.infoq.com/cn/author/Srini-Penchikala">Srini Penchikala</a> </strong>译者 <strong><a class="editorlink f_taxonomyTranslator" href="http://www.infoq.com/cn/author/%E7%8E%8B%E4%B8%BD%E5%A8%9F">王丽娟</a> </strong>发布于 2010年11月29日 </p>
+<div style="width: 100%;height: 19px" class="addthis_toolbox addthis_default_style">
+<div style="float: left"><a class="addthis_button_googlereader at300b" title="Send to Google Reader" href="http://www.addthis.com/bookmark.php?v=250&amp;winname=addthis&amp;pub=infoq&amp;source=tbx-250&amp;lng=zh-CN&amp;s=googlereader&amp;url=http%3A%2F%2Fwww.infoq.com%2Fcn%2Fnews%2F2010%2F11%2Ftc-bigmemory&amp;title=InfoQ%3A%20Ari%20Zilka%E8%B0%88Ehcache%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%86%85%E5%A0%86%E5%A4%96%E7%BC%93%E5%AD%98BigMemory&amp;ate=AT-infoq/-/-/4e55a2ccc03c4f8e/1&amp;frommenu=1&amp;uid=4e55a2cc0c52e927&amp;ct=1&amp;tt=0" target="_blank"><span class="at300bs at15nc at15t_googlereader"></span></a><a class="addthis_button_douban at300b" title="Send to Douban" href="http://www.addthis.com/bookmark.php?v=250&amp;winname=addthis&amp;pub=infoq&amp;source=tbx-250&amp;lng=zh-CN&amp;s=douban&amp;url=http%3A%2F%2Fwww.infoq.com%2Fcn%2Fnews%2F2010%2F11%2Ftc-bigmemory&amp;title=InfoQ%3A%20Ari%20Zilka%E8%B0%88Ehcache%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%86%85%E5%A0%86%E5%A4%96%E7%BC%93%E5%AD%98BigMemory&amp;ate=AT-infoq/-/-/4e55a2ccc03c4f8e/2&amp;frommenu=1&amp;uid=4e55a2cc0c4bae91&amp;ct=1&amp;tt=0" target="_blank"><span class="at300bs at15nc at15t_douban"></span></a><a class="addthis_button_googlebuzz at300b" title="Send to Google Buzz" href="http://www.addthis.com/bookmark.php?v=250&amp;winname=addthis&amp;pub=infoq&amp;source=tbx-250&amp;lng=zh-CN&amp;s=googlebuzz&amp;url=http%3A%2F%2Fwww.infoq.com%2Fcn%2Fnews%2F2010%2F11%2Ftc-bigmemory&amp;title=InfoQ%3A%20Ari%20Zilka%E8%B0%88Ehcache%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%86%85%E5%A0%86%E5%A4%96%E7%BC%93%E5%AD%98BigMemory&amp;ate=AT-infoq/-/-/4e55a2ccc03c4f8e/3&amp;frommenu=1&amp;uid=4e55a2ccc318e055&amp;ct=1&amp;tt=0" target="_blank"><span class="at300bs at15nc at15t_googlebuzz"></span></a><a class="addthis_button_sinaweibo at300b" title="Send to Sinaweibo" href="http://www.addthis.com/bookmark.php?v=250&amp;winname=addthis&amp;pub=infoq&amp;source=tbx-250&amp;lng=zh-CN&amp;s=sinaweibo&amp;url=http%3A%2F%2Fwww.infoq.com%2Fcn%2Fnews%2F2010%2F11%2Ftc-bigmemory&amp;title=InfoQ%3A%20Ari%20Zilka%E8%B0%88Ehcache%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%86%85%E5%A0%86%E5%A4%96%E7%BC%93%E5%AD%98BigMemory&amp;ate=AT-infoq/-/-/4e55a2ccc03c4f8e/4&amp;frommenu=1&amp;uid=4e55a2cc2593853e&amp;ct=1&amp;tt=0" target="_blank"><span class="at300bs at15nc at15t_sinaweibo"></span></a><a class="addthis_button_live at300b" title="Send to Live" href="http://www.addthis.com/bookmark.php?v=250&amp;winname=addthis&amp;pub=infoq&amp;source=tbx-250&amp;lng=zh-CN&amp;s=live&amp;url=http%3A%2F%2Fwww.infoq.com%2Fcn%2Fnews%2F2010%2F11%2Ftc-bigmemory&amp;title=InfoQ%3A%20Ari%20Zilka%E8%B0%88Ehcache%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%86%85%E5%A0%86%E5%A4%96%E7%BC%93%E5%AD%98BigMemory&amp;ate=AT-infoq/-/-/4e55a2ccc03c4f8e/5&amp;frommenu=1&amp;uid=4e55a2cc7eee41af&amp;ct=1&amp;tt=0" target="_blank"><span class="at300bs at15nc at15t_live"></span></a><a class="addthis_button_linkedin at300b" title="Send to Linkedin" href="http://www.addthis.com/bookmark.php?v=250&amp;winname=addthis&amp;pub=infoq&amp;source=tbx-250&amp;lng=zh-CN&amp;s=linkedin&amp;url=http%3A%2F%2Fwww.infoq.com%2Fcn%2Fnews%2F2010%2F11%2Ftc-bigmemory&amp;title=InfoQ%3A%20Ari%20Zilka%E8%B0%88Ehcache%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%86%85%E5%A0%86%E5%A4%96%E7%BC%93%E5%AD%98BigMemory&amp;ate=AT-infoq/-/-/4e55a2ccc03c4f8e/6&amp;frommenu=1&amp;uid=4e55a2ccebf433bf&amp;ct=1&amp;tt=0" target="_blank"><span class="at300bs at15nc at15t_linkedin"></span></a><a class="addthis_button_twitter at300b" title="Tweet This" href="http://www.infoq.com/cn/news/2010/11/tc-bigmemory#"><span class="at300bs at15nc at15t_twitter"></span></a><a class="addthis_button_email at300b" title="Email" href="http://www.infoq.com/cn/news/2010/11/tc-bigmemory#"><span class="at300bs at15nc at15t_email"></span></a></div>
+<div style="float: right"></div>
+<div class="clearer"></div>
+<div class="atclear"></div>
+</div>
+<p>Ehcache的<a href="http://www.terracotta.org/bigmemory">BigMemory</a>提供了一个进程内的堆外缓存，用来存储应用相关的大批量数据。<a href="http://www.terracotta.org/">Terracotta</a>上周<a href="http://www.terracotta.org/news/pr/2010-11-9-bigmemoryga">发布</a>了BigMemory模块的GA版本，该模块支持Ehcache企业版。BigMemory是Ehcache标准API的一部分，为cache定义两个新属性（overflowToOffHeap和maxMemoryOffHeap）就可以使用了，代码片段如下所示：</p>
+<pre>&lt;cache name=&quot;sample-offheap-cache&quot;
+    maxElementsInMemory=&quot;10000&quot;
+    eternal=&quot;true&quot;
+    memoryStoreEvictionPolicy=&quot;LRU&quot;
+    overflowToOffHeap=&quot;true&quot;
+    maxMemoryOffHeap=&quot;1G&quot;/&gt;</pre>
+<p>BigMemory在内存存储策略上有别于传统的缓存解决方案。它不把数据存储在Java堆里，从而避免了JVM的GC问题。BigMemory这种特别的存储被称为堆外（Off-Heap）存储。传统的缓存解决方案为了规避这些问题，都将数据分布在缓存节点组成的集群上。BigMemory提供了一种新的架构选择方案，允许应用运行在堆小于1G的JVM上，利用堆外的内存来加快数据访问的速度。</p>
+<p>InfoQ有幸采访了Terracotta的CTO Ari Zilka，请他谈了Ehcache框架里的BigMemory新特性、BigMemory有助于应用性能提升的用例场景，以及BigMemory的局限性。</p>
+<p><strong>InfoQ：</strong>为Ehcache框架添加BigMemory特性的主要动机是什么？</p>
+<blockquote><p>主要动机是为了解决我们在Terracotta服务器里遇到的GC问题。服务器里的GC会引起响应时间和大规模GC事件出现变化，可能会致使（一级缓存L1的）缓存客户端故障转移到备份的Terracotta服务器上去。我们意识到这个解决方案的好处后就立即扩大了它的应用范围，包括为独立Ehcache追加一个内存存储，这个内存存储后来就发展成了BigMemory——Ehcache企业版的一个插件。</p></blockquote>
+<p><strong>InfoQ：</strong>BigMemory堆外存储提供的方式能避免Java GC的复杂性，你能谈一谈实现的具体细节么？</p>
+<blockquote><p>BigMemory把缓存对象存储在Java堆之外，但仍然在操作系统的Java进程里。所以它仍然是个进程内的缓存，具备所有与此相关的高性能，但它不使用堆，这样就可以给应用配置很小的堆空间，从而避免GC问题。BigMemory使用了JDK 1.4引入的<a href="http://download.oracle.com/javase/6/docs/api/index.html?java/nio/ByteBuffer.html">DirectByteBuffers</a>。所有的Java实现都可以运行BigMemory，所以任何人都可以使用BigMemory，而不用更换JDK。 </p>
+<p>操作系统内存管理器的功能差不多就要完成了。届时我们会在放入数据时分配内存、移除数据时释放内存，我们能做这些事情是因为BigMemory是个缓存，而不是一般用途的Java程序。DirectByteBuffers分配内存很慢，但用起来非常快。所以我们会在启动的时候就从操作系统获取所有需要的内存。</p>
+<p>BigMemory的关键之处在于，怎样判断某个对象不再被使用、关联的内存被释放了，这也是很多人一开始最难理解的地方。对缓存来说，这其实非常简单。Map主要涉及put、get和remove操作。我们在放入数据的时候分配内存（malloc），移除数据的时候释放内存（free）。我们实现了一个内存管理器，它使用的是很好理解的计算机科学算法，还有我们专门为此实现的增强。</p>
+</blockquote>
+<p>在被问及BigMemory什么情况下能提升应用性能时（从只读、经常读、读写操作来说），Ari回答说，在“90%读/10%写”的常见情况和“50%读/50%写”的写操作过多的情况下，他们都见过比较好的<a href="http://ehcache.org/documentation/offheap_store.html#Performance_Comparisons">性能结果</a>。这是因为缓存是进程内的。只读操作会受到分布式缓存的影响。读取活跃数据集要比读取其它数据快很多，那些不活跃的数据必须通过网络获取。</p>
+<p><strong>InfoQ：</strong>BigMemory解决方案有什么局限性？</p>
+<blockquote><p>鉴于BigMemory是纯Java的、进程内的，而且和常见的JVM、容器兼容，所以它没有明显的局限性。我们找到的最大的内存盒有384GB内存，我们在上面测试的结果显示，在BigMemory始终有350GB内存的空闲情况下，性能都是线性的，没有明显的增长。 </p>
+<p>我们要向用户强调的限制只有一个，那就是使用堆外存储的话，放置在BigMemory中的对象必须进行序列化。对通常就存储在缓存里的那些数据来说，这并不是什么问题。</p>
+<p>一旦对象被序列化，在返回Java堆的时候必需反序列化才可以使用。这确实是一笔性能开销。因此在没有GC的时候，BigMemory会比堆内存储慢。但BigMemory还是要比底层可用的存储快很多，不论是本地磁盘、网络存储，还是RDBMS等原本记录数据的系统。</p>
+<p>还应指出的是，序列化/反序列化的性能开销远没有很多用户想象的那么大。BigMemory已经针对字节缓冲区做了优化，本身也包含一些优化机制，可以对使用标准Java序列化的对象进行优化。举例来说，测试版发布之后添加的那些优化机制能使复杂Java对象的性能提升两倍，使byte数组的性能提升四倍。Terracotta Server Array正是用byte数组存储数据的。用自定义的序列化则能进一步减少性能开销。</p>
+</blockquote>
+<p>InfoQ问Ari，架构师和开发人员在应用中使用BigMemory时应该注意哪些最佳实践和问题。Ari回答说，任何成功的商业应用都要处理伸缩性问题。缓存是最稳妥、最容易实现的解决方案之一。现在比较新颖的是，不用非得引入缓存集群了。</p>
+<blockquote><p>最好的做法就是用新眼光来审视一下你的性能架构，看你能否从大型的进程内缓存获益。BigMemory可以让架构师对服务器和进程密度进行优化，以满足特定的需求，而不用受制于Java的局限性。 </p>
+<p>最大的问题则是大多数人已经针对Java本身的局限性做了优化。比如说，大多数Ehcache用户会运行32位的JVM。根据OS的不同，32位 Java的地址空间会是2到4GB不等。所以这些用户在用Java时就放弃了使用很多内存。应用目前可能都运行在RAM很小的硬件上。所以用户要是想使用 BigMemory来运行100GB的进程内缓存，可能就意味着要更换新的硬件，即便现在硬件很便宜。</p>
+</blockquote>
+<p><strong>InfoQ：</strong>Ehcache框架以后的路线图是怎样的？BigMemory有什么特殊的么？</p>
+<blockquote><p>我们正在开发Ehcache和Terracotta的下一个版本（代码以澳大利亚弗里曼特尔的别称Freo命名），计划本月发布测试版。我们计划在这个版本中添加一系列功能特性和性能增强。比如<a href="http://ehcache.org/documentation/search.html">Ehcache Search</a>，它能让Ehcache用户在缓存里进行搜索，就像使用数据库一样。Ehcache Search已经发布了测试版，文档也已经全部可用了。 </p>
+<p>至于BigMemory，我们还在继续提升性能，同时会增加一系列比较实用的增强，例如提供更多的工具，帮助人们更好地理解最适合他们用例的设置。</p>
+</blockquote>
+<p><strong>查看英文原文：</strong><a href="http://www.infoq.com/news/2010/11/tc-bigmemory">Ari Zilka on Ehcache BigMemory</a></p></p>
+<p>---------------------------------------</p>
+<p>PS:</p>
+<p>另外一篇:<a title="http://www.infoq.com/interviews/zilka-bigmemory" href="http://www.infoq.com/interviews/zilka-bigmemory">http://www.infoq.com/interviews/zilka-bigmemory</a></p>
+<p>Terracotta是一款由美国Terracotta公司开发的著名开源Java集群平台。</p>
+<p>参见:<a title="http://blog.csdn.net/ansonchan/article/details/1873001" href="http://blog.csdn.net/ansonchan/article/details/1873001">http://blog.csdn.net/ansonchan/article/details/1873001</a></p>
+<p>这有个人问的<a href="http://blog.csdn.net/lima01/article/details/5260034" target="_blank">问题</a>:</p>
+<div>
+<pre>    请教老马，这个产品在当前有没有成功又稳定的项目中使用的经验，由于该项目中使用大量自旋竞争锁操作，导致cpu偏高，所以带来的稳定性一直是个问题</pre>
+<p>问的有水平。哪些人用了？</p>
+<p></div>

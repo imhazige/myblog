@@ -1,0 +1,26 @@
+---
+layout: post
+title: 'apache mod_fcgid: HTTP request length xxx (so far) exceeds MaxRequestLen xxx
+  问题解决'
+date: 2012-10-19 11:55:06.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- apache
+meta:
+  views: '37'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>此错误显然与fcgid有关，需在apache中欧配置</p>
+<p>&lt;IfModule mod_fcgid.c&gt;   <br />&#160; AddHandler&#160;&#160;&#160; fcgid-script .fcgi    <br />&#160; FcgidConnectTimeout 20    <br /># to get around upload errors when uploading images increase the MaxRequestLen size to 15MB    <br />&#160; MaxRequestLen 15728640    <br />&lt;/IfModule&gt;</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://blog.wu-boy.com/2012/06/fix-apache-mod_fcgid-http-request-length-136000-so-far-exceeds-maxrequestlen/">http://blog.wu-boy.com/2012/06/fix-apache-mod_fcgid-http-request-length-136000-so-far-exceeds-maxrequestlen/</a></p>

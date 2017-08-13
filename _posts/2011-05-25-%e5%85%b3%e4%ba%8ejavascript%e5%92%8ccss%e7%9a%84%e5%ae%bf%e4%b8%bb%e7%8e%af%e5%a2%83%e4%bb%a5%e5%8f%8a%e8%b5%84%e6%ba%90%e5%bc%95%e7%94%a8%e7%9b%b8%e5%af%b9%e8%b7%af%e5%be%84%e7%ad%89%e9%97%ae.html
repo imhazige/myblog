@@ -1,0 +1,65 @@
+---
+layout: post
+title: "关于javascript和css的宿主环境以及资源引用相对路径等问题实践总结!"
+date: 2011-05-25 08:30:39.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- web css javascript
+meta:
+  views: '106'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>1.javascript引用资源(比如图片)相对路径是以宿主环境(所被引用的网页比如user.html)所处位置为基准</p>
+<p>2.css引用资源(比如图片)相对路径是以.css文件所处位置为基准!</p>
+<p>已经实践证明过!</p>
+<p>--2009aicheaizi    <br />------images     <br />---------index_02.jpg     <br />------test.htm</p>
+<p>--css    <br />------css     <br />----------test.css</p>
+<p>--js    <br />------js     <br />----------test.js</p>
+<p>引用代码如下:    <br />test.css </p>
+<div>
+<pre><span style="color: #800000">#imgtest</span> 
+{ 
+<span style="color: #ff0000">background-image</span>:<span style="color: #0000ff">url(。。/。。/2009aicheaizi/images/index_02.jpg)</span>;//<span style="color: #ff0000">把</span>.<span style="color: #0000ff">换成。以防cnblogs转换 
+width:500px</span>; 
+<span style="color: #ff0000">height</span>:<span style="color: #0000ff">50px</span>; 
+<span style="color: #ff0000">border</span>:<span style="color: #0000ff">solid 1px red</span>; 
+}</pre>
+</div>
+<p>test.js</p>
+<div>
+<pre><span style="color: #0000ff">function</span> writeimg() 
+{ 
+  <span style="color: #0000ff">document</span>.write(&quot;<span style="color: #8b0000">&lt;img src='images/index_02.jpg' /&gt;</span>&quot;); 
+}</pre>
+</div>
+<p></p>
+<p>test.html</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span>!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;<span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">html</span> <span style="color: #ff0000">xmlns</span>=<span style="color: #0000ff">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span> 
+    <span style="color: #0000ff">&lt;</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span>无标题页<span style="color: #0000ff">&lt;/</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">script</span> <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;text/javascript&quot;</span> <span style="color: #ff0000">src</span>=<span style="color: #0000ff">&quot;../js/js/test.js&quot;</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">script</span><span style="color: #0000ff">&gt;</span> 
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">link</span> <span style="color: #ff0000">href</span>=<span style="color: #0000ff">&quot;../css/css/test.css&quot;</span> <span style="color: #ff0000">rel</span>=<span style="color: #0000ff">&quot;stylesheet&quot;</span> <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;text/css&quot;</span> <span style="color: #0000ff">/&gt;</span> 
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">script</span> <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;text/javascript&quot;</span><span style="color: #0000ff">&gt;</span> 
+writeimg(); 
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">script</span><span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">div</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;imgtest&quot;</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">div</span><span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span> 
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p></p>
+<p>实践是检验真理的唯一途径.</p>
+<p>&#160;</p>
+<p>另外//d1.abc.com/test.js 这种用法没试过吧，这也是绝对路径，但是没有写前面的http协议头，这样写有什么好处呢，对于需要引用外部脚本的站点来说，如果是https请求，那么上面的地址会请求<a href="https://d1.abc.com/test.js">https://d1.abc.com/test.js</a>&#160; 如果是http请求,上面地址则会请求<a href="http://d1.abc.com/test.js">http://d1.abc.com/test.js</a> 这样就避免了跨域安全问题，参见:<a href="http://kazge.com/archives/402.html">http://kazge.com/archives/402.html</a></p>

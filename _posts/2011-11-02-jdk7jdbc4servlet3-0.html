@@ -1,0 +1,94 @@
+---
+layout: post
+title: jdk7,jdbc4,servlet3.0
+date: 2011-11-02 10:26:45.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- jdbc4
+- jdk7
+- servlet3
+meta:
+  views: '402'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<ul>
+<li>jdk7新特性:&#160; <a title="http://developer.51cto.com/art/201105/263219.htm" href="http://developer.51cto.com/art/201105/263219.htm">http://developer.51cto.com/art/201105/263219.htm</a> </li>
+</ul>
+<p>switch 语句可以用字符串了,try-with-resources 语句(jdbc4.1[jdk7的一部分]新特性就是基于这一点)等</p>
+<p>&#160;</p>
+<ul>
+<li>jdbc4.0新特性: <a title="http://www.blogjava.net/yangyi/archive/2007/04/24/113241.html" href="http://www.blogjava.net/yangyi/archive/2007/04/24/113241.html">http://www.blogjava.net/yangyi/archive/2007/04/24/113241.html</a> </li>
+</ul>
+<p>1. 驱动及连接管理</p>
+<p>2. 异常处理</p>
+<p>3. 数据类型支持 sqlxml(为什么不是json?)</p>
+<p>4. API 的变化</p>
+<p>&#160;</p>
+<ul>
+<li>jdbc4.1新特性: <a title="http://developer.51cto.com/art/201105/263223.htm" href="http://developer.51cto.com/art/201105/263223.htm">http://developer.51cto.com/art/201105/263223.htm</a> </li>
+</ul>
+<p>jdk7的try资源特性，rowset改进。</p>
+<p>&#160;</p>
+<ul>
+<li>servlet3.0新特性: <a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html?ca=drs-cn-0423">http://www.ibm.com/developerworks/cn/java/j-lo-servlet30/index.html?ca=drs-cn-0423</a> </li>
+</ul>
+<p>异步处理支持 <font color="#0000ff">还可以，参见异步io:<a title="http://kazge.com/archives/596.html" href="http://kazge.com/archives/596.html">http://kazge.com/archives/596.html</a> 以及<a title="http://www.ibm.com/developerworks/cn/java/j-nioserver/" href="http://www.ibm.com/developerworks/cn/java/j-nioserver/">http://www.ibm.com/developerworks/cn/java/j-nioserver/</a> 如果是使用nio实现的话，倒更像多路io。</font></p>
+<p><font color="#0000ff"></font></p>
+<p>一个简单的模拟异步处理的 Servlet 示例如下：</p>
+<div>
+<pre>@WebServlet(urlPatterns = &quot;<span style="color: #8b0000">/demo</span>&quot;, asyncSupported = <span style="color: #0000ff">true</span>)
+<span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> AsyncDemoServlet <span style="color: #0000ff">extends</span> HttpServlet {
+    @Override
+    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> doGet(HttpServletRequest req, HttpServletResponse resp)
+    <span style="color: #0000ff">throws</span> IOException, ServletException {
+        resp.setContentType(&quot;<span style="color: #8b0000">text/html;charset=UTF-8</span>&quot;);
+        PrintWriter out = resp.getWriter();
+        out.println(&quot;<span style="color: #8b0000">进入Servlet的时间：</span>&quot; + <span style="color: #0000ff">new</span> Date() + &quot;<span style="color: #8b0000">.</span>&quot;);
+        out.flush();
+
+        <span style="color: #008000">//在子线程中执行业务调用，并由其负责输出响应，主线程退出</span>
+        AsyncContext ctx = req.startAsync();
+        <span style="color: #0000ff">new</span> Thread(<span style="color: #0000ff">new</span> Executor(ctx)).start();
+
+        out.println(&quot;<span style="color: #8b0000">结束Servlet的时间：</span>&quot; + <span style="color: #0000ff">new</span> Date() + &quot;<span style="color: #8b0000">.</span>&quot;);
+        out.flush();
+    }
+}
+
+<span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Executor <span style="color: #0000ff">implements</span> Runnable {
+    <span style="color: #0000ff">private</span> AsyncContext ctx = <span style="color: #0000ff">null</span>;
+    <span style="color: #0000ff">public</span> Executor(AsyncContext ctx){
+        <span style="color: #0000ff">this</span>.ctx = ctx;
+    }
+
+    <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> run(){
+        <span style="color: #0000ff">try</span> {
+            <span style="color: #008000">//等待十秒钟，以模拟业务方法的执行</span>
+            Thread.sleep(10000);
+            PrintWriter out = ctx.getResponse().getWriter();
+            out.println(&quot;<span style="color: #8b0000">业务处理完毕的时间：</span>&quot; + <span style="color: #0000ff">new</span> Date() + &quot;<span style="color: #8b0000">.</span>&quot;);
+            out.flush();
+            ctx.complete();
+        } <span style="color: #0000ff">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}</pre>
+</div>
+<p></p>
+<p>新增的注解支持</p>
+<p>可插性支持</p>
+<p>ServletContext 的性能增强</p>
+<p>HttpServletRequest 对文件上传的支持 <font color="#0000ff">这个我觉得是最实用的了！但是不知道大文件上传支持的怎么样以及上传进度问题是否提供支持。</font> </p>
+<p>参见:</p>
+<p><a title="http://pisces-java.iteye.com/blog/723125" href="http://pisces-java.iteye.com/blog/723125">http://pisces-java.iteye.com/blog/723125</a></p>
+<p><a title="http://www.blogjava.net/yongboy/archive/2011/03/18/346202.html" href="http://www.blogjava.net/yongboy/archive/2011/03/18/346202.html">http://www.blogjava.net/yongboy/archive/2011/03/18/346202.html</a></p>

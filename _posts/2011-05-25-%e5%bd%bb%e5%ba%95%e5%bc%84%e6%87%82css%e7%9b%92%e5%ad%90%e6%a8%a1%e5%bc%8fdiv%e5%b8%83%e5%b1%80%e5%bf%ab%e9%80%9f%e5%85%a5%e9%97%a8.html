@@ -1,0 +1,70 @@
+---
+layout: post
+title: "彻底弄懂CSS盒子模式(DIV布局快速入门)"
+date: 2011-05-25 09:23:49.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- web html css 前端
+meta:
+  views: '27'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<h5>&#160;</h5>
+<p><a href="http://bbs.blueidea.com/thread-2727499-1-3.html">http://bbs.blueidea.com/thread-2727499-1-3.html</a></p>
+<h5>前言</h5>
+<p>作者：唐国辉 天涯社区、经典论坛昵称：webflash</p>
+<p>如果你想尝试一下不用表格来排版网页，而是用CSS来排版你的网页，也就是常听的用DIV来编排你的网页结构，又或者说你想学习网页标准设计，再或者说你的上司要你改变传统的表格排版方式，提高企业竞争力，那么你一定要接触到的一个知识点就是CSS的盒子模式，这就是DIV排版的核心所在，传统的表格排版是通过大小不一的表格和表格嵌套来定位排版网页内容，改用CSS排版后，就是通过由CSS定义的大小不一的盒子和盒子嵌套来编排网页。因为用这种方式排版的网页代码简洁，更新方便，能兼容更多的浏览器，比如PDA设备也能正常浏览，所以放弃自己之前钟爱的表格排版也是值得的，更重要的是CSS排版网页的优势远远不只这些，本人在这里就不多说，自己可以去查找相关信息。</p>
+<h5>理解CSS盒子模型</h5>
+<p>什么是CSS的盒子模式呢？为什么叫它是盒子？先说说我们在网页设计中常听的属性名：内容(content)、填充(padding)、边框(border)、边界(margin)， CSS盒子模式都具备这些属性。<img alt="CSS盒子模式" src="{{ site.baseurl }}/assets/box.gif" />CSS盒子模式这些属性我们可以把它转移到我们日常生活中的盒子（箱子）上来理解，日常生活中所见的盒子也具有这些属性，所以叫它盒子模式。那么内容就是盒子里装的东西；而填充就是怕盒子里装的东西（贵重的）损坏而添加的泡沫或者其它抗震的辅料；边框就是盒子本身了；至于边界则说明盒子摆放的时候的不能全部堆在一起，要留一定空隙保持通风，同时也为了方便取出嘛。在网页设计上，内容常指文字、图片等元素，但是也可以是小盒子（DIV嵌套），与现实生活中盒子不同的是，现实生活中的东西一般不能大于盒子，否则盒子会被撑坏的，而CSS盒子具有弹性，里面的东西大过盒子本身最多把它撑大，但它不会损坏的。填充只有宽度属性，可以理解为生活中盒子里的抗震辅料厚度，而边框有大小和颜色之分，我们又可以理解为生活中所见盒子的厚度以及这个盒子是用什么颜色材料做成的，边界就是该盒子与其它东西要保留多大距离。在现实生活中，假设我们在一个广场上，把不同大小和颜色的盒子，以一定的间隙和顺序摆放好，最后从广场上空往下看，看到的图形和结构就类似我们要做的网页版面设计了，如下图。<img alt="由“盒子”堆出来的网页版面" src="{{ site.baseurl }}/assets/box2.gif" />由“盒子”堆出来的网页版面</p>
+<p>现在对CSS盒子模式理解多少了，如果还不够透彻，继续往下看，我会在后面举例，并延用盒子的概念来解释它。</p>
+<h5>转变我们的思路</h5>
+<p>传统的前台网页设计是这样进行的：根据要求，先考虑好主色调，要用什么类型的图片，用什么字体、颜色等等，然后再用Photoshop这类软件自由的画出来，最后再切成小图，再不自由的通过设计HTML生成页面，改用CSS排版后，我们要转变这个思想，此时我们主要考虑的是页面内容的语义和结构，因为一个强CSS控制的网页，等做好网页后，你还可以轻松的调你想要的网页风格，况且CSS排版的另外一个目的是让代码易读，区块分明，强化代码重用，所以结构很重要。如果你想说我的网页设计的很复杂，到后来能不能实现那样的效果？我要告诉你的是，如果用CSS实现不了的效果，一般用表格也是很难实现的，因为 CSS的控制能力实在是太强大了，顺便说一点的是用CSS排版有一个很实用的好处是，如果你是接单做网站的，如果你用了CSS排版网页，做到后来客户有什么不满意，特别是色调的话，那么改起来就相当容易，甚至你还可以定制几种风格的CSS文件供客户选择，又或者写一个程序实现动态调用，让网站具有动态改变风格的功能。</p>
+<h5>实现结构与表现分离</h5>
+<p>在真正开始布局实践之前，再来认识一件事——结构和表现相分离，这也用CSS布局的特色所在，结构与表现分离后，代码才简洁，更新才方便，这不正是我们学习 CSS的目的所在吗？举个例来说P是结构化标签，有P标签的地方表示这是一个段落区块，margin是表现属性，我要让一个段落右缩进2字高，有些人会想到加空格，然后不断地加空格，但现在可以给P标签指定一个CSS样式：P {text-indent: 2em;}，这样结果body内容部分就如下，这没有外加任何表现控制的标签：</p>
+<p>&lt;p&gt;加进天涯社区有一段时间了，但一直没有时间写点东西，今天写了一篇有关CSS布局的文章，并力求通过一种通俗的语言来说明知识点，还配以实例和图片，相信对初学CSS布局的人会带来一定的帮助。&lt;/p&gt;</p>
+<p>如果还要对这个段落加上字体、字号、背景、行距等修饰，直接把对应的CSS加进P样式里就行了，不用像这样来写了：</p>
+<p>&lt;p&gt;&lt;font color=&quot;#FF0000&quot; face=&quot;宋体&quot;&gt;段落内容&lt;/font&gt;&lt;/p&gt;</p>
+<p>这个是结构和表现混合一起写的，如果很多段落有统一结构和表现的话，再这样累加写下去代码就繁冗了。</p>
+<p>再直接列一段代码加深理解结构和表现相分离：   <br />用CSS排版</p>
+<p>&lt;style type=&quot;text/css&quot;&gt;   <br />&lt;!--    <br />#photoList img{    <br /> height:80;    <br /> width:100;    <br /> margin:5px auto;    <br />}    <br />--&gt;    <br />&lt;/style&gt; &lt;div id=&quot;photoList&quot;&gt;    <br />&lt;img src=&quot;01.jpg&quot; /&gt;    <br />&lt;img src=&quot;02.jpg&quot; /&gt;    <br />&lt;img src=&quot;03.jpg&quot; /&gt;    <br />&lt;img src=&quot;04.jpg&quot; /&gt;    <br />&lt;img src=&quot;05.jpg&quot; /&gt;    <br />&lt;/div&gt;</p>
+<p>不用CSS排版</p>
+<p>&lt;img src=&quot;01.jpg&quot; width=&quot;100&quot; height=&quot;80&quot; align=&quot;middle&quot; /&gt;   <br />&lt;img src=&quot;02.jpg&quot; width=&quot;100&quot; height=&quot;80&quot; align=&quot;middle&quot; /&gt;    <br />&lt;img src=&quot;03.jpg&quot; width=&quot;100&quot; height=&quot;80&quot; align=&quot;middle&quot; /&gt;    <br />&lt;img src=&quot;04.jpg&quot; width=&quot;100&quot; height=&quot;80&quot; align=&quot;middle&quot; /&gt;    <br />&lt;img src=&quot;05。jpg&quot; width=&quot;100&quot; height=&quot;80&quot; align=&quot;middle&quot; /&gt;</p>
+<p>第一种方法是结构表现相分离，内容部分代码简单吧，如果还有更多的图片列表的话，那么第一种CSS布局方法就更有优势，我打个比喻你好理解：我在BODY向你介绍一个人，我只对你说他是一个人，至于他是一个什么样的人，有多高，是男是女，你去CSS那里查下就知道。这样我在BODY的工作就简单了，也就是说 BODY的代码就简单了。如果BODY有一个团队人在那里，我在CSS记录一项就行了，这有点像Flash软件里的元件和实例的概念，不同的实例共享同一个元件，这样动画文件就不大了，把这种想法移到CSS网页设计中，就是代码不复杂，网页文件体积小能较快被客户端下载了。<img alt="用CSS排版减小网页文件体积" src="{{ site.baseurl }}/assets/lan.gif" width="700" height="270" />演示地址：http://www.hsptc.com/css1.html用CSS排版减小网页文件体积</p>
+<p>像上面我做的那个版面，一共分为四个区块，每个区块的框架是一样的，这个框架就是用CSS写出来的，样式写一次，就可以被无数次调用了(用class调用，而不是ID)，只要改变其中的文字内容就可以生成风格统一的众多板块了，它的样式和结构代码是（请不要直接复制生成网页，把下面代码分别粘贴到网页中它们应在的位置）：</p>
+<p>&lt;style type=&quot;text/css&quot;&gt;   <br />&lt;!--    <br />* {margin:0px; padding:0px;}&#160; <br />body {    <br />font-size: 12px;&#160; <br />margin: 0px auto;    <br />height: auto;    <br />width: 805px;    <br />}    <br />.mainBox {    <br />border: 1px dashed #0099CC;    <br />margin: 3px;    <br />padding: 0px;    <br />float: left;    <br />height: 300px;    <br />width: 192px;    <br />}    <br />.mainBox h3 {    <br />float: left;    <br />height: 20px;    <br />width: 179px;    <br />color: #FFFFFF;    <br />padding: 6px 3px 3px 10px;    <br />background-color: #0099CC;    <br />font-size: 16px;    <br />}    <br />.mainBox p {    <br />line-height: 1.5em;    <br />text-indent: 2em;    <br />margin: 35px 5px 5px 5px;    <br />}    <br />--&gt;    <br />&lt;/style&gt;    <br />&lt;div class=&quot;mainBox&quot;&gt;    <br />&lt;h3&gt;前言&lt;/h3&gt;    <br />&lt;p&gt;正文内容&lt;/p&gt;    <br />&lt;/div&gt;    <br />&lt;div class=&quot;mainBox&quot;&gt;    <br />&lt;h3&gt;CSS盒子模式&lt;/h3&gt;    <br />&lt;p&gt;正文内容 &lt;/p&gt;    <br />&lt;/div&gt;    <br />&lt;div class=&quot;mainBox&quot;&gt;    <br />&lt;h3&gt;转变思想&lt;/h3&gt;    <br />&lt;p&gt;正文内容 &lt;/p&gt;    <br />&lt;/div&gt;    <br />&lt;div class=&quot;mainBox&quot;&gt;    <br />&lt;h3&gt;熟悉步骤&lt;/h3&gt;    <br />&lt;p&gt;正文内容 &lt;/p&gt;    <br />&lt;/div&gt;</p>
+<h5>熟悉工作流程</h5>
+<p>在真正开始工作之前我们脑海中要形成这样一种思想：表格是什么我不知道，在内容部分我不能让它再出现表现控制标签，如：font、color、 height、width、align等标签不能再出现，（简单说工作前先洗脑，忘掉以前的一惯做法，去接受和使用全新的方法），我不是单纯的用DIV来实现排版的嵌套，DIV是块级元素，而像P也是块级元素，例如要分出几个文字内容块，不是一定要用DIV才叫DIV排版，不是“&lt;div&gt;文字块一&lt;/div&gt;&lt;div&gt;文字块二&lt;/div&gt;&lt;div&gt;文字块三&lt;/div&gt;”，而用“&lt;p&gt;文字块一&lt;/p&gt;&lt;p&gt;文字块二&lt;/p&gt;&lt;p&gt;文字块三&lt;/p&gt;” 更合适。</p>
+<p>用 DIV+CSS设计思路是这样的: 1.用div来定义语义结构；2.然后用CSS来美化网页，如加入背景、线条边框、对齐属性等；3.最后在这个CSS定义的盒子内加上内容，如文字、图片等（没有表现属性的标签），下面大家跟我一起来做一个实例加深对这个步骤的理解。先看结果图：<img alt="CSS排版结果图" src="{{ site.baseurl }}/assets/web.gif" width="700" height="532" />演示地址：http://www.hsptc.com/css2.htmlCSS排版结果图</p>
+<ol>
+<li>用div来定义语义结构</li>
+</ol>
+<p>现在我要给大家演示的是一个典型的版面分栏结构，即页头、导航栏、内容、版权（如下图），典型版面分栏结构其结构代码如下：</p>
+<p>&lt;div id=&quot;header&quot;&gt;&lt;/div&gt;   <br />&lt;div id=&quot;nav&quot;&gt;&lt;/div&gt;    <br />&lt;div id=&quot;content&quot;&gt;&lt;/div&gt;    <br />&lt;div id=&quot;footer&quot;&gt;&lt;/div&gt;</p>
+<p>上面我们定义了四个盒子，按照我们想要的结果是，我们要让这些盒子等宽，并从下到下整齐排列，然后在整个页面中居中对齐，为了方便控制，我们再把这四个盒子装进一个更大的盒子，这个盒子就是BODY，这样代码就变成:</p>
+<p>&lt;body&gt;   <br />&lt;div id=&quot;header&quot;&gt;&lt;/div&gt;    <br />&lt;div id=&quot;nav&quot;&gt;&lt;/div&gt;    <br />&lt;div id=&quot;content&quot;&gt;&lt;/div&gt;    <br />&lt;div id=&quot;footer&quot;&gt;&lt;/div&gt;    <br />&lt;/body&gt;</p>
+<p>最外边的大盒子（装着小盒子的大盒子）我们要让它在页面居中，并重定义其宽度为760像素，同时加上边框，那么它的样式是：</p>
+<p>body {   <br />font-family: Arial, Helvetica, sans-serif;    <br />font-size: 12px;    <br />margin: 0px auto;    <br />height: auto;    <br />width: 760px;    <br />border: 1px solid #006633;    <br />}</p>
+<p>页头为了简单起见，我们这里只要让它整个区块应用一幅背景图就行了,并在其下边界设计定一定间隙，目的是让页头的图像不要和下面要做的导航栏连在一起，这样也是为了美观。其样式代码为：</p>
+<p>#header {   <br />height: 100px;    <br />width: 760px;    <br />background-image: url(headPic.gif);    <br />background-repeat: no-repeat;    <br />margin:0px 0px 3px 0px;    <br />}</p>
+<p>导航栏我做成像一个个小按钮，鼠标移上去会改变按钮背景色和字体色，那么这些小小的按钮我们又可以理解为小盒子，如此一来这是一个盒子嵌套问题了，样式代码如下：</p>
+<p>#nav {   <br />height: 25px;    <br />width: 760px;    <br />font-size: 14px;    <br />list-style-type: none;    <br />}    <br />#nav li {    <br />float:left;    <br />}    <br />#nav li a{    <br />color:#000000;    <br />text-decoration:none;    <br />padding-top:4px;    <br />display:block;    <br />width:97px;    <br />height:22px;    <br />text-align:center;    <br />background-color: #009966;    <br />margin-left:2px;    <br />}    <br />#nav li a:hover{    <br />background-color:#006633;    <br />color:#FFFFFF;    <br />}</p>
+<p>内容部分主要放入文章内容，有标题和段落，标题加粗，为了规范化，我用H标签，段落要自动实现首行缩进2个字,同时所有内容看起来要和外层大盒子边框有一定距离，这里用填充。内容区块样式代码为：</p>
+<p>#content {   <br />height:auto;    <br />width: 740px;    <br />line-height: 1.5em;    <br />padding: 10px;    <br />}    <br />#content p {    <br />text-indent: 2em;    <br />}    <br />#content h3 {    <br />font-size: 16px;    <br />margin: 10px;</p>
+<p>版权栏，给它加个背景，与页头相映，里面文字要自动居中对齐，有多行内容时，行间距合适，这里的链接样式也可以单独指定，我这里就不做了。其样式代码如下：</p>
+<p>#footer {   <br />height: 50px;    <br />width: 740px;    <br />line-height: 2em;    <br />text-align: center;    <br />background-color: #009966;    <br />padding: 10px;    <br />}</p>
+<p>最后回到样式开头大家会看到这样的样式代码：</p>
+<p>* {   <br />margin: 0px;    <br />padding: 0px;    <br />}</p>
+<p>这是用了通配符初始化各标签边界和填充，（因为有部分标签默认会有一定的边界，如Form标签）那么接下来就不用对每个标签再加以这样的控制，这可以在一定程度上简化代码。最终完成全部样式代码是这样的：</p>
+<p>&lt;style type=&quot;text/css&quot;&gt;   <br />&lt;!--    <br />* {    <br />margin: 0px;    <br />padding: 0px;    <br />}    <br />body {    <br />font-family: Arial, Helvetica, sans-serif;    <br />font-size: 12px;    <br />margin: 0px auto;    <br />height: auto;    <br />width: 760px;    <br />border: 1px solid #006633;    <br />}    <br />#header {    <br />height: 100px;    <br />width: 760px;    <br />background-image: url(headPic.gif);    <br />background-repeat: no-repeat;    <br />margin:0px 0px 3px 0px;    <br />}    <br />#nav {    <br />height: 25px;    <br />width: 760px;    <br />font-size: 14px;    <br />list-style-type: none;    <br />}    <br />#nav li {    <br />float:left;    <br />}    <br />#nav li a{    <br />color:#000000;    <br />text-decoration:none;    <br />padding-top:4px;    <br />display:block;    <br />width:97px;    <br />height:22px;    <br />text-align:center;    <br />background-color: #009966;    <br />margin-left:2px;    <br />}    <br />#nav li a:hover{    <br />background-color:#006633;    <br />color:#FFFFFF;    <br />}    <br />#content {    <br />height:auto;    <br />width: 740px;    <br />line-height: 1.5em;    <br />padding: 10px;    <br />}    <br />#content p {    <br />text-indent: 2em;    <br />}    <br />#content h3 {    <br />font-size: 16px;    <br />margin: 10px;    <br />}    <br />#footer {    <br />height: 50px;    <br />width: 740px;    <br />line-height: 2em;    <br />text-align: center;    <br />background-color: #009966;    <br />padding: 10px;    <br />}    <br />--&gt;    <br />&lt;/style&gt;</p>
+<p>结构代码是这样的：</p>
+<p>&lt;body&gt;   <br />&lt;div id=&quot;header&quot;&gt;&lt;/div&gt;    <br />&lt;ul id=&quot;nav&quot;&gt;    <br />&lt;li&gt;&lt;a href=&quot;#&quot;&gt;首 页&lt;/a&gt;&lt;/li&gt;    <br />&lt;li&gt;&lt;a href=&quot;#&quot;&gt;文 章&lt;/a&gt;&lt;/li&gt;    <br />&lt;li&gt;&lt;a href=&quot;#&quot;&gt;相册&lt;/a&gt;&lt;/li&gt;    <br />&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;    <br />&lt;li&gt;&lt;a href=&quot;#&quot;&gt;论 坛&lt;/a&gt;&lt;/li&gt;    <br />&lt;li&gt;&lt;a href=&quot;#&quot;&gt;帮助&lt;/a&gt;&lt;/li&gt;    <br />&lt;/ul&gt;    <br />&lt;div id=&quot;content&quot;&gt;    <br />&lt;h3&gt;前言&lt;/h3&gt;    <br />&lt;p&gt;第一段内容&lt;/p&gt;    <br />&lt;h3&gt;理解CSS盒子模式&lt;/h3&gt;    <br />&lt;p&gt;第二段内容&lt;/p&gt;    <br />&lt;/div&gt;    <br />&lt;div id=&quot;footer&quot;&gt;    <br />&lt;p&gt; 关于华升 | 广告服务 | 华升招聘 | 客服中心 | Q Q留言 | 网站管理 | 会员登录 | 购物车&lt;/p&gt;&lt;p&gt;Copyright ©2006 - 2008 Tang Guohui. All Rights Reserved&lt;/p&gt;    <br />&lt;/div&gt;    <br />&lt;/body&gt;</p>
+<p>好了，此文到此结束，更多内容，如：CSS中的盒子宽度计算，浏览器兼容问题，XHTML规范化写法等请大家去参考其它资料。如果觉得此文还可以，看过之后记得跟帖，你的鼓励是我不断出新文章的动力^-^</p>

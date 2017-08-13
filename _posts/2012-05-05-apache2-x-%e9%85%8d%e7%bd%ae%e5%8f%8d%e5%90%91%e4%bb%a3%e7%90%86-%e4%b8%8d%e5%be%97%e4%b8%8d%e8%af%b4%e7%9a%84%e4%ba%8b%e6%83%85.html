@@ -1,0 +1,36 @@
+---
+layout: post
+title: apache2.x 配置反向代理 不得不说的事情
+date: 2012-05-05 10:29:00.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- linux
+- Web
+tags:
+- apache
+- linux
+meta:
+  views: '87'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天在linux上配置apache反向代理，真是折腾人，故此记下：</p>
+<p>网上查到的配置倒是很简单,在httpd.conf中:</p>
+<p>LoadModule proxy_module&#160;&#160;&#160;&#160;&#160;&#160; modules/mod_proxy.so    <br />LoadModule proxy_connect_module modules/mod_proxy_connect.so     <br />LoadModule proxy_http_module&#160; modules/mod_proxy_http.so     <br />LoadModule proxy_ftp_module&#160;&#160; modules/mod_proxy_ftp.so     <br />LoadModule authz_host_module modules/mod_authz_host.so</p>
+<p>ProxyPass /rp1 <a href="http://127.0.0.1:30080/">http://127.0.0.1:30080/</a>     <br />ProxyPassReverse /Test <a href="http://127.0.0.1:30080">http://127.0.0.1:30080</a>     <br />&lt;proxy&#160; <a href="http://127.0.0.1:30080">http://127.0.0.1:30080</a>&gt;     <br />&#160;&#160;&#160; AllowOverride None     <br />&#160;&#160;&#160; Order Deny,Allow     <br />&#160;&#160;&#160; Allow from all     <br />&lt;/proxy&gt;</p>
+<p>如上所示，配置了/rp1的反向代理指向<a href="http://127.0.0.1:30080">http://127.0.0.1:30080</a></p>
+<p>但是我今天遇到的问题是，我是新编译的apache,发现需要的的模块都没有,于是需要手动编译,对于proxy模块，需要使用命令:</p>
+<p>APACHE_PATH/bin/apxs -i -a –c&#160; APACHE_SOURCE_PATH/modules/proxy/mod_proxy.c APACHE_SOURCE_PATH/modules/proxy/proxy_util.c    <br />其中APACHE_PATH指代apache安装目录，APACHE_SOURCE_PATH指代apache源码目录。</p>
+<p>注意proxy下模块需要配合 proxy_util.c 一起编译才行，否则编译的模块不能加载。</p>
+<p>而且LoadModule authz_host_module modules/mod_authz_host.so这个模块是需要的，否则，会报Order 命令不识别:</p>
+<p>Invalid command 'Order', perhaps misspelled or defined by a module not included in the server config </p>
+<p>关于模块编译参见<a title="http://kazge.com/archives/815.html" href="http://kazge.com/archives/815.html">http://kazge.com/archives/815.html</a></p>
+<p>&#160;</p>
+<p>我写这篇文章起因是我要在我的远程主机上配置反向代理到我的本地机器</p>
+<p>之前说的<a href="http://kazge.com/archives/798.html">http://kazge.com/archives/798.html</a> 使用tunnel还是不够的，因为不知为什么，即使我在远程主机上暴露了tunnel端口，但是通过internet任然无法访问ssh建立的通道,后来想个办法，使用apache做反向代理，apache监听开放的单口比如8080，使用反向代理转到已建立隧道的端口上，这样才行。 </p>

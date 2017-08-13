@@ -1,0 +1,32 @@
+---
+layout: post
+title: JVM Heap最大内存限制
+date: 2014-12-04 12:35:57.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags: []
+meta:
+  _edit_last: '1'
+  views: '81'
+  _oembed_c0ce6c4d70f7cdc806d6ef305fa00c92: "{{unknown}}"
+  _oembed_3b1c170c06b0d81c73099ccdd854772e: "{{unknown}}"
+author:
+  login: justaname
+  email: admin@ig2net.info
+  display_name: justaname
+  first_name: ''
+  last_name: ''
+---
+<p>好久没写日志了&hellip;&hellip;</p>
+<p>&nbsp;</p>
+<p>最近的项目陷入了hazelcast的巨坑之中，问题之一就是hazelcast的各种内存泄露，让我绞尽脑汁，最后大家商量没得办法，只好说服让客户每月重启一次，这样他们还不至于拿锤子锤你，然后加大JVM内存。</p>
+<p>&nbsp;</p>
+<p>先得确认一下jvm的内存限制：</p>
+<p>http://stackoverflow.com/questions/2093679/max-memory-for-64bit-java</p>
+<p>http://stackoverflow.com/questions/1434779/maximum-java-heap-size-of-a-32-bit-jvm-on-a-64-bit-os</p>
+<p>&nbsp;</p>
+<p>32bit OS 1.2G就有些够呛</p>
+<p>64bit OS + 64bit JVM 理论上是2的64次方，人家试过1000G是没得问题的。</p>

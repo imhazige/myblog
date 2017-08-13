@@ -1,0 +1,23 @@
+---
+layout: post
+title: ie文本提示相关--事件注意
+date: 2011-05-30 09:11:11.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+- web
+meta:
+  views: '27'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+</p>
+<p> <span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">1：keydown和keyup事件不是一一对应的，用户按着键不动，再松开的话，会触发多个keydown事件而只触发一个keyup事件。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">2：extjs的wndow点击关闭触发不了document的onclick事件，不知道什么回事.</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">3：使用extjs的菜单来响应用户输入反应很慢，效果很不好，所以我自己写ui。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">4：文本框输入的时间顺序是keydown-&gt;keypress-&gt;keyup 只有keyup事件才算将用户刚输入的字符输入到文本框,即value的值包含了用户刚才的输入。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">5: 原来在keydown时间里面来判断词边界，哪知对于回车这类,在keydown里面获得的选中文本是不正确的，它忽略了回车换行，把我纠结的哟。最后放在keyup时间里面就可以了，想想也是，就应该在keyup时间里处理的嘛，如果用户按着建不动这个时候是没必要处理提示逻辑的。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">TextRange 的offsetLeft/offsetTop是相对于浏览器客户区左上角为起始点，它一直是绝对定位的。但是要实现建议的浮动下拉框式时，使用的是 style.left/top属性，这个坐标是以普通的文档的body坐标系统，因此需要加上body的滚动位置。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">xy = [sel.offsetLeft, sel.offsetTop];&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">xy[0] += document.body.scrollLeft;</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">xy[1] += document.body.scrollTop;</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>

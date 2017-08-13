@@ -1,0 +1,71 @@
+---
+layout: post
+title: linux下mysql安装
+date: 2012-07-30 21:57:00.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- linux
+- "数据库"
+tags:
+- mysql
+meta:
+  views: '76'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>记下自己安装mysql的过程：</p>
+<p>wget <a href="http://cdn.mysql.com/Downloads/MySQL-5.1/mysql-5.1.63.tar.gz">http://cdn.mysql.com/Downloads/MySQL-5.1/mysql-5.1.63.tar.gz</a></p>
+<p>tar zvxf mysql-5.1.63.tar.gz</p>
+<p>cd mysql-5.1.63 </p>
+<p># 新版本的mysql默认不带innodb故要加参数 -with-plugins=innobase&#160; 参见<a href="http://blog.prosight.me/index.php/2009/06/82">http://blog.prosight.me/index.php/2009/06/82</a>    <br />./configure <font color="#0000ff">--prefix</font>=/xxx/mysql-5.1.63 <font color="#0000ff">--sysconfdir</font>=/xxx/etc/lib --<font color="#0000ff">localstatedir</font>=/xxxx/lib/mysql <font color="#0000ff">-with-plugins=innobase</font> &amp;&amp; make &amp;&amp; make install</p>
+<p>说明:</p>
+<p><font color="#000000">--prefix&#160;&#160;&#160; 指明将要安装的路径</font></p>
+<p><font color="#000000">--sysconfdir 指明mysql启动时加载的配置文件(my.cnf)路径目录</font></p>
+<p><font color="#000000">--localstatedir 指明变量存放目录</font></p>
+<p><font color="#000000">这三个参数都是为了确保后面安装成功后能访问这些目录，因为安装mysql不一定需要linux系统root权限。我这个例子的情况就是这样，我没有远程主机root权限，我只对某个目录有777权限，所以在这里指明三个个路径参数，并保证对这三个目录有足够的权限。</font></p>
+<p><font color="#000000">这一不下来后就要安装数据库了:</font></p>
+<p>/xxx/mysql-5.1.63/bin/mysql_install_db </p>
+<p>配置my.cnf:</p>
+<p>首先选择一个模板拷贝到前面指明的<font color="#0000ff">--sysconfdir</font><font color="#000000">路径中</font></p>
+<p>cp /xxx/mysql-5.1.63/share/mysql/my-medium.cnf /xxx/etc/lib/my.cnf</p>
+<p>这里我选择了my-medium.cnf 这个配置模板，要对其进行修改:</p>
+<p>1 修改端口,</p>
+<p>2 修改socket 路径到具有777权限的路径下 如/tmp/sockt改为&#160; /xxx/tmp/socket</p>
+<p>3 将innodb的注释反注释掉。</p>
+<p>再就可以启动了，默认的root是没有密码的:</p>
+<p>/xxx/mysql-5.1.63/bin/mysqld_safe --user=root &amp;&#160; </p>
+<p>这样可以启动mysql了，它的日志打在了=/xxxx/lib/mysql /xxxxx.err 中（启动提示写明了）,可以据此日志分析问题。</p>
+<p>上面的 命令可加参数--defaults-extra-file来指定配置文件路径，如:</p>
+<p>/xxx/mysql-5.1.63/bin/mysqld_safe <font color="#0000ff">--defaults-extra-file</font>=/xxxx/my.cnf --user=root &amp;</p>
+<p>这样启动后，应该初始化root密码 :</p>
+<p>/xxx/mysql-5.1.63/bin/mysqladmin -u root password root&#160; <font color="#008080">//此例中初始root用户密码为root</font></p>
+<p><font color="#000000">修改密码:</font></p>
+<p>/xxx/mysql-5.1.63/bin/mysqladmin -u'root' -p'oldpasswor' password 'newpassword'</p>
+<p>&#160;</p>
+<p>下面尝试连接mysql:</p>
+<p>mysql client登陆</p>
+<p>/xxx/mysql-5.1.63/bin/mysql -u'root' –p'root'</p>
+<p>这样就登陆了mysql client,可进行sql操作了。</p>
+<p>&#160;</p>
+<p>现在想使用heidisql远程登录,结果报1130错误，这是因为默认只允许127.0.0.1 和 localhost登陆的，这些信息配置在mysql.user表中记录。</p>
+<p>use mysql;   <br />select `host`,`user` from user where user='root';    <br />发现有三条记录    <br />127.0.0.1    <br />localhost    <br />主机域名</p>
+<p>那么我们就添加一条权限,加入允许远程主机ip为10.199.1.18登陆的话：</p>
+<div>
+<pre style="width: 962px; height: 71px"><a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=INSERT&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">INSERT</a> <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=INTO&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">INTO</a> <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=user&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">user</a> <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=SET&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">SET</a> Host='10.199.1.18',<a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=User&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">User</a>='<span style="color: #8b0000">root</span>',Reload_priv='<span style="color: #8b0000">Y</span>', Process_priv='<span style="color: #8b0000">Y</span>';
+<a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=update&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">update</a> <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=user&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">user</a> <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=set&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">set</a> Password = PASSWORD('<span style="color: #8b0000">root</span>'),Select_priv='<span style="color: #8b0000">Y</span>',Insert_priv = '<span style="color: #8b0000">Y</span>', Update_priv = '<span style="color: #8b0000">Y</span>', Delete_priv = '<span style="color: #8b0000">Y</span>', Create_priv = '<span style="color: #8b0000">Y</span>', Drop_priv = '<span style="color: #8b0000">Y</span>', Reload_priv = '<span style="color: #8b0000">Y</span>', Shutdown_priv = '<span style="color: #8b0000">Y</span>', Process_priv = '<span style="color: #8b0000">Y</span>', File_priv = '<span style="color: #8b0000">Y</span>', Grant_priv = '<span style="color: #8b0000">Y</span>', References_priv = '<span style="color: #8b0000">Y</span>', Index_priv = '<span style="color: #8b0000">Y</span>', Alter_priv = '<span style="color: #8b0000">Y</span>', Show_db_priv = '<span style="color: #8b0000">Y</span>', Super_priv = '<span style="color: #8b0000">Y</span>', Create_tmp_table_priv = '<span style="color: #8b0000">Y</span>', Lock_tables_priv = '<span style="color: #8b0000">Y</span>', Execute_priv = '<span style="color: #8b0000">Y</span>', Repl_slave_priv = '<span style="color: #8b0000">Y</span>', Repl_client_priv = '<span style="color: #8b0000">Y</span>', Create_view_priv = '<span style="color: #8b0000">Y</span>', Show_view_priv = '<span style="color: #8b0000">Y</span>', Create_routine_priv = '<span style="color: #8b0000">Y</span>', Alter_routine_priv = '<span style="color: #8b0000">Y</span>', Create_user_priv = '<span style="color: #8b0000">Y</span>', Event_priv = '<span style="color: #8b0000">Y</span>', Trigger_priv = '<span style="color: #8b0000">Y</span>' <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=where&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">where</a> `Host`='<span style="color: #8b0000">50.87.25.233</span>';
+FLUSH <a style="color: #0000ff" href="http://search.microsoft.com/default.asp?so=RECCNT&amp;siteid=us%2Fdev&amp;p=1&amp;nq=NEW&amp;qu=PRIVILEGES&amp;IntlSearch=&amp;boolean=PHRASE&amp;ig=01&amp;i=09&amp;i=99">PRIVILEGES</a>;</pre>
+</div>
+<p>注意，密码一定要设置,同一用户每一登陆host的密码可以不同（其实同一用户连权限也可因登陆host 不同而设置不同），否则远程连接会报1045 错误。</p>
+<p>&#160;</p>
+<p>然后是停止mysql:</p>
+<p>/xxx/mysql-5.1.63/bin/mysqladmin shutdown -u'root' -p'root'</p>
+<p>&#160;</p>
+<p> 参见:</p>
+<p><a href="http://mysql-tips.blogspot.com/2005/04/setup-new-users-in-mysql.html">http://mysql-tips.blogspot.com/2005/04/setup-new-users-in-mysql.html</a></p>
+<p><a href="http://kazge.com/archives/815.html">http://kazge.com/archives/815.html</a></p>

@@ -1,0 +1,72 @@
+---
+layout: post
+title: base64数据和@font-face
+date: 2011-06-28 09:51:42.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- web css javascript
+meta:
+  views: '309'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>本文介绍的是边角料技术base64数据和@font-face,因为它们用的比较少。</p>
+<p><font size="2"><strong>base64：</strong></font></p>
+<p>先看看这样的样式</p>
+<div>
+<pre>div {
+width:100px;
+height:100px;
+background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEX/AAAAAP9sof2OAAAAIUlEQVR4nGNgGAWjgFTw<span style="color: #008000">//8HJF4Dg8CI5aGGxCgYBcQBAMULD/2Zt2wmAAAAAElFTkSuQmCC);</span>
+}</pre>
+</div>
+<p>另外还可以这样写:</p>
+<div>
+<pre>&lt;<span style="color: #800000">img</span> <span style="color: #800000">src</span>=&quot;<span style="color: #800000">data</span>:<span style="color: #800000">image</span>/<span style="color: #800000">png</span>;<span style="color: #800000">base64</span>, 
+<span style="color: #800000">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD</span>/ 
+//+<span style="color: #800000">l2Z</span>/<span style="color: #800000">dAAAAM0lEQVR4nGP4</span>/<span style="color: #800000">5</span>/<span style="color: #800000">h</span>/<span style="color: #800000">1</span>+<span style="color: #800000">G</span>/<span style="color: #800000">58ZDrAz3D</span>/<span style="color: #800000">McH8yw83NDDeNGe4U</span> 
+<span style="color: #800000">g9C9zwz3gVLMDA</span>/<span style="color: #800000">A6P9</span>/<span style="color: #800000">AFGGFyjOXZtQAAAAAElFTkSuQmCC</span>&quot;/&gt;</pre>
+</div>
+<p>其中</p>
+<p></p>
+<p>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEX/AAAAAP9sof2OAAAAIUlEQVR4nGNgGAWjgFTw//8HJF4Dg8CI5aGGxCgYBcQBAMULD/2Zt2wmAAAAAElFTkSuQmCC<br />
+  <br />定义了一张背景图片，而这张图片使用base64编码格式直接嵌入到样式表里面了。</p>
+<p>其优点：</p>
+<p>1:放在css里面很容易做到缓存效果，大部分应用都是基于这个考虑。</p>
+<p>2:css可使用gzip压缩。</p>
+<p>3:减少请求次数。</p>
+<p>但是缺点如下：</p>
+<p>1：ie8以上才支持base64编码。要ie7以下支持，也不是没办法，看<a href="http://ljl-xyf.iteye.com/blog/830099" target="_blank">这篇文章</a>。</p>
+<p>2:这样的方式不好重用。</p>
+<p>3：放在css里面的话会造成大数据量，css没下载完之前，其他样式也没显示出来。</p>
+<p>4:很麻烦。</p>
+<p>附base64编码工具</p>
+<ul>
+<li><a href="http://www.motobit.com/util/base64-decoder-encoder.asp">http://www.motobit.com/util/base64-decoder-encoder.asp</a> </li>
+<li><a href="http://www.greywyvern.com/code/php/binary2base64">http://www.greywyvern.com/code/php/binary2base64</a></li>
+</ul>
+<p>&#160;</p>
+<p><font size="2"><strong>@font-face</strong></font></p>
+<pre style="width: 858px;height: 74px">@font-face {
+	font-family: Delicious;
+	src: url('Delicious-Roman.otf');
+}</pre>
+<p>FF3.5以上以及其他浏览器都支持这种写法，但是在格式上有区别</p>
+<p>ie支持.eot (Embedded OpenType) 和.ote</p>
+<p>其他支持TrueType 和OpenType (.ttf, .otf)</p>
+<p>也可以配合base64格式</p>
+<div>
+<pre>@<span style="color: #800000">font-face</span>{
+<span style="color: #800000">font-family</span>: <span style="color: #800000">Gentium</span>;
+<span style="color: #800000">src</span>: <span style="color: #800000">url</span>(&quot;<span style="color: #800000">data</span>:<span style="color: #800000">font</span>/
+<span style="color: #800000">truetype</span>;<span style="color: #800000">base64</span>,…&quot;);
+}</pre>
+</div>

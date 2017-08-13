@@ -1,0 +1,22 @@
+---
+layout: post
+title: the object invoked has disconnected from its clients 问题
+date: 2011-05-26 06:17:19.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- java
+- javascript web 前端
+meta:
+  views: '225'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>IE8 下出现 <tt>the object invoked has disconnected from its clients 脚本错误：     <br />原因是跨窗体创建数组。解决办法是，数组在主窗体创建，而不要在别的窗体创建它。      <br /></tt>It seems like it is no longer safe to pass objects between windows. If the window that created the object is closed, the object will no longer be usable in other places. This causes a problems for popup-windows that tried to &quot;remember&quot; the active tab. The information must be stored in the main page, and the array object is created by the popup page. But once the popup was closed, the array could no longer be used. The result was an error message: <tt>the object invoked has disconnected from its clients</tt>. The solution is to let the main page create the array.</p>

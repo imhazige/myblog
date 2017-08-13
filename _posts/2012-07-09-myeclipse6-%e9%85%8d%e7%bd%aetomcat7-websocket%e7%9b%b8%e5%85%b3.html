@@ -1,0 +1,30 @@
+---
+layout: post
+title: myeclipse6 配置tomcat7 websocket相关
+date: 2012-07-09 14:30:41.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- tomcat7
+- websocket
+meta:
+  views: '528'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>我的机器很慢……</p>
+<p>所以我只能用myeclipse6,但是它最高只有对tomcat6的支持（那时tomcat7还没出来）。</p>
+<p>网上搜了一下，可以直接将tomcat7的地址配置到myeclipse tomcat6中的home directory。然后还要在Tomcat6/launch/create launch config/class path中将tomcat7 bin目录下面的jar包加上。</p>
+<p>这样就可以了。</p>
+<p>我这主要使用tomcat7的websocket功能，发现7.0.27和7.0.29的websocket api 有不同，所以对于使用maven的情况，要保证引用的websocket api(catalina.jar,tomcat-coyoto.jar)版本与目标tomcat一致。</p>
+<p>目前tomcat的maven 引用一下子就把很多包下来了，如果这些包直接发布到目标tomcat中，又会造成冲突报addFilter错误。 maven有provide的引用scope,但是对myeclipse这样直接发布到tomcat又不行，我是将包发布后再删除(catalina.jar,tomcat-coyoto.jar)。</p>
+<p>使用maven tomcat 插件也可以，但是我总觉得与实际环境越接近越好。</p>
+<p>总之，我还是很讨厌maven……</p>
+<p>另外tomcat7目前对safari的websocket支持不好。参见<a href="http://kazge.com/archives/792.html">http://kazge.com/archives/792.html</a></p>

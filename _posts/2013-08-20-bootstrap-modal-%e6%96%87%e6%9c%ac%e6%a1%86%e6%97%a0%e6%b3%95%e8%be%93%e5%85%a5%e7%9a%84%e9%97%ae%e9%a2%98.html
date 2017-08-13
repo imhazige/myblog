@@ -1,0 +1,29 @@
+---
+layout: post
+title: bootstrap modal 文本框无法输入的问题
+date: 2013-08-20 17:36:06.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- bootstrap
+meta:
+  views: '143'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>弄了几个小时，bootstrap的modal插件，我是这样用的，同时可以显示多个modal, 但是有个问题就是显示多个modal的时候，里面的文本框不能获得焦点，用户无法输入。</p>
+<p>&#160;</p>
+<p>firefox根本没报错，还是chrome里有关于focus的递归报错。</p>
+<p>&#160;</p>
+<p>真是折腾死人，最后发现modal元素上不能有tabindex这样的属性,去掉就可以了。</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p>&#160;</p>
+<p><a href="https://github.com/jschr/bootstrap-modal/issues/83">https://github.com/jschr/bootstrap-modal/issues/83</a></p>

@@ -1,0 +1,29 @@
+---
+layout: post
+title: linux shell脚本和windows bat脚本的区别造成的问题
+date: 2012-01-16 11:42:41.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- linux
+- "计算机基础"
+tags:
+- bat
+- shell
+meta:
+  views: '295'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>首先最容易出错的是换行符的不同,windows 上写shell脚本放到linux上运行就不行。因为linux不认windows换行符，所以应该在notepad++这样的编辑器中修改一下 :编辑-&gt;档案格式转换-&gt;转为UNIX格式。</p>
+<p>再一个windows bat变量使用%变量名%来替换，而在linux中需要将变量放在引号中替换如:</p>
+<p>::windows:</p>
+<p>set JVM_OPS=%JVM_OPS% -Djava.rmi.server.hostname=127.0.0.1 </p>
+<p>&#160;</p>
+<p>#shell:</p>
+<p>JVM_OPS=&quot;$JVM_OPS -Djava.rmi.server.hostname=127.0.0.1&quot;</p>

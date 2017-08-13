@@ -1,0 +1,23 @@
+---
+layout: post
+title: extjs TreeNode expand removeChild导致折叠
+date: 2011-09-27 11:34:52.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- extjs
+meta:
+  views: '187'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>在使用TreeNode时，在expand事件中删除了所有子节点，然后再动态加载，结果导致节点再次折叠了，查看源码，原来removeChild方法中当子节点为空时，TreeNode会调用collapse方法，真是多此一举！</p>
+<p>&#160;</p>
+<p>还没找到好的解决办法，所以在expand事件中要避免调用removeChild!</p>

@@ -1,0 +1,66 @@
+---
+layout: post
+title: IPhone In Action 读书笔记
+date: 2011-07-05 11:20:32.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- apple
+tags:
+- iphone
+meta:
+  views: '84'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>1章介绍,2-9章web,10-20章sdk(sdk tools)</p>
+<p>mac os基于unix发展</p>
+<p>480*320 像素输出屏幕。</p>
+<p>wifi→EDGE(Enhanced Data Rate for GSM Evolution,增强型数据速率GSM演进技术,最大220kbps)→3G(384kbps--1000kbps)</p>
+<p>web开发工具 iui <a title="http://code.google.com/p/iui/" href="http://code.google.com/p/iui/(web">http://code.google.com/p/iui/(web</a>库) ,dashcode(IDE)</p>
+<p>safari不支持java,flash.</p>
+<p>1.4.1 web视图是980px缩放的效果?</p>
+<p>Chrome头所占比率</p>
+<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 带url&#160;&#160; 不显示url</p>
+<p>竖向 26%&#160;&#160;&#160;&#160;&#160; 13%</p>
+<p>横向 35%&#160;&#160;&#160;&#160; 16%</p>
+<p>作者倾向横向，Chrome头可以通过动态显示解决。</p>
+<p>没有鼠标的概念，也没有滚动条。</p>
+<p>第六章介绍了canvas</p>
+<p>第九章初步介绍了 objectC</p>
+<p>支持类方法(静态方法)</p>
+<p>消息类似于方法</p>
+<p>更加明确的演绎MVC模式</p>
+<p>限制:</p>
+<p>不能下载非sdk代码（这导致java不能运行在iphone上）</p>
+<p>必须经过用户允许才能获得用户位置</p>
+<p>不能进行实时路由引导</p>
+<p>不能包含ip voice功能</p>
+<p>开发者需要证书才能提交程序，但是apple可以回收此证书（如果不喜欢你开发的程序）</p>
+<p>ios架构:</p>
+<p><a href="http://kazge.com/wp-content/uploads/2011/07/image.png"><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="{{ site.baseurl }}/assets/image_thumb.png" width="177" height="244" /></a> </p>
+<p>10.3.1</p>
+<p>大部分将UI操作会和Cocoa Touch打交道，但是也有要使用ObjectC类的情况，这就在Core Foundation(类名以CF开头)之上了。</p>
+<p>Cocoa Touch包含 UIKit(类名以UI开头)和Foundation(类名以NS开头)</p>
+<p>16章讲了sqlite,包含数据类型转换的内容。</p>
+<p>这部书主要讲应用程序，没有讲游戏相关。</p>
+<p>第十九章讲图形 Quartz 2D,openGL等</p>
+<p>Quartz 2D建立在老的Core foundation之上??</p>
+<p>三个概念context,pathes,state</p>
+<p>cocos2d是封装的openGL,也用到了quartz 2D</p>
+<p>Quartz默认的坐标系是从右下到左上，与Cocoa Touch整好相反。如果你不是使用Cocoa Touch创建context,就要认为坐标原点是右下。</p>
+<p>图context保存为堆形式(先进先出)</p>
+<p>19.4.4图形变换</p>
+<p>19.4.5 状态管理 save,restore.--和canvas2d像吧</p>
+<p>高级2D:梯度，图片处理，画字</p>
+<p>19.7 动画介绍</p>
+<p>19.8 OpenGL ES(Embded System)</p>
+<p>EAGL is Embedded AGL(Apple's OpenGL extensions for OS X.)</p>
+<p>openGL通过EAGLView操作，也就是UIView的CAEAGL层。</p>
+<p>Xcode提供了OpenGL的模板，默认设置了它的参数，只要在EAGLView的drawView方法里写你的代码就行了。</p>
+<p>详细见apple文档OpenGL ES Framework Reference,里面也有示例。</p>

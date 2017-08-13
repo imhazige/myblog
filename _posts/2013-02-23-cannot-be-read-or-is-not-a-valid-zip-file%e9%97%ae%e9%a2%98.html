@@ -1,0 +1,40 @@
+---
+layout: post
+title: cannot be read or is not a valid ZIP file问题
+date: 2013-02-23 10:38:56.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- maven
+meta:
+  views: '1166'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天又遇到maven问题:cannot be read or is not a valid ZIP file</p>
+<p>&#160;</p>
+<p>工程是导入的，在别的机器上好好地，导入到我的机器上就出了问题。</p>
+<p>&#160;</p>
+<p>我的是maven3,仓库是默认的。</p>
+<p>&#160;</p>
+<p>打开报错的jar文件，好好地，没什么问题。</p>
+<p>&#160;</p>
+<p>最后发现在eclipse里面打开这些包里的类却是报错。</p>
+<p>&#160;</p>
+<p>看来还是包没有正确下下来。没办法只好将包从本地仓库中删掉，再更新maven 依赖。终于解决了。解决一个包的问题又出现另外的包同样的错，一个一个同样的解决办法，要是想爽快，干脆将整个本地仓库删掉再更新maven依赖。</p>
+<p>&#160;</p>
+<p>你还得感谢它还报了个错，等我运行时，还是发现这类没找到，那类没找到，同样，删吧，更新……</p>
+<p>&#160;</p>
+<p>就这样弄环境就花了两个小时，maven就是强。</p>
+<p>&#160;</p>
+<p>导入maven工程很容易出现这种情况。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>但最终都是maven这个怪物的问题，<a href="http://kazge.com/wp-content/uploads/2013/02/0073D164.gif"><img style="display: inline" title="0073D164" alt="0073D164" src="{{ site.baseurl }}/assets/0073D164_thumb.gif" width="24" height="24" /></a></p>

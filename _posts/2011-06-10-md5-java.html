@@ -1,0 +1,60 @@
+---
+layout: post
+title: MD5 JAVA
+date: 2011-06-10 16:27:56.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- java
+meta:
+  views: '10'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div>
+<pre>private static String dumpBytes(byte[] bytes)
+    {
+        int i;
+        StringBuffer sb = new StringBuffer();
+        for (i = 0; i <span style="color: #0000ff">&lt;</span> bytes.length; i++)
+        {
+            if (i % 32 == 0 &amp;&amp; i != 0)
+            {
+                sb.append(&quot;\n&quot;);
+            }
+            String s = Integer.toHexString(bytes[i]);
+            if (s.length() <span style="color: #0000ff">&lt;</span> 2)
+            {
+                s = &quot;0&quot; + s;
+            }
+            if (s.length() <span style="color: #0000ff">&gt;</span> 2)
+            {
+                s = s.substring(s.length() - 2);
+            }
+            sb.append(s);
+        }
+        return sb.toString();
+    }
+    public static String MD5Encode(String origin)
+    {
+        String resultString = null;
+        try
+        {
+            resultString = new String(origin);
+            MessageDigest md = MessageDigest.getInstance(&quot;MD5&quot;);
+            resultString = dumpBytes(md.digest(resultString.getBytes()));
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException(ex);
+        }
+        return resultString;
+    } </pre>
+</div>

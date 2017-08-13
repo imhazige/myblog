@@ -1,0 +1,45 @@
+---
+layout: post
+title: X-UA-Compatible, IE向前兼容性
+date: 2012-02-20 10:16:35.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+- Web前端
+tags:
+- X-UA-Compatible
+meta:
+  views: '46'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>IE这个浏览器真是很头疼，有时你开发的网页，到稍微新一点的版本上就完全变了样。</p>
+<p>对于IE8,它就使用了全新的渲染引擎，IE9更是变化大。</p>
+<p>这里介绍使用X-UA-Compatible meta来让IE 跳转到某个版本来渲染。</p>
+<p>方法1：</p>
+<p>可使用meta 标签 </p>
+<pre>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=8&quot; /&gt;</pre>
+<p>&#160;</p>
+<p>方法2:</p>
+<p>服务器返回头</p>
+<pre>X-UA-Compatible: IE=8;FF=3;OtherUA=4</pre>
+<p>&#160;</p>
+<p>其实X-UA-Compatible 虽不是个标准头，但是很多浏览器都支持它，然而最需要这个的恐怕是IE了，它的向前兼容性太差。</p>
+<p>&#160;</p>
+<p>另外这样的写法:</p>
+<pre>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;</pre>
+<p>则是让浏览器使用最新的可能版本渲染。</p>
+<p>&#160;</p>
+<p>这里顺便提一下Acid2测试, acid主要测试浏览器符合w3c标准的程度，这篇文章介绍较好:</p>
+<p><a href="http://www.bobopo.com/article/code/acid_w3c.htm">http://www.bobopo.com/article/code/acid_w3c.htm</a></p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://www.alistapart.com/articles/beyonddoctype">http://www.alistapart.com/articles/beyonddoctype</a></p>
+<p><a href="http://www.456bereastreet.com/archive/201103/x-ua-compatible_and_html5/">http://www.456bereastreet.com/archive/201103/x-ua-compatible_and_html5/</a></p>
+<p><a href="http://wange.im/x-ua-compatible-ie9-to-ie7.html">http://wange.im/x-ua-compatible-ie9-to-ie7.html</a></p>

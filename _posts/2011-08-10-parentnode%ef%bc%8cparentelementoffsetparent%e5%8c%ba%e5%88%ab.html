@@ -1,0 +1,54 @@
+---
+layout: post
+title: parentNode，parentElement,offsetParent区别
+date: 2011-08-10 09:40:16.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- web html css 前端
+meta:
+  views: '92'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>parentNode与parentElement同义，但是parentElement不是w3c规范的。这里主要讨论parentNode,offsetParent的区别：</p>
+<p><a href="http://blog.csdn.net/zj_2009/article/details/2087291" target="_blank">引用网上的介绍:</a></p>
+<div>
+<pre>offsetParent直接的将是影响元素位置的上级element，而parentElement与位置显示无关时dom中的上级element。
+例如：
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">BODY</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">div</span>   <span style="color: #ff0000">style</span>=<span style="color: #0000ff">&quot;border:   1px   solid   black;position:absolute;&quot;</span><span style="color: #0000ff">&gt;</span> 
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">form</span><span style="color: #0000ff">&gt;</span> 
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">input</span>   <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;checkbox&quot;</span>   <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;cc&quot;</span><span style="color: #0000ff">&gt;</span> 
+  <span style="color: #0000ff">&lt;/</span><span style="color: #800000">form</span><span style="color: #0000ff">&gt;</span> 
+  <span style="color: #0000ff">&lt;/</span><span style="color: #800000">div</span><span style="color: #0000ff">&gt;</span> 
+这个例子中，“cc”元素的offsetParent是div，如果去掉div的position属性，那么cc的offsetParent就会变为body。而parentElement一直都为form。
+与此相关的还有offsetLeft和offsetTop两种属性，他们分别表示的是元素与offsetElement相对应的左侧和顶部距离。 </pre>
+</div>
+<p>另外的例子是table:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span>!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;<span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">script</span> <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;text/javascript&quot;</span><span style="color: #0000ff">&gt;</span>
+		window.onload = function(){
+			var el = document.getElementById('t2');
+			alert(el.offsetParent.id);
+		};	
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">script</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">body</span> <span style="color: #ff0000">style</span>=<span style="color: #0000ff">&quot;width: 1000px;&quot;</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">table</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;tb&quot;</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;tr1&quot;</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>t1<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;tr2&quot;</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;t2&quot;</span><span style="color: #0000ff">&gt;</span>t2<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">table</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p>可以看到td的offsetParent直接是table。</p>

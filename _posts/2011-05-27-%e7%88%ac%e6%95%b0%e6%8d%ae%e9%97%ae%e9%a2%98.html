@@ -1,0 +1,329 @@
+---
+layout: post
+title: "爬数据问题"
+date: 2011-05-27 10:01:46.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+- Web前端
+tags:
+- web html css 前端
+meta:
+  views: '156'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+</p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">想截取豆瓣的内容 ，发现以下问题&#160; </span>    <br /><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">一般的 网站都有防止被 iframe包含的脚本 ，所以 用iframe不行</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">我再试 window.open打开窗口来 加载脚本 ，但是</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">window的 onload事件 不能 监听，可能是跨域 问题 ，那么就做不下去了</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">-------------------</span>    <br /><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>
+<pre><pre>(<span style="color: #0000ff">function</span>() {
+</pre>
+<pre><span style="color: #0000ff">function</span> g_log(msg) {
+</pre>
+<pre><span style="color: #0000ff">if</span> (!<span style="color: #0000ff">window</span>.mylog_win) {
+</pre>
+<pre> <span style="color: #0000ff">window</span>.mylog_win = <span style="color: #0000ff">window</span>.<span style="color: #0000ff">open</span>('', 'log');
+</pre>
+<pre>}
+</pre>
+<pre><span style="color: #0000ff">var</span> doc = <span style="color: #0000ff">window</span>.mylog_win.<span style="color: #0000ff">document</span>;
+</pre>
+<pre>doc.write(msg + '&lt;br&gt;');
+</pre>
+<pre>}
+</pre>
+<pre><span style="color: #0000ff">function</span> DoubanTask() {
+</pre>
+<pre><span style="color: #0000ff">var</span> URL = 'http:<span style="color: #008000">//movie.douban.com/subject/';</span>
+</pre>
+<pre><span style="color: #0000ff">var</span> INDEX_BEGIN = 1000000;
+</pre>
+<pre><span style="color: #0000ff">var</span> INDEX_END = 1999999;
+</pre>
+<pre><span style="color: #0000ff">var</span> TRYCOUNT = 3;
+</pre>
+<pre><span style="color: #0000ff">var</span> tryicount = 0;
+</pre>
+<pre><span style="color: #0000ff">var</span> win = <span style="color: #0000ff">window</span>.<span style="color: #0000ff">open</span>('', 'doubanwin');
+</pre>
+<pre><span style="color: #0000ff">var</span> url_index = INDEX_BEGIN;
+</pre>
+<pre><span style="color: #0000ff">function</span> log (msg) {
+</pre>
+<pre> g_log(msg);
+</pre>
+<pre>};
+</pre>
+<pre><span style="color: #0000ff">function</span> getData() {
+</pre>
+<pre> <span style="color: #0000ff">var</span> doc = Ext.get(win.<span style="color: #0000ff">document</span>.body);
+</pre>
+<pre> <span style="color: #0000ff">var</span> score = doc.query('strong[property=v:average]')
+</pre>
+<pre> <span style="color: #0000ff">if</span> (!score || !score.<span style="color: #0000ff">length</span>) {
+</pre>
+<pre>  log('score not <span style="color: #0000ff">find</span>,<span style="color: #0000ff">return</span> <span style="color: #0000ff">null</span>.');
+</pre>
+<pre>  <span style="color: #0000ff">return</span> <span style="color: #0000ff">null</span>;
+</pre>
+<pre> }
+</pre>
+<pre> score = score[0].innerHTML;
+</pre>
+<pre> <span style="color: #0000ff">var</span> vote = doc.query('span[property=v:votes]')
+</pre>
+<pre> <span style="color: #0000ff">if</span> (!vote || !vote.<span style="color: #0000ff">length</span>) {
+</pre>
+<pre>  log('score not <span style="color: #0000ff">find</span>,<span style="color: #0000ff">return</span> <span style="color: #0000ff">null</span>.');
+</pre>
+<pre>  <span style="color: #0000ff">return</span> <span style="color: #0000ff">null</span>;
+</pre>
+<pre> }
+</pre>
+<pre> vote = vote[0].innerHTML;
+</pre>
+<pre> <span style="color: #0000ff">var</span> <span style="color: #0000ff">name</span> = doc.query('span[property=v:itemreviewed]')
+</pre>
+<pre> <span style="color: #0000ff">if</span> (!<span style="color: #0000ff">name</span> || !<span style="color: #0000ff">name</span>.<span style="color: #0000ff">length</span>) {
+</pre>
+<pre>  log('<span style="color: #0000ff">name</span> not <span style="color: #0000ff">find</span>,<span style="color: #0000ff">return</span> <span style="color: #0000ff">null</span>.');
+</pre>
+<pre>  <span style="color: #0000ff">return</span> <span style="color: #0000ff">null</span>;
+</pre>
+<pre> }
+</pre>
+<pre> <span style="color: #0000ff">name</span> = <span style="color: #0000ff">name</span>[0].innerHTML;
+</pre>
+<pre> <span style="color: #0000ff">var</span> year = doc.query('span[<span style="color: #0000ff">class</span>=year]')
+</pre>
+<pre> <span style="color: #0000ff">if</span> (year &amp;&amp; year.<span style="color: #0000ff">length</span>) {
+</pre>
+<pre>  year = year[0].innerHTML;
+</pre>
+<pre> }
+</pre>
+<pre> <span style="color: #0000ff">var</span> director = doc.query('a[rel=v:directedBy]')
+</pre>
+<pre> <span style="color: #0000ff">if</span> (director &amp;&amp; director.<span style="color: #0000ff">length</span>) {
+</pre>
+<pre>  director = director[0].innerHTML;
+</pre>
+<pre> }
+</pre>
+<pre> <span style="color: #0000ff">if</span> (year) {
+</pre>
+<pre>  <span style="color: #0000ff">var</span> i0 = year.indexOf('(');
+</pre>
+<pre>  <span style="color: #0000ff">if</span> (-1 != i0) {
+</pre>
+<pre>   year = year.substring(i0 + 1);
+</pre>
+<pre>  }
+</pre>
+<pre>  i0 = year.indexOf(')');
+</pre>
+<pre>  <span style="color: #0000ff">if</span> (-1 != i0) {
+</pre>
+<pre>   year = year.substring(0, i0);
+</pre>
+<pre>  }
+</pre>
+<pre> }
+</pre>
+<pre> <span style="color: #0000ff">return</span> {
+</pre>
+<pre>  score : score,
+</pre>
+<pre>  vote : vote,
+</pre>
+<pre>  <span style="color: #0000ff">name</span> : <span style="color: #0000ff">name</span>,
+</pre>
+<pre>  year : year,
+</pre>
+<pre>  director : director
+</pre>
+<pre> };
+</pre>
+<pre>}
+</pre>
+<pre><span style="color: #0000ff">function</span> onloadfunc(url) {
+</pre>
+<pre> <span style="color: #0000ff">var</span> data = getData();
+</pre>
+<pre> <span style="color: #0000ff">if</span> (!data) {
+</pre>
+<pre>  log('retrive no data <span style="color: #0000ff">in</span> [' + url + '],<span style="color: #0000ff">continue</span>.');
+</pre>
+<pre>  runtask();
+</pre>
+<pre>  <span style="color: #0000ff">return</span>;
+</pre>
+<pre> }
+</pre>
+<pre> data.url = url;
+</pre>
+<pre> log('get data:' + Ext.encode(data));
+</pre>
+<pre> Ext.Ajax.request({
+</pre>
+<pre>    url : &quot;<span style="color: #8b0000">mytime.ax</span>&quot;,
+</pre>
+<pre>    params : data,
+</pre>
+<pre>    success : <span style="color: #0000ff">function</span>() {
+</pre>
+<pre>     tryicount = 0;
+</pre>
+<pre>     log('submit ok <span style="color: #0000ff">for</span> url:' + url);
+</pre>
+<pre>     runtask();
+</pre>
+<pre>    },
+</pre>
+<pre>    failure : <span style="color: #0000ff">function</span>() {
+</pre>
+<pre>     tryicount += 1;
+</pre>
+<pre>     log('submit fail[' + tryicount + '] <span style="color: #0000ff">for</span> url:' + url);
+</pre>
+<pre>     <span style="color: #0000ff">if</span> (tryicount &gt; TRYCOUNT) {
+</pre>
+<pre>      tryicount = 0;
+</pre>
+<pre>      log('cancel <span style="color: #0000ff">try</span> <span style="color: #0000ff">for</span>:' + url
+</pre>
+<pre>        + ', move <span style="color: #0000ff">for</span> next none.');
+</pre>
+<pre>      runtask();
+</pre>
+<pre>     } <span style="color: #0000ff">else</span> {
+</pre>
+<pre>      log('<span style="color: #0000ff">continue</span> <span style="color: #0000ff">try</span> <span style="color: #0000ff">for</span>:' + url);
+</pre>
+<pre>      onloadfunc(url);
+</pre>
+<pre>     }
+</pre>
+<pre>    }
+</pre>
+<pre>   });
+</pre>
+<pre>}
+</pre>
+<pre><span style="color: #0000ff">function</span> runtask() {
+</pre>
+<pre> url_index += 1;
+</pre>
+<pre> <span style="color: #0000ff">if</span> (url_index &gt;= INDEX_END) {
+</pre>
+<pre>  log('task complete!');
+</pre>
+<pre>  <span style="color: #0000ff">return</span>;
+</pre>
+<pre> }
+</pre>
+<pre> <span style="color: #0000ff">var</span> url = URL + url_index;
+</pre>
+<pre> <span style="color: #008000">//no use, can't work</span>
+</pre>
+<pre> win.<span style="color: #0000ff">document</span>.body.onload = <span style="color: #0000ff">function</span>() {
+</pre>
+<pre>  onloadfunc(url);
+</pre>
+<pre> };
+</pre>
+<pre> win.<span style="color: #0000ff">location</span>.href = url;
+</pre>
+<pre>}
+</pre>
+<pre><span style="color: #0000ff">this</span>.run = <span style="color: #0000ff">function</span>() {
+</pre>
+<pre> runtask();
+</pre>
+<pre>};
+</pre>
+<pre>}
+</pre>
+<pre><span style="color: #0000ff">function</span> onload() {
+</pre>
+<pre><span style="color: #0000ff">var</span> dbTask = <span style="color: #0000ff">new</span> DoubanTask();
+</pre>
+<pre><span style="color: #0000ff">var</span> btnRun1 = Ext.get('btnStart');
+</pre>
+<pre>btnRun1.on('click', <span style="color: #0000ff">function</span>() {
+</pre>
+<pre>   dbTask.run();
+</pre>
+<pre>  });
+</pre>
+<pre>}
+</pre>
+<pre>Ext.fly(<span style="color: #0000ff">window</span>).on('load', onload);
+</pre>
+<pre>})();
+</pre>
+<pre></pre>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">-------------------------</span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>
+<pre><pre><span style="color: #0000ff">&lt;</span>!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;<span style="color: #0000ff">&gt;</span>
+</pre>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>    <span style="color: #0000ff">&lt;</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span>run.html<span style="color: #0000ff">&lt;/</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre></pre>
+<pre>    <span style="color: #0000ff">&lt;</span><span style="color: #800000">meta</span> <span style="color: #ff0000">http</span>-<span style="color: #ff0000">equiv</span>=<span style="color: #0000ff">&quot;description&quot;</span> <span style="color: #ff0000">content</span>=<span style="color: #0000ff">&quot;this is my page&quot;</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>    <span style="color: #0000ff">&lt;</span><span style="color: #800000">meta</span> <span style="color: #ff0000">http</span>-<span style="color: #ff0000">equiv</span>=<span style="color: #0000ff">&quot;content-type&quot;</span> <span style="color: #ff0000">content</span>=<span style="color: #0000ff">&quot;text/html; charset=ISO-8859-1&quot;</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>    
+</pre>
+<pre>    <span style="color: #008000">&lt;!--&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./styles.css&quot;&gt;--&gt;</span>
+</pre>
+<pre>    <span style="color: #0000ff">&lt;</span><span style="color: #800000">script</span> <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;text/javascript&quot;</span> <span style="color: #ff0000">src</span>=<span style="color: #0000ff">&quot;../js/ext-core.js&quot;</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">script</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>    <span style="color: #0000ff">&lt;</span><span style="color: #800000">script</span> <span style="color: #ff0000">type</span>=<span style="color: #0000ff">&quot;text/javascript&quot;</span> <span style="color: #ff0000">src</span>=<span style="color: #0000ff">&quot;js/main.js&quot;</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">script</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre><span style="color: #0000ff">&lt;/</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre></pre>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre> <span style="color: #0000ff">&lt;</span><span style="color: #800000">table</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>  <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>  <span style="color: #0000ff">&lt;</span><span style="color: #800000">button</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;btnStart&quot;</span><span style="color: #0000ff">&gt;</span>Start<span style="color: #0000ff">&lt;/</span><span style="color: #800000">button</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>       
+</pre>
+<pre>  <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre>  <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">iframe</span> <span style="color: #ff0000">id</span>=<span style="color: #0000ff">&quot;frm1&quot;</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">iframe</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">table</span><span style="color: #0000ff">&gt;</span>    
+</pre>
+<pre><span style="color: #0000ff">&lt;/</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre><span style="color: #0000ff">&lt;/</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span>
+</pre>
+<pre></pre>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">-------------------------------</span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">换取思路，可以使用ajax请求由服务端通过httpclient取得数据返回给客户端，再由客户端</span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">写到iframe里面，这样就避开了跨域问题了。但是httpclient爬数据时要注意伪装成浏览器，加上请求头'User-Agent' : 'Mozilla/5.0 (Windows NT 5.1; rv:2.0) Gecko/20100101 Firefox/4.0'，其余的就不要加了，加了反而会有问题（莫名其妙的返回）</span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">HtmlUnit基于mozila实现，可以考虑 </span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"><strong><font color="#0000ff">发现豆瓣提供api晕菜</font></strong></span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">-------------</span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: verdana;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>
+<p></p>
+<p><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>

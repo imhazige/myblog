@@ -1,0 +1,25 @@
+---
+layout: post
+title: IE下 ajax delete请求 pendding问题
+date: 2013-07-25 18:07:48.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- ajax
+- delete
+- jquery
+meta:
+  views: '378'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>IE总是奇葩,这次发现个问题，ajax请求服务端，服务端收到请求，返回204,结果ie就pendding这个请求了，jquery.ajax里的success,error,compelete事件都不触发。</p>
+<p>&#160;</p>
+<p>这个就是204返回码的原因，服务端返回码换成201,200就可以了。</p>

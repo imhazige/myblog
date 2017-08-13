@@ -1,0 +1,28 @@
+---
+layout: post
+title: it-e-68 Can Graphics Files Be Enctypted
+date: 2011-08-05 11:55:45.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "英语"
+tags:
+- english
+- it
+meta:
+  views: '12'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>Of course you can encrypt a graphics file. After all, most encryption algorithms don't care   <br />about the intellectual content of a file. All they chew on is a series of byte values. Therefore,    <br />most any encryption program that works on ordinary text files will work on graphics files as well.    <br />Why would you want to encrypt a graphics file? Mostly to control who can view its contents.    <br />You can invent a proprietary file format and that might slow a file format hack down for, say,    <br />five or ten minutes. You could add a proprietary data compression scheme, possibly a twisted    <br />variation of an already public algorithm. But there are so many people out there with nothing    <br />better to do than hack at unknown data formats that your data would probably be exposed in little    <br />time. But suppose we top off all this effort by encrypting the graphics file itself as we would an    <br />ordinary text file. Would your data then be safe?    <br />Realize that an encrypted graphics file still might not be very secure. For every data    <br />encryption algorithm there exists at least one method of getting around it, although it may take    <br />hundreds of computers and many years to fully employ and execute that method!    <br />For example, one of the more popular methods used to encrypt data is the Vernam or XOR    <br /><font color="#0000ff">cipher</font>. This cipher Exclusive ORs the plain-text data with a single, random, fixed-length key.    <br />The longer the key the harder it is to break the cipher. A totally random key the length of your    <br />data is impossible to break. Shorter and less-random keys are easier to break.    <br />XOR is very simple and fast, which is a must for a graphics file translators/viewers that    <br />must decrypt a file on the fly. A problem, however, is that most graphics files contain fixed size    <br />headers which vary only slightly in content from file to file. If you knew the approximate    <br />contents of the header of an encrypted file you could XOR a &quot;decrypted&quot; header with the    <br />encrypted file and possibly produce the key used to encrypt the file. A short key might be very    <br />easily discovered in this way.    <br />If you wish to use a public key/private key encryption method, then storing the public key in    <br />the file format header (usually as a 4-byte field) and only encrypting the image data would be the    <br />way to go. The SMPTE DPX file format supports such an encryption feature.    <br />If you really need to make the contents of a graphics file secure, then I'd suggest not only    <br />using some form of data encryption, but also create an unconventional and proprietary file format    <br />and do not publish its format specification.</p>
+<h4>
+<h6>cipher ['saifə] </h6>
+<p> n. 零,暗号</h4>
+<ul>
+<li>v. 计算,做算术</li>
+</ul>

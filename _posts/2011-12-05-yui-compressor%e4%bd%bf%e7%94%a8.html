@@ -1,0 +1,99 @@
+---
+layout: post
+title: YUI Compressor使用
+date: 2011-12-05 17:54:37.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- javascript
+- "压缩"
+- "混淆"
+meta:
+  views: '319'
+  _edit_last: '1'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>一般来说，js脚本混淆是吃力不讨好的事。没有真正的混淆，做得再好的工具混淆后，仍然可以被反推理。</p>
+<p>花在混淆上面的功夫相对于脚本本来的价值很可能是不划算的。</p>
+<p>但是，混淆一下起码还是有些作用的。</p>
+<p>使用混淆最担心的是造成脚本错误。</p>
+<p>我尝试用了YUI Compressor <a href="http://developer.yahoo.com/yui/compressor/">http://developer.yahoo.com/yui/compressor/</a>，觉得还不错。</p>
+<p>首先，它的混淆还是比较安全的：</p>
+<p>The YUI Compressor is JavaScript minifier designed to be <font color="#0000ff"><strong>100% safe</strong></font> and yield a higher compression ratio than most other tools.</p>
+<p>in the face of <a href="http://www.jslint.com/lint.html">evil features</a> such as <code>eval</code> or <code>with</code>, the YUI Compressor takes a defensive approach by not obfuscating any of the scopes containing the evil statemen。对于eval和with采取保护措施。</p>
+<p>在yui-yuicompressor-6e2bc23中的reademe中，我发现:</p>
+<p>+ Supports wildcards for specifying multiple input files.</p>
+<p>但是实际使用确是不支持通配符和多文件的，一次只能处理一个文件。</p>
+<p>这样导致要处理多个文件要么写bat脚本，要么写ant文件。但是仍不能多个合并到一个。</p>
+<p>这两个方法真丑！ant支持文档也找不到！</p>
+<p>它不是java写的吗？我还是自己写代码来条用它得了！</p>
+<p>下面是对源码中Bootstrap类的使用，添加功能不难吧！</p>
+<div>
+<pre><span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span> main(String args[]) <span style="color: #0000ff">throws</span> Exception
+	{
+		ClassLoader loader = <span style="color: #0000ff">new</span> JarClassLoader();
+		Thread.currentThread().setContextClassLoader(loader);
+		Class c = loader.loadClass(YUICompressor.<span style="color: #0000ff">class</span>.getName());
+		Method main = c.getMethod(&quot;<span style="color: #8b0000">main</span>&quot;, <span style="color: #0000ff">new</span> Class[] { String[].<span style="color: #0000ff">class</span> });
+		String srcpath = &quot;<span style="color: #8b0000">E/html</span>&quot;;
+		String despath = &quot;<span style="color: #8b0000">E:/dest/all.js</span>&quot;;
+		<span style="color: #008000">// main.invoke(null, new Object[]{new String[]{&quot;-v&quot;,&quot;-o&quot;,path + &quot;\all.js&quot;,&quot;--type&quot;,&quot;js&quot;,path + &quot;\xxx.js&quot;}});</span>
+
+		String[] jss = { &quot;a<span style="color: #8b0000">.js</span>&quot;, &quot;b<span style="color: #8b0000">.js</span>&quot; }; //note the order
+		File[] dess = <span style="color: #0000ff">new</span> File[jss.length];
+
+		<span style="color: #0000ff">for</span> (<span style="color: #0000ff">int</span> i = 0; i &lt; jss.length; i++)
+		{
+			File tmpFile = File.createTempFile(&quot;<span style="color: #8b0000">yuicp</span>&quot;, <span style="color: #0000ff">null</span>);
+			tmpFile.deleteOnExit();
+			main.invoke(<span style="color: #0000ff">null</span>,
+						<span style="color: #0000ff">new</span> Object[] { <span style="color: #0000ff">new</span> String[] { &quot;<span style="color: #8b0000">-v</span>&quot;, &quot;<span style="color: #8b0000">-o</span>&quot;, tmpFile.getAbsolutePath(), &quot;<span style="color: #8b0000">--type</span>&quot;, &quot;<span style="color: #8b0000">js</span>&quot;, srcpath + &quot;<span style="color: #8b0000">/</span>&quot; + jss[i] } });			
+			dess[i] = tmpFile;
+		}
+
+		FileOutputStream out = <span style="color: #0000ff">new</span> FileOutputStream(despath);
+		<span style="color: #0000ff">for</span> (<span style="color: #0000ff">int</span> i = 0; i &lt; dess.length; i++)
+		{
+			FileInputStream in = <span style="color: #0000ff">null</span>;
+			<span style="color: #0000ff">try</span>
+			{
+				in = <span style="color: #0000ff">new</span> FileInputStream(dess[i]);
+				copyLarge(in, out);
+			}
+			<span style="color: #0000ff">finally</span>{
+				<span style="color: #0000ff">if</span> (in != <span style="color: #0000ff">null</span>){
+					in.close();
+				}
+			}
+		}
+		
+		out.close();
+		<span style="color: #008000">// main.invoke(null, new Object[]{args});</span>
+	}
+
+	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">long</span> copyLarge(InputStream input, OutputStream output) <span style="color: #0000ff">throws</span> IOException
+	{
+		<span style="color: #0000ff">byte</span>[] buffer = <span style="color: #0000ff">new</span> <span style="color: #0000ff">byte</span>[1024*4];
+		<span style="color: #0000ff">long</span> count = 0;
+		<span style="color: #0000ff">int</span> n = 0;
+		<span style="color: #0000ff">while</span> (-1 != (n = input.read(buffer)))
+		{
+			output.write(buffer, 0, n);
+			count += n;
+		}
+		<span style="color: #0000ff">return</span> count;
+	}</pre>
+</div>
+<p>&nbsp;</p>
+<p>尝试了一下，还不错，压缩了50%以上。而且没有错误！</p>
+<p><span style="color:#00f;">注意，合并的所有文件最好都是未压缩的，否则合并后可能出现错误。</span></p>
+<p>后来发现了eclipse插件<a href="http://marketplace.eclipse.org/content/yuicompressor">http://marketplace.eclipse.org/content/yuicompressor</a></p>
+<p>其实这个插件在我的myeclipse里面存在n年了，今天才注意！</p>

@@ -1,0 +1,22 @@
+---
+layout: post
+title: mysql 锁 事务 并发
+date: 2011-05-30 09:09:30.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "数据库"
+tags:
+- mysql
+- "数据库"
+meta:
+  views: '90'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">在做manage console时，由于存在后台和ui两方面修改树数据，存在并发问题。而此树实现又存在递归。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #1f497d;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">myisam</span><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">方式是不行的，它需要锁住所有涉及到的表，这样的话，根本达不到只锁一个表的目的。myisam也不支持事务，但它支持表锁，但是他的锁需要手动释放，事务提交时是没有自动解锁的。</span><span style="background-color: transparent;font-style: normal;font-family: arial;color: #1f497d;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">innodb</span><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">支持事务，但只支持行级锁。在事务提交时会自动解锁。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">可使用单独表来实现并发互斥，此表只有一行记录，在进行操作事务时将此行用hibernate LOCKMODE.Read锁</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">代码:</span><span style="background-color: transparent;font-style: normal;font-family: arial;color: #0000ff;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">getSession().load(Lock.class, 0, LockMode.READ);</span><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none">则达到互斥效果。</span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span>  <br /><span style="background-color: transparent;font-style: normal;font-family: arial;color: #000000;font-size: 11pt;vertical-align: baseline;font-weight: normal;text-decoration: none"></span></p>

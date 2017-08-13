@@ -1,0 +1,27 @@
+---
+layout: post
+title: "【转】回车键触发表单提交的问题"
+date: 2011-06-10 17:07:32.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+meta:
+  views: '26'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><span><br />
+<h3 class="entry-title"><font size="3"><a title="Permalink to 回车键触发表单提交的问题" href="http://wlog.com.cn/?p=1103" rel="bookmark"><u>回车键触发表单提交的问题</u></a></font></h3>
+<div style="font-family: corbel;margin-left: 0px;margin-right: 0px" class="entry-date">2009年03月24号 – 19:54</div>
+<div style="margin-left: 0px;margin-right: 0px" class="entry-content">
+<p><font size="3">我们有时候希望回车键敲在文本框（input element）里来提交表单（form），但有时候又不希望如此。比如搜索行为，希望输入完关键词之后直接按回车键立即提交表单，而有些复杂表单，可能要避免回车键误操作在未完成表单填写的时候就触发了表单提交。         <br />要控制这些行为，不需要借助JS，浏览器已经帮我们做了这些处理，这里总结几条规则：          <br />1、如果表单里有一个type=”submit”的按钮，回车键生效。          <br />2、如果表单里只有一个type=”text”的input，不管按钮是什么type，回车键生效。          <br />3、如果按钮不是用input，而是用button，并且没有加type，IE下默认为type=button，FF默认为type=submit。          <br />4、其他表单元素如textarea、select不影响，radio checkbox不影响触发规则，但本身在FF下会响应回车键，在IE下不响应。          <br />5、type=”image”的input，效果等同于type=”submit”，不知道为什么会设计这样一种type，不推荐使用，应该用CSS添加背景图合适些。          <br />实际应用的时候，要让表单响应回车键很容易，保证表单里有个type=”submit”的按钮就行。<font color="#ff0000">而当只有一个文本框又不希望响应回车键怎么办呢？我的方法有点别扭，就是再写一个无意义的文本框，隐藏起来<span class="writely-comment writely-comment-yellow"> <font color="#000000">但是如果设置了submit tabindex=0,则会提交 </font></span>&#160;</font>。根据第3条规则，我们在用button的时候，尽量显式声明type以使浏览器表现一致。</font></p>
+</p></div>
+<p> </span></p>

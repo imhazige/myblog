@@ -1,0 +1,30 @@
+---
+layout: post
+title: "[转]PHP的require和include路径问题经验总结(被包含路径弄晕了的来看看"
+date: 2011-05-25 08:53:50.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- php
+meta:
+  views: '32'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<h5>&#160;</h5>
+<p> 被PHP的include路径弄晕了。自己试验一通，总结如下。  <br />定义A=包含文件&#160; B=被A包含的文件&#160; C=被B包含的文件  <br />也就是说 A 包含 B， B包含C  <br />A中有Php代码
+<ol>
+<li>require '[B路径]'&#160; //(这里的require可以换成require_once include)&#160; </li>
+</ol>
+<p>require '[B路径]'&#160; //(这里的require可以换成require_once include)  <br />B中有  <br />Php代码
+<ol>
+<li>require '[C路径]'&#160; //(这里的require可以换成require_once include)&#160; </li>
+</ol>
+<p>require '[C路径]'&#160; //(这里的require可以换成require_once include)  <br />下面的讨论主要针对A为入口文件，即只直接访问A，不直接访问B。  <br />首先定义两个概念：相对路径和全路径，我对它们的定义是，相对路径指以.开头的路径，例如&#160; ./a/a.php (相对当前目录)&#160;&#160;&#160; ../common.inc.php (相对上级目录)， 全路径是以/开头或者windows下的C:/类似的盘符开头的路径，全路径不用任何参考路径就可以唯一确定文件的最终地址。 例如&#160;&#160;&#160;&#160;&#160; /apache/wwwroot/site/a/a.php c:/wwwroot/site/a/a.php  <br />除了相对路径和全路径之外的路径还有其他类型的路径吗？ 还有。凡是不以.或者/开头、也不是windows下盘符:/开头的路径，例如 a/a.php common.inc.php， 这样的路径，就是第三种类型路径。开始以为这也是相对路径，但在php的include/require包含机制中，这种类型的路径跟以.开头的相对路径 处理是完全不同的。 （require './a.php' 和 require 'a.php' 是不同的！）我们姑且叫这种路径为未确定路径  <br />下面分析这三种类型包含路径的处理方式：首先记住一个结论：如果包含路径为相对路径或者全路径，则不会到include_path中去查找该文 件，也就是说不管php.ini中定义的include_path环境变量是多少，或者在程序中设置set_include_path(...)为多少。  <br />引用  <br />If a path is defined (full or relative), the include_path will be ignored altogether.  <br />注意：下面的讨论和结论基于这样的环境：  <br />假设 A=[SITE]/app/test/main.php， 再次强调下面的讨论是针对直接访问A的情况。 ([SITE]代表站点的根目录，可以替换成成http://www.xxx.com这样的域名根路径或者文档存储的物理目录如： c:/wwwroot/xxx.com 或者 /usr/wwwroot/xxx.com )，请读者在自己能测试的网站根目录创建/app/test/ 目录，并在其中创建main.php，最好是把下面的例子都实践一下。  <br />1. 相对路径：  <br />相对路径需要一个参考目录才能确定文件的最终路径，在包含解析中，这个参考目录是程序执行入口文件所在目录，不管包含嵌套多少层。  <br />如果  <br />A中定义&#160; require './b/b.php';&#160;&#160; //则B=[SITE]/app/test/b/b.php  <br />B中定义&#160; require './c.php';&#160;&#160; //则C=[SITE]/app/test/c.php&#160; 不是 [SITE]/app/test/b/c.php  <br />如果  <br />A中定义&#160; require './b/b.php';&#160;&#160; //则B=[SITE]/app/test/b/b.php  <br />B中定义&#160; require '../c.php';&#160;&#160; //则C=[SITE]/app/c.php&#160; 不是 [SITE]/app/test/c.php  <br />如果  <br />A中定义&#160; require '../b.php';&#160;&#160; //则B=[SITE]/app/b.php  <br />B中定义&#160; require '../c.php';&#160;&#160; //则C=[SITE]/app/c.php&#160; 不是 [SITE]/c.php  <br />如果  <br />A中定义&#160; require '../b.php';&#160;&#160; //则B=[SITE]/app/b.php  <br />B中定义&#160; require './c/c.php';&#160;&#160; //则C=[SITE]/app/test/c/c.php&#160; 不是 [SITE]/app/c/c.php  <br />如果  <br />A中定义&#160; require '../inc/b.php';&#160;&#160; //则B=[SITE]/app/inc/b.php  <br />B中定义&#160; require './c/c.php';&#160;&#160; //则C还是=[SITE]/app/test/c/c.php&#160; 不是 [SITE]/app/inc/c/c.php  <br />同理如果  <br />A中定义&#160; require '../inc/b.php';&#160;&#160; //则B=[SITE]/app/inc/b.php  <br />B中定义&#160; require './c.php';&#160;&#160; //则C=[SITE]/app/test/c.php&#160; 不是 [SITE]/app/inc/c.php  <br />2. 全路径：  <br />全路径的比较简单，不容易混淆出错。举一个简单例子  <br />A中定义 require '/wwwroot/xxx.com/app/test/b.php';&#160;&#160; //则在windows下B=c:/wwwroot/xxx.com/app/test/b.php (c:为服务器所在盘符)，在linux下B=/wwwroot/xxx.com/app/test/b.php  <br />dirname(__FILE__)计算出来的也是一个全路径形式的目录，但是要注意__FILE__是一个<a href="http://www.php.net/manual/en/language.constants.predefined.php">Magic constants</a>，不管在什么时候都等于写这条语句的php文件所在的全路径，因此dirname(__FILE__)也总是指向写这条语句的php文件所在的全路径，跟这个文件是否被其他文件包含使用没有任何关系。  <br />例如：  <br />A中定义&#160; require '../b.php';&#160;&#160; //则B=[SITE]/app/b.php  <br />B中定义&#160; require dirname(__FILE__).'/c.php';&#160;&#160; //则B=[SITE]/app/c.php  <br />如果  <br />A中定义&#160; require '../inc/b.php';&#160;&#160; //则B=[SITE]/app/inc/b.php  <br />B中定义&#160; require dirname(__FILE__).'/c.php';&#160;&#160; //则B=[SITE]/app/inc/c.php 始终跟B在同一个目录  <br />结论：不管B是被A包含使用，还是直接被访问，  <br /> B如果 require dirname(__FILE__).'/c.php' ，则始终引用到跟B在同一个目录中的 c.php文件;  <br /> B如果 require dirname(__FILE__).'/../c.php'&#160; ，则始终引用到B文件所在目录的父目录中的 c.php文件;  <br /> B如果 require dirname(__FILE__).'/c/c.php'&#160; ，则始终引用到B文件所在目录的c子目录中的 c.php文件;  <br />3. 除相对路径和全路径之外的未确定路径  <br />首先在逐一用include_path中定义的包含目录来拼接[未确定路径]，找到存在的文件则包含成功退出，如果没有找到，则用写 require语句的php文件所在目录来拼接[未确定路径]组成的全路径去查找该文件，如果文件存在则包含成功退出，否则表示包含文件不存在，出错。  <br />下面的讨论和结论需要首先在A文件的开头调用 set_include_path(dirname(__FILE__).'/../inc'); 设置include_path为 [SITE]/app/test/../inc 目录，其实就是 [SITE]/app/inc  <br />并且在A中定义&#160; require '../b.php';&#160;&#160; //把B固定在[SITE]/app/b.php  <br />这样如果  <br />...未完...</p>

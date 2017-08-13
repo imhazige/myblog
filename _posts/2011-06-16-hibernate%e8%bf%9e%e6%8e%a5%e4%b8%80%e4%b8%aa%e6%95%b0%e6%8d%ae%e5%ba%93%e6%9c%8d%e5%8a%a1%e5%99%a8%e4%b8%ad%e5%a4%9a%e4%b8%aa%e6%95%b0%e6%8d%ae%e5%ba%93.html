@@ -1,0 +1,33 @@
+---
+layout: post
+title: hibernate连接一个数据库服务器中多个数据库
+date: 2011-06-16 10:38:47.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- "数据库"
+tags:
+- hibernate
+- orm
+- "数据库"
+meta:
+  views: '141'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>网上问的大多数是不同服务器不同表结构的方法，也碰到类似我这样的同一数据库服务器不同数据库但是表结构是一样的情况，</p>
+<p>这篇文章<a title="http://hi.baidu.com/piaokes/blog/item/c715114ecbcdf7ced1c86a92.html" href="http://hi.baidu.com/piaokes/blog/item/c715114ecbcdf7ced1c86a92.html">http://hi.baidu.com/piaokes/blog/item/c715114ecbcdf7ced1c86a92.html</a>的方法是传入数据库名创建对应的SessionFactory。</p>
+<p>这样的情况，同表结构不同数据库的情形是多个同逻辑的子程序。子程序可能很多，每个都建个SessionFactory以及一系列的对象，性能是很吃力地吧。</p>
+<p>hibernate自定义数据源：</p>
+<p><a title="http://www.ibm.com/developerworks/cn/opensource/os-hibernate/" href="http://www.ibm.com/developerworks/cn/opensource/os-hibernate/">http://www.ibm.com/developerworks/cn/opensource/os-hibernate/</a>&#160;</p>
+<p>但这是与集群相关，与逻辑无关。</p>
+<p>看看自动生成的HibernateSessionFactory这个类，再看看org.hibernate.SessionFactory这个类的接口，再想想hibernate的目标，为每个数据库建立一个connection是行不通的。</p>
+<p>我觉得这种情况是不适合使用ORM的。还是自己使用jdbc处理比较好。</p>
+<p>&#160;</p>
+<p>最后想了想，还是应该分表而不是分库。但是这样hibernate还是无法处理。</p>

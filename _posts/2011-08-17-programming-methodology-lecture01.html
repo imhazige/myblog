@@ -1,0 +1,790 @@
+---
+layout: post
+title: Programming Methodology-Lecture01
+date: 2011-08-17 17:07:36.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+- "计算机基础"
+tags:
+- Programming Methodology
+- SSE
+meta:
+  views: '25'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div>
+<pre>NOTE:these series of lecture are from SEE http://see.stanford.edu/see/courses.aspx</pre>
+</div>
+<p>Instructor (Mehran Sahami):Alrighty. If you could have a seat, please, we need to get</p>
+<p>started. There are still a bunch of people coming in the back. Come on down and try to</p>
+<p>find a seat somewhere. If you can't find a seat, sit in the aisle[(席位间的)通道] as long as you're not a fire</p>
+<p>marshal[消防局长；防火处处长]. Anyone here a fire marshal? Good. We're fine. Come on in and sit in the aisles.</p>
+<p>So welcome to CS106A. If you don't think you should be in CS106A, you think you</p>
+<p>should be somewhere different, now is probably a good time to go, not that I would</p>
+<p>discourage anyone from taking this class. I think we'll have a lovely time in here. But this</p>
+<p>class is CS106A or E70A, so if you're, like, &quot;Wait. I thought I was in E70A,&quot; you're fine.</p>
+<p>They're the same class; it's the same thing. No worries, okay?</p>
+<p>There's four handouts[讲义；宣传册子]. They're in the back. If you haven't already gotten the handouts</p>
+<p>because you came in and you sat down, don't worry. You can pick them up on the way</p>
+<p>out. They're the same handouts. They'll still be there.</p>
+<p>So just a quick introduction. That's what the first four handouts actually give you. They</p>
+<p>give you a little bit of an introduction to the class, what we're gonna cover, some logistics</p>
+<p>for the class and some other stuff. I'm gonna go over all that today so we can sort of get a</p>
+<p>good idea for where we're at, okay?</p>
+<p>So just a quick show of hands before we get into a bunch of things in the class. This is</p>
+<p>kind of an intro-programming course; well, it is. I shouldn't say it's kind of an introprogramming</p>
+<p>course. It is an intro-programming course. And it's always good to get an</p>
+<p>idea as to how much familiarity you may have beforehand, okay? So just quick show of</p>
+<p>hands. How many people can recognize a computer that's on? Good, good. That's the</p>
+<p>prerequisite[n. 先决条件] for this class.</p>
+<p>So if you're worried about how much previous experience you've had or your friend who,</p>
+<p>like, worked their way through high school by programming for Google or whatever,</p>
+<p>don't worry about it because all you need to know in here is basically either how to turn a</p>
+<p>computer on or to recognize a computer that's on if you were to walk up to it and it were</p>
+<p>already to be on, all right?</p>
+<p>So but a little bit more seriously, how many people have actually used a computer for</p>
+<p>anything? All right. I would expect most of you.</p>
+<p>So now, we begin to bump it up a notch[再加把劲, 原意是给压力计加压使它再上一个刻度]. How many people have used it for word</p>
+<p>processing? Okay. Most folks.</p>
+<p>How many people have done web browsing? Yeah, I won't ask you what you look at, all</p>
+<p>right? It's just I don't wanna know.</p>
+<p>How many people have actually created a web page? Okay. Fair number.</p>
+<p>How many people have done any kind of programming before? Fair number. All right.</p>
+<p>How about how many folks have done actually programmed in Java before? All right. A</p>
+<p>few folks.</p>
+<p>How about another language, C, C++, BASIC, anyone program in BASIC? Yeah, oh, I</p>
+<p>love — that was the first language I learned, and it was kind of like the warm and fuzzy,</p>
+<p>and I felt good. There was actually people who argued that if you learn BASIC as your</p>
+<p>first language, you're brain damaged, then you're just beyond help. But if that's the case,</p>
+<p>we're all in the boat together because I'm probably brain damaged as well. The truth is I</p>
+<p>probably am, but that's a whole different story.</p>
+<p>All right. So one thing you should know kind of up front is actually this course is gonna</p>
+<p>be provided eventually somewhere down the line as part of Stanford School of</p>
+<p>Engineering Free Course Initiative, which means not only are we recording this course to</p>
+<p>broadcast to a bunch of companies and industry who are watching this course, but we're</p>
+<p>eventually gonna provide it free to the world.</p>
+<p>So how does that impact your life? And on the average day, it doesn't at all. The only</p>
+<p>way it does impact your life is just so you should know, the lawyers told me to tell you</p>
+<p>that your voice, should you ask a question, may actually be recorded as part of the video.</p>
+<p>As a result, your voice may end up going out to thousands of people or millions of people</p>
+<p>in the world. If you have an issue with that, come talk to me. If you don't, everything is</p>
+<p>just fine, all right?</p>
+<p>Don't worry. We're not gonna put your picture up or anything like that. You might wanna</p>
+<p>be on the video, like, &quot;Hey, ma, I'm on TV.&quot; We decided that we're just gonna not show</p>
+<p>anyone actually on the video, but your voice may actually get recorded, okay?</p>
+<p>Now, along those lines, you may also notice there are some microphones in the room. So</p>
+<p>when you wanna ask a question, please make sure to use the microphone because that's</p>
+<p>not only good for people in here to be able to hear your question, it's also good for all the</p>
+<p>folks that this is getting broadcast to because not only are we gonna broadcast to the</p>
+<p>world, but there's actually some folks who are sort of watching this live now in various</p>
+<p>companies in Silicon Valley.</p>
+<p>So it's real important that you actually use the microphone, so just remember that. And</p>
+<p>every once in a while, I might get on your case and be, like, &quot;Please use the microphone.&quot;</p>
+<p>I'm not trying to be argumentative[a. 爱争论的,好辩论的] or anything. I just wanna make sure we pick up all the</p>
+<p>audio, all right?</p>
+<p>So with that said, a little bit of an introduction. That's kind of a way of background. I</p>
+<p>didn't give you any sort of introduction. So just to introduce myself, my name's Mehran</p>
+<p>Sahami. I'm the professor for the class. Don't call my Professor Sahami, way too formal.</p>
+<p>Don't call me Mr. Sahami. That, I think of my dad. And don't call me Mrs. Sahami, or</p>
+<p>we're gonna have issues, all right? So just call me Mehran. We'll get along. It's just fine,</p>
+<p>all right? It's to keep things a little bit more informal, but that way it's a little bit easier to</p>
+<p>discuss stuff as you go along.</p>
+<p>There is also a head TA[abbr. 助教（teaching assistant）] for the class, Ben Newman, who's standing up there. Get to know</p>
+<p>Ben. He has all the real power in this class. I'm just kind of the monkey that gets up here</p>
+<p>and gives the lectures. But Ben really is the one who's got all the power.</p>
+<p>Along with the head TA for the class, we have a large section leading staff. So the section</p>
+<p>leaders here, could you stand up if you're here? They're kind of all over the place, some</p>
+<p>over here, some over there, and some over there. As you can see, there's a pretty large</p>
+<p>number of folks. And this isn't even all of them. We sort of have more — we just can't</p>
+<p>stuff them all into the room — who are section leaders for the class, and these folks are</p>
+<p>all here to make sure that everyone in this class has as good an experience as possible</p>
+<p>when we're sort of going through the class.</p>
+<p>And the best way to reach all of us is email. So on Handout No. 1, you get my email and</p>
+<p>Ben's email. We'll tell you how to sign up for section. That's how you'll meet your section</p>
+<p>leader and get your section leader's email. That will all be coming soon. But email really</p>
+<p>is kind of a happy form of communication to get a hold of us, okay?</p>
+<p>So with that said, I wanna tell you a little bit about this class and kind of what we're</p>
+<p>gonna do in here and what you should expect and make sure that you don't feel scared off</p>
+<p>by this class, okay? Because it really is meant to sort of be an interesting time.</p>
+<p>But one question that comes up is why is this class called Programming Methodology,</p>
+<p>right? Why don't we just call this class, like, Programming with Java? And the real reason</p>
+<p>for that is that programming methodology is about good software engineering principles.</p>
+<p>It's about something that's much larger than just programming.</p>
+<p>So some people, like, they'll go and get a book somewhere and they'll think they learned</p>
+<p>how to program by just reading the book. And they're, like, &quot;Oh, I know how to program.</p>
+<p>Isn't that great?&quot; And it's, like, yeah, you might know the mechanics of the language, but</p>
+<p>the mechanics of the language are nothing compared to understanding the software</p>
+<p>engineering principles that go into actually developing a software system.</p>
+<p>And that's what you're gonna learn about in this class. You're gonna learn a lot of those</p>
+<p>principles. But in order to be able to use those principles and apply them, you also need</p>
+<p>to have the language to program in, and that language that we're gonna use in this class is</p>
+<p>Java.</p>
+<p>-----很幽默-----</p>
+<p>So the way I like to think about it and the way I tell a lot of people is writing a good</p>
+<p>program or learning how to program is like learning to be a good essay[散文] writer. And</p>
+<p>you're, like, &quot;Oh, but part of the reason I'm taking this class, Mehran, is that I don't like</p>
+<p>writing essays.&quot; That's fine. It's okay. Trust me. I didn't like writing essays either.</p>
+<p>But the whole point is that when you write an essay, it's not a formulated kind of thing.</p>
+<p>You're, like, &quot;Well, what about five-paragraph essays?&quot; Yeah, just block that from your</p>
+<p>mind. That was a bad time, right? That was just, like, '70s education at work. It's not a</p>
+<p>formulated kind of thing.</p>
+<p>There's an art to writing an essay, right? In order to write an essay, you need to know a</p>
+<p>language. You need to know English or German or Hindi or whatever language you</p>
+<p>wanna use, but then you use that language to write an essay. Just knowing the language</p>
+<p>doesn't make you a good essay writer though. Being a good essay writer makes you a</p>
+<p>good essay writer.</p>
+<p>So that's the same difference in programming and software engineering. Knowing the</p>
+<p>language, in order to be a good programmer, like a good essayist, you need to know a</p>
+<p>language to write your programs in, whether that be Java or C or C++ or whatever. Here</p>
+<p>we're gonna use Java.</p>
+<p>But just knowing the language doesn't make you a good software engineer and doesn't</p>
+<p>make you understand what the principles are of writing good software, which is what</p>
+<p>you're also gonna get in this class in addition to the language, and that's kind of a key</p>
+<p>thing to stress.</p>
+<p>So if you're sort of worried, if you were kind of looking around and you saw a bunch of</p>
+<p>people raising their hands when I asked, &quot;Do you have any previous programming</p>
+<p>experience?&quot; and some folks raised their hands, and you got a little worried and you're</p>
+<p>like, &quot;Oh, am I gonna be in some sense at a disadvantage because I haven't done any</p>
+<p>programming before?&quot; The answer, plain and simple, is no, okay? You're gonna learn</p>
+<p>everything you need to learn from the first principle because as a matter of fact, in some</p>
+<p>cases you might be in slightly better shape. That's not necessarily to say that that's the</p>
+<p>way it will be.</p>
+<p>But how many people are Star Wars fans? Just wondering. Anyone? I'm talking about the</p>
+<p>old-school, original, like, three movies. Those were so good, and we're not — no George</p>
+<p>R. Binks here, all right? So if you remember — and sort of I'm a big Star Wars fan, and</p>
+<p>that's just a whole separate point. But in the second movie, Yoda actually said something</p>
+<p>which I thought was quite profound, which is he says sometimes you have to unlearn</p>
+<p>what you have learned.</p>
+<p>And one of the things we actually find is that some people who are self-taught</p>
+<p>programmers, some of them are just fine, and some of them are very good. But some of</p>
+<p>them have picked up some really bad habits along the way, and it's like being a bad essay</p>
+<p>writer. And to go from being a bad essay writer to a good essay writer, in some cases, can</p>
+<p>actually be harder than from not being an essay writer to being a good essay writer</p>
+<p>because you have to unlearn the bad habits.</p>
+<p>So if you're worried about, &quot;Oh, I've had no previous experience,&quot; don't worry. You're</p>
+<p>okay, blank slate, you're just fine. And now if you're thinking, &quot;Oh, I have some previous</p>
+<p>experience. Do I have bad habits?&quot; Don't worry. You'll be fine, too, okay? So it's all</p>
+<p>gonna work out.</p>
+<p>So the next question that kind of comes up — hopefully that helps put some of your fears</p>
+<p>aside. Another one of the things is that we really strive to make everyone successful in</p>
+<p>this class, okay? At some other schools, people wanna do computer science or they</p>
+<p>wanna do an engineering major or whatever. And you come into the first day of class,</p>
+<p>and they say, &quot;Oh, only one third of you are actually gonna make it through this program.</p>
+<p>And look to the person to your left and look to the person to your right, and only one of</p>
+<p>you will make it through.&quot; And you're, like, &quot;Oh, man, that's real nice.&quot; It's not like that</p>
+<p>here.</p>
+<p>As a matter of fact, we want all of you to be extremely successful in this class, which is</p>
+<p>why we have a huge course staff, which is why over years and years we've refined how</p>
+<p>we do a lot of the teaching in this class to make sure you have the best possible</p>
+<p>experience and to make sure that everyone gets through.</p>
+<p>And the important thing about that is that you're not competing against anyone except</p>
+<p>yourself in this class. It's not like we're gonna have a curve and we're gonna say, &quot;Oh, we</p>
+<p>have a certain number of &quot;F&quot;s and a certain number of &quot;D&quot;s and a certain number of</p>
+<p>&quot;C&quot;s.&quot; All we really have going into it is an expectation that when you get out of here,</p>
+<p>there's a set of stuff we want you to know. And if you know that stuff well, you get an</p>
+<p>&quot;A.&quot; And if everyone knows that stuff well, everyone gets an &quot;A.&quot; And I got no problems</p>
+<p>with that. Registrar might have a problem with that, but that's okay. You don't need to</p>
+<p>worry about that.</p>
+<p>So you don't need to think about, oh, is someone else doing better than you or whatever.</p>
+<p>And we'll talk about issues of collaboration in just a little bit. All you need to think about</p>
+<p>is learning the stuff yourself as well as you possibly can, and you'll be just fine and you'll</p>
+<p>get a good grade, okay? So that's really all we ask, which is not a trivial amount, right? It</p>
+<p>requires you to really understand the material.</p>
+<p>So another question that comes up is are you in the right place, right? This isn't the only</p>
+<p>introductory programming class at Stanford. And so I wanna spend a little bit of time</p>
+<p>making sure you actually are in the right place by going over some of the different</p>
+<p>options.</p>
+<p>----------------------</p>
+<p>So right now, as you know, you're in CS106A. And CS106A, we're sort of happy over</p>
+<p>here, right? As a matter of fact, we're not only happy, we're happy and we're also a little</p>
+<p>bit loopy[adj. 多圈的；呆头呆脑的], right? There is no previous programming experience required, as I mentioned,</p>
+<p>right? All you need to know is basically if you can get to a computer and know how to</p>
+<p>figure out that it's on, you're in good shape.</p>
+<p>But what 106A does is it's a real rigorous[严厉的,严酷的,严格的] class. You learn programming in here, and you</p>
+<p>learn it in a way that makes you ready to be an engineer if you so choose to be an</p>
+<p>engineer. That's not to say you're all gonna be engineers. I would love for all of you to be</p>
+<p>computer science majors, but statistics in the past show only about 6 percent of you will</p>
+<p>be computer science majors. That's not because we turn anyone off to computer science;</p>
+<p>it's because we make programming accessible to so many people that you don't have to be</p>
+<p>a computer science or a Double E or even an engineering major to do extremely well in</p>
+<p>the class.</p>
+<p>And we actually have sort of a significant percentage of the entire campus undergraduate</p>
+<p>student body at Stanford actually goes through this class and does well, okay? So don't</p>
+<p>worry if you're, like, &quot;Oh, but I'm not really a CS person.&quot; I hope we'll turn you into one</p>
+<p>by the end of the class. No, it's okay. But you'll be prepared if that's what you wanna do.</p>
+<p>So this leads into a whole engineering sequence that can go on to other engineering</p>
+<p>majors or the computer science majors.</p>
+<p>If you're, like, &quot;Huh, I'm not sure if that's really what I wanna do. As a matter of fact, I'm</p>
+<p>so sure that's not what I wanna do, I only wanna get the general educational requirement</p>
+<p>out of the way, and I'm positive there is nothing else I wanna do. Really, no matter how</p>
+<p>much I like it, like, there is no way you're gonna drag me into anything that would</p>
+<p>involve anything remotely techie.&quot; They're the class CS105. And this is happy, yeah, this</p>
+<p>is kind of, oh, we're happy in our little happy world. And I don't wanna say it's holding</p>
+<p>hands and singing, &quot;Kumbaya,&quot; because that's not what it is. It's a real class. But it's</p>
+<p>meant to be a general educational requirement, right? It doesn't lead into the 106s. It's</p>
+<p>meant to be its own self-contained class. You do some Java script in there. You do a little</p>
+<p>bit of what computers are about.</p>
+<p>Computers in society is a good time. We all hold hands. We're all happy. I don't teach the</p>
+<p>class, so I don't actually hold hands. But it's a fun time, okay? It just doesn't lead to</p>
+<p>anything else. So think of this as kind of a terminal class, right? So it's sort of like, well,</p>
+<p>we'll hook you up to the IV drip.</p>
+<p>And you're, like, &quot;Well, 106A, you told me I don't need any previous background. Well,</p>
+<p>hey, Mehran, I got lots of background. I got so much background, it hurts. I got AP</p>
+<p>background, I got working through school doing software engineering background. I'm</p>
+<p>not sure I should be here.&quot; That could be the case.</p>
+<p>We have another class called CS106X, and as the &quot;X&quot; kind of implies, it's sort of the</p>
+<p>extreme games version of the class. No, it stands for accelerated, right, because &quot;A&quot; was</p>
+<p>already taken, so we had to come up with something else. So the way CS106X works is it</p>
+<p>really is a very fast-paced class. It's meant for people who've got previous AP exam</p>
+<p>credit, like, got a 4 or 5 on the AP, or have had significant and prior programming</p>
+<p>experience before.</p>
+<p>If you're not sure which one of these classes is for you, you can come talk to me</p>
+<p>afterwards, or I'd also encourage you, you could go to pick up the syllabus for CS106X</p>
+<p>and compare it to CS106A. This class is all in C++. And if you're thinking, &quot;Hey,</p>
+<p>Mehran, I'm doing 106A. I wanna learn Java and C++,&quot; don't worry. You'll eventually, if</p>
+<p>you so choose, take a class called CS106B, which is where this class sort of leads to,</p>
+<p>which is C++ and all of the other stuff you would have learned in this accelerated class,</p>
+<p>okay? So you still certainly have that course path.</p>
+<p>So don't let anyone make you think — I know a lot of times, and especially for Stanford</p>
+<p>students, you come in here and you're, like, &quot;Well, every class I took in high school was</p>
+<p>like an honors or an AP class, or if it wasn't an honors or an AP class, like, I had to tie</p>
+<p>half my brain before my head because I'm just that hardcore.&quot; And so everyone just wants</p>
+<p>to, like, do the most hardcore thing they can, right? And what I'm here to tell you is that</p>
+<p>you shouldn't necessarily think about it that way. You should think about it as where you</p>
+<p>feel most comfortable.</p>
+<p>Some number of years ago, let's just say greater than 10, maybe 15, I was sitting where</p>
+<p>you're sitting right now, literally. I was in CS106A in Terman Auditorium as a freshman,</p>
+<p>okay? It was perfectly fine. It worked out. I went to grad school, did the faculty thing. It's</p>
+<p>just fine. It will open your doors to CS. You're not at any kind of disadvantage by starting</p>
+<p>here. So know where you've been, literally. Like, that seat right there was where I was</p>
+<p>most of the time. So just something to keep in mind in terms of the different options that</p>
+<p>are actually available to you.</p>
+<p>Now, with that said, let's just assume for the rest of this lecture that this is the right place</p>
+<p>for you. And if it's not, well, afterwards we can kind of talk about it, or if you really are</p>
+<p>convinced now that it's not the right place, you can feel free and try to scramble over 20</p>
+<p>of your classmates and actually leave the room, which is probably impossible.</p>
+<p>All right. So a few other things you should know, some mechanics. So Handout No. 1,</p>
+<p>should you wanna follow along at home, is the class web page. And so all the stuff that</p>
+<p>we think of as course materials, including online copies of the handouts, things that you'll</p>
+<p>need to do for the assignments, announcements related to the class are all on the class</p>
+<p>web page, which is www.stanford.edu/class/cs106a. And because that's just kind of a</p>
+<p>whole bunch to remember, we make your life easy and so there is an equivalent form of</p>
+<p>the URL, which is just cs106a.stanford.edu, which is the easy thing to remember. You</p>
+<p>put that in, it'll take you to the class web page, okay?</p>
+<p>And you should check that regularly because all the announcements and handouts —</p>
+<p>we'll give out hard copies of all the handouts in class, but should you happen to miss</p>
+<p>class for whatever reason, you wanna go print whatever copies of the handouts we're</p>
+<p>actually giving out, you can find them all on the web page, okay?</p>
+<p>Now, there's this funky thing about units. So you may have noticed that this class is for</p>
+<p>three to five units, and that kind of brings up the natural question, &quot;Should I take it for</p>
+<p>three or five units?&quot; If you're an undergrad, you take it for five units, end of story. That's</p>
+<p>life in the city. Congratulations. Five units.</p>
+<p>If you're a graduate student, you can have the option of taking it for three units if you</p>
+<p>want, if you're gonna run into some unit cap. It doesn't change the amount of work you</p>
+<p>have to do. Welcome to graduate school. Same work, fewer units. So that's just the way</p>
+<p>life is. If you have a unit cap and you're a grad student, in three units you can take it if</p>
+<p>you want. You can take it for five if you want as well. If you're an undergrad, you take it</p>
+<p>for five, all right?</p>
+<p>So why is it five units? And you might think, &quot;Hey, this class only meets three times a</p>
+<p>week. How come it's five units?&quot; Well, it actually has a fourth meeting every week,</p>
+<p>which is your section, and that's something you should sign up for. So how you actually</p>
+<p>sign up for your section is sections are at a bunch of different times. You don't sign up for</p>
+<p>them in Axess, even though they're all kind of listed in the time schedule. That's not</p>
+<p>where you sign up for them. In Axess, you just sign up for the class.</p>
+<p>How you sign up for a section is you go to a website, cs198.stanford.edu/section and this</p>
+<p>will give us a list of preferences for section times that you wanna sign up for, and there's</p>
+<p>some matching process that goes on. It takes all your preferences into consideration with</p>
+<p>the whole system, and eventually you get an email by sometime early next week that tells</p>
+<p>you what section you're in. And section's 50 minutes, once a week. It's required to go to.</p>
+<p>It's actually gonna be part of your class participation grade, which we'll talk about in just</p>
+<p>a bit, okay?</p>
+<p>---------------------------------------</p>
+<p>When do these sign-ups happen? They happen between 5:00 p.m. this Thursday is when</p>
+<p>they go up. So if you try to go there now, you can't sign up. Remember 5:00 p.m.</p>
+<p>Thursday. So they're up, and then they're down at 5:00 p.m. on Sunday, okay? So make</p>
+<p>sure you sign up probably this weekend. If you're planning on being out of town this</p>
+<p>weekend, you wanna sign up before you go. Sign up early, but don't sign up often</p>
+<p>because you only need one section, okay?</p>
+<p>If you're an SCPD student — every once in a while you'll hear me refer to SCPD</p>
+<p>students. That stands for Stanford Center for Professional Development. They are the</p>
+<p>folks in industry who actually take this class via broadcast. If you're an SCPD student,</p>
+<p>you're automatically enrolled for a section, so you don't actually need to do this, and your</p>
+<p>section will meet at — so for SCPD — and if you're wondering what an SCPD student is,</p>
+<p>you're not one, okay? So SCPD section meets Friday from 1:15 to 2:05. It meets live, if</p>
+<p>you wanna go there live, in Skilling Auditorium. But if you're watching it remotely, it</p>
+<p>meets on Channel E2. I know it seems weird to say it meets on channel — what does that</p>
+<p>mean? It meets on Channel E2, okay? That is grammatically the correct way of saying it.</p>
+<p>All right. So there's a little bit more administrative stuff. Now, textbooks, right?</p>
+<p>Textbooks, there's nothing quite like the extortion that is textbooks. So there are two</p>
+<p>textbooks that are required for this class. Well, one's a course reader and one's a textbook.</p>
+<p>The course reader is called, Karel the Robot Learns Java. You can pick it up at the</p>
+<p>bookstore. It's relatively cheap. It was actually written by Eric Roberts here. And</p>
+<p>surprisingly enough, the textbook for the class was also written by Eric Roberts, The Art</p>
+<p>and Science of Java, which is available now in your local bookstore, including the</p>
+<p>bookstore on campus, so you can go and pick up a copy of this.</p>
+<p>So both these things you actually wanna have because they're required for the class. We'll</p>
+<p>go through all of them. We'll go through basically everything except the last chapter of</p>
+<p>this book. So you sort of get your money's worth. We're just gonna do it a little bit out of</p>
+<p>order, but we'll go through the whole thing, okay?</p>
+<p>So email, how many of you have email accounts? All right. I will ask the reverse question</p>
+<p>because I think at this point, some people just don't wanna put up their hands. How many</p>
+<p>people don't have email accounts? Odd how that is not the complement of the folks who</p>
+<p>had their hands up previously. Email's required for this class. Chances are, by being at</p>
+<p>Stanford, you've already gotten an email account through your SUNet ID, but if you don't</p>
+<p>have an email account, get an email account and that's how you'll stay in contact with us.</p>
+<p>That's how we'll stay in contact with you, except we'll also meet with you live in person,</p>
+<p>but email is kind of the general method for communication.</p>
+<p>As a matter of fact, for your first assignment, and part of your first assignment is to send</p>
+<p>us an email, just because we love you and we don't get enough email as it is. So you need</p>
+<p>to have an email account to be able to do that. So if you have not already, you can kind of</p>
+<p>get ahead of the game and go set up your email account. Now, don't worry. You'll get the</p>
+<p>first assignment next time. So you still get, like, two days of breathing space before your</p>
+<p>assignment goes out, okay?</p>
+<p>There is also gonna be lots of handouts in the class. They'll be either given out in class,</p>
+<p>well, they will be given out in class, but we'll also post them online in case you miss</p>
+<p>them.</p>
+<p>And how much real work do you do in this class? That's always kind of an interesting</p>
+<p>question. So let's talk a little bit about assignments and a little bit of other logistical</p>
+<p>things. So assignments, we'll just call them the dreaded assigns. There are seven</p>
+<p>programming assignments. And if you look at the syllabus Handout No. 2, it tells you</p>
+<p>when all of them are due all the way through by day, so you can plan out your whole</p>
+<p>quarter. It's just that much fun, okay?</p>
+<p>And these seven programming assignments are weighted slightly more toward the last</p>
+<p>assignments because the assignments will tend to get more complicated. That doesn't</p>
+<p>necessarily mean there'll be more programming; it just means conceptually, they'll</p>
+<p>become more complicated, so we tend to weigh them more toward the end of the class.</p>
+<p>So the later assignments count more than the early assignments.</p>
+<p>How you're gonna be actually doing your programming is using a little tool called</p>
+<p>Eclipse. And Eclipse thankfully is free, so you don't have to pay for it. As a matter of</p>
+<p>fact, you can download it from the CS106A website. And if you're wondering how you</p>
+<p>do that, don't worry. We'll give you a handout next class that explains to you the whole</p>
+<p>grueling process of downloading and installing Eclipse.</p>
+<p>And you can use this either on the Mac or the PC. So if you have your own computer,</p>
+<p>you can certainly work on this yourself. You just download it to your own machine. We'll</p>
+<p>explain the whole process in a handout. If you don't have your own computer, the public</p>
+<p>computer clusters on campus will have Eclipse installed on them, and so you can use</p>
+<p>Eclipse there. So you're sort of happy to go either way, okay?</p>
+<p>Now, the important thing, remember I mentioned that whole notion of software</p>
+<p>engineering in the class, and that's something we take really seriously, so seriously as a</p>
+<p>matter of fact that when you turn in your assignments, one thing we could do is we could</p>
+<p>take your assignments and we could just kind of look at it and go, &quot;Yeah, interesting, 'B.'</p>
+<p>Here you go. Thanks for playing.&quot; And you don't learn a whole lot from them. So in order</p>
+<p>to actually learn a lot from your assignments, we could take your assignment and write a</p>
+<p>whole bunch of comments on it and hand it back to you. Even that's kind of not enough.</p>
+<p>What really is a little bit more that makes it more fun is every week after you turn in your</p>
+<p>assignment and your section leader looks it over and grades it, you'll actually meet with</p>
+<p>your section leader for about 10 to 15 minutes every week or every time an assignment is</p>
+<p>due to actually go over in something referred to as interactive grading.</p>
+<p>And it's a chance to sit there and talk with an actual human being about what's good in</p>
+<p>your assignment, what are some of the things you need to work on, what are some of the</p>
+<p>software engineering principles you need to develop. And that way, you can really sort of</p>
+<p>get more detailed information and be able to ask questions to develop yourself as a</p>
+<p>programmer as well as get help if you need help, okay?</p>
+<p>And that's in addition to going to section, going to class and all that stuff. So it's another</p>
+<p>15 minutes a week. You'll actually schedule that time with your section leader on a</p>
+<p>regular basis when you're gonna have interactive grading or just affectionately referred to</p>
+<p>as IGs because at Stanford, everything's just short and we just can't say, like, psychology;</p>
+<p>we have to say psyche. So it's IG. Just remember that, all right?</p>
+<p>And then how are these things graded? So the other thing we could do is I told you we</p>
+<p>could just write &quot;B&quot; and hand it back to you. But we found that that's not really great</p>
+<p>because people get all wrapped around the axle about the grade.</p>
+<p>And so for a while, we did numbers and we're, like, huh, why don't we give a number</p>
+<p>between 1 and 20? And so what happens there? People get all wrapped around the axle</p>
+<p>about numbers.</p>
+<p>So then we thought, huh, what was a happier time when we were in school? I remember</p>
+<p>when we were in school, and we used to get back assignments and they had, like, smiley</p>
+<p>faces on them. Well, we can't do that because then it doesn't appear to be a rigorous</p>
+<p>Stanford class.</p>
+<p>So instead of the smiley face, we come up with something else, which looks surprisingly</p>
+<p>like this. It's kind of involved to actually draw, so I need to erase the board to do it.</p>
+<p>Check. That's kind of the beginning of our grading scale, okay?</p>
+<p>And the way our grading scale works is we start off with a check in the middle, which</p>
+<p>says this is a pretty solid program. It meets all the requirements for the program. Maybe</p>
+<p>it's got a little problem here or there, but it's a check. Then we have sort of two grades on</p>
+<p>the two sides of it: check plus and check minus.</p>
+<p>Check plus is, like, solid. You did a great job; you got everything right; things look good,</p>
+<p>a nice style in your program, nice software engineering, and the program works</p>
+<p>flawlessly. Good job. This is like total &quot;A.&quot; Check is kind of like, yeah, you're sort of</p>
+<p>there. It's kind of like &quot;A&quot; minus, &quot;B&quot; plus, maybe on some occasions &quot;B.&quot; But it's kind</p>
+<p>of like it's pretty good work; you're in pretty good shape here. And so a lot of grades in</p>
+<p>this class ends up being check pluses and checks, and if that's the case, you're perfectly</p>
+<p>fine grade-wise.</p>
+<p>Check minus, as you can imagine, this is kind of thinking about &quot;B,&quot; &quot;B&quot; minus. It's,</p>
+<p>yeah, there are some slightly more significant problems with your program.</p>
+<p>But that's not where it ends, right, because we wanna be able to even shoot for in some</p>
+<p>sense bigger gustoes. There was a plus and a minus. So plus is like, oh, nice job, kind of a</p>
+<p>hearty pat on the back. If you get pluses all the way through on all your assignments,</p>
+<p>you're in a pretty good candidate to get an &quot;A&quot; plus.</p>
+<p>And minus, like, just take good over here and replace it with bad, it's kind of like, oh, bad</p>
+<p>times, right, or maybe, you know — but even there was, like, more significant problems</p>
+<p>with this program or just the style on the program is just really bad. But even there, we</p>
+<p>don't stop. And you're, like, &quot;Come on, man. Like, I thought the whole reason was to</p>
+<p>simplify this.&quot; Don't worry.</p>
+<p>And it gets even better because we have a plus-plus and a minus-minus. And at this point,</p>
+<p>we've run out of board space, so we can't go any further. But a plus-plus is just</p>
+<p>outrageous, right? It's the kind of thing — so this is the kind of thing your section leader</p>
+<p>can't actually give you without coming and talking to Ben and I first because they get a</p>
+<p>program that just goes — it has to actually exceed the requirements for the assignment.</p>
+<p>It's by a long shot. Like, you'll get all your assignment requirements, and what we</p>
+<p>encourage you to do is you can do a grade assignment and get everything right and have</p>
+<p>good style, and you'll be in this category. And for the later assignments, you may be in</p>
+<p>this category if it's flawless.</p>
+<p>But we'll actually — if you want to go for the plus-plus, go beyond the assignment</p>
+<p>requirements. And the way we think about the plus-plus, it's a program that makes you</p>
+<p>weep in a good way. It's just like your section leader sees it, and they're just, like, this is</p>
+<p>so good, I've gotta show someone else. And they come and show Ben and I, and we're,</p>
+<p>like, sitting there looking at this on a monitor, and, like, tears are just welling in our eyes,</p>
+<p>and there was, like, soft violin music playing in the background and we get out the wine</p>
+<p>and cheese.</p>
+<p>So this is just, like, this is the kind of thing that gets you, like, remembered and the, oh, if</p>
+<p>you want a letter of recommendation, just ask because you got a plus-plus. Like, oh, it's</p>
+<p>awesome, right?</p>
+<p>There are very few of these in a quarter. So just by sort of way of comparison, in a class</p>
+<p>this size, probably throughout the span of the whole quarter, I'd expect there to be maybe</p>
+<p>ten plus-pluses, I mean, ten assignment plus-pluses, not ten students who get plus-pluses</p>
+<p>across the board. So it's really something to strive for, but if you strive for it, like, we're</p>
+<p>giving you the credit for it. And this gets remembered and you get, like, extra credit and</p>
+<p>everything.</p>
+<p>So we're left with this, right? This assignment also makes you weep, but not in the good</p>
+<p>way, right? It makes you kind of weep in the sense, like, I look at them and I'm, like, oh,</p>
+<p>man, like, what did I teach? Like, where did I go wrong, right? I, like, blame myself. I</p>
+<p>blame you a little bit, but I blame myself. And this is really just, like, the program is just,</p>
+<p>like, it's a shell. Like, there really wasn't much effort that was put into it. Yeah, you</p>
+<p>slapped something together or it doesn't really work, that whole deal.</p>
+<p>And then if you don't turn anything in, we do kind of reserve the zero to distinguish from</p>
+<p>the &quot;made really bad effort&quot; versus &quot;didn't make any effort at all.&quot; And we just won't talk</p>
+<p>about these, right? Let's just hope we can avoid those if possible. But that's kind of how</p>
+<p>the grading scale works now.</p>
+<p>Now, at the same time, I trust all of you to be responsible people. And every once in a</p>
+<p>while, something bad happens to a good person, and there's an assignment that you'd like</p>
+<p>to be able to turn in, but for whatever reason, you can't turn in on time. And I just wanna</p>
+<p>treat you like adults. I don't want you to have to worry about coming in and asking for an</p>
+<p>extension or, like, &quot;Oh, I had this really hard thing in another class, and I couldn't do it at</p>
+<p>the same time.&quot; Up front, everyone gets two free extensions, okay? So in terms of late</p>
+<p>days — we refer to these as late days, strangely enough — you get two free ones.</p>
+<p>What a late day is, is a class day. They're not 24-hour days, but class days. So if</p>
+<p>something is due on a Wednesday, you turned in on a Friday, that's a late day. That's one.</p>
+<p>You turn it in on the following Monday, that's two late days. You can split up your two</p>
+<p>late days among two different assignments. You can use them both on one assignment.</p>
+<p>But we encourage you to not use them at all because if you use your late days, you fall</p>
+<p>behind in the class. The way you should think about these things are these are preapproved</p>
+<p>extensions. They're not the kind of thing where you just think, &quot;Oh, yeah, I'm</p>
+<p>not gonna do the assignment because I wanna go and play Frisbee golf,&quot; right? Think of</p>
+<p>it, well, you wouldn't come ask me for an extension — you might, but you probably</p>
+<p>wouldn't ask me for an extension if you're, like, &quot;Hey, hey, Mehran, can I turn in the</p>
+<p>assignment, like, on Wednesday because I'm playing Frisbee golf this afternoon,&quot; right?</p>
+<p>If you would feel embarrassed asking that question, you probably don't wanna use one of</p>
+<p>your free late days.</p>
+<p>But something happens like, oh, it's a tough week, you've got midterms in other classes</p>
+<p>and you got this assignment due or whatever, that's a good time to use it. So we just trust</p>
+<p>you. And most people, we actually encourage you not to use them because it just makes</p>
+<p>you fall behind in the class.</p>
+<p>Because we trust you and we give you these two up front, getting extensions beyond your</p>
+<p>two free class days is virtually impossible because we sort of up front said, hey, it's your</p>
+<p>responsibility. We're giving you two freebies. We're not gonna give you a third extension.</p>
+<p>Imagine if you had to come ask us for three extensions. By the third one, we'd be, like,</p>
+<p>okay, what's going on, which is why we don't necessarily give extensions beyond these</p>
+<p>two.</p>
+<p>The only time we might give an extension beyond the two free ones is for something</p>
+<p>major, like death in the family or, like, serious medical problems that might require</p>
+<p>surgery or something like that. Every once in a while, unfortunately, that happens. I hope</p>
+<p>it doesn't happen in this class. But those are the only kinds of things that we give</p>
+<p>extensions to beyond the two free late days.</p>
+<p>Importantly, don't ask your section leader for extensions. They cannot grant you</p>
+<p>extensions. Only Ben, who has all the power in this class, can give extensions, which is</p>
+<p>why you should get to know Ben and then hopefully you won't need to talk to him about</p>
+<p>extensions, okay?</p>
+<p>So other thing to keep in mind is that three days late is the max. Beyond three days late,</p>
+<p>which is basically one class week, if you think about late days being class days, we will</p>
+<p>not accept an assignment. And the reason for that is at a certain point, you're so late,</p>
+<p>you're better off just doing the next assignment, letting the old one go. So to sort of</p>
+<p>enforce that policy, after three days, we don't accept that assignment late anymore. It's</p>
+<p>just gonna be a zero if it's not turned in, okay? And that just kind of forces you to keep</p>
+<p>up.</p>
+<p>Couple other minor things, well, I shouldn't say they're minor things. They're actually</p>
+<p>kind of important. Exams: There's two exams in this class. There's a midterm and a final.</p>
+<p>Both of them are, well, I shouldn't say both. The midterm is out of class. It's from 7:00 to</p>
+<p>8:30 p.m. on Tuesday, October 30. And it's on the syllabus. It's there. It's on the syllabus;</p>
+<p>it's on Handout No. 1. We repeat it multiple times. The date will eventually be announced</p>
+<p>when we get close to the midterm.</p>
+<p>But if you have a conflict with this time, you need to send me email, okay? You can send</p>
+<p>me email a little closer to the midterm because I'll announce it again for people who have</p>
+<p>conflicts. But since it's an out-of-class exam, you need to send me email if you have a</p>
+<p>conflict. I'll get all the constraints from people who have conflicts and try to schedule an</p>
+<p>alternate time if there's enough people with conflicts. But 7:00 to 8:30 is when you need</p>
+<p>to know about the midterm.</p>
+<p>And to make up for the fact that we have an out-of-class midterm, I actually give you sort</p>
+<p>of a belated free day, which is the Friday of the week of the midterm, we don't have class</p>
+<p>to make up for the fact that we made you come to the midterm outside of class. But the</p>
+<p>midterm's an hour and a half, and we can't compress time. If we could, we'd have</p>
+<p>different issues. We can't compress time and fit it into a 50 minute class, which is why it's</p>
+<p>out of class, but you get a free day for it, all right?</p>
+<p>Last but not least, few things about grading. Grading, one of those things as you might be</p>
+<p>able to tell from this little board over here or something, if I didn't have to do it, I</p>
+<p>wouldn't do it because honestly, as corny as this sounds, I just believe in the love of</p>
+<p>learning. Like, I think if you're passionate about something, you just go do it and you</p>
+<p>learn it. But I'm naïve, and so that's not the way learning always works. So sometimes we</p>
+<p>actually need grading to make sure that learning takes place.</p>
+<p>And so this is how your grade breaks down: Forty-five percent of your grade is on the</p>
+<p>programming assignments, okay? Fifteen percent is the midterm, which we'll just call the</p>
+<p>mid because we like to abbreviate everything. Thirty percent is the final. It's a three-hour</p>
+<p>final exam in the regular final time slot for this class.</p>
+<p>If you think or are under the delusion that you should take two classes at the same time,</p>
+<p>that's a bad idea because their final exams are at the same time, okay? So you should not</p>
+<p>take two classes as the same time because our final exam is scheduled for — I believe it's</p>
+<p>December 13, which is a Thursday, 12:15 to 3:15. That's the regular final exam slot for</p>
+<p>this class. And any other class at the same time will conflict with that slot. Thirty percent</p>
+<p>of your grade is the final.</p>
+<p>And that, if you add it all up, it's not just that I'm bad with math. It's because 10 percent</p>
+<p>of your grade is actually participation. And this is things like did you go to your</p>
+<p>interactive grading sessions? Did you regularly attend section? Did you participate in</p>
+<p>section? Did you participate in class, right?</p>
+<p>And so, in order to help you participate in class, there's a little incentive to participate in</p>
+<p>class, which is sugar in the afternoon. So someone raise their hand. All right. Yeah,</p>
+<p>sometimes I'm not a good shot. And this will tell you, if you're sitting in the back of the</p>
+<p>room, I can't throw a Kit Kat back there because they're a little too light. Oh, yeah, sorry.</p>
+<p>If you sit in the back of the room, the roof prevents me from actually being able to hit</p>
+<p>you. So if you want the food, come up. But if you ask questions in class, hey, that's a</p>
+<p>good time. It's just a little way to be able to reward you for actually participating in class</p>
+<p>or to keep your blood sugar up if you need it, all right?</p>
+<p>So that's participation. It's 10 percent of your grade, and as a matter of fact, at the end of</p>
+<p>the quarter, I ask every one of your section leaders to actually tell me how much you</p>
+<p>participated in class, and some of them just say, &quot;Oh, this person was wonderful. They</p>
+<p>came every time. They participated. It's just a great thing.&quot; And that helps your grade out</p>
+<p>a lot, okay?</p>
+<p>Now, the final thing, and as you can kind of tell, most of the time, I'm not the most</p>
+<p>serious person in the world. I just like to have fun with things, and I think it's important</p>
+<p>for you to have fun with things. There is just one place where I get real serious, and it's</p>
+<p>one place where Stanford gets real serious. Anyone wanna guess what that is? Plagiarism</p>
+<p>and the honor code. As a matter of fact, that's what we call a social. So we had someone</p>
+<p>down here who got it and then a whole bunch of people who I don't know, so we just</p>
+<p>spray. All right.</p>
+<p>So the honor code, in terms of the honor code, the question comes up is what is the honor</p>
+<p>code all about, and how does that affect working in groups and computer science, etc.?</p>
+<p>Does that mean we shouldn't talk to each other? No. The answer to all those is no, okay?</p>
+<p>If you look at Handout No. 4, which is all about the honor code, we encourage you to talk</p>
+<p>to each other. We encourage you to talk about concepts in the class, talk about different</p>
+<p>strategies to problems, to think about the ways that you could potentially approach some</p>
+<p>problem or the way different control constructs when we eventually get to them work in</p>
+<p>the class. And discussion is perfectly fine, especially among the course staff, but also</p>
+<p>amongst yourselves. That's a great thing.</p>
+<p>So where do we draw the line? And we try to make a bright line for where you've crossed</p>
+<p>the line for the honor code, which is don't share code, plain and simple, in any respect,</p>
+<p>okay? Don't give a file to someone else that's got your code in it. Don't get code from</p>
+<p>someone else. Don't look at someone else's printout. Don't give them a printout.</p>
+<p>If you have two people who are sitting looking at the same screen together, that code</p>
+<p>can't belong to both of you. It belongs to one of you. I don't know which one, but it</p>
+<p>becomes an honor code violation. So you shouldn't both — two people shouldn't be</p>
+<p>staring at the monitor together. If it ever gets to the point where you're looking at</p>
+<p>someone else's code, that's where you're gonna reach an issue, okay? Discuss as much as</p>
+<p>you want. That's great. Write your own code. That's all we care about.</p>
+<p>And you're, like, &quot;Well, what is code, Mehran? What does that word mean?&quot; Code is</p>
+<p>geek speak for your program, so when you program, the program that you write is what</p>
+<p>we affectionately refer to as code. And the idea of programming is what we refer to as</p>
+<p>coding, strangely enough. Computer scientists need to make everything more</p>
+<p>complicated than it really is so we can get people under the illusion that they should pay</p>
+<p>us lots of money to do what we do. I mean, you're, like, &quot;Oh, I just write programs.&quot; And</p>
+<p>they're, like, &quot;Oh, yeah, I should pay you half.&quot; And you're, like, &quot;No, no, no. I write</p>
+<p>code.&quot; And they're, like, &quot;Oh, yeah.&quot; Suddenly, it's much more impressive. So don't share</p>
+<p>code.</p>
+<p>The other thing is if you talk to other people, like if you have a study group to talk about</p>
+<p>solution approaches or you go, let's say, talk to the TA or your section leader to how you</p>
+<p>should approach a problem, and they give you a lot of hints as to how to do it, cite</p>
+<p>collaboration. So cite and collaboration gets you out of trouble. Any collaboration that</p>
+<p>you cite you cannot be held responsible for under the honor code.</p>
+<p>You can actually copy someone else's program and say, &quot;I copied this program from</p>
+<p>Mary Smith.&quot; And I'll look at that and say, &quot;They cited it,&quot; and it will warm the cockles</p>
+<p>of my heart. And Mary Smith will get full credit, and you'll get a zero because you copied</p>
+<p>your program from Mary Smith, but it's not an honor code violation because you cited the</p>
+<p>work, okay? So the bottom line is keep yourself safe and cite your collaborations. And I</p>
+<p>guarantee you most of the time, you'll be just fine.</p>
+<p>Now, you might wonder why do I make such a big deal about this. And the reason I make</p>
+<p>a big deal about this is for a while, thankfully it's not true anymore, but for a while, the</p>
+<p>computer science department actually had more honor code violations than the rest of the</p>
+<p>university combined. Take everything else in the university, put them all together, they</p>
+<p>were like over here. And we're, like, we're computer science, which is not a fun</p>
+<p>distinction to have, let me tell you.</p>
+<p>And you might wonder why is that? Is that because computer science people are just</p>
+<p>mischievous and dishonest? No. It's because it's easier to catch honor code violations in</p>
+<p>computer science. We have a whole bunch of tools that allow us — then we take all your</p>
+<p>programs and we run them through this tool, and it compares them not only to everyone</p>
+<p>else in here, but, like, to everyone from the last, like, X years where X is the large</p>
+<p>number of people who've ever gone through the classes, right? And it's an extremely</p>
+<p>good tool from finding where honor code violations happen, from where they don't. And</p>
+<p>it doesn't find spurious violations.</p>
+<p>To be honest, I've never lost an honor code case. When I find an honor code case, it is</p>
+<p>blatant. And you take it to judicial affairs, and they look at it, and they're, like, yeah, this</p>
+<p>is blatant. And I take it to the student, and every student I've ever confronted them with</p>
+<p>never said, &quot;No, no, no. I didn't cheat.&quot; They said, &quot;You caught me,&quot; okay? So it's blatant.</p>
+<p>It's not like, oh, there's some little line in it, &quot;Oh, am I gonna need to worry about an</p>
+<p>honor code violation?&quot; Remember those rules, you have nothing to worry about in this</p>
+<p>class. It's people who go and, like, fish out printouts from the recycle bins and copy other</p>
+<p>people's code that are the people we catch, right? It's blatant cheating that we catch. But</p>
+<p>we catch it. We catch it all the time. So I hope, I pray it doesn't happen in this class.</p>
+<p>But the reason I make a big deal about it is historically if I look at the evidence, it</p>
+<p>happens and we catch it. And when we catch it, we're required by the university to</p>
+<p>prosecute. And I feel bad because usually it's someone who just made a bad call, like,</p>
+<p>they were up way too late the night before working on something else, and they're not</p>
+<p>thinking straight. And rather than just taking a late day or turning in their assignment late</p>
+<p>and getting a slight penalty on it beyond their two free late days, they decide to cheat.</p>
+<p>And that's just always the wrong call, okay? So you just don't wanna put yourself in that</p>
+<p>situation. So I get real serious about it for a moment, and hopefully it won't be an issue</p>
+<p>and we can just kind of go on, okay?</p>
+<p>So with that said, that's a whole bunch of logistical stuff. Any questions about the</p>
+<p>logistics of this class or anything I just talked about? Uh huh?</p>
+<p>Student:You had briefly mentioned the late penalty.</p>
+<p>Instructor (Mehran Sahami):Oh, the late penalty, good point. So remember our little</p>
+<p>bucket scale. If you go beyond your two free late days, every day you turn in an</p>
+<p>assignment late beyond those, it drops down one bucket. So let's say you already used</p>
+<p>your two free late days on Assignment No. 1. And on Assignment No. 2, you turned in</p>
+<p>something one day late and you would have gotten a check normally, it becomes a check</p>
+<p>minus. So that's how it is. It's one bucket per late day beyond your two free ones. Uh</p>
+<p>huh?</p>
+<p>Student:Are the sections first come, first served?</p>
+<p>Instructor (Mehran Sahami):Yeah, the sign-ups, well, they take into consideration your</p>
+<p>preference, but part of your preference is to do the match is first come, first served. So</p>
+<p>you wanna sign up early. Oh, thanks for your honesty. As a matter of fact, I dig honesty,</p>
+<p>all right? Any other questions? It's just honesty's cool. Uh huh?</p>
+<p>Student:How much time should we plan on studying [inaudible]?</p>
+<p>Instructor (Mehran Sahami):Oh, good question. How much time should you plan? And</p>
+<p>this is something that I say for classes in general at Stanford, which is not always true,</p>
+<p>which is take the number of units that a class is, multiply it by three. That's how many</p>
+<p>hours you'll spend per week in that class, total, on average. So what that means is in</p>
+<p>106A, a 5 unit class, you multiply by 3, you get 15. Five of those hours are roughly spent</p>
+<p>between class, section, interactive grading, other stuff. That means on average about ten</p>
+<p>hours a week will be spent on your assignments in this class. Again, that's an average.</p>
+<p>Sometimes when I go to computer science conferences, I sit there and joke around with</p>
+<p>plans. And we're, like, &quot;Oh, how long did your assignments take?&quot; And I say, &quot;Oh, on</p>
+<p>average, ten hours.&quot; And what I really mean when I say on average 10 hours is they take</p>
+<p>between 3 and 45, okay? It's a large variance event, right? Ten is the average. Some</p>
+<p>people take a really long time. Some people get through it really quickly, but that's about</p>
+<p>the average you can plan for. Uh huh? Another question?</p>
+<p>Student:[Inaudible] late days [inaudible] class days?</p>
+<p>Instructor (Mehran Sahami):Yeah, all late days are class days, so the free ones — the</p>
+<p>halfway mark's really my reach. That's about it. All right.</p>
+<p>So I do wanna give you your very beginning of an introduction to programming before</p>
+<p>we sort of break for the day. How are we doing on time? And so in order to kind of see</p>
+<p>this, there's a few things that we wanna keep in mind.</p>
+<p>Actually, let me show you a little picture, okay? Sometimes when we talk about writing</p>
+<p>programs, we talk about debugging programs, right? How many people ever heard the</p>
+<p>term debugging or bugs in programs? A bug in a program is an error in a program, so</p>
+<p>sometimes when you hear us say, &quot;Oh, come see,&quot; like, your section leader to help debug</p>
+<p>or see the helpers in LaIR.</p>
+<p>That's another thing. In the Tresidder computer cluster is the LaIR. It's a computer cluster</p>
+<p>that we have helpers there to help you get through this class. What is it? Sunday through</p>
+<p>Thursday, every week, from around 2:00 in the afternoon 'til midnight every day, okay, to</p>
+<p>help you get through the class. So that's a good place if, you know, you can work in your</p>
+<p>dorm room certainly, but if you also want help, go to the Tresidder computer cluster, and</p>
+<p>there will be helpers there. There's a little queue you sign up for to get help, and that's a</p>
+<p>great place, and it's all explained in Handout No. 1, but that's just something to keep in</p>
+<p>mind.</p>
+<p>Where the term debugging comes from, it turns out this is an apocryphal story, but I'll tell</p>
+<p>you anyway. Back in the days of yore, in 1945 actually, there was a computer called the</p>
+<p>Mark II at Harvard. And there was a woman named Grace Murray Hopper. Anyone ever</p>
+<p>heard of Grace Murray Hopper? A few folks. She was actually the first woman who was</p>
+<p>an admiral in the navy. And she was also one of the very early pioneers of computer</p>
+<p>programming. She did a lot of computer programming when she was actually a captain,</p>
+<p>and she was stationed at Harvard as part of some sort of navy thing. I don't know why,</p>
+<p>but that's what happened.</p>
+<p>And they had this huge computer there, and they were noticing the computer was on the</p>
+<p>fritz, and they couldn't understand what was wrong. And this is one of these big old</p>
+<p>machines in the days of yore that has vacuum tubes and stuff inside it. So they walked</p>
+<p>inside the computer, right, because then you could actually open it up and walk inside</p>
+<p>your computer.</p>
+<p>And they saw this, and I don't know if you can see that, but that's a moth. It was a moth</p>
+<p>that had sort of given its life to be immortalized because it had actually shorted out across</p>
+<p>two relays in the computer and was causing these sort of errors to happen on the fritz.</p>
+<p>And so they took the bug out, and once they actually plucked this little charred bug out of</p>
+<p>there, the computer started working fine again, and she taped it in her log book.</p>
+<p>And this log book's actually preserved in the Smithsonian Institution now, which is where</p>
+<p>all this comes from. Here's all the standard disclaimer information: &quot;Image used under</p>
+<p>fair use for education purposes. Use of this image is exempt from Creative Commons and</p>
+<p>other licenses,&quot; just so you know. Now the lawyers are happy. But this is where we think</p>
+<p>of sort of the modern term debugging actually came from.</p>
+<p>Now, it turns out the actual story is that the term debugging came from the 1800s, in the</p>
+<p>late 1800s from mechanical devices. People actually referred to debugging as fixing</p>
+<p>mechanical devices. But this is kind of the apocryphal story for how it comes up in</p>
+<p>computer science.</p>
+<p>Now, with that said, what is the platform in which you're gonna sort of do your first</p>
+<p>debugging or your first work on? We talked about Java, but in fact in this class, we're not</p>
+<p>gonna start with Java. We're gonna start with something even sort of simpler than Java</p>
+<p>because as I mentioned, sometimes what happens in computer science is people learn all</p>
+<p>the features of some language. And they think just knowing the language makes them a</p>
+<p>good software engineer. And they get so worried about all the features of the language</p>
+<p>that they don't kind of think about the big picture.</p>
+<p>And so there was a guy named Rich Pattis, who oddly enough was actually a grad student</p>
+<p>at the time at Stanford, and he said, &quot;You know what? If we're gonna teach computer</p>
+<p>science, when we first start out, why don't we have people not worry about all of the</p>
+<p>different commands of the language and all the different things they can do? Let's start</p>
+<p>with something really simple so you can learn all the commands real quick. And then</p>
+<p>you've mastered everything there is to master about that language, and you can focus on</p>
+<p>the software engineering concepts.&quot; And it turns out to be a brilliant idea, which has</p>
+<p>actually been adopted by a bunch of people.</p>
+<p>And so Rich, who's a wonderfully friendly guy — sometime if we get him to come to</p>
+<p>Stanford, I'll introduce you; he's just very nice — came up with this thing called Karel the</p>
+<p>Robot. And the term, &quot;Karel&quot; actually comes from Karel Capek. Anyone know who he</p>
+<p>is? Oh, free candy. Uh huh?</p>
+<p>Student:He coined the term, &quot;robot.&quot;</p>
+<p>Instructor (Mehran Sahami):He coined the term, &quot;robot.&quot; He was a Czech playwright</p>
+<p>who actually wrote a play called, &quot;RUR,&quot; which was about robots. And the word robot</p>
+<p>actually comes from a Czech word, the Czech word for work. And so the robot is named</p>
+<p>after Karel. And some people say Karl, which is kind of actually closer to I believe if — I</p>
+<p>don't know if there's anyone who speaks Czech in the room — but closer to the actual</p>
+<p>pronunciation. But we say Karel these days because it's kind of like gender neutral, okay?</p>
+<p>And so Karel the Robot is basically this robot that lives in a really simple world. And so</p>
+<p>I'll show you all that you can meet Karel the Robot. He's friendly; he's fun. I'll show you</p>
+<p>Karel the Robot. So we gotta get Karel running. He's at the factory. He's getting souped</p>
+<p>up. We're energizing Karel. You gotta add some color to it. Otherwise — all right. We're</p>
+<p>begging for him. Come on, Karel. There he is. Oh, yeah. That's Karel the Robot. He looks</p>
+<p>like one of the old Macintoshes if you remember the original Macintoshes that look like a</p>
+<p>lunch pail, except he's got legs. One sticks out his back. That's just the way it is.</p>
+<p>And the way Karel works is he lives in a grid. To you, it may not be exciting, but to</p>
+<p>Karel, it's way exciting. So Karel lives in this little grid, and the way the grid works is</p>
+<p>there are streets and avenues in the grid. Streets run horizontally, so this is First Street,</p>
+<p>Second Street, Third Street. And then over here, we have avenues, First Avenue, Second</p>
+<p>Avenue, Third Avenue, Fourth Avenue, Fifth Avenue. It's kind of like Karel lives in</p>
+<p>Manhattan if you wanna think about it that way, okay? So Karel always is on one of these</p>
+<p>corners. So right now, he's at the corner of First Street and First Avenue, or we just refer</p>
+<p>to it as 1 1 if you wanna think about sort of Cartesian coordinates, right? But just think of</p>
+<p>them as streets and avenues. That's where Karel lives.</p>
+<p>And Karel can move around in this world. There's a bunch of things that Karel can do. He</p>
+<p>can take steps forward. He can turn around to face different directions, and he can sense</p>
+<p>certain things about his world. So there's some things that exist in Karel's world, okay?</p>
+<p>Things like walls that Karel cannot move through, right, so his world has walls all around</p>
+<p>it that he can't go through, so he can't fall off the end of the world. And there's other walls</p>
+<p>like this one if Karel were over here, he can't step through that wall.</p>
+<p>There's also something referred to as beepers in Karel's world. And what a beeper is, is</p>
+<p>it's like a big diamond, okay? But what a beeper really is, is basically just some marker</p>
+<p>that he puts in the world. You can think of a beeper like a piece of candy. And Karel just</p>
+<p>goes around, like, putting pieces of candy in the world. As a matter of fact, not only does</p>
+<p>he put pieces of candy in the world, he carries around a whole bag of candy.</p>
+<p>So he has a beeper bag with him, and sometimes that bag has a whole bunch of beepers in</p>
+<p>it; sometimes it only has one beeper; sometimes, it's sad Karel, and he has no beepers.</p>
+<p>But he's still got the bag. There just don't happen to be any beepers in it. So he can</p>
+<p>potentially, if he come across a beeper in his world, he can pick it up and put it in his bag,</p>
+<p>or he can take, if he's got beepers in his bag, he can take them out of his bag and put them</p>
+<p>places in the world. And corners in the world can have either zero — if they have no</p>
+<p>beepers, they just appear like a little dot — or one or more beepers on them that Karel</p>
+<p>can potentially pick up, okay?</p>
+<p>So any questions about beepers or Karel having a little bag of beepers? And that's it.</p>
+<p>That's Karel. That's his world. His world, we can make it larger if we want. We can put in</p>
+<p>walls in different places. We can put beepers in different places. We can have Karel be in</p>
+<p>a different place.</p>
+<p>But starting next time, what you're gonna realize is with this extremely simple world,</p>
+<p>there's actually some complicated things you can do. And after about a week — so this</p>
+<p>first week, we're gonna focus on Karel — you'll notice that Karel is actually a very nice,</p>
+<p>gentle introduction into Java. And a lot of the concepts that we learn, sort of software</p>
+<p>engineering concepts using Karel, will translate over to the Java world, okay? So any</p>
+<p>questions about Karel or any of the other logistics that you've actually heard about in the</p>
+<p>class?</p>
+<p>Alrighty then. Welcome to 106A. I'll see you on Wednesday.</p>
+<p>[End of Audio]</p>
+<p>Duration: 50 minutes</p>

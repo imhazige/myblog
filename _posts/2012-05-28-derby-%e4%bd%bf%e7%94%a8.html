@@ -1,0 +1,25 @@
+---
+layout: post
+title: derby 使用
+date: 2012-05-28 17:40:17.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- "数据库"
+tags:
+- derby
+meta:
+  views: '36'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>很早之前用过derby当时觉得编辑数据很麻烦，现在又要用，忘记光了，重新来过。</p>
+<p>可使用eclipse 的db开发视图(data source exploer)来创建一个数据库。加载驱动后包，使用org.apache.derby.jdbc.EmbeddedDriver,connection url中加create=true&#160; 即可创建一个数据库。</p>
+<p>但是此时图不好创建表，那么可以配合myeclipse中的jdbc插件来建立连接来创建表和执行sql。</p>
+<p>嵌入式方式是独占式的，谁建立的连接就把文件给锁了。myeclipse打开连接后需要推出myeclipse并删除derby目录下的db.lck才能让别的程序使用此derby。</p>

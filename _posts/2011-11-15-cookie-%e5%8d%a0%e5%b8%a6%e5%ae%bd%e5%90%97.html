@@ -1,0 +1,24 @@
+---
+layout: post
+title: cookie 占带宽吗?
+date: 2011-11-15 09:45:30.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- cookie
+meta:
+  views: '14'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>分布式计算中为减轻服务端压力，有时将信息存储在cookie中。但是cookie是要通过http header传送的，它的大小不能超过4K(各浏览器不同<a href="http://www.cnblogs.com/sdjxcolin/archive/2009/02/16/1391272.html">http://www.cnblogs.com/sdjxcolin/archive/2009/02/16/1391272.html</a>)。</p>
+<p>所以cookie是占带宽的，主要看应用的场景了，对于一般小型应用，这点带宽可以忽略，而对于大型网站，还需要对此做专门的优化。</p>
+<p>见：</p>
+<p><a href="http://news.newhua.com/news1/Skills_net/2009/1014/09101414481032AJ148BDDG23A36IHI288JKB6793C8I22DGD04HDHAGE.html" target="_blank">杜绝Cookie传送提高网站访问速度</a></p>

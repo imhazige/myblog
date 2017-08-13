@@ -1,0 +1,51 @@
+---
+layout: post
+title: mysql 时间字段使用int还是datetime …
+date: 2013-02-22 13:26:06.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- "数据库"
+tags:
+- mysql
+meta:
+  views: '1313'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><font color="#0000ff">注意：这里的int是mysql整形统称， 因为datetime是8字节，所以对应是应由mysql bigint代替,timestamp是4字节,可由mysql int代替,一般java,php时间戳应该是由mysql bigint才能完全存储，mysql int长度不够。</font></p>
+<p>&#160;</p>
+<p>今天又纠结数据库里时间存储的问题，以往的经验，时区问题很繁琐，而mysql的date,datetime,timestamp都是和时区设置有关系的。(当然)</p>
+<p>&#160;</p>
+<p>我认为一般设计数据库，时间存储的应该是UTC时间，这样便于物理和逻辑上的移植，对于国际化功能的应用更是如此。可以省去许多时区转换的麻烦，可以维持一致性。</p>
+<p>&#160;</p>
+<p>网上也有这方面的讨论，大部分赞同int</p>
+<p>&#160;</p>
+<p>例如:</p>
+<h3><a href="http://billauer.co.il/blog/2009/03/mysql-datetime-epoch-unix-time/">Why MySQL’s (SQL) DATETIME can and should be avoided</a></h3>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>对于性能，</p>
+<p>下面的这篇文章的测试我认为具有片面性</p>
+<h4><a href="http://gpshumano.blogs.dri.pt/2009/07/06/mysql-datetime-vs-timestamp-vs-int-performance-and-benchmarking-with-myisam/">MySQL DATETIME vs TIMESTAMP vs INT performance and benchmarking with MyISAM</a></h4>
+<p>其测试认为int 比datetime慢，但是其测试语句使用了相当多的mysql 日期函数，我们根本就不需要这样做，我们不需要使用数据库的日期函数，只要保证传入数据库的参数是int，像日期比较直接用int比较实际是比datetime要快的。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>参照openfire的mysql设计，发现它根本就没有使用任何datetime,timestamp类型。而是用bigint或是char。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>我的观点：</p>
+<p>对于应用型数据库，不应该使用datetime。</p>
+<p>对于需要在sql中嵌入逻辑的例如分析型数据仓库，数据管理员可能会倾向于使用datetime。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a title="http://billauer.co.il/blog/2009/03/mysql-datetime-epoch-unix-time/" href="http://billauer.co.il/blog/2009/03/mysql-datetime-epoch-unix-time/">http://billauer.co.il/blog/2009/03/mysql-datetime-epoch-unix-time/</a></p>
+<p><a title="http://gpshumano.blogs.dri.pt/2009/07/06/mysql-datetime-vs-timestamp-vs-int-performance-and-benchmarking-with-myisam/" href="http://gpshumano.blogs.dri.pt/2009/07/06/mysql-datetime-vs-timestamp-vs-int-performance-and-benchmarking-with-myisam/">http://gpshumano.blogs.dri.pt/2009/07/06/mysql-datetime-vs-timestamp-vs-int-performance-and-benchmarking-with-myisam/</a></p>

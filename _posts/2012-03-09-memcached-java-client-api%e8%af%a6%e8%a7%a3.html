@@ -1,0 +1,269 @@
+---
+layout: post
+title: "【转】Memcached Java Client API详解"
+date: 2012-03-09 10:36:33.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- "分布式"
+tags:
+- memcached
+meta:
+  views: '198'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p><span style="text-align: left; widows: 2; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px; font: 14px/26px arial; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(51,51,51); word-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span">
+<div>
+<pre>转自 <a href="http://blog.csdn.net/qqiabc521/article/details/6438429">http://blog.csdn.net/qqiabc521/article/details/6438429</a> ,蓝色字是我加的加重或是注解</pre>
+</p></div>
+<p></p>
+<h2 style="border-bottom: rgb(60,120,181) 1px solid; padding-bottom: 0px; line-height: normal; background-color: rgb(240,240,240); margin: 3px 0px 0px; padding-left: 0px; padding-right: 0px; font-family: arial, sans-serif; color: rgb(0,51,102); font-size: 16pt; font-weight: bold; padding-top: 0px"><span style="font-family: verdana, arial, sans-serif"></span></h2>
+<h2 style="border-bottom: rgb(60,120,181) 1px solid; padding-bottom: 0px; line-height: normal; background-color: rgb(240,240,240); margin: 3px 0px 0px; padding-left: 0px; padding-right: 0px; font-family: arial, sans-serif; color: rgb(0,51,102); font-size: 16pt; font-weight: bold; padding-top: 0px"><span style="font-family: verdana, arial, sans-serif">Memcached Java Client API详解</span></h2>
+<p style="padding-bottom: 0px; line-height: 1.5; margin: 16px 0px; padding-left: 0px; padding-right: 0px; font-family: verdana, arial, sans-serif; color: rgb(0,0,0); font-size: 14px; font-weight: normal; padding-top: 0px">针对<span style="white-space: nowrap"><a style="color: rgb(0,51,102); text-decoration: none" href="http://danga.com/memcached/" rel="nofollow">Memcached官方网站<sup><img style="border-bottom-style: none; border-right-style: none; border-top-style: none; border-left-style: none" title="Memcached&#160;&lt;wbr&gt;Java&#160;&lt;wbr&gt;Client&#160;&lt;wbr&gt;API详解及优化1.5.0" border="0" alt="" align="absMiddle" src="{{ site.baseurl }}/assets/linkext7.gif" width="7" height="7" /></sup></a></span>提供的java_memcached-release_2.0.1版本进行阅读分析，Memcached Java客户端lib库主要提供的调用类是SockIOPool和MemCachedClient?，关键类及方法整理说明如下。</p>
+<h3 style="padding-bottom: 0px; line-height: normal; background-color: rgb(240,240,240); margin: 20px 0px 0px; padding-left: 0px; padding-right: 0px; font-family: arial, sans-serif; border-bottom-width: 0px; color: rgb(0,51,102); font-size: 14pt; font-weight: bold; padding-top: 0px"><a style="color: rgb(51,102,153); text-decoration: none" name="MemcachedJavaClientAPI详解及优化1.5.0-SockIOPool"></a>SockIOPool</h3>
+<p style="padding-bottom: 0px; line-height: 1.5; margin: 16px 0px; padding-left: 0px; padding-right: 0px; font-family: verdana, arial, sans-serif; color: rgb(0,0,0); font-size: 14px; font-weight: normal; padding-top: 0px">这个类用来创建管理客户端和服务器通讯连接池，客户端主要的工作包括数据通讯、服务器定位、hash码生成等都是由这个类完成的。</p>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public static SockIOPool getInstance()
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">获得连接池的单态方法。这个方法有一个重载方法getInstance( String poolName )，每个poolName只构造一个SockIOPool实例。缺省构造的poolName是default。 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">如果在客户端配置多个memcached服务，一定要显式声明poolName。 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setServers( String[] servers )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置连接池可用的cache服务器列表，server的构成形式是IP:PORT（如：127.0.0.1:11211） </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setWeights( Integer[] weights )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置连接池可用cache服务器的权重，和server数组的位置一一对应 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">其实现方法是通过根据每个权重在连接池的bucket中放置同样数目的server（如下代码所示），因此所有权重的最大公约数应该是1，不然会引起bucket资源的浪费。 </li>
+</ul>
+</li>
+</ul>
+<div style="border-bottom: rgb(60,120,181) 1px dashed; border-left: rgb(60,120,181) 1px dashed; padding-bottom: 0px; line-height: 1.5; overflow-x: auto; overflow-y: auto; background-color: rgb(255,255,255); margin: 0px 10px 10px; padding-left: 0px; padding-right: 0px; font-family: courier; color: black; font-size: 14px; border-top: rgb(60,120,181) 1px dashed; border-right: rgb(60,120,181) 1px dashed; padding-top: 0px; background-origin: initial; background-clip: initial">
+<div style="text-align: left; padding-bottom: 5px; background-color: rgb(240,240,240); margin: 0px; padding-left: 5px; padding-right: 5px; color: rgb(0,0,0); font-size: 0.95em; padding-top: 5px; background-origin: initial; background-clip: initial">
+<pre style="text-align: left; padding-bottom: 0px; line-height: 1.3; overflow-x: auto; overflow-y: auto; margin: 5px 5px 5px 15px; padding-left: 0px; padding-right: 0px; font-family: &#39;Courier new&#39;, courier, monospace; word-wrap: break-word; white-space: normal; padding-top: 0px"><span style="color: rgb(0,0,145)">for</span><span class="Apple-converted-space">&#160;</span>(<span class="Apple-converted-space">&#160;</span><span style="color: rgb(145,0,145)">int</span><span class="Apple-converted-space">&#160;</span>i = 0; i &lt; servers.length; i+/+ ) {<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,0,145)">if</span><span class="Apple-converted-space">&#160;</span>(<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,0,145)">this</span>.weights /!=<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,0,145)">null</span><span class="Apple-converted-space">&#160;</span>&amp;&amp;<span style="color: rgb(0,0,145)">this</span>.weights.length &gt; i ) {<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,0,145)">for</span><span class="Apple-converted-space">&#160;</span>(<span class="Apple-converted-space">&#160;</span><span style="color: rgb(145,0,145)">int</span><span class="Apple-converted-space">&#160;</span>k = 0; k &lt;<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,0,145)">this</span>.weights[i].intValue(); k+/+ ) {<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,0,145)">this</span>.buckets.add( servers[i] );<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,0,145)">if</span><span class="Apple-converted-space">&#160;</span>( log.isDebugEnabled() ) log.debug(<span style="color: rgb(0,145,0)">&quot;++++ added &quot;</span><span class="Apple-converted-space">&#160;</span>+ servers[i] +<span class="Apple-converted-space">&#160;</span><span style="color: rgb(0,145,0)">&quot; to server bucket&quot;</span><span class="Apple-converted-space">&#160;</span>); } }</pre>
+</p></div>
+</p></div>
+<blockquote>
+<p><font color="#0000ff">这个文档上举例:</font></p>
+<p><font color="#0000ff">Lets say you have 3 servers.&#160; Server 1 and server 2 have 3GB of space<br />
+        <br />and server 3 has 2GB of space for cache.&#160; Here is how I would set up </p>
+<p>my client.</font></p>
+<p><font color="#0000ff">如果有三个server,分别有3GB,3GB,2GB的缓存空间，那么权重对应应该是3:3:2</font></p>
+</blockquote>
+<p>&#160;</p>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setInitConn( int initConn )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置开始时每个cache服务器的可用连接数 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setMinConn( int minConn )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置每个服务器最少可用连接数 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setMaxConn( int maxConn )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置每个服务器最大可用连接数 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setMaxIdle( long maxIdle )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置可用连接池的最长等待时间 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setMaintSleep( long maintSleep )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置连接池维护线程的睡眠时间 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置为0，维护线程不启动 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">维护线程主要通过log输出socket的运行状况，监测连接数目及空闲等待时间等参数以控制连接创建和关闭。 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setNagle( boolean nagle )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置是否使用Nagle算法，因为我们的通讯数据量通常都比较大（相对TCP控制数据）而且要求响应及时，因此该值需要设置为false（默认是true） </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><font color="#0000ff">Nagle算法是用于对缓冲区内的一定数量的消息进行自动连接。该处理过程(称为Nagling)，通过减少必须发送的封包的数量，提高了网络应用程序系统的效率。这个该不该禁用还需的具体分析，</font></p>
+<p><font color="#0000ff">参见</font><a href="http://www.blogjava.net/killme2008/archive/2011/10/25/353441.html"><font color="#0000ff">http://www.blogjava.net/killme2008/archive/2011/10/25/353441.html</font></a><font color="#0000ff"> 这个也是与memcached相关的经验。</font></p>
+</blockquote>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">ublic void setSocketTO( int socketTO )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置socket的读取等待超时值 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setSocketConnectTO( int socketConnectTO )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置socket的连接等待超时值 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setAliveCheck( boolean aliveCheck )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置连接心跳监测开关。 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设为true则每次通信都要进行连接是否有效的监测，造成通信次数倍增，加大网络负载，因此该参数应该在对HA要求比较高的场合设为TRUE，默认状态是false。 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setFailback( boolean failback )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置连接失败恢复开关 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置为TRUE，当宕机的服务器启动或中断的网络连接后，这个socket连接还可继续使用，否则将不再使用，默认状态是true，建议保持默认。 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setFailover( boolean failover )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置容错开关 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置为TRUE，当当前socket不可用时，程序会自动查找可用连接并返回，否则返回NULL，默认状态是true，建议保持默认。 </li>
+</ul>
+</li>
+</ul>
+<p style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px"><font color="#0000ff">&#160;&#160;&#160;&#160;&#160; 这里我补充一下，当这个设置为true时,写操作会对此server池中所有的server都进行,例如set(‘1’,’abc’);则每个server都存储了1=abc,当设置为false时，则把所有server作为一个整体,那么上一个set操作可能就放置在server1,而下一个set操作可能就放置在server2.</font></p>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setHashingAlg( int alg )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置hash算法
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">alg=0 使用String.hashCode()获得hash code,该方法依赖JDK，可能和其他客户端不兼容，建议不使用 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">alg=1 使用original 兼容hash算法，兼容其他客户端 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">alg=2 使用CRC32兼容hash算法，兼容其他客户端，性能优于original算法 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">alg=3 使用MD5 hash算法 </li>
+</ul>
+</li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">采用前三种hash算法的时候，查找cache服务器使用余数方法。采用最后一种hash算法查找cache服务时使用consistent方法。 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void initialize()
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置完pool参数后最后调用该方法，启动pool。 </li>
+</ul>
+</li>
+</ul>
+<h3 style="padding-bottom: 0px; line-height: normal; background-color: rgb(240,240,240); margin: 20px 0px 0px; padding-left: 0px; padding-right: 0px; font-family: arial, sans-serif; border-bottom-width: 0px; color: rgb(0,51,102); font-size: 14pt; font-weight: bold; padding-top: 0px"><a style="color: rgb(51,102,153); text-decoration: none" name="MemcachedJavaClientAPI详解及优化1.5.0-MemCachedClient?"></a>MemCachedClient?</h3>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setCompressEnable( boolean compressEnable )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设定是否压缩放入cache中的数据 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">默认值是ture </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">如果设定该值为true，需要设定CompressThreshold? </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setCompressThreshold( long compressThreshold )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设定需要压缩的cache数据的阈值 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">默认值是30k </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setPrimitiveAsString( boolean primitiveAsString )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">设置cache数据的原始类型是String </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">默认值是false </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">只有在确定cache的数据类型是string的情况下才设为true，这样可以加快处理速度。 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">public void setDefaultEncoding( String defaultEncoding )
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">当primitiveAsString为true时使用的编码转化格式 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">默认值是utf-8 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">如果确认主要写入数据是中文等非ASCII编码字符，建议采用GBK等更短的编码格式 </li>
+</ul>
+</li>
+</ul>
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 10px 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">cache数据写入操作方法
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">set方法
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">将数据保存到cache服务器，如果保存成功则返回true </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">如果cache服务器存在同样的key，则替换之 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">set有5个重载方法，key和value是必须的参数，还有过期时间，hash码，value是否字符串三个可选参数 </li>
+</ul>
+</li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">add方法
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">将数据添加到cache服务器,如果保存成功则返回true </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">如果cache服务器存在同样key，则返回false </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">add有4个重载方法，key和value是必须的参数，还有过期时间，hash码两个可选参数 </li>
+</ul>
+</li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">replace方法
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">将数据替换cache服务器中相同的key,如果保存成功则返回true </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">如果cache服务器不存在同样key，则返回false </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">replace有4个重载方法，key和value是必须的参数，还有过期时间，hash码两个可选参数 </li>
+</ul>
+</li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">建议分析key的规律，如果呈现某种规律有序，则自己构造hash码，提高存储效率 </li>
+</ul>
+</li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">cache数据读取操作方法
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">使用get方法从cache服务器获取一个数据
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">如果写入时是压缩的或序列化的，则get的返回会自动解压缩及反序列化 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">get方法有3个重载方法，key是必须的参数，hash码和value是否字符串是可选参数 </li>
+</ul>
+</li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">使用getMulti方法从cache服务器获取一组数据
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">get方法的数组实现，输入参数keys是一个key数组 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">返回是一个map </li>
+</ul>
+</li>
+</ul>
+</li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">通过cache使用计数器
+<ul style="padding-bottom: 0px; line-height: 1.5; list-style-type: disc; margin: 0px; padding-left: 22px; padding-right: 3em; color: rgb(0,0,0); font-size: 14px; padding-top: 0px">
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">使用storeCounter方法初始化一个计数器 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">使用incr方法对计数器增量操作 </li>
+<li style="padding-bottom: 0px; line-height: 1.5; margin: 0px; padding-left: 0px; padding-right: 0px; font-size: 14px; padding-top: 0px">使用decr对计数器减量操作 </li>
+</ul>
+</li>
+</ul>
+<h2 style="border-bottom: rgb(60,120,181) 1px solid; padding-bottom: 0px; line-height: normal; background-color: rgb(240,240,240); margin: 24px 0px 0px; padding-left: 0px; padding-right: 0px; font-family: arial, sans-serif; color: rgb(0,51,102); font-size: 16pt; font-weight: bold; padding-top: 0px"><a style="color: rgb(51,102,153); text-decoration: none" name="MemcachedJavaClientAPI详解及优化1.5.0-MemcachedClientAPI优化(草)"></a>Memcached Client API 优化(草)</h2>
+<h3 style="padding-bottom: 0px; line-height: normal; background-color: rgb(240,240,240); margin: 20px 0px 0px; padding-left: 0px; padding-right: 0px; font-family: arial, sans-serif; border-bottom-width: 0px; color: rgb(0,51,102); font-size: 14pt; font-weight: bold; padding-top: 0px"><a style="color: rgb(51,102,153); text-decoration: none" name="MemcachedJavaClientAPI详解及优化1.5.0-实现memcached的遍历操作"></a>实现memcached的遍历操作</h3>
+<p style="padding-bottom: 0px; line-height: 1.5; margin: 16px 0px; padding-left: 0px; padding-right: 0px; font-family: verdana, arial, sans-serif; color: rgb(0,0,0); font-size: 14px; font-weight: normal; padding-top: 0px">有些应用情况下，需要遍历memcached服务器中所有被cache的数据，目前memcached client API不支持遍历操作，需要进行扩展。</p>
+<h3 style="padding-bottom: 0px; line-height: normal; background-color: rgb(240,240,240); margin: 20px 0px 0px; padding-left: 0px; padding-right: 0px; font-family: arial, sans-serif; border-bottom-width: 0px; color: rgb(0,51,102); font-size: 14pt; font-weight: bold; padding-top: 0px"><a style="color: rgb(51,102,153); text-decoration: none" name="MemcachedJavaClientAPI详解及优化1.5.0-实现get时刷新数据过期时间（应用于session，可能需要修改服务器端程序）"></a>实现get时刷新数据过期时间（应用于session，可能需要修改服务器端程序）</h3>
+<p style="padding-bottom: 0px; line-height: 1.5; margin: 16px 0px; padding-left: 0px; padding-right: 0px; font-family: verdana, arial, sans-serif; color: rgb(0,0,0); font-size: 14px; font-weight: normal; padding-top: 0px">当memcached被用作session服务器的时候，需要支持session的access方法，根据最近访问时间刷新过期时间，目前memcached也不支持该操作，需要进行扩展。</p>
+<p></span></p>

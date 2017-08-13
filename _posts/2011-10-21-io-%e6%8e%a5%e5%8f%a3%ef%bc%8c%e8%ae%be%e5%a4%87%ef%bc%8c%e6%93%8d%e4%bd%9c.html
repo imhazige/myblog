@@ -1,0 +1,63 @@
+---
+layout: post
+title: IO 接口，设备
+date: 2011-10-21 11:50:12.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "计算机基础"
+tags:
+- io
+meta:
+  views: '50'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>IO这个词出现太多了太多了，这里整理一下思路。</p>
+<p>计算机由控制单元，运算单元，存储单元，输入设备输出设备组成。其中IO指的就是输入输出。</p>
+<p>关于IO又有接口，设备，操作的概念: 参见<a title="http://book.51cto.com/art/200704/45417.htm" href="http://book.51cto.com/art/200704/45417.htm">http://book.51cto.com/art/200704/45417.htm</a></p>
+<h2>IO接口</h2>
+<p>IO接口是实现外部设备与主机之间的连接和信息交换的设备，也可称I/O适配器（Adapter）或适配卡。目前有:</p>
+<p>① 总线系统</p>
+<p>② 直接内存访问（DMA）</p>
+<p>③ 通道</p>
+<p>④ SCSI（Small Computer System Interface）</p>
+<p>⑤ 并行口</p>
+<p>⑥ RS-232C接口</p>
+<p>⑦ USB（Universal Serial Bus，通用串行总线）接口</p>
+<p>⑧ IEEE 1394接口</p>
+<h3>IO接口的控制方式</h3>
+<p>（1）程序查询方式    <br />这种方式下，CPU通过I/O指令询问指定外设当前的状态，如果外设准备就绪，则进行数据的输入或输出，否则CPU等待，循环查询。     <br />这种方式的优点是结构简单，只需要少量的硬件电路即可，缺点是由于CPU的速度远远高于外设，因此通常处于等待状态，工作效率很低     </p>
+<p>（2）中断处理方式    <br />在这种方式下，CPU不再被动等待，而是可以执行其他程序，一旦外设为数据交换准备就绪，可以向CPU提出服务请求，CPU如果响应该请求，便暂时停止当前程序的执行，转去执行与该请求对应的服务程序，完成后，再继续执行原来被中断的程序。     <br />中断处理方式的优点是显而易见的，它不但为CPU省去了查询外设状态和等待外设就绪所花费的时间，提高了CPU的工作效率，还满足了外设的实时要求。但需要为每个I／O设备分配一个中断请求号和相应的中断服务程序，此外还需要一个中断控制器（I／O接口芯片）管理I／O设备提出的中断请求，例如设置中断屏蔽、中断请求优先级等。     <br />此外，中断处理方式的缺点是每传送一个字符都要进行中断，启动中断控制器，还要保留和恢复现场以便能继续原程序的执行，花费的工作量很大，这样如果需要大量数据交换，系统的性能会很低。     </p>
+<p>（3）DMA（直接存储器存取）传送方式    <br />DMA最明显的一个特点是它不是用软件而是采用一个专门的控制器来控制内存与外设之间的数据交流，无须CPU介入，大大提高CPU的工作效率。     <br />在进行DMA数据传送之前，DMA控制器会向CPU申请总线控制 权，CPU如果允许，则将控制权交出，因此，<font color="#0000ff">在数据交换时，总线控制权由DMA控制器掌握，在传输结束后，DMA控制器将总线控制权交还给CPU。</font></p>
+<p><font color="#000000">(4) 通道方式</font></p>
+<p><font color="#000000"></font></p>
+<p><font color="#000000">(5) 外围处理机(输入输出处理机)方式</font></p>
+<p><font color="#000000">有专门的处理机负责IO,一般用于大型系统</font></p>
+<p><font color="#000000"></font></p>
+<h2>IO设备</h2>
+<p>键盘，鼠标，硬盘,打印机，扫描仪，网络设备等……</p>
+<h2>&#160;</h2>
+<p><font color="#0000ff">说实话，我还是没搞清楚！有时候把接口当成设备，有时又要把它当成控制方式，下面显然是控制方式：</font></p>
+<p>常见I/O接口方式的分类方式有:</p>
+<p>①按数据传送格式分类：串行接口和并行接口</p>
+<p>②按时序控制方式分类：同步接口和异步接口</p>
+<p>③按传送控制方式分类：直接程序传送接口,中断接口,DMA接口.   </p>
+<h2>网络IO</h2>
+<p>还有网络IO这个说法,对于web方面的来说，性能与网络IO操作有很大关系，参见<a title="http://blog.csdn.net/historyasamirror/article/details/5778378" href="http://blog.csdn.net/historyasamirror/article/details/5778378">http://blog.csdn.net/historyasamirror/article/details/5778378</a></p>
+<p>对于一个network IO (这里我们以read举例)，它会涉及到两个系统对象，一个是调用这个IO的process (or thread)，另一个就是系统内核(kernel)。</p>
+<p>当一个read操作发生时，它会经历两个阶段：   <br /> 1 等待数据准备 (Waiting for the data to be ready)    <br /> 2 将数据从内核拷贝到进程中 (Copying the data from the kernel to the process)记住这两点很重要，因为这些IO Model的区别就是在两个阶段上各有不同的情况。</p>
+<p>阻塞IO:特点就是在IO执行的两个阶段都被block了，调用返回时数据一定是准备好了的。</p>
+<p>非阻塞IO:调用马上返回，但是数据可能还没准备好，需要不断的主动询问kernel数据好了没有</p>
+<p>多路IO(IO multiplexing):先选择，后获取。选择操作会阻塞知道其中一个有数据。</p>
+<p>异步IO:调用马上返回，有数据后会发信号。（和ajax取数据有点像哈）</p>
+<p>此文将多路分为同步IO,</p>
+<p>这篇文章有另一种分法：<a title="http://blog.chinaunix.net/space.php?uid=20357359&amp;do=blog&amp;id=1963658" href="http://blog.chinaunix.net/space.php?uid=20357359&amp;do=blog&amp;id=1963658">http://blog.chinaunix.net/space.php?uid=20357359&amp;do=blog&amp;id=1963658</a></p>
+<p><a href="http://kazge.com/wp-content/uploads/2011/10/090830172605.gif"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="090830172605" border="0" alt="090830172605" src="{{ site.baseurl }}/assets/090830172605_thumb.gif" width="386" height="225" /></a> </p>
+<p>将多路归类为异步阻塞，各有各道理，知道原理就好。不钻牛角尖！</p>
+<p>显然非阻塞异步IO性能应该是最好的，Nodejs中的事件驱动非阻塞IO就是AIO。</p>

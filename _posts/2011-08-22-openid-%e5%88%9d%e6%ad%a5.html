@@ -1,0 +1,121 @@
+---
+layout: post
+title: OpenID 入门
+date: 2011-08-22 13:43:07.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- java
+- openid
+- web
+meta:
+  views: '332'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>wiki百科:&#160; <a title="http://zh.wikipedia.org/wiki/OpenID" href="http://zh.wikipedia.org/wiki/OpenID">http://zh.wikipedia.org/wiki/OpenID</a></p>
+<p>官网: <a title="http://openid.net/" href="http://openid.net/">http://openid.net/</a>&#160; 规范:<a title="http://openid.net/developers/specs/" href="http://openid.net/developers/specs/">http://openid.net/developers/specs/</a></p>
+<p>这篇文章较适入门：&#160; <a title="http://www.theserverside.com/news/1364125/Using-OpenID" href="http://www.theserverside.com/news/1364125/Using-OpenID">http://www.theserverside.com/news/1364125/Using-OpenID</a> 作者也是open4javba的作者。</p>
+<p>使用open4java,wicket</p>
+<p>上 <a title="http://www.ibm.com/developerworks/cn/java/j-openid/" href="http://www.ibm.com/developerworks/cn/java/j-openid/">http://www.ibm.com/developerworks/cn/java/j-openid/</a></p>
+<p>下&#160; <a title="http://www.ibm.com/developerworks/cn/java/j-openid2/index.html?ca=drs-cn-0427" href="http://www.ibm.com/developerworks/cn/java/j-openid2/index.html?ca=drs-cn-0427">http://www.ibm.com/developerworks/cn/java/j-openid2/index.html?ca=drs-cn-0427</a></p>
+<p>讲得最明白的还是google: <a title="http://code.google.com/intl/zh-CN/apis/accounts/docs/OpenID.html" href="http://code.google.com/intl/zh-CN/apis/accounts/docs/OpenID.html">http://code.google.com/intl/zh-CN/apis/accounts/docs/OpenID.html</a></p>
+<p><a title="http://www.seven2.com.cn/archives/786/" href="http://www.seven2.com.cn/archives/786/">http://www.seven2.com.cn/archives/786/</a>&#160; Google OAUTH + OpenID 解决方案</p>
+<p>open4java 用起来总是报错，说什么xml解析错误，查了半天原来是xml解析包冲突,遇到这种情况要检查一下别的引用是否有冲突的xml解析包。</p>
+<p>使用0.9.6 maven一直下载不下来改用0.9.5就可以了。</p>
+<p>运行simple-openid这个示例只需要这样的pom:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;</span><span style="color: #800000">project</span> <span style="color: #ff0000">xmlns</span>=<span style="color: #0000ff">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+	<span style="color: #ff0000">xmlns</span>:<span style="color: #ff0000">xsi</span>=<span style="color: #0000ff">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+	<span style="color: #ff0000">xsi</span>:<span style="color: #ff0000">schemaLocation</span>=<span style="color: #0000ff">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">modelVersion</span><span style="color: #0000ff">&gt;</span>4.0.0<span style="color: #0000ff">&lt;/</span><span style="color: #800000">modelVersion</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>test<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>test<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>0.0.1-SNAPSHOT<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependencies</span><span style="color: #0000ff">&gt;</span>		
+		<span style="color: #0000ff">&lt;</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>org.openid4java<span style="color: #0000ff">&lt;/</span><span style="color: #800000">groupId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>openid4java<span style="color: #0000ff">&lt;/</span><span style="color: #800000">artifactId</span><span style="color: #0000ff">&gt;</span>
+			<span style="color: #0000ff">&lt;</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>0.9.5<span style="color: #0000ff">&lt;/</span><span style="color: #800000">version</span><span style="color: #0000ff">&gt;</span>
+		<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependency</span><span style="color: #0000ff">&gt;</span>
+	<span style="color: #0000ff">&lt;/</span><span style="color: #800000">dependencies</span><span style="color: #0000ff">&gt;</span>	
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">project</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<p></p>
+<p>简单复述一遍流程：</p>
+<p>用户登陆网站(简称A),A提供选择：</p>
+<p>1：用A的账户登陆。</p>
+<p>2：用google的账户登陆。</p>
+<p>用户想“俺有个google openid账户，我不想重新注册A账户”。他就选择用google openid账户登陆。</p>
+<p>A站点就要知道google的openid provider endpoint的url,向这个地址请求,这一步叫discovery.</p>
+<p>endpoint会返回一个文档(可能是xrds格式或html格式),例如google返回的xrds格式:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span style="color: #0000ff">?&gt;</span>
+<span style="color: #0000ff">&lt;</span><span style="color: #c71585">xrds</span>:<span style="color: #800000">XRDS</span> <span style="color: #ff0000">xmlns</span>:<span style="color: #ff0000">xrds</span>=<span style="color: #0000ff">&quot;xri://$xrds&quot;</span> <span style="color: #ff0000">xmlns</span>=<span style="color: #0000ff">&quot;xri://$xrd*($v*2.0)&quot;</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">XRD</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">Service</span> <span style="color: #ff0000">priority</span>=<span style="color: #0000ff">&quot;0&quot;</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>http://specs.openid.net/auth/2.0/server<span style="color: #0000ff">&lt;/</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>http://openid.net/srv/ax/1.0<span style="color: #0000ff">&lt;/</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>http://specs.openid.net/extensions/ui/1.0/mode/popup<span style="color: #0000ff">&lt;/</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>http://specs.openid.net/extensions/ui/1.0/icon<span style="color: #0000ff">&lt;/</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>http://specs.openid.net/extensions/pape/1.0<span style="color: #0000ff">&lt;/</span><span style="color: #800000">Type</span><span style="color: #0000ff">&gt;</span>
+  <span style="color: #0000ff">&lt;</span><span style="color: #800000">URI</span><span style="color: #0000ff">&gt;</span></pre>
+<p><font color="#0000ff"><font color="#408080">https://www.google.com/accounts/o8/ud</font><span style="color: #0000ff">&lt;/</span></font><span style="color: #800000">URI</span><span style="color: #0000ff">&gt;</span><br />
+  <span style="color: #0000ff">&lt;/</span><span style="color: #800000">Service</span><span style="color: #0000ff">&gt;</span><br />
+  <span style="color: #0000ff">&lt;/</span><span style="color: #800000">XRD</span><span style="color: #0000ff">&gt;</span><br />
+<span style="color: #0000ff">&lt;/</span><span style="color: #c71585">xrds</span>:<span style="color: #800000">XRDS</span><span style="color: #0000ff">&gt;</span>
+</div>
+<p>可以看到uri里面就是下一步进行认证的地址。</p>
+<p>A就要向这个uri请求认证，这个里面要设置一些参数用来进行交互比如说交换用户信息(AX),或是简单注册(Sreg)。当然要传入用户输入的openid账号。以及验证成功后接受google信息的url(openid.return_to)。google验证完成后会请求openid.return_to设置的网址，如果成功，会将需要的用户信息使用参数传入。</p>
+<p>在这最后一步需要验证返回是否是安全的（中途是否被修改）:</p>
+<p>1：检查openid.return_to和请求的地址是否匹配；</p>
+<p>2：检查discovery信息。</p>
+<p>3：检查openid.response_nonce</p>
+<p>4：检查签名</p>
+<p>------------------------------------------</p>
+<p>我再使用规范2.0的复述一遍:</p>
+<p>1 The end user <a href="http://openid.net/specs/openid-authentication-2_0.html#initiation">initiates authentication</a> by presenting a User-Supplied Identifier to the Relying Party via their User-Agent.&#160; </p>
+<blockquote>
+<p>用户向RP提交openid.</p>
+</blockquote>
+<p>2 After <a href="http://openid.net/specs/openid-authentication-2_0.html#normalization">normalizing</a> the User-Supplied Identifier, the Relying Party <a href="http://openid.net/specs/openid-authentication-2_0.html#discovery">performs discovery</a> on it and establishes the OP Endpoint URL that the end user uses for authentication. It should be noted that the User-Supplied Identifier may be an OP Identifier, as discussed in <a href="http://openid.net/specs/openid-authentication-2_0.html#discovered_info">Section 7.3.1</a>, which allows selection of a Claimed Identifier at the OP or for the protocol to proceed without a Claimed Identifier if something else useful is being done via an <a href="http://openid.net/specs/openid-authentication-2_0.html#extensions">extension</a>. </p>
+<blockquote>
+<p>RP使用openid执行discovery操作。openid中包含了将要请求的OP地址相关信息。OP对discovery返回的信息中包含了OP Endpoint 信息，下一步将要使用这些信息。openid还可能仅仅是OP的标识符而不是用户的openid标识符。</p>
+</blockquote>
+<p>3 (optional) The Relying Party and the OP establish an <a href="http://openid.net/specs/openid-authentication-2_0.html#associations">association</a> -- a shared secret established using <a href="http://openid.net/specs/openid-authentication-2_0.html#RFC2631">Diffie-Hellman Key Exchange</a> [RFC2631]. The OP uses an association to sign subsequent messages and the Relying Party to verify those messages; this removes the need for subsequent direct requests to verify the signature after each authentication request/response. </p>
+<blockquote>
+<p>关联，密钥交换，这一步不是必需的，但是如果使用了这一步，那么最后的验证(7)就不是必需的。</p>
+</blockquote>
+<p>4 The Relying Party redirects the end user's User-Agent to the OP with an OpenID <a href="http://openid.net/specs/openid-authentication-2_0.html#requesting_authentication">Authentication request</a>. </p>
+<blockquote>
+<p>RP跳转用户到OP的登陆页面。</p>
+</blockquote>
+<p>5 The OP establishes whether the end user is authorized to perform OpenID Authentication and wishes to do so. The manner in which the end user authenticates to their OP and any policies surrounding such authentication is out of scope for this document. </p>
+<blockquote>
+<p>OP完成对用户的验证</p>
+</blockquote>
+<p>6 The OP redirects the end user's User-Agent back to the Relying Party with either an assertion that <a href="http://openid.net/specs/openid-authentication-2_0.html#positive_assertions">authentication is approved</a> or a message that <a href="http://openid.net/specs/openid-authentication-2_0.html#negative_assertions">authentication failed</a>. </p>
+<blockquote>
+<p>OP跳转用户到RP提供的returnto页面，并提供验证信和其他扩展属性。</p>
+</blockquote>
+<p>7 The Relying Party <a href="http://openid.net/specs/openid-authentication-2_0.html#verification">verifies</a> the information received from the OP including checking the Return URL, verifying the discovered information, checking the nonce, and verifying the signature by using either the shared key established during the association or by sending a direct request to the OP. </p>
+<blockquote>
+<p>RP验证返回的信息是否可靠。(如果使用了<a href="http://openid.net/specs/openid-authentication-2_0.html#associations">association</a>这一步，那么就不需要。因为直接可以通过交换的密钥来验证返回。)</p>
+</blockquote>
+<p>-----------------</p>
+<p>要认识到openid和cas的sso是两种风格，openid对于不同公司不同网站，典型的登陆操作是，即使用户已经登陆了provider的网站，但是即使他再打开consumer的网站，consumer网站任然是不知道此用户已经登陆的。用户想要登录consumer网站，还需要进入登陆页面，这个时候给予用户使用provider网站账户登陆的选项。用户选择使用provider网站账户登陆后，由consumer的网站自动与provider网站交互完成登录过程。典型的例子可看 <a title="http://translate.uservoice.com/" href="http://translate.uservoice.com/">http://translate.uservoice.com/</a> 中的google登录方式。</p>
+<p>但是如果是同一个公司，不同的网站，要通过openid实现类似CAS的方式，也是可行的，每个网站都使用过滤器来检查用户是否已经在主站(provider)登陆，将用户信息拿过来就行了。即discovery这一步是固定的。</p>
+<p>&#160;</p>
+<p>==========================================</p>
+<p>参考:</p>
+<p><a title="http://r-j-r-a5438-163-com.iteye.com/blog/611351" href="http://r-j-r-a5438-163-com.iteye.com/blog/611351">http://r-j-r-a5438-163-com.iteye.com/blog/611351</a></p>
+<p><a title="http://www.360doc.com/content/08/0507/11/7349_1242557.shtml" href="http://www.360doc.com/content/08/0507/11/7349_1242557.shtml">http://www.360doc.com/content/08/0507/11/7349_1242557.shtml</a></p>
+<p><a href="http://code.google.com/p/openid4java/w/list">http://code.google.com/p/openid4java/w/list</a></p>
+<p><a href="http://code.google.com/p/openid-server/">http://code.google.com/p/openid-server/</a></p>

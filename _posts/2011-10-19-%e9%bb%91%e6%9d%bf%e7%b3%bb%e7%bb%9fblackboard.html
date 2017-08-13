@@ -1,0 +1,50 @@
+---
+layout: post
+title: "黑板系统Blackboard"
+date: 2011-10-19 11:42:29.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "体系结构"
+tags:
+- "体系结构风格"
+meta:
+  views: '187'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<h3>适用问题：</h3>
+<p> 没有直接的算法，多种方法都可能解决问题；    <br /> 找不到确定的求解策略(先做什么？后做什么？)；    <br /> 问题没有唯一的解答；    <br /> 每个求解步骤中都可能产生多个可能的解，需要寻求最佳或可接受解。    <br /> 需要多个领域的专门知识协作解决。    <br /> 例如：自然语言处理、语音处理、模式识别、图像处理等</p>
+<p>&#160;</p>
+<h3>基本思想</h3>
+<p> 独立程序（知识源）集合    <br /> 对公共数据结构进行协同操作；    <br /> 每个程序专门解决一个子问题；    <br /> 不存在互相调用；    <br /> 不存在事先确定的操作顺序；    <br /> 中心控制部件    <br /> 反映整体问题求解过程的状态；    <br /> 状态变化时，中心控制部件对信息进行评价，协调各程序工作；    <br /> 可以试探调用各个可能的求解算法；</p>
+<p>&#160;</p>
+<h3>结构:</h3>
+<p><a href="http://kazge.com/wp-content/uploads/2011/10/Snap11.jpg"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb1.jpg" width="644" height="354" /></a> </p>
+<p><a href="http://kazge.com/wp-content/uploads/2011/10/Snap2.jpg"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb.jpg" width="644" height="355" /></a> </p>
+<h4>黑板部件   <br /></h4>
+<p> 中心共享数据；</p>
+<p> 存储系统的初始输入、问题求解的局部和中间结果，以及反映问题求解状态的数据；</p>
+<p> 为知识源访问这些元素提供读和写的操作；</p>
+<h4>知识源：独立的求解程序   <br /></h4>
+<p> 独立, 依赖于应用的问题求解子系统;</p>
+<p> 它们之间的交互仅能通过读写黑板的数据和状态来实现（不直接交互）;</p>
+<p> 包含条件和操作两个部分：条件部分评估求解过程的当前状态，即黑板上的当前内容。当条件满足时，执行相应的操作;</p>
+<p> 操作引起黑板数据状态的变化;</p>
+<h4>控制组件   <br /></h4>
+<p> 监视黑板上信息和状态的变化，并根据变化决定采取的行动。</p>
+<p> 根据知识调度策略，调度知识源对条件的匹配评价，并采取相应的操作。</p>
+<p>&#160;</p>
+<h3>应用:</h3>
+<p>起源于人工智能(Artificial Intelligence, AI)领域；   <br /> 典型应用领域：自然语言处理、语音处理、模式识别、图像处理等；    <br /> HEARSAY-II (自然语言处理系统，系统输入是自然语言的语音信号，经过语音音节、词汇、句法和语义分析后，获得用户对数据库的查询请求)    <br /> HASP/SIAP(在特定海域根据声纳阵列信号探测敌方潜艇出没的系统)    <br /> CRYALIS(根据X射线探测数据推测蛋白质分子三维结构的系统)    <br /> TRICERO(在分布环境下监视飞机活动的系统)</p>
+<p>&#160;</p>
+<h3>优点：</h3>
+<p> 
+<p> 应用于没有确定解方法的问题：用不同的算法进行试验；   <br /> 支持可更改性和可维护性（知识源、控制算法、中心数据分离）；    <br /> 知识可重用：知识来自某类任务的独立专家；    <br /> 支持容错性和健壮性：中间结论只是下一步的假设条件；    </p>
+<h3>缺点：</h3>
+<p> 测试困难（没有一个确定的算法）；    <br /> 难以保证最优的解决方案；    <br /> 效率低；    <br /> 开发工作昂贵；    <br /> 缺少对并行机制的支持（黑板上数据的访问必须同步）；</p>

@@ -1,0 +1,24 @@
+---
+layout: post
+title: mysql 8小时解决
+date: 2013-02-25 09:42:19.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- "数据库"
+tags:
+- mysql
+meta:
+  views: '34'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>以前解决8小时问题通过设置不起作用，后来使用poxool池就可以</p>
+<p>&#160;</p>
+<p>这次发现dbcp还是好些，可能还是配置问题：   <br /><a href="http://stackoverflow.com/questions/8535433/spring-app-losing-connection-to-mysql-after-8-hours-how-to-properly-configure">http://stackoverflow.com/questions/8535433/spring-app-losing-connection-to-mysql-after-8-hours-how-to-properly-configure</a>    <br />从其答案中说是需要配置:    <br />testWhileIdle, validationQuery and timeBetweenEvictionRunsMillis    <br />这里有个例子    <br />validationQuery = &quot;SELECT 1&quot;&#160; <br />testWhileIdle = &quot;true&quot;&#160;&#160;&#160; <br />timeBetweenEvictionRunsMillis = &quot;3600000&quot;&#160; <br />minEvictableIdleTimeMillis = &quot;18000000&quot;    <br />testOnBorrow = &quot;true&quot;    <br />有人说    <br />timeBetweenEvictionRunsMillis    <br />这个值不能设置&gt;time_out    <br />但http://stackoverflow.com/questions/15949/javatomcat-dying-database-connection    <br />几个例子都比它大，所以应该是要设置testWhileIdle=true    <br />dbcp文档:    <br /><a href="http://commons.apache.org/dbcp/configuration.html">http://commons.apache.org/dbcp/configuration.html</a></p>

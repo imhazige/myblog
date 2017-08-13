@@ -1,0 +1,33 @@
+---
+layout: post
+title: swing全局钩子快捷键
+date: 2012-06-07 09:50:11.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- swing
+meta:
+  views: '101'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>之前还写过jna不错， <a href="http://kazge.com/archives/834.html">http://kazge.com/archives/834.html</a> ，但是这次想实现全局钩子快捷键，默认jna做不到，可能还要自己扩展。它没有完全封装user32 api,使用目前提供的不能判断shift, control 等系统组合键。</p>
+<p>没办法只得使用jintellitype <a href="http://melloware.com/products/jintellitype/index.html">http://melloware.com/products/jintellitype/index.html</a> 。</p>
+<p>它的使用很简单，示例：</p>
+<p>首先要将jintellitype .dll文件放到可加载目录中，也可放在包中，<font color="#0000ff">注意包名是com\melloware\jintellitype</font> </p>
+<p>注册alt + shift + b/B</p>
+<p>//第一个参数2是自己使用的标识符</p>
+<p>JIntellitype.getInstance().registerHotKey(2, JIntellitype.MOD_ALT + JIntellitype.MOD_SHIFT, (int)'B');</p>
+<p>//事件中的参数也是上面得标识符2</p>
+<p>JIntellitype.getInstance().addHotKeyListener(new HotKeyListener() {...);</p>
+<p>销毁：</p>
+<p>//这个2就是上面使用的标识符</p>
+<p>JIntellitype.getInstance().unregisterHotKey(2);    <br />JIntellitype.getInstance().cleanUp(); //这一句是卸载，会将dll文件删除，所以一般不需要调用。</p>
+<p><font color="#0000ff">注意有个问题就是注册函数registerHotKey第三个参数应该是大写字符，小写就不起作用。上面例子中无论用户按alt+shift+B或是alt+shift+b都会触发事件。</font></p>

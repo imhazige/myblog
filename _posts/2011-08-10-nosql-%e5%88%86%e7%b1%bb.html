@@ -1,0 +1,144 @@
+---
+layout: post
+title: nosql 分类
+date: 2011-08-10 11:15:35.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "数据库"
+tags:
+- nosql
+- "数据库"
+meta:
+  _edit_last: '1'
+  views: '56'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<table border="1" cellspacing="0" cellpadding="0" width="100%">
+<tbody>
+<tr>
+<td valign="top" width="208">
+<p>类型</p>
+</td>
+<td valign="top" width="208">
+<p>部分代表</p>
+</td>
+<td valign="top" width="299">
+<p>特点</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="208">
+<p>列存储</p>
+</td>
+<td valign="top" width="208">
+<p>Hbase</p>
+<p>Cassandra</p>
+<p>Hypertable</p>
+</td>
+<td valign="top" width="299">
+<p>顾名思义，是按列存储数据的。最大的特点是方便存储结构化和半结构化数据，方便做数据压缩，对针对某一列或者某几列的查询有非常大的IO优势。</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="208">
+<p>文档存储</p>
+</td>
+<td valign="top" width="208">
+<p>MongoDB</p>
+<p>CouchDB</p>
+</td>
+<td valign="top" width="299">
+<p>文档存储一般用类似json的格式存储，存储的内容是文档型的。这样也就有有机会对某些字段建立索引，实现关系数据库的某些功能。</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="208">
+<p>key-value存储</p>
+</td>
+<td valign="top" width="208">
+<p>Tokyo Cabinet / Tyrant</p>
+<p>Berkeley DB</p>
+<p>MemcacheDB</p>
+<p>Redis</p>
+<p>Riak</p>
+</td>
+<td valign="top" width="299">
+<p>可以通过key快速查询到其value。一般来说，存储不管value的格式，照单全收。（Redis包含了其他功能）</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="208">
+<p>图存储</p>
+</td>
+<td valign="top" width="208">
+<p>Neo4J</p>
+<p>FlockDB</p>
+</td>
+<td valign="top" width="299">
+<p>图形关系的最佳存储。使用传统关系数据库来解决的话性能低下，而且设计使用不方便。</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="208">
+<p>对象存储</p>
+</td>
+<td valign="top" width="208">
+<p>db4o</p>
+<p>Versant</p>
+</td>
+<td valign="top" width="299">
+<p>通过类似面向对象语言的语法操作数据库，通过对象的方式存取数据。</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="208">
+<p>xml数据库</p>
+</td>
+<td valign="top" width="208">
+<p>Berkeley DB XML</p>
+<p>BaseX</p>
+</td>
+<td valign="top" width="299">
+<p>高效的存储XML数据，并支持XML的内部查询语法，比如XQuery,Xpath。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>板桥的分类:<a title="http://www.jdon.com/jivejdon/thread/38312" href="http://www.jdon.com/jivejdon/thread/38312">http://www.jdon.com/jivejdon/thread/38312</a></p>
+<div>
+<pre>NoSQL数据库异军突起，随着Digg和 sf.net大型应用不断采取NoSQL，NoSQL运动已经蓬勃发展，NoSQL数据库很多，如何对他们分类，以便方便地根据自己应用特色选择不同的NoSQL数据库呢？
+
+NoSQL = HVSP 无(传统关系数据库的)join或明显事务的高容量简单处理。
+
+按照数据模型保存性质将当前NoSQL分为四种：
+1.Key-value stores键值存储, 保存keys+BLOBs (二进制大对象Binary Large OBjects)
+2.Table-oriented 面向表, 主要有Google的BigTable和Cassandra.
+3.Document-oriented面向文本, 文本是一种类似XML文档，MongoDB 和 CouchDB
+4.Graph-oriented 面向图论. 如Neo4J.
+
+NoSQL一般都是分布式数据库，高性能是其特点，因此，数据是如何被分布、复制/碎片以及合成就成为关键，这其中涉及你的应用对数据一致性的要求，见CAP原理，不同一致性处理方式决定不同类型：
+1.基本上基于Dynamo. 核心思想就是在多个节点之间获得最终一致性就可以，即使你有时会读到脏数据. 好处是写数据时从来不会阻塞。那种强制性节点一致性，如2PC，两段事务提交将会让你的写关闭停顿，使用Dynamo-like风格你能将数据写到多个节点中，通过一致hashing，然后你可以从这些节点读取数据，返回正确结果给用户。
+
+2.基本基于BigTable. 这种模型中，使用常用方式保持节点充分的一致性。比如同步复制，由数据自己活或数据所在位置来实现一致性，不同产品实现细节不一样。
+
+比如：MongoDB有一个面向文本类型的数据模型, 它采取类似BigTable-like 复制策略；Cassandra有面向表table-like数据模型, 采取的是Dynamo-like风格.
+
+以后应该有数据是如何被持久化保存到磁盘上的区分，不同NoSQL处理策略不一样，有的是写一次保存一次；有的是定期保存，后者性能要好些。
+
+当然，也有按照列记录来划分的，见http://nosql-database.org/</pre>
+</div>
+<p></p>
+<p>通过CouchDB看文档型数据库含义特点：</p>
+<p><a title="http://www.ibm.com/developerworks/cn/opensource/os-couchdb/" href="http://www.ibm.com/developerworks/cn/opensource/os-couchdb/">http://www.ibm.com/developerworks/cn/opensource/os-couchdb/</a></p>
+<div>
+<pre>在面向文档的数据库中，每个名片都储存在各自的文档中，并且每个文档都可以定义它需要使用的字段。因此，对于没有传真号码的人而言，就不需要定义传真的值，而对于有传真号码的人，则根据他们的意愿定义该值。
+
+这两种数据库的另一个不同点是惟一标识符的储存。在关系数据库中通常可以使用主键，它由一个自动递增特性或序列生成器生成。当然，这些标识符仅相对于所使用的表或数据库是惟一的 — 其他表或数据库还可以使用它们。如果同时对不同网络上的两个数据库执行更新操作，这两个数据库不会同时准确地获取下一个惟一标识符。CouchDB 没有自动递增或序列特性。相反，它为每个文档分配一个通用惟一标识符（Universally Unique Identifier，UUID），这就杜绝了其他数据库意外地选择相同的惟一标识符的情况。</pre>
+</div>

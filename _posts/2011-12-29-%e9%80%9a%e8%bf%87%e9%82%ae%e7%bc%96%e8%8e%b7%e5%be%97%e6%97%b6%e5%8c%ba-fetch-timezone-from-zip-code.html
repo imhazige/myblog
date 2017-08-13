@@ -1,0 +1,64 @@
+---
+layout: post
+title: "通过邮编获得时区 fetch timezone from zip code"
+date: 2011-12-29 16:22:30.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- geoip
+- timezone
+- zipcode
+meta:
+  views: '48'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>通过邮编获得时区可以通过<a href="http://www.geonames.org/">http://www.geonames.org</a> 提供的服务来做到：</p>
+<p>首先你要注册成他的账户，激活免费服务。</p>
+<p>然后看其文挡<a href="http://www.geonames.org/export/web-services.html">http://www.geonames.org/export/web-services.html</a></p>
+<p>这网站是好人，免费啊。</p>
+<p>首先调用Postal Code Search</p>
+<p>api.geonames.org/postalCodeSearchJSON?postalcode=邮编参数&amp;maxRows=1&amp;username=你的用户名</p>
+<p>此调用返回进度和纬度</p>
+<div>
+<pre>{
+	&quot;<span style="color: #8b0000">postalCodes</span>&quot; : [{
+				&quot;<span style="color: #8b0000">adminName2</span>&quot; : &quot;<span style="color: #8b0000">Gwinnett</span>&quot;,//上级地区名
+				&quot;<span style="color: #8b0000">adminCode2</span>&quot; : &quot;<span style="color: #8b0000">135</span>&quot;,
+				&quot;<span style="color: #8b0000">adminCode1</span>&quot; : &quot;<span style="color: #8b0000">GA</span>&quot;,
+				&quot;<span style="color: #8b0000">postalCode</span>&quot; : &quot;</pre>
+<p><font color="#8b0000">xxxxxxx</font>&quot;,<br />
+				&quot;<span style="color: #8b0000">countryCode</span>&quot; : &quot;<span style="color: #8b0000">US</span>&quot;,<br />
+				&quot;<span style="color: #8b0000">lng</span>&quot; : -123.123123,<br />
+				&quot;<span style="color: #8b0000">placeName</span>&quot; : &quot;<font color="#8b0000">xxxxxxx</font>&quot;,<br />
+				&quot;<span style="color: #8b0000">lat</span>&quot; : 12.12312312,<br />
+				&quot;<span style="color: #8b0000">adminName1</span>&quot; : &quot;<span style="color: #8b0000">Georgia</span>&quot;//上上级地区名,省<br />
+			}]<br />
+}
+</div>
+<p></p>
+<p>然后调用Timezone Search</p>
+<p><a href="http://api.geonames.org/timezoneJSON?lat">http://api.geonames.org/timezoneJSON?lat</a>=纬度参数&amp;lng=经度参数&amp;username=你的用户名</p>
+<p>此调用返回目标地区当前时间，时区</p>
+<div>
+<pre>{
+	&quot;<span style="color: #8b0000">time</span>&quot; : &quot;<span style="color: #8b0000">2011-12-29 03:05</span>&quot;,
+	&quot;<span style="color: #8b0000">countryName</span>&quot; : &quot;<span style="color: #8b0000">United States</span>&quot;,
+	&quot;<span style="color: #8b0000">sunset</span>&quot; : &quot;<span style="color: #8b0000">2011-12-29 17:36</span>&quot;,
+	&quot;<span style="color: #8b0000">rawOffset</span>&quot; : -5,
+	&quot;<span style="color: #8b0000">dstOffset</span>&quot; : -4,
+	&quot;<span style="color: #8b0000">countryCode</span>&quot; : &quot;<span style="color: #8b0000">US</span>&quot;,
+	&quot;<span style="color: #8b0000">gmtOffset</span>&quot; : -5,
+	&quot;<span style="color: #8b0000">lng</span>&quot; : -123.123123,
+	&quot;<span style="color: #8b0000">sunrise</span>&quot; : &quot;<span style="color: #8b0000">2011-12-29 07:41</span>&quot;,
+	&quot;<span style="color: #8b0000">timezoneId</span>&quot; : &quot;<span style="color: #8b0000">America/New_York</span>&quot;,
+	&quot;<span style="color: #8b0000">lat</span>&quot; : 12.12312312
+}</pre>
+</div>

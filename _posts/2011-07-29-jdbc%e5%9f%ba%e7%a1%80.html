@@ -1,0 +1,30 @@
+---
+layout: post
+title: JDBC基础
+date: 2011-07-29 09:54:13.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- jdbc
+- "数据库"
+meta:
+  views: '21'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>在ORM上走，有时底下的都忘了。</p>
+<p>1:一个connection是为之一个状态的，在未关闭它之前，前面的操作会影响后面的操作。例如，使用use语句，即使是不同的两个事务，前一个事务use abc;那么后面的事务是运行在数据库abc上。</p>
+<p>2:connection是默认自动提交事务的，要实现类似begintransaction和endtransaction的逻辑，要在begintransaction里面setAutoCommit(<font color="#0000ff">false</font>),在endtransaction里面setAutoCommit(<font color="#0000ff">true</font>),提交使用commit,回滚使用rollback。记住，要是同一个connection。</p>
+<p>3:不要想一个命令里执行多个语句，一个里面执行多条要看实际实现。推荐使用addBatch，或者是多个命令，每个命令只执行一条。</p>
+<p>4：存在不能回滚的语句，例如在mysql中:</p>
+<div>
+<pre>有些语句不能被回滚。通常，这些语句包括数据定义语言（DDL）语句，比如创建或取消数据库的语句，和创建、取消或更改表或存储的子程序的语句。</pre>
+</div>
+<div>&#160;</div>

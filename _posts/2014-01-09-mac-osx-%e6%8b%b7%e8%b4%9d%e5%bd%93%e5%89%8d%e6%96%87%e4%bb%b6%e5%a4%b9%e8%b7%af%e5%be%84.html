@@ -1,0 +1,40 @@
+---
+layout: post
+title: mac osx 拷贝当前文件夹路径
+date: 2014-01-09 11:42:15.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- apple
+tags:
+- osx
+meta:
+  views: '249'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>mac osx下要活的当前文件夹路径不是个很方便的事情，因为它没有winows那样的地址栏，那么：</p>
+<p>方法一：</p>
+<p>command+I获得简介，从里面copy路径&#160; 这个不好用</p>
+<p>&#160;</p>
+<p>方法二：</p>
+<p>网上找到的</p>
+<p>在launchpad里打开Automator，在实用工具里找到Run AppleScript，选择no input，从左边Run AppleScript拖到右边，就会出现脚本编辑。</p>
+<p>&#160;</p>
+<p>拷贝脚本</p>
+<p>try   <br />&#160;&#160;&#160; tell application &quot;Finder&quot; to set the clipboard to POSIX path of (target of window 1 as alias)    <br />on error    <br />&#160;&#160;&#160; beep    <br />end try</p>
+<p>&#160;</p>
+<p>替换(* Your script goes here *)</p>
+<p>&#160;</p>
+<p>command+save 保存一个名字。</p>
+<p>&#160;</p>
+<p>然后你就可以在系统设置、键盘快捷键、通用下 找到你创建的服务，给它一个快捷键，那么在任何文件夹下只要这个快捷键就可以将其拷贝到粘贴板上了。</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>具体参见：</p>
+<p><a title="http://apple.stackexchange.com/questions/47216/copying-the-current-directorys-path-to-the-clipboard" href="http://apple.stackexchange.com/questions/47216/copying-the-current-directorys-path-to-the-clipboard">http://apple.stackexchange.com/questions/47216/copying-the-current-directorys-path-to-the-clipboard</a></p>

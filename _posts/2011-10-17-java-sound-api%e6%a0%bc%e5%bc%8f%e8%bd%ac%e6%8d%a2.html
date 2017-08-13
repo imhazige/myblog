@@ -1,0 +1,53 @@
+---
+layout: post
+title: Java Sound API,格式转换
+date: 2011-10-17 10:36:01.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- "音频转换"
+meta:
+  views: '544'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>转换音频格式本以为java很难实现，但是发现Java sound Api还是比较强大的，它可以读取音频设备输入，播放音频，还能进行音频格式转换，当然，这种转换不是所有的格式都支持，下面代码将音频格式从8bit 8k pcm wav转换为16bit 8k pcm wav。</p>
+<p>this code show how to convert audio from 8bit 8k pcm to 16 bit 8k pcm in pure java:</p>
+<div>
+<pre>	<span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span> convert(InputStream in, OutputStream out) <span style="color: #0000ff">throws</span> IOException, UnsupportedAudioFileException
+	{
+
+		<span style="color: #008000">// get an AudioInputStream of the desired format for playback</span>
+		AudioFormat.Encoding encoding = AudioFormat.Encoding.PCM_SIGNED;
+		<span style="color: #0000ff">float</span> rate = 8000f;
+		<span style="color: #0000ff">int</span> targetSampleSize = 16;
+		<span style="color: #0000ff">boolean</span> bigEndian = <span style="color: #0000ff">true</span>;
+		<span style="color: #0000ff">int</span> channels = 1;
+<span style="color: #008000">//		AudioFormat sourceFormat = new AudioFormat(encoding, rate, sourceSampleSize, channels, (sourceSampleSize / 8)</span>
+<span style="color: #008000">//				* channels, rate, bigEndian);</span>
+		AudioFormat targetFormat = <span style="color: #0000ff">new</span> AudioFormat(encoding, rate, targetSampleSize, channels, (targetSampleSize / 8)
+				* channels, rate, bigEndian);
+
+		AudioInputStream lowResAIS = AudioSystem.getAudioInputStream(in); 
+		AudioFormat sourceFormat = lowResAIS.getFormat();
+		<span style="color: #0000ff">if</span> (AudioSystem.isConversionSupported(targetFormat, sourceFormat))
+		{
+			lowResAIS = AudioSystem.getAudioInputStream(targetFormat, lowResAIS);
+		}
+		<span style="color: #0000ff">else</span>
+		{
+			<span style="color: #0000ff">throw</span> <span style="color: #0000ff">new</span> UnsupportedAudioFileException(&quot;<span style="color: #8b0000">not supported!</span>&quot;);
+		}
+
+		AudioSystem.write(lowResAIS, AudioFileFormat.Type.WAVE, out);
+	}</pre>
+</div>
+<p></p>
+<p>这种转换跨度不大，其他的参考 <a title="http://www.oracle.com/technetwork/java/javase/sound-dev-guide-1-159173.pdf" href="http://www.oracle.com/technetwork/java/javase/sound-dev-guide-1-159173.pdf">http://www.oracle.com/technetwork/java/javase/sound-dev-guide-1-159173.pdf</a></p>

@@ -1,0 +1,22 @@
+---
+layout: post
+title: extjs tree 节点清空问题
+date: 2011-05-26 06:11:35.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- extjs
+- javascript web 前端
+meta:
+  views: '366'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>当拖拽一个树节点后将改动提交服务端后怎么样保证两处树结构一致，我的的做法是让树重新生成一遍。但是这里有个问题，extjs删除树时老是报错 removeChild this.ownerTree is null.这种情况发生在当拖拽一个树节点到一个未展开的树节点之下后删除此树时。我估计是由于刚才那个拖拽的节点造成的。   <br />试过将整个treepanel重新构建，也是同样的错误。    <br />原因是调用不可见节点的expand或select方法，因为这些节点的父节点没展开，这些节点不可见。    <br />解决方法是将这些节点的父节点展开让这些节点可见。</p>

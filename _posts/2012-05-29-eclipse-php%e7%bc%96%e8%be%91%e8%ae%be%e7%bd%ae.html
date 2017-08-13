@@ -1,0 +1,27 @@
+---
+layout: post
+title: eclipse php编辑设置
+date: 2012-05-29 21:45:10.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- eclipse
+meta:
+  views: '267'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>以前写java没怎么碰到linux上编码的问题。</p>
+<p>而今写用eclipse写php，出现这个问题，别的开发者的代码文件都好好的，就我这个上传的编码格式怪怪的。似乎是utf-8又似乎是ansi。</p>
+<p>有的人看是ansi,我自己看vim里面打开文件然后:set fileencoding 看的是utf8。 用notepad++看是ansi,转换成utf-8 without bom。保存后eclipse里面看不出来有改动，然后再用notepad++打开，还是ansi编码。晕了。</p>
+<p>我的eclipse里面默认编码是utf-8,linux上运行也没问题，就是别的开发者反应格式与他们的不一样。</p>
+<p>后来发现除了encoing,还有换行符不同。</p>
+<p>需要在:</p>
+<p>Window -&gt; Preferences -&gt; General -&gt; Workspace :   <br />Text file encoding :    <br />Default : 选择此项将设定文件为系统默认的编码格式，后边会有提示具体是什么。    <br />Other&#160;&#160; : 选择一个具体的编码格式。    <br />New text file line delimiter :    <br />Default : 选择此项将设定新建的文件换行符为系统默认的换行符。    <br />Other&#160;&#160; : 选择一个具体的换行符样式。    <br />换行符分别有：    <br />Windows&#160;&#160;&#160; : CRLF 0D0A 1310 \r\n (Carriage Return/Line Feed)    <br />Unix/Linux : LF 0A 10 \n    <br />Mac OS&#160;&#160;&#160;&#160; : CR 0D 13 \r    <br />编码格式设定将影响新建的文件和修改保存后的文件。    <br />换行符设定只影响新建的文件，修改后保存将延续文件保存之前的换行符设定。    <br />修改已存在文件的编码格式：    <br />选择文件或文件夹 -&gt; Properties -&gt; Resource -&gt; Text file encoding    <br />修改已存在文件的换行符：    <br />选择文件或文件夹 -&gt; File -&gt; Convert Line Delimiter To</p>

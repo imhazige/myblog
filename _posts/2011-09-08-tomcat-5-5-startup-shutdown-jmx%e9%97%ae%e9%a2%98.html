@@ -1,0 +1,55 @@
+---
+layout: post
+title: Tomcat 5.5 startup shutdown jmx问题
+date: 2011-09-08 16:39:19.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- jmx
+- tomcat
+meta:
+  views: '262'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>我想从java启动tomcat5.5,代码如下:</p>
+<div>
+<pre>Runtime.getRuntime().exec(<span style="color: #0000ff">new</span> String[] { &quot;<span style="color: #8b0000">D:/Program Files/Apache Software Foundation/Tomcat 5.5/bin/startup.bat</span>&quot; },
+					<span style="color: #0000ff">null</span>, <span style="color: #0000ff">new</span> File(&quot;<span style="color: #8b0000">D:/Program Files/Apache Software Foundation/Tomcat 5.5</span>&quot;));</pre>
+</div>
+<div>老是启动不了，后来发现要这样：</div>
+<div>
+<pre>BufferedReader bufferedReader = <span style="color: #0000ff">new</span> BufferedReader(<span style="color: #0000ff">new</span> InputStreamReader(pid.getInputStream()), 1024);
+
+
+			String line = <span style="color: #0000ff">null</span>;
+
+			<span style="color: #0000ff">int</span> i = 0;
+			<span style="color: #0000ff">while</span> (bufferedReader != <span style="color: #0000ff">null</span> &amp;&amp; (line = bufferedReader.readLine()) != <span style="color: #0000ff">null</span>)
+			{
+				System.out.println(line);
+			}</pre>
+</div>
+<p>就是要把输出读出来才行。这样导致这个调用线程还不能马上关掉，关掉了那么Runtime.getRuntime().exec开启的子线程也会关掉导致调用取消。</p>
+<p>我使用命令行启动tomcat,再在java里面调用Runtime.getRuntime().exec来执行shutdown.bat脚本，发现关闭不了。然后使用命令行关闭，仍然关闭不了，报错:</p>
+<pre>java.net.BindException: Address already in use: JVM_Bind</pre>
+<p>平时都是关闭控制台就关闭了，这次竟然出现这种问题。网上一搜，原来是启用了jmx，而tomcat5.5脚本里面又有bug:<a title="https://issues.apache.org/bugzilla/show_bug.cgi?id=36976" href="https://issues.apache.org/bugzilla/show_bug.cgi?id=36976">https://issues.apache.org/bugzilla/show_bug.cgi?id=36976</a> 两方面的因素造成的。</p>
+<p>&#160;</p>
+<p>通过远程访问Tomcat的正确配置是:</p>
+<div>
+<pre>CATALINA_OPTS=&quot;<span style="color: #8b0000">-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=10019 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false</span>&quot; 
+CATALINA_OPTS=&quot;<span style="color: #8b0000">$CATALINA_OPTS -Djava.rmi.server.hostname=192.168.xx.xx</span>&quot; 
+CATALINA_OPTS=&quot;<span style="color: #8b0000">$CATALINA_OPTS -Djava.rmi.server.logCalls=true</span>&quot;</pre>
+</div>
+<p></p>
+<p>-Djava.rmi.server.hostname这个配置是一定要的，文档上可是没写。不然你本地可以连，远程就访问不了！</p>
+<p>在linux下执行需要:</p>
+<p>[&quot;/bin/sh&quot;,&quot;-c&quot;,&quot;sh xxx …&quot;]
+  </p>

@@ -1,0 +1,49 @@
+---
+layout: post
+title: "【转】http 301 302跳转"
+date: 2012-02-09 09:14:01.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- '301'
+- "跳转"
+meta:
+  views: '51'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>转自 <a href="http://www.williamlong.info/archives/484.html">http://www.williamlong.info/archives/484.html</a></p>
+<p>页面永久性移走（301重定向）是一种非常重要的<a href="http://www.williamlong.info/archives/375.html">“自动转向”技术</a>。</p>
+<p> 301重定向可促进搜索引擎优化效果</p>
+<p> 从搜索引擎优化角度出发，301重定向是网址重定向最为可行的一种办法。当网站的域名发生变更后，搜索引擎只对新网址进行索引，同时又会把旧地址下原有的外部链接如数转移到新地址下，从而不会让网站的排名因为网址变更而收到丝毫影响。同样，在使用301永久性重定向命令让多个域名指向网站主域时，亦不会对网站的排名产生任何负面影响。</p>
+<p> 302重定向可影响搜索引擎优化效果</p>
+<p> 迄今为止，能够对302重定向具备优异处理能力的只有Google。也就是说，在网站使用302重定向命令将其它域名指向主域时，只有Google会把其它域名的链接成绩计入主域，而其它搜索引擎只会把链接成绩向多个域名分摊，从而削弱主站的链接总量。既然作为网站排名关键因素之一的外链数量受到了影响，网站排名降低也是很自然的事情了。</p>
+<p> 综上所述，在众多重定向技术中，301永久性重定向是最为安全的一种途径，也是极为理想的一款解决方案。</p>
+<p> 对于正确实施301重定向，有这样几个方法可供大家参考：</p>
+<p> 1.在.htaccess文件中增加301重定向指令</p>
+<p> 采用“mod_rewrite”技术，形如：</p>
+<p>RewriteEngine on   <br />RewriteRule ^(.*)$ http://www.williamlong.info/$1 [R=301,L]</p>
+<p> 2.适用于使用Unix网络服务器的用户</p>
+<p> 通过此指令通知搜索引擎的spider你的站点文件不在此地址下。这是较为常用的办法。</p>
+<p> 形如：Redirect 301 / http://www.williamlong.info/</p>
+<p> 3.在服务器软件的系统管理员配置区完成301重定向</p>
+<p> 适用于使用Window网络服务器的用户</p>
+<p> 4.绑定/本地DNS</p>
+<p> 如果具有对本地DNS记录进行编辑修改的权限，则只要添加一个记录就可以解决此问题。若无此权限，则可要求网站托管服务商对DNS服务器进行相应设置。</p>
+<p> DNS服务器的设置</p>
+<p> 若要将blog.williamlong.info指向<a href="http://www.williamlong.info/">www.williamlong.info</a>，则只需在DNS服务中应增加一个别名记录，可写成：blog IN CNAME <a href="http://www.williamlong.info/">www.williamlong.info</a>。</p>
+<p> 如需配置大量的虚拟域名，则可写成：* IN CNAME <a href="http://www.williamlong.info/">www.williamlong.info</a>.</p>
+<p> 这样就可将所有未设置的以williamlong.info结尾的记录全部重定向到<a href="http://www.williamlong.info/">www.williamlong.info</a>上。</p>
+<p> 5.用ASP/PHP实现301重定向：</p>
+<p>ASP：   <br />Response.Status=&quot;301 Moved Permanently&quot;    <br />Response.AddHeader &quot;Location&quot;,&quot;<a href="http://www.williamlong.info/">http://www.williamlong.info/</a>&quot;    <br />Response.End</p>
+<p>PHP：   <br />header(&quot;HTTP/1.1 301 Moved Permanently&quot;)；    <br />header(&quot;Location：<a href="http://www.williamlong.info/">http://www.williamlong.info/</a>&quot;)；    <br />exit()；</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://www.51testing.com/?uid-43487-action-viewspace-itemid-191187">http://www.51testing.com/?uid-43487-action-viewspace-itemid-191187</a> HTTP 301 跳转和302跳转的区别</p>

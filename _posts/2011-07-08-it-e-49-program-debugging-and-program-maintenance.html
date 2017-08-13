@@ -1,0 +1,27 @@
+---
+layout: post
+title: it-e-49 Program Debugging and Program Maintenance
+date: 2011-07-08 17:06:46.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "英语"
+tags:
+- english
+- it
+meta:
+  views: '12'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>If your program exits abnormally, then there is almost certainly a logical error (a bug) in   <br />your program. 99% of programming is finding and removing these bugs. Here are some tips to    <br />help you get started.    <br />Before going on, it is necessary to reiterate the standard <font color="#0000ff">OLC</font> policy on program debugging:    <br />Do *NOT* ask OLC for help debugging a program.[1] This stock answer is intended to give you    <br />some tips on how to get started in this area; however, in general, program debugging requires    <br />more time and effort than consultants are usually able to provide.    <br />The first step is to find the exact line where the program exits. One way of doing this is with    <br />print statements scattered through your code. For example, you might do something like this in    <br />your source code:    <br />myplot(int x, int y)    <br />{ printf(&quot;Entering myplot()\n&quot;); fflush(stdout);    <br />---- lots of code here ------    <br />printf(&quot;Exiting myplot()\n&quot;); fflush(stdout);    <br />return; }    <br />The fflush() command in C ensures that the print statement is sent to your screen immediately,    <br />and you should use it if you're using printf() for debugging purposes.    <br />[2] Once you have <font color="#0000ff">narrowed down the line where your bug occurs</font>, the next step is to find out    <br />the value of your variables at that time. You will probably find that one of your variables    <br />contains very strange values. This is the time to check that you have not done the following    <br />things:    <br />Assigned an integer value to a pointer variable; or    <br />Written to a subscript that is beyond the end of an array (remember that in C array    <br />subscripts go from 0 to N-1, not from 1 to N.)    <br />Other mistakes also cause bugs. Make sure that your loops test correctly for their end conditions,    <br />for example.    <br />Other kinds of bugs (programs not exiting, incorrect output) are debugged using similar    <br />methods. Again, find the line where the first error occurs, and then check the values of your    <br />variables. Once you fix a bug, recompile your program, run it again, and then debug it again as    <br />necessary.</p>
+<p>Using printf() is a primitive method of debugging, but sometimes it's the only one that will   <br />work . If your program is too big for a debugger (such as Saber or Ddbx) or if you are working    <br />on a non-Athena platform, you may not have a debugger available. Usually, though, it is quicker    <br />and easier to use a debugger. Athena has several sophisticated debugging tools available. Saber is    <br />the tool of choice for C programmers. Gdb and Dbx may also come in handy, and both of these    <br />work with Fortran as well as with C. There are stock answers that introduce Saber and Dbx, and    <br />Saber even comes with a tutorial.    <br />It is a fact of life in program design but there seems to be always one last bug or error to be    <br />corrected. We can broadly classify the errors as:    <br /> Syntax errors this class of error means that a mistake is made in the language used to    <br />state the algorithm.    <br /> Logic errors the algorithm is syntactically correct but doesn't do what is intended.    <br /> Data range and data type errors the algorithm is syntactically correct and logically    <br />correct but can be threatened by the wrong kind of data or by values which are out of    <br />range.    <br />[3] The syntax errors aren't a serious issue during the program design phase since in practice,    <br />after designing and testing the design, the program will be implemented in a computer program    <br />language and it is at this point that syntax errors become a problem. Even so syntax errors are a    <br />minor problem since the process of building the program will capture the errors. The program    <br />simply won't build until all the syntax errors are removed.    <br />The logic errors are a much more serious problem since there is no way to eliminate these    <br />other than rigorously testing the program design.    <br />The data errors are also serious errors and in some respects are harder to deal with than logic    <br />errors.    <br />Once launched, the program needs to be maintained. Definition for program maintenance is    <br />that updating programs from time to time keeps abreast of changes in an organization's needs or its    <br />hardware and software. Based on the maintenance tasks needed to be performed, the program    <br />administrators should determine on-going financial and <font color="#0000ff">staffing</font> needs and how they will be met.    <br />Program maintenance represents a major portion of the total <font color="#0000ff">expenditures </font>on application programs.</p>
+<p>&#160;</p>
+<p>OLCThe Online Learning Center</p>
+<p>1, expenditures&#160;&#160; <br />n. 开支，支出（expenditure复数形式） </p>
+<p>2, staff&#160; [stɑ:f]   <br />n. 全体人员,同事     <br />n. 杆,棒     <br />vt. 配备员工 </p>

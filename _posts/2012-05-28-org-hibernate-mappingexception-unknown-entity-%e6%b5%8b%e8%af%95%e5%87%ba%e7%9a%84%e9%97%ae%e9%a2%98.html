@@ -1,0 +1,36 @@
+---
+layout: post
+title: 'org.hibernate.MappingException: Unknown entity, 测试出的问题'
+date: 2012-05-28 17:32:18.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- hibernate
+meta:
+  views: '204'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天hibernate黑了我一把， 将之前的hibernate工程拷贝建另一个工程，这回加个测试类，首先写几个测试怎删改查。</p>
+<p>结果merge成功，findById, findAll,findByExample报错:</p>
+<p>org.hibernate.MappingException: Unknown entity</p>
+<p>确认不是配置错误，因为插入成功了。</p>
+<p>试了半天搞不定，看之前的工程，没有测试类，心想是否测试类加载的问题？但是怎么merge可以呢？</p>
+<p>后来试试直接运行程序，奇迹发生了，运行得好好的。</p>
+<p>看来是测试环境造成的原因。我用的狗屎maven，估计又是这个造成的。</p>
+<p>后来发现有个包common.collections有冲突，解决此问题后，发现findall可以，findById, findByExample仍然不行。看来还和包冲突有关。</p>
+<p>最后只好源码跟踪，发现问题：</p>
+<p>&#160;</p>
+<p>findById中</p>
+<p>getSession().get(ENTITY_NAME, id)</p>
+<p>ENTITY_NAME应该是类全名(含包名),而我的代码里却是类短名(不含包名)。</p>
+<p>而hsql中应该是类短名。</p>
+<p>这是myeclipse中自动生成的，想起来生成向导时没有写包名，导致如此。 </p>
+<p>放弃了，真BT的问题。花了我一下午。</p>

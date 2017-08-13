@@ -1,0 +1,27 @@
+---
+layout: post
+title: "数据库同步--可别忘记了"
+date: 2011-07-26 14:19:36.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- "数据库"
+tags:
+- jdbc
+- "数据库"
+meta:
+  views: '88'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>对于数据库同步，使用者往往将注意力放在了事务上，但是可别忘记了数据库操作方法的同步性。</p>
+<p><code><b>JDBC中:<a href="../../java/sql/Connection.html#setAutoCommit(boolean)">setAutoCommit</a></b>(boolean autoCommit)</code>这个方法可不是什么同步方法，如果一个connection被多个线程使用，这种方式就达不到同步的要求。因为说不定哪个线程马上又调用<b><a href="../../java/sql/Connection.html#setAutoCommit(boolean)">setAutoCommit</a>。</b></p>
+<p>保持同步的方法是：保证connection只被一个线程使用:</p>
+<p>1:使用ThreadLocal(HibernateSessionFactory的方法,ibatis的SqlMapClient内部也是使用了ThreadLocal,所以你可以放心使用单例的SqlMapClient,它是线程安全的)。</p>
+<p>2：使用连接池获取connection，用完后关闭。</p>
+<p>3：在一个操作内使用同步块。</p>

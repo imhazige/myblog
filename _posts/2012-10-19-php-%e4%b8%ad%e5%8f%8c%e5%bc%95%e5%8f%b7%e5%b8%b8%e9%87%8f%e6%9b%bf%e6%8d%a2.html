@@ -1,0 +1,26 @@
+---
+layout: post
+title: php 中双引号常量替换
+date: 2012-10-19 13:41:29.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags: []
+meta:
+  views: '170'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>php双引号字符串中可计算变量表达式，但是常量怎么办，可以使用如下方法:</p>
+<p>
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:812469c5-0cb0-4c63-8c15-c81123a09de7:efdd52db-2fa8-4898-bc00-e70bd398bae8" class="wlWriterEditableSmartContent">
+<pre name="code" class="php:firstline[1]">define('ANIMAL', 'dog');
+$constant = 'constant';
+echo "I like {$constant('ANIMAL')}";</pre>
+</div>

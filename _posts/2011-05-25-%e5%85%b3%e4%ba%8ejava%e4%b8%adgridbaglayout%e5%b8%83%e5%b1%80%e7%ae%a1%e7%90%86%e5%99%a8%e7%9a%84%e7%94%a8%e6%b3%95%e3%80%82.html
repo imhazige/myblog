@@ -1,0 +1,164 @@
+---
+layout: post
+title: "关于Java中GridBagLayout布局管理器的用法。"
+date: 2011-05-25 08:33:53.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- swing java
+meta:
+  views: '110'
+  _edit_last: '1'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>&nbsp;&nbsp;&nbsp; 最近要写一个界面，我却发现一般的布局管理器都不那么好用。上网百度了一下，有人推荐GridBagLayout，却有很多人说GridBagLayout不好用，看不懂。</p>
+<p>&nbsp;&nbsp;&nbsp; 于是我仔细查了一下java API，感觉<u>掌握GridBagLayout最简单的用法还是蛮简单的，也是很有必要的。</u>因为个人不喜欢绝对定位，而使用相对定位的话就必须用到GridBagLayout，主要是由于其它的几个布局管理器太简单，可操作性差。 <br />
+	总结了GridBagLayout的用法中的关键点如下：</p>
+<p>1.要明确一点概念：每个 GridBagLayout 对象维持一个动态的矩形单元网格，每个组件占用一个或多个这样的单元，称为显示区域。 <br />
+	&nbsp; 网格的总体方向取决于容器的 ComponentOrientation 属性。对于水平的从左到右的方向，网格坐标 (0,0) 位于容器的左上角，其中 X 向右递增，Y 向下递增。</p>
+<p>2.<u>要使用GidBagLayout要先定义一个GridBagConstraints对象。 <br />
+	</u>&nbsp; java API说明如下：&ldquo;每个由 GridBagLayout 管理的组件都与 GridBagConstraints 的实例相关联。Constraints 对象指定组件在网格中的显示区域以及组件在其显示区域中的放置方式。&rdquo; <br />
+	&nbsp; 例如，如下几行代码就可以添加其它组件： <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagLayout gridbag = new GridBagLayout(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagConstraints c = new GridBagConstraints(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JFrame&nbsp;&nbsp; f=new JFrame(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.setLayout(gridbag); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Button button = new Button(name); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(button, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.add(jButton);</p>
+<p>3.为了有效使用网格包布局，必须自定义与组件相关联的一个或多个 GridBagConstraints 对象。 <br />
+	<u>即须设置GridBagConstraints 对象的属性。</u>我认为只要能掌握以下四种参数就能很好的使用GidBagLayout： <br />
+	（1）GridBagConstraints.gridwidthGridBagConstraints.gridheight <br />
+	&nbsp;&nbsp;&nbsp; 指定组件的显示区域行（针对 gridwidth）或列（针对 gridheight）中的单元数。默认值为 1。如下向窗口中添加一个占两个单元格（两行一列）的按钮的例子： <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JFrame&nbsp;&nbsp; f=new JFrame(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagLayout gridbag = new GridBagLayout(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagConstraints c = new GridBagConstraints(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.setLayout(gridbag); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridheight=2; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridwidth=1; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton jButton = new JButton(&quot;按钮1&quot;); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(button, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.add(jButton); <br />
+	（2）GridBagConstraints.fill <br />
+	&nbsp;&nbsp;&nbsp; 当组件的显示区域大于组件的所需大小时，用于确定是否（以及如何）调整组件。 <br />
+	&nbsp;&nbsp;&nbsp; 可能的值为 GridBagConstraints.NONE（默认值）、 <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagConstraints.HORIZONTAL（加宽组件直到它足以在水平方向上填满其显示区域，但不更改其高度）、&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagConstraints.VERTICAL（加高组件直到它足以在垂直方向上填满其显示区域，但不更改其宽度）和&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagConstraints.BOTH（使组件完全填满其显示区域）。 <br />
+	&nbsp;&nbsp;&nbsp; 使用情景举例：在一个很大的窗口（如300*300）中添加一个按钮（原始大小40*30）。</p>
+<p>（3）GridBagConstraints.anchor <br />
+	&nbsp;&nbsp;&nbsp; 当组件小于其显示区域时，用于确定将组件置于何处（在显示区域中）。可能的值有两种：相对和绝对。相对值的解释是相对于容器的ComponentOrientation 属性，而绝对值则不然。个人觉得只使用绝对值就可以。有效值有： <br />
+	&nbsp;&nbsp;&nbsp; 绝对值 <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.NORTH <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.SOUTH <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.WEST <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.EAST <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.NORTHWEST <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.NORTHEAST <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.SOUTHWEST <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.SOUTHEAST <br />
+	&nbsp;&nbsp;&nbsp; GridBagConstraints.CENTER (the default) <br />
+	（4）GridBagConstraints.weightx、GridBagConstraints.weighty&nbsp;&nbsp; （************最重要的属性） <br />
+	&nbsp; 用于确定分布空间的方式，这对于指定调整行为至关重要。例如：在一个很大的窗口（如300*300）中添加两个按钮（也可以是面板）（原始大小 40*30），默认的，你会发现两个按钮分别处于上下两个等大小的区域中，且只占用了一小部分，没有被按钮占用的区域就被称为额外区域。<u>该额外区域会随着参数weightx、weighty而被分配。</u></p>
+<p>&nbsp;&nbsp; 完整的示例代码如下：</p>
+<p>import javax.swing.*; <br />
+	import java.util.*; <br />
+	import java.awt.*;</p>
+<p>public class Example{</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; public Example() { <br />
+	&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; public static void main(String args[]) { <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JFrame f = new JFrame(&quot;GridBag Layout Example&quot;);</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagLayout gridbag = new GridBagLayout(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagConstraints c = new GridBagConstraints(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.setLayout(gridbag); <br />
+	//添加按钮1 <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill = GridBagConstraints.BOTH; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridheight=2; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridwidth=1; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weightx=0.0;//默认值为0.0 <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weighty=0.0;//默认值为0.0 <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.anchor=GridBagConstraints.SOUTHWEST; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton jButton1 = new JButton(&quot;按钮1&quot;); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(jButton1, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.add(jButton1); <br />
+	//添加按钮2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill = GridBagConstraints.NONE; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridwidth=GridBagConstraints.REMAINDER; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridheight=1; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weightx=1.0;//默认值为0.0 <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weighty=0.8; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton jButton2 = new JButton(&quot;按钮2&quot;); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(jButton2, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.add(jButton2); <br />
+	//添加按钮3 <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill = GridBagConstraints.BOTH; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridwidth=1; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridheight=1; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weighty=0.2; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton jButton3 = new JButton(&quot;按钮3&quot;); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(jButton3, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.add(jButton3);</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.setSize(500,500); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f.setVisible(true); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+	}</p>
+<p>&nbsp;&nbsp;&nbsp; 在上述代码中添加按钮2时c.weighty=0.8，而在添加按钮3时c.weighty=0.2，这就会导致按钮2所占区域的高大约是按钮3所占区域的高的0.8/0.2=4倍。</p>
+<p>以下是我修改的代码：</p>
+<p>package co.im.client.component.dialog; <br />
+	import java.awt.GridBagConstraints; <br />
+	import java.awt.GridBagLayout; <br />
+	import javax.swing.JButton; <br />
+	import javax.swing.JFrame; <br />
+	import javax.swing.LookAndFeel; <br />
+	import javax.swing.UIManager; <br />
+	public class GridBagLayoutTest <br />
+	{ <br />
+	&nbsp;&nbsp;&nbsp; public static void main(String[] args) <br />
+	&nbsp;&nbsp;&nbsp; { <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JFrame jFrame = new JFrame(); <br />
+	//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UIManager.setLookAndFeel(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jFrame.setSize(400, 300); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagConstraints c = new GridBagConstraints(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridBagLayout gridbag = new GridBagLayout(); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jFrame.setLayout(gridbag); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill = GridBagConstraints.BOTH; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridheight = 2; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridwidth = 1; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weightx = 1;//简单的方法就是这里设置为一就可以了（填充效果） <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weighty = 1;// <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.anchor = GridBagConstraints.SOUTHWEST; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton jButton1 = new JButton(&quot;1&quot;); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(jButton1, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jFrame.add(jButton1); <br />
+	//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill = GridBagConstraints.NONE; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridwidth = GridBagConstraints.REMAINDER; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridheight = 1; <br />
+	//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weightx = 1.0; <br />
+	//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weighty = 0.8; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton jButton2 = new JButton(&quot;2&quot;); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(jButton2, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jFrame.add(jButton2); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.fill = GridBagConstraints.BOTH; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridwidth = 1; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.gridheight = 1; <br />
+	//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.weighty = 0.2; <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton jButton3 = new JButton(&quot;3&quot;); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gridbag.setConstraints(jButton3, c); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jFrame.add(jButton3); <br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jFrame.setVisible(true); <br />
+	&nbsp;&nbsp;&nbsp; } <br />
+	}</p>
+<p>&nbsp;</p>
+<p>更多例子参见:</p>
+<p><a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html">http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html</a></p>
+<p><a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html">http://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html</a></p>

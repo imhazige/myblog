@@ -1,0 +1,49 @@
+---
+layout: post
+title: php mail 在windows下的配置
+date: 2012-07-19 16:23:46.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- mail
+meta:
+  views: '62'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>php 的mail函数可以发邮件，它的配置是在php.ini中设置的，一般linux上很方便，众多VPS,host一定会为你设置好。</p>
+<p>但是在windows中开发怎么配置呢？</p>
+<p>可使用sendmail来通过远程smtp服务器来发邮件。(我这里只讲发邮件，对于一般开发是足够了)</p>
+<p>下载sendmail <a href="http://www.glob.com.au/sendmail/sendmail.zip">http://www.glob.com.au/sendmail/sendmail.zip</a></p>
+<p>解压到目录例如c:/sendmail</p>
+<p><strong>编辑sendmail.ini</strong></p>
+<p>smtp_server=smtp服务器地址    <br />auth_username=邮箱登录名     <br />auth_password=邮箱密码     <br />force_sender=发件人地址全写 这个如果不配置可能导致无法发送，但是我实际测试可以不写。</p>
+<p>反注释debug_logfile=debug.log这一句以便调试</p>
+<p>&#160;</p>
+<p><strong>编辑php.ini</strong></p>
+<p>sendmail_from = <a href="mailto:you@yourdomain.com">you@yourdomain.com</a> 这个我没写也可以发邮件     <br />sendmail_path = “c:/sendmail/sendmail.exe -t –i”</p>
+<p>&#160;</p>
+<p><font color="#0000ff">注意force_sender和sendmail_from这两个配置都是为了自动加上From头，但是我的环境即使都设置了，还是没有在邮件头中加上From,导致550 Administrative prohibition错误。</font></p>
+<p>最后只好在mail函数调用时在<i><tt>additional_headers</tt></i>这个参数中包含From,例如</p>
+<div>&#160;</div>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+<a style="color: #ffa500" href="http://www.php.net/mail">mail</a>('<span style="color: #8b0000">xxxx@gmail.com</span>', &quot;<span style="color: #8b0000">Test Email</span>&quot;, '<span style="color: #8b0000">good email</span>','<span style="color: #8b0000">From: xxxx@ig2net.info</span>' )
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p>这样就可以了。</p>
+<p>注意From由于安全的原因，可以使其他域名的随意账户，即是此账户不存在，但是如果是配置的邮件服务器的域名，则必须存在。</p>
+<p>例如上例中我使用本域名<a href="mailto:admin@ig2net.info">admin@ig2net.info</a> 账户作为邮件服务器，那么'<span style="color: #8b0000">From: xxxx@ig2net.info</span>' 这样发送必须有<a href="mailto:'xxxx@ig2net.info'">'<span style="color: #8b0000">xxxx@ig2net.info</span>'</a>&#160; 这个账户，否则发不出去。</p>
+<p>然而如果使用From: <a href="mailto:abcd@somedomain.com">abcd@somedomain.com</a> 作为发件人，那是绝对可以发出去的。当然这可归于垃圾邮件。</p>
+<p>&#160;</p>
+<p>今天碰到一个问题是，由于我的域名改了，本机测试的邮件发不出去了，打开sendmail的debug.log一看，似乎是验证成功的，但是接着一大堆乱码。我尝试将smtp_ssl设置为none则解决了此问题。</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://www.devcha.com/2010/04/how-to-send-emails-from-php-on-windows.html">http://www.devcha.com/2010/04/how-to-send-emails-from-php-on-windows.html</a></p>

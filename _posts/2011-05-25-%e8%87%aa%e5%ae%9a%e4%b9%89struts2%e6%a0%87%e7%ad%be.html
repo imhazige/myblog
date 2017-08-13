@@ -1,0 +1,21 @@
+---
+layout: post
+title: "自定义struts2标签"
+date: 2011-05-25 08:39:27.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- struts2 java
+meta:
+  views: '50'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>网上有人指出基本步骤如下:   <br />One of the developers recently mentioned they is writing a document about how to do this and I think there was talk about creating a maven archetype.    <br />In the mean-time, try following some of existing code. The current version of the struts2 yui plugin provides a nice simple example as it only contains two tags and is packaged as a a plugin (http://code.google.com/p/struts2yuiplugin/source).【见附件:】    <br />I find it's easiest to follow that example completely - use the maven plugin to generate the TLD and package your tags as a struts2 plugin. This isn't mandatory though as you can write the TLD by hand and include the classes in your webapp directly.    <br />In general:    <br />1. create a bean that extends UIBean or ClosingUIBean (for open &amp; close tags), identifies the templates and populates the template context     <br />2. create a tag class that extends AbstractUITag that creates the bean instance and sets the properties of the bean    <br />3. create the templates referenced by the bean    <br />After completing these 3 steps you can start using your tag if you write a TLD and include it in your classpath. If you copy the pom.xml from the example able you can use maven to generate the TLD (if you've used the appropriate annotations).    <br />The remaining steps allowing your tags to be uses within freemarker and velocity templates (rather than only JSP)    <br />4. Create a TagLibrary and TagModels for Freemarker and Directive's for velocity    <br />5. Create struts-plugin.xml that declares your TagLibrary bean    <br />----------------------------------------------------------------------------------------------------------------------------------------------------------------------    <br />plugin配置中：    <br />&lt;bean type=&quot;org.apache.struts2.views.TagLibrary&quot; name=&quot;<b><i><font color="#0000ff">tagtest</font></i></b>&quot; class=&quot;test.s2.plugin.views.TestTagLibrary&quot; /&gt;    <br />freemarker models中:    <br />&#160;&#160;&#160; public AncorModel get<i><b><font color="#0000ff">Ancor</font></b></i>() {    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; if (this.ancor == null) {    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; this.ancor = new AncorModel(this.stack, this.req, this.res);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; }    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; return this.ancor;    <br />&#160;&#160;&#160; }    <br />那么应该这样使用：    <br />&lt;@tagtest.ancor ... /&gt;    <br />注意前缀tagtest和后缀ancor分别对应蓝色斜体字。【shit!】    <br />然而velocity的用法又不一样:    <br />AbstractDirective：    <br />&#160;&#160;&#160; public String getName()    <br />&#160;&#160;&#160; {&#160;&#160;&#160;&#160;&#160;&#160;&#160; <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; return &quot;<i><b><font color="#0000ff">testa</font></b></i>&quot; ;    <br />&#160;&#160;&#160; }    <br />#<b><i>testa</i></b> (... )    <br />这个与配置无关，是由getName返回的来决定的。</p>

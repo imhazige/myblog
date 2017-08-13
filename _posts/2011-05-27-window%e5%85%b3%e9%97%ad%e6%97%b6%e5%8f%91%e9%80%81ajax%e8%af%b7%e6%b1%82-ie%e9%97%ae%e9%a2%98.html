@@ -1,0 +1,29 @@
+---
+layout: post
+title: window关闭时onunload,onbeforeunload处理
+date: 2011-05-27 09:54:35.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- onbeforeunload
+- onunload
+meta:
+  views: '258'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>要想在页面跳转时询问用户，需要在onbeforeunload 事件中返回询问字符:</p>
+<p>window.onbeforeunload = function(e) {   <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; return 'Are You Sure To Leave This Page?';    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; };</p>
+<p>如果在关闭页面时需要做些请求动作，在onunload事件中处理较好:</p>
+<p>window.onunload = function() {   <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; //close function    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; };</p>
+<p>注意事项：</p>
+<p>1:不要试图用addEventListener或attachEvent绑定这两个事件，浏览器不兼容。</p>
+<p>2:应该在onbeforeunload 中询问，而将退出动作放在onunload 中，这样逻辑好清晰。</p>
+<p>3:如果是ajax请求放在onunload 事件中，需要同步执行ajax,否则是不能保证这个ajax请求会成功的。</p>

@@ -1,0 +1,36 @@
+---
+layout: post
+title: hibernate工程，正向还是反向？
+date: 2011-07-25 10:54:48.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- hibernate
+- orm
+meta:
+  views: '158'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>我用hibernate都是反向工程即先有数据库schema再生成dao,mapping file。</p>
+<p>我记得最早我这么做时就已经比较过了，但是现在又忘了为什么……</p>
+<p>这次做的项目先用的是mongodb,自己写的pojo,dal,现在要转为使用mysql，在想这回来个正向工程吧。查了一下，正向工程要先写mapping file或是在pojo上写注解,再用xdolet或者SchemaExport反向生成。想想，哎呀算了吧，看见xml就头疼！况且已经有了数据库设计的模型，转成sql很容易。最后还是决定反向工程。</p>
+<p>那答案就很清楚了，一般数据库设计都是先使用工具建好模型直接生成schema就可以。在反向自然是顺理成章的事。</p>
+<p>这篇文章也讨论了这个问题：<a title="http://www.iteye.com/topic/123" href="http://www.iteye.com/topic/123">http://www.iteye.com/topic/123</a></p>
+<div>
+<pre>从这四种自动生成工具来看， mapping file, java file and DDL，只要知道任何一种文件，都可以得到另外两种文件， 
+如： 
+1. 只有mapping file: 
+mapping file---hbm2java----java---SchemaExport----DDL 
+2.只有DDL 
+DDL---Middlegen---hbm----hbm2java----java 
+3.只有Java 
+java---XDoclet---hbm----SchemaExport----DDL</pre>
+</div>

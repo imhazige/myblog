@@ -1,0 +1,31 @@
+---
+layout: post
+title: XPath namespace的情况
+date: 2012-08-27 16:01:16.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- namespace
+- xml
+meta:
+  views: '96'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>今天使用Dom4j取节点，试了半天都没取到，真是很纳闷，用了这么久的函数今天突然不行了？仔细一看，原来xml节点带名空间。</p>
+<p>下面引用自: <a href="http://www.cnblogs.com/PunkChen/archive/2008/04/02/1134304.html">http://www.cnblogs.com/PunkChen/archive/2008/04/02/1134304.html</a></p>
+<p>xml代码example:   <br /> &lt;report&#160; xmlns=&quot;<a href="http://www.eclipse.org/birt/2005/design&quot;">http://www.eclipse.org/birt/2005/design&quot;</a> version=&quot;3.2.15&quot; id=&quot;1&quot;&gt;    <br />&#160;&#160;&#160; &lt;list-property name=&quot;cssStyleSheets&quot;&gt;    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;structure&gt;    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;property name=&quot;fileName&quot;&gt;D: eport.css&lt;/property&gt;    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;/structure&gt;    <br />&#160;&#160;&#160; &lt;/list-property&gt;    <br />&lt;/report&gt;    <br />第一个方案.设置你的xpath的命名空间setNamespaceURIs </p>
+<p>public class TransferXML {   <br />&#160;&#160;&#160; public static void main(String[] args) throws Exception{    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Map map = new HashMap();    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; map.put(&quot;design&quot;,&quot;<a href="http://www.eclipse.org/birt/2005/design&quot;);">http://www.eclipse.org/birt/2005/design&quot;);</a>    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; SAXReader saxReader = new SAXReader();    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; File file = new File(&quot;D:\test.xml&quot;);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Document document = saxReader.read(file);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; XPath x = document.createXPath(&quot;//design:list-property&quot;);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; x.setNamespaceURIs(map);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; List nodelist = x.selectNodes(document);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(nodelist.size());    <br />&#160;&#160;&#160; }    <br />}    <br />第二个解决方案:设置你的DocumentFactory()的命名空间 setXPathNamespaceURIs    <br />public class TransferXML {    <br />&#160;&#160;&#160; public static void main(String[] args) throws Exception{    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Map map = new HashMap();    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; map.put(&quot;design&quot;,&quot;<a href="http://www.eclipse.org/birt/2005/design&quot;);">http://www.eclipse.org/birt/2005/design&quot;);</a>    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; SAXReader saxReader = new SAXReader();    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; File file = new File(&quot;D:\test.xml&quot;);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; saxReader.getDocumentFactory().setXPathNamespaceURIs(map);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Document document = saxReader.read(file);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; List tmp = document.selectNodes(&quot;//design:list-property&quot;);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(tmp.size());    <br />&#160;&#160;&#160; }    <br />}    <br />第三种方法：本人用的，最笨也是最通用的方法，就是不使用开发环境给你提供的一系列对象，而是用XPath语法中自带的local-name() 和 namespace-uri() 指定你要使用的节点名和命名空间。    <br />当你遇到使用xslt来样式化xml时，就知道这个笨方法的好处了：    <br />public class TransferXML {    <br />&#160;&#160;&#160; public static void main(String[] args) throws Exception    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; SAXReader saxReader = new SAXReader();    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; File file = new File(&quot;D:\test.xml&quot;);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; Document document = saxReader.read(file);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; List tmp = document.selectNodes(&quot;//*[local-name()='report' and namespace-uri()='<a href="http://www.eclipse.org/birt/2005/design']/*">http://www.eclipse.org/birt/2005/design']/*</a> [local-name()='list-property']&quot;);    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; System.out.println(tmp.size());    <br />&#160;&#160;&#160; }    <br />}</p>
+<p>我觉得第三种最方便，虽然有点繁琐，往往那个名空间是多余的东西，我们处理的数据不需要关心它，所以使用低三种方法时，可以将and namespace-uri()='<a href="http://www.eclipse.org/birt/2005/design']/*">http://www.eclipse.org/birt/2005/design</a> 这个条件不要，那么不管它是什么名空间，只要是要选取得节点名就被包含了。</p>
+<p>&#160;</p>
+<p>不得不吐槽：为什么不用json呢?</p>
+<p>&#160;</p>
+<p>参见:</p>
+<p><a href="http://www.cnblogs.com/PunkChen/archive/2008/04/02/1134304.html">http://www.cnblogs.com/PunkChen/archive/2008/04/02/1134304.html</a></p>

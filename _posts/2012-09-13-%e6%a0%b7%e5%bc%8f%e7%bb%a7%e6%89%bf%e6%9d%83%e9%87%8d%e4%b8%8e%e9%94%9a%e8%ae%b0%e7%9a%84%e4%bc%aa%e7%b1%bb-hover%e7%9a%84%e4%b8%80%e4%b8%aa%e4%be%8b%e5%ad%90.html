@@ -1,0 +1,43 @@
+---
+layout: post
+title: "样式继承权重与锚记的伪类 :hover的一个例子"
+date: 2012-09-13 17:04:10.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- css
+meta:
+  views: '7'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div>
+<pre><span style="color: #800000">a</span> {
+	<span style="color: #ff0000">color</span>: <span style="color: #0000ff">#222222</span>;
+	<span style="color: #ff0000">text-decoration</span>: <span style="color: #0000ff">none</span>;
+}
+
+<span style="color: #800000">a</span>:<span style="color: #800000">hover</span> {
+	<span style="color: #ff0000">color</span>: <span style="color: #0000ff">#333333</span>;
+	<span style="color: #ff0000">text-decoration</span>: <span style="color: #0000ff">underline</span>;
+}</pre>
+</div>
+<p>上面的例子定义了锚记的两种状态。鼠标不在其上时没有下划线，当移动到其上时则有下划线。</p>
+<p>如果又定义了一个样式为:</p>
+<div>
+<pre><span style="color: #800000">a#abc</span>{
+      <span style="color: #800000">text-decoration</span>: <span style="color: #800000">none</span>;
+}</pre>
+</div>
+<p>那么你会发现当鼠标移动到id=”abc”这个锚记上时，并没有出现下划线。</p>
+<p>这并没有什么好奇怪的，这是个很好的例子。</p>
+<p>选择子“a#abc”的权重显然比选择子“a”和”a:hover”高，那么当移动到id=”abc”这个锚记上时,就会应用“a#abc”样式而不是”a:hover”样式。当然此时如果有”a#abc:hover”则会应用它，因为此时（鼠标在其上）它的权重更高。</p>
+<p>
+  <br />此文纯属烂笔头。</p>

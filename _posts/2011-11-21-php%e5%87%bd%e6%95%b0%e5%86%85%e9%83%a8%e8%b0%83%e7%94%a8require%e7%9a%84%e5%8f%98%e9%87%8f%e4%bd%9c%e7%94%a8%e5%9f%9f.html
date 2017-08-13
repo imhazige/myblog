@@ -1,0 +1,63 @@
+---
+layout: post
+title: php函数内部调用require的变量作用域
+date: 2011-11-21 11:11:10.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- php
+tags:
+- "变量作用域"
+meta:
+  views: '264'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>在函数内部调用require函数后被包含文件内部的变量会有什么作用域？</p>
+<p>被包含文件a.inc.php:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+
+$a='<span style="color: #8b0000">1</span>';
+<a style="color: #0000ff" href="http://www.php.net/global">global</a> $b; 
+$b = '<span style="color: #8b0000">2</span>';
+
+<a style="color: #0000ff" href="http://www.php.net/function">function</a> fc(){
+	<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> '<span style="color: #8b0000">fc</span>';
+}
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p></p>
+<p> 调用文件:</p>
+<div>
+<pre><span style="color: #0000ff">&lt;?</span>php
+<a style="color: #0000ff" href="http://www.php.net/function">function</a> infc(){
+	<a style="color: #0000ff" href="http://www.php.net/require">require</a>('<span style="color: #8b0000">a.inc.php</span>');
+
+	<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> &quot;<span style="color: #8b0000">$a&lt;br&gt;</span>&quot;; <span style="color: #008000">//function scope var $a visible</span>
+	<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> &quot;<span style="color: #8b0000">$b</span>&quot;;	<span style="color: #008000">//global var $b visible in function</span>
+	fc();
+}
+
+infc();
+
+<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> '<span style="color: #8b0000">--</span>';
+
+fc(); <span style="color: #008000">//note: function fc visible</span>
+
+<span style="color: #008000">//echo &quot;$a&quot;; //error, function scope not visible</span>
+<a style="color: #0000ff" href="http://www.php.net/echo">echo</a> &quot;<span style="color: #8b0000">$b</span>&quot;; <span style="color: #008000">//ok:global var visible</span>
+<span style="color: #0000ff">?&gt;</span></pre>
+</div>
+<p></p>
+<p>总结：</p>
+<p>函数内部调用require:</p>
+<p>变量--&gt;函数scope变量</p>
+<p>global--&gt;global变量，并且函数内部可见</p>
+<p>函数--&gt;函数内外可见
+  </p>

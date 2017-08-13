@@ -1,0 +1,21 @@
+---
+layout: post
+title: window.open 子窗体的onload事件
+date: 2011-05-26 06:16:42.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Web前端
+tags:
+- javascript web 前端
+meta:
+  views: '324'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>下面的写法：   <br />&lt;script type=&quot;text/javascript&quot;&gt;    <br />function ops(){    <br />var win = window.open('','_blank');    <br />win.onload = function(){    <br />alert('ok');    <br />};    <br />win.location.href = 'test.html';    <br />}    <br />&lt;/script&gt;    <br />&lt;/head&gt;    <br />&lt;body&gt;    <br />&lt;div class=&quot;bb&quot; onclick=&quot;ops();&quot;&gt;    <br />圆角三边 这里是内容    <br />&lt;/div&gt;    <br />&lt;/body&gt;    <br />火狐里面是可以alert的，但是ie8就不行。    <br />解决办法是子窗体调父窗体的方法模拟回调。（IE真是让人纠结。）</p>

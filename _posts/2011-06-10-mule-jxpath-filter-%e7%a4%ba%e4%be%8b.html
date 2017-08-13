@@ -1,0 +1,65 @@
+---
+layout: post
+title: mule-jxpath-filter 示例
+date: 2011-06-10 16:21:59.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+tags:
+- jmx
+- mule
+meta:
+  views: '72'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<div class="cnblogs_code">
+<pre /><img align="top" src="{{ site.baseurl }}/assets/ContractedBlock.gif" width="11" height="16" /><img align="top" src="{{ site.baseurl }}/assets/ExpandedBlockStart.gif" width="11" height="16" /><span class="cnblogs_code_Collapse">myjmx-plugin</span><span><span style="color: #0000ff">&lt;?</span>xml version="1.0" encoding="UTF-8"<span style="color: #0000ff">?&gt;</span><br />
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">mule</span> <span style="color: #ff0000">xmlns</span>=<span style="color: #0000ff">"http://www.mulesource.org/schema/mule/core/2.2"</span><br />
+    <span style="color: #ff0000">xmlns</span>:<span style="color: #ff0000">xsi</span>=<span style="color: #0000ff">"http://www.w3.org/2001/XMLSchema-instance"</span><br />
+    <span style="color: #ff0000">xmlns</span>:<span style="color: #ff0000">spring</span>=<span style="color: #0000ff">"http://www.springframework.org/schema/beans"</span><br />
+    <span style="color: #ff0000">xmlns</span>:<span style="color: #ff0000">stdio</span>=<span style="color: #0000ff">"http://www.mulesource.org/schema/mule/stdio/2.2"</span><br />
+    <span style="color: #ff0000">xmlns</span>:<span style="color: #ff0000">vm</span>=<span style="color: #0000ff">"http://www.mulesource.org/schema/mule/vm/2.2"</span><br />
+    <span style="color: #ff0000">xsi</span>:<span style="color: #ff0000">schemaLocation</span>=<span style="color: #0000ff">"<br />
+               http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd<br />
+               http://www.mulesource.org/schema/mule/core/2.2 http://www.mulesource.org/schema/mule/core/2.2/mule.xsd<br />
+               http://www.mulesource.org/schema/mule/stdio/2.2 http://www.mulesource.org/schema/mule/stdio/2.2/mule-stdio.xsd<br />
+               http://www.mulesource.org/schema/mule/vm/2.2 http://www.mulesource.org/schema/mule/vm/2.2/mule-vm.xsd<br />
+               http://www.mulesource.org/schema/mule/xml/2.2 http://www.mulesource.org/schema/mule/xml/2.2/mule-xml.xsd<br />
+               "</span><span style="color: #0000ff">&gt;</span></p>
+<p>    <span style="color: #0000ff">&lt;</span><span style="color: #800000">description</span><span style="color: #0000ff">&gt;</span></p>
+<p>    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">description</span><span style="color: #0000ff">&gt;</span></p>
+<p>    <span style="color: #0000ff">&lt;</span><span style="color: #800000">model</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">"adapterModel"</span><span style="color: #0000ff">&gt;</span><br />
+        <span style="color: #0000ff">&lt;</span><span style="color: #800000">service</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">"AdapterService"</span><span style="color: #0000ff">&gt;</span><br />
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">inbound</span><span style="color: #0000ff">&gt;</span><br />
+                <span style="color: #0000ff">&lt;</span><span style="color: #c71585">vm</span>:<span style="color: #800000">inbound</span>-<span style="color: #ff0000">endpoint</span> <span style="color: #ff0000">path</span>=<span style="color: #0000ff">"xxx/adapter"</span><br />
+                    <span style="color: #ff0000">synchronous</span>=<span style="color: #0000ff">"true"</span> <span style="color: #0000ff">/&gt;</span><br />
+            <span style="color: #0000ff">&lt;/</span><span style="color: #800000">inbound</span><span style="color: #0000ff">&gt;</span><br />
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">outbound</span><span style="color: #0000ff">&gt;</span><br />
+                <span style="color: #0000ff">&lt;</span><span style="color: #800000">filtering</span>-<span style="color: #ff0000">router</span><span style="color: #0000ff">&gt;</span><br />
+                    <span style="color: #0000ff">&lt;</span><span style="color: #c71585">vm</span>:<span style="color: #800000">outbound</span>-<span style="color: #ff0000">endpoint</span> <span style="color: #ff0000">path</span>=<span style="color: #0000ff">"xxx/adapter/ccc"</span><br />
+                        <span style="color: #ff0000">synchronous</span>=<span style="color: #0000ff">"true"</span> <span style="color: #0000ff">/&gt;</span><br />
+                    <span style="color: #0000ff">&lt;</span><span style="color: #800000">expression</span>-<span style="color: #ff0000">filter</span> <span style="color: #ff0000">evaluator</span>=<span style="color: #0000ff">"jxpath"</span><br />
+                        <span style="color: #ff0000">expression</span>=<span style="color: #0000ff">"(adapter/header/trx/@value)='logadd'"</span> <span style="color: #0000ff">/&gt;</span><br />
+                <span style="color: #0000ff">&lt;/</span><span style="color: #800000">filtering</span>-router<span style="color: #0000ff">&gt;</span><br />
+                <span style="color: #0000ff">&lt;</span><span style="color: #800000">filtering</span>-<span style="color: #ff0000">router</span><span style="color: #0000ff">&gt;</span><br />
+                    .....如此重复<br />
+                <span style="color: #0000ff">&lt;/</span><span style="color: #800000">filtering</span>-router<span style="color: #0000ff">&gt;</span><br />
+            <span style="color: #0000ff">&lt;/</span><span style="color: #800000">outbound</span><span style="color: #0000ff">&gt;</span><br />
+        <span style="color: #0000ff">&lt;/</span><span style="color: #800000">service</span><span style="color: #0000ff">&gt;</span><br />
+        <span style="color: #0000ff">&lt;</span><span style="color: #800000">service</span> <span style="color: #ff0000">name</span>=<span style="color: #0000ff">"sdoService"</span><span style="color: #0000ff">&gt;</span><br />
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">inbound</span><span style="color: #0000ff">&gt;</span><br />
+                <span style="color: #0000ff">&lt;</span><span style="color: #c71585">vm</span>:<span style="color: #800000">inbound</span>-<span style="color: #ff0000">endpoint</span> <span style="color: #ff0000">path</span>=<span style="color: #0000ff">"xxx/adapter/ccc"</span><br />
+                    <span style="color: #ff0000">synchronous</span>=<span style="color: #0000ff">"true"</span> <span style="color: #0000ff">/&gt;</span><br />
+            <span style="color: #0000ff">&lt;/</span><span style="color: #800000">inbound</span><span style="color: #0000ff">&gt;</span><br />
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">component</span> <span style="color: #ff0000">class</span>=<span style="color: #0000ff">"cc.xxx.adapter.TestComponent"</span><span style="color: #0000ff">&gt;</span><span style="color: #0000ff">&lt;/</span><span style="color: #800000">component</span><span style="color: #0000ff">&gt;</span><br />
+        <span style="color: #0000ff">&lt;/</span><span style="color: #800000">service</span><span style="color: #0000ff">&gt;</span><br />
+    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">model</span><span style="color: #0000ff">&gt;</span></p>
+<p><span style="color: #0000ff">&lt;/</span><span style="color: #800000">mule</span><span style="color: #0000ff">&gt;</span> </span></div>
+<p></p>

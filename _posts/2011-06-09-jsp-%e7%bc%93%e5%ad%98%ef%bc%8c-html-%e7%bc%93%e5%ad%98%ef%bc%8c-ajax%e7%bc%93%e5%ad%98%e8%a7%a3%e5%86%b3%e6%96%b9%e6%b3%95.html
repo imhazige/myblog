@@ -1,0 +1,71 @@
+---
+layout: post
+title: jsp 缓存， html 缓存， ajax缓存,解决方法
+date: 2011-06-09 14:55:30.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- Web
+- Web前端
+tags:
+- java
+- web
+meta:
+  views: '236'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+</p>
+<h1 class="title_txt">&#160;</h1>
+<div class="blogstory">
+<p><font size="2">有关页面缓存问题．这个问题上网找了 好多．但发觉各种解决方法，都彼此分离，没有一篇统一的解决方法，本人近日，也遇到了页面缓存的问题，根据网上各页面缓存的解答，做了一个总结。</font></p>
+<p><font size="2">1.服务器端缓存的问题，</font> 防止JSP页面<font size="2">缓存:</font></p></p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools"><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">view plain</a><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">copy to clipboard</a><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">print</a><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">?</a></div>
+</p></div>
+<ol class="dp-j">
+<li class="alt">&lt;%&#160; </li>
+<li><span class="comment">// 将过期日期设置为一个过去时间</span>&#160; </li>
+<li class="alt">response.setHeader(<span class="string">&quot;Expires&quot;</span>, <span class="string">&quot;Sat, 6 May 1995 12:00:00 GMT&quot;</span>);&#160; </li>
+<li><span class="comment">// 设置 HTTP/1.1 no-cache 头</span>&#160; </li>
+<li class="alt">response.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store,no-cache,must-revalidate&quot;</span>);&#160; </li>
+<li><span class="comment">// 设置 IE 扩展 HTTP/1.1 no- cache headers， 用户自己添加</span>&#160; </li>
+<li class="alt">response.addHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;post-check=0, pre-check=0&quot;</span>);&#160; </li>
+<li><span class="comment">// 设置标准 HTTP/1.0 no-cache header.</span>&#160; </li>
+<li class="alt">response.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);&#160; </li>
+<li>%&gt;&#160; </li>
+</ol></div>
+<p> &lt;% // 将过期日期设置为一个过去时间 response.setHeader(&quot;Expires&quot;, &quot;Sat, 6 May 1995 12:00:00 GMT&quot;); // 设置 HTTP/1.1 no-cache 头 response.setHeader(&quot;Cache-Control&quot;, &quot;no-store,no-cache,must-revalidate&quot;); // 设置 IE 扩展 HTTP/1.1 no-cache headers， 用户自己添加 response.addHeader(&quot;Cache-Control&quot;, &quot;post-check=0, pre-check=0&quot;); // 设置标准 HTTP/1.0 no-cache header. response.setHeader(&quot;Pragma&quot;, &quot;no-cache&quot;); %&gt;</p>
+<p><font size="2">当然，每一个页面都包含这些代码会很繁琐，可以通过自定义过滤器 （Filter）的方法来处理相关的页面</font></p>
+<p><font size="2">2.防止html页面缓存</font></p></p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools"><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">view plain</a><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">copy to clipboard</a><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">print</a><a href="http://blog.csdn.net/oklzh/archive/2009/08/14/4445722.aspx#">?</a></div>
+</p></div>
+<ol class="dp-xml">
+<li class="alt"><span class="tag">&lt;</span><span class="tag-name">meta</span>&#160;<span class="attribute">http-equiv</span>=<span class="attribute-value">&quot;pragma&quot;</span>&#160;<span class="attribute">content</span>=<span class="attribute-value">&quot;no-cache&quot;</span><span class="tag">&gt;</span>&#160; </li>
+<li><span class="tag">&lt;</span><span class="tag-name">meta</span>&#160;<span class="attribute">http-equiv</span>=<span class="attribute-value">&quot;cache-control&quot;</span>&#160;<span class="attribute">content</span>=<span class="attribute-value">&quot;no-cache&quot;</span><span class="tag">&gt;</span>&#160; </li>
+<li class="alt"><span class="tag">&lt;</span><span class="tag-name">meta</span>&#160;<span class="attribute">http-equiv</span>=<span class="attribute-value">&quot;expires&quot;</span>&#160;<span class="attribute">content</span>=<span class="attribute-value">&quot;0&quot;</span><span class="tag">&gt;</span>&#160;&#160;&#160;&#160; </li>
+</ol></div>
+<p> &lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt; &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt; &lt;meta http-equiv=&quot;expires&quot; content=&quot;0&quot;&gt;</p>
+<p><font size="2">3.防止Ajax缓存</font></p>
+<p><font size="2">如果，你的页面，已经设置了防止JSP,HTML的页面缓存，但发觉页面缓存， 始终存在，就要考虑是否Ajax造成的页面缓存了。</font></p>
+<p><font size="2">1）设置了，如上1，2之后</font></p>
+<p>Ajax缓存，产生的原因是：request, url的地址上:     <br />IE中如果XMLHttpRequest提交的URL与历史一样则使用缓存，根本不向服务器端提交。因此无法取到刚提交的数据。</p>
+<p><font size="2">针对ajax，需要如下设置:</font></p>
+<p>方法一：加时间戳 var url = BaseURL + &quot;&amp;timeStamp=&quot; + new Date().getTime();     <br />方法二：加随机数 var url = BaseURL + &quot;&amp;r=&quot; + Math.random();</p>
+<p>总结：原引(http://www.javaeye.com/topic/150162)</p>
+<p>在jsp页面中，光是使用html的&lt;meta&gt; tag是无法禁止缓存的。一定要加上 </p>
+<p>response.setHeader(&quot;Pragma&quot;,&quot;No-cache&quot;);      <br />response.setHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);       <br />response.setDateHeader(&quot;Expires&quot;, 0);</p>
+<p>有人肯定会说，这个跟html的tag设置没有不同啊。的确，我也觉得，但实践证明，没有这几句，光靠html tag不行。</p>
+<p>所以当action会返回页面时，有以下这两种情况：</p>
+<p>a，返回的页面没有写上上面的禁止cache的语句（或者只写了html tag）。IE存储的是URL link + page result(cache eabled)。这也就是导致了之前为什么还会有cache的原因</p>
+<p>b，返回的页面写上了禁止cache语句 。IE存储的是URL link + page result(cache disabled)。这样才能够实现到我们想要的目的。每次都会真正的发出request。</p>
+</p></div>

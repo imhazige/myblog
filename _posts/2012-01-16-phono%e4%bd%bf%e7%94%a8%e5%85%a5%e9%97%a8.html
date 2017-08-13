@@ -1,0 +1,92 @@
+---
+layout: post
+title: phono使用入门
+date: 2012-01-16 16:29:33.000000000 +00:00
+type: post
+published: true
+status: publish
+categories:
+- voip
+tags:
+- phono
+meta:
+  views: '90'
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>phono是tropo的jquery脚本库，使得你可以轻松地整合语音,IM服务到你的网站上去。</p>
+<p>官网<a href="http://www.phono.com">http://www.phono.com</a></p>
+<p>文档<a href="http://www.phono.com/docs">http://www.phono.com/docs</a></p>
+<p>它的功能很强大：</p>
+<p>tropo支持的它都支持，而且还更强大:</p>
+<p>每个匿名session都有唯一的sessionid,可以作为匿名sip账号，因此它可以接收呼叫包括实际电话和sip电话。</p>
+<p>同样它可以接收发送sms短信。这个不是本身提供的。</p>
+<p>它可以接收发送xmpp消息。</p>
+<p>&#160;</p>
+<p>当初始化好phono时,会得到一个唯一sessionid类似<a href="mailto:a95df60a-31c6-42ed-b56e-74a1baa1b9e5@gw114.phono.com">a95df60a-31c6-42ed-b56e-74a1baa1b9e5@gw114.phono.com</a></p>
+<p>这是一个可以合法的sip地址。</p>
+<p>dial方法:</p>
+<p>呼叫电话号码:(不能带区号+1),其实质是通过tropo使用一个号码TELA转接到目标电话。如果直接回call这个号码TELA，则告知此号码不可用。</p>
+<pre><code>this.phone.dial(&quot;774-271-7100&quot;)</code></pre>
+<p>呼叫sip:</p>
+<pre><code>this.phone.dial(&quot;sip:9991443046@sip.voxeo.net&quot;)</code></pre>
+<p>呼叫tropo app:</p>
+<pre><code><br />
+$.phono({
+  onReady: function(event, phone) {
+    var text = prompt(&quot;Enter some text you'd like to hear in Spanish&quot;);
+    phone.dial(&quot;app:9991442945&quot;, {
+       headers: [
+         {
+           name:&quot;x-source&quot;,
+           value:&quot;en&quot;
+         },
+         {
+           name:&quot;x-target&quot;,
+           value:&quot;es&quot;
+         },
+         {
+           name:&quot;x-text&quot;,
+           value:text
+         }
+       ]
+    });
+  }
+});</code></pre>
+<p>详细call api:<a href="http://www.phono.com/docs#call-reference">http://www.phono.com/docs#call-reference</a></p>
+<p>接收电话:</p>
+<pre><p><code>$.phono({
+  onReady: function(event) {
+    alert(&quot;My SIP address is sip:&quot; + this.sessionId);
+  },
+  phone: {
+    onIncomingCall: function(event) {
+      var call = event.call;
+      alert(&quot;Incoming call&quot;);
+    }
+  }
+});</code></p></pre>
+<p>发送xmpp消息:</p>
+<pre><code>$.phono({
+  onReady: function() {
+     this.messaging.send(&quot;phono-echo@tropo.im&quot;,&quot;Hello&quot;);
+  }
+});</code></pre>
+<p>对于gtalk来说，是不接受非联系人消息的，除非gtalk用户手动将这个匿名账户添加到联系人再聊条。---所以，这个临时xmpp账户基本对gtalk没有什么实际意义。</p>
+<p>接收xmpp消息: session可作为xmpp消息address</p>
+<pre><code>$.phono({
+  onReady: function(event) {
+    alert(&quot;My XMPP address is &quot; + this.sessionId);
+  },
+  messaging: {
+    onMessage: function(event) {
+       var message = event.message;
+       alert(&quot;Message from: &quot; + message.from + &quot;\n&quot; + message.body);
+    }
+  }
+})</code></pre>
+<p>发送sms见<a href="http://blog.phono.com/2010/12/07/web-based-im-to-sms-gateway/">http://blog.phono.com/2010/12/07/web-based-im-to-sms-gateway/</a> 原理是通过发送到tropo app的jabber账号由app来通过tropo的sms接口转发的。这样存在一个问题，因为多个phono用户给同一个sms用户发短信时，sms用户无法区分phono用户，因为app使用同一个电话号码,sms手机上就显示的是同一个号码的来自不同phono用户的消息?</p>

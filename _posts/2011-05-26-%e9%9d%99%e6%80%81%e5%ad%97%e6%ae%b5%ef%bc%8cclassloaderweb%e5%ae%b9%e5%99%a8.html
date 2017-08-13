@@ -1,0 +1,131 @@
+---
+layout: post
+title: "静态字段，classloader,web容器"
+date: 2011-05-26 02:42:10.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- java
+- Web
+tags:
+- java
+meta:
+  _edit_last: '1'
+  views: '155'
+  _oembed_cbdbe1f907110e42e6257fb40884efca: "{{unknown}}"
+  _oembed_ae1469c75eef04849ce01780cc118688: "{{unknown}}"
+author:
+  login: ig2net
+  email: ig2net@ig2net.info
+  display_name: "农夫一号"
+  first_name: ''
+  last_name: ''
+---
+<p>http://hi.baidu.com/liangzhongbo1/blog/item/f2c3201ae4b7250c34fa41f6.html</p>
+<p>类加载器与 Web 容器</p>
+<p>对于运行在 Java EE™ 容器中的 Web 应用来说，类加载器的实现方式与一般的Java 应用有所不同[默认的是从父到子]。不同的 Web 容器的实现方式也会有所不同。以 Apache Tomcat 来说，每个 Web 应用都有一个对应的类加载器实例。该类加载器也使用代理模式，所不同的是它是首先尝试去加载某个类，如果找不到再代理给父类加载器。这与一般类加载器的顺序是相反的。这是 Java Servlet 规范中的推荐做法，其目的是使得 Web 应用自己的类的优先级高于 Web 容器提供的类。这种代理模式的一个例外是：Java 核心库的类是不在查找范围之内的。这也是为了保证 Java 核心库的类型安全。</p>
+<p>绝大多数情况下，Web 应用的开发人员不需要考虑与类加载器相关的细节。下面给出几条简单的原则：</p>
+<p>每个 Web 应用自己的 Java 类文件和使用的库的 jar 包，分别放在 WEB-INF/classes 和 WEB-INF/lib 目录下面。多个应用共享的 Java 类文件和 jar 包，分别放在 Web 容器指定的由所有 Web 应用共享的目录下面。当出现找不到类的错误时，检查当前类的类加载器和当前线程的上下文类加载器是否正确。</p>
+<p><a href="http://agapple.iteyeeye.com/blog/826661">http://agapple.iteyeeye.com/blog/826661</a></p>
+<table style="width: 200px; height: 600px" border="1" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p>容器</p>
+</td>
+<td>
+<p>jboss(4.05)</p>
+</td>
+<td>
+<p>tomcat(6.0.30)</p>
+</td>
+<td>
+<p>jetty(7.1.20)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>支持child/parent first设置(默认值)</p>
+</td>
+<td>
+<p>Java2ClassLoadingCompliance=false</p>
+</td>
+<td>
+<p>delegate=false</p>
+</td>
+<td>
+<p>_parentLoaderPriority=false</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>过滤package配置</p>
+</td>
+<td>
+<p>FilteredPacages</p>
+<p>默认值： javax.servlet,org.apache.commons.logging</p>
+</td>
+<td>
+<p>packageTriggers</p>
+<p>默认配置：org.apache.commons.logging</p>
+</td>
+<td>
+<p>systemClasses</p>
+<p>默认配置：java. </p>
+<p>javax.</p>
+<p>org.xml.</p>
+<p>org.w3c.</p>
+<p>org.apache.commons.logging.</p>
+<p>org.eclipse.jetty.continuation.</p>
+<p>org.eclipse.jetty.jndi.</p>
+<p>org.eclipse.jetty.plus.jaas.</p>
+<p>org.eclipse.jetty.websocket.</p>
+<p>org.eclipse.jetty.servlet.DefaultServlet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>特殊性</p>
+</td>
+<td>
+<p>1. UseJBossWebLoader=false时,过滤packages才能生效</p>
+<p>2. UseJBossWebLoader=true时,不支持过滤packages</p>
+<p>3. jboss 5.0以后UseJBossWebLoader参数将不支持</p>
+</td>
+<td>
+<p>1. 在执行child/parent判断之前，会委托system classloader装载系统class，比如jdk的lib库</p>
+</td>
+<td>
+<p>1. 多了一个serverclass配置，如果是serverclass优先采用child first</p>
+<p>2. systemclass默认的配置，多了javax,org.xml,org.w3c配置。</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>相关文档</p>
+</td>
+<td>
+<p>svn url : <a href="http://anonsvn.jboss.org/repos/jbossas/tags/JBoss_4_0_5_GA_CP18">http://anonsvn.jboss.org/repos/jbossas/tags/JBoss_4_0_5_GA_CP18</a></p>
+<p>jboss社区classloader文档: <a href="http://community.jboss.org/wiki/ClassLoadingConfiguration">http://community.jboss.org/wiki/ClassLoadingConfiguration</a></p>
+</td>
+<td>
+<p>svn url : <a href="http://svn.apache.org/repos/asf/tomcat/tc6.0.x/trunk">http://svn.apache.org/repos/asf/tomcat/tc6.0.x/trunk</a></p>
+<p>官方classloader机制： <a href="http://tomcat.apache.org/tomcat-6.0-doc/class-loader-howto.html">http://tomcat.apache.org/tomcat-6.0-doc/class-loader-howto.html</a></p>
+</td>
+<td>
+<p>svn url : <a href="http://dev.eclipse.org/svnroot/rt/org.eclipse.jetty/jetty/tags/jetty-7.2.0.v20101020/">http://dev.eclipse.org/svnroot/rt/org.eclipse.jetty/jetty/tags/jetty-7.2.0.v20101020/</a></p>
+<p>classloader 官方文档： <a href="http://docs.codehaus.org/display/JETTY/Classloading">http://docs.codehaus.org/display/JETTY/Classloading</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>静态字段</p>
+<p>http://stackoverflow.com/questions/797964/what-is-the-exact-meaning-of-static-fields-in-java</p>
+<p>Static doesn't quite mean &quot;shared by all instances&quot; - it means &quot;not related to a particular instance at all&quot;. In other words, you could get at the static field in class A without ever creating <i>any</i> instances.</p>
+<p>As for running two programs within the same JVM - it really depends on exactly what you mean by &quot;running two programs&quot;. The static field is <i>effectively</i> associated with the class object, <b><font color="#0000ff">which is in turn associated with a classloader. So if these two programs use separate classloader instances, you'll have two independent static variables. If they both use the same classloader, then there'll only be one so they'll see each other's changes.</font></b></p>
+<p>As for an alternative - there are various options. One is to pass the reference to the &quot;shared&quot; object to the constructor of each object you create which needs it. It will then need to store that reference for later. This can be a bit of a pain and suck up a bit more memory than a static approach, but it does make for easy testability.</p>
+<p><font color="#0000ff">这个不知出处,但根据java规范，静态字段是在类加载器加载类时初始化的，也证明了上面的说法。</font></p>
+<p><font color="#0000ff">一般的java程序，每次启动也是单独的classloader实例，所以即使同一个类的main方法同时执行多次，也不会互相干扰。</font></p>
+<p><strong><font color="#0000ff">总结发言，静态字段虽然是依附于classloader,在web容器下每个app又是自己的classloader，客观来说不会存在互相影响的问题，但任然存在这个风险。所以能不用就不用，特别是是对于单例模式。</font></strong></p>
+<p><strong><font color="#0000ff">&#160;</font></strong></p>
