@@ -6,11 +6,11 @@ title:               Ka's Blog
 
 # The unique resource location of your page.
 # Set to `https://<username>.github.io` when hosting on GitHub Pages
-url:                 https://imhazige.github.io
+url:                 http://blog.kazge.com
 
 # Set to '' when hosting a blog on GitHub Pages, ie on `//<username>.github.io`
 # Set to '/<reponame>' when using the `gh-pages` branch of a repository
-baseurl:             /myblog
+baseurl:             /
 
 # A very short description of your page
 tagline:             IT software.
