@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mobile Chat</title>
+</head>
+<body>
+<div class="outer hero-unit">
+<h2 style="color:red;">This demo have been shutdown!</h2>
+<p>This application require a token, please input the token I send you or <button id="btnLinkReq" disabled="true" class="btn-link">request one</button>.</p>
+<form id="frm">
+<div class="input-append">
+  <input class="span2" id="inputToken" name="token" type="text" placeholder="Token" value="" >
+  <button class="btn" disabled="true" type="submit" name="cmd" value="Start!">Start!</button>
+</div>
+</form>
+
+<form id="frm1" class="form-horizontal hidden-desktop well">
+  <fieldset>
+    <legend>Request a token</legend>
+    <div class="control-group">
+	    <label class="control-label" for="inputEmail">Email</label>
+	    <div class="controls">
+	      <input type="text" id="inputEmail" name="email" placeholder="Email" value="">
+	      <span class="help-inline"></span>
+	    </div>
+  	</div>
+    <div class="control-group">
+	    <label class="control-label" for="inputUserName">Name</label>
+	    <div class="controls">
+	      <input type="text" id="inputUserName" name="username" placeholder="Name" value="">
+	    </div>
+  	</div>
+  	<div class="control-group">
+	    <label class="control-label" for="inputMemo">Description</label>
+	    <div class="controls">
+	      <textarea id="inputMemo" placeholder="Some description here ..." name="memo" rows="10" wrap="off"></textarea>
+	    </div>
+  	</div>
+  	<div class="control-group">
+	    <div class="controls">	      
+	      <button type="submit" disabled="true"  name="cmd" class="btn" value="Submit">Submit</button>
+	    </div>
+	</div>
+  </fieldset>
+</form>
+</div>
+</body>
+</html>

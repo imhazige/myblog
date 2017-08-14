@@ -1,7 +1,11 @@
 ---
-theme :
-  name : bootstrap-3
-layout: default
+layout: base
 ---
-{% include JB/setup %}
-{% include themes/bootstrap-3/post.html %}
+
+{% include post.html post=page link_title=false %}
+
+<!-- {% include about.html %} -->
+
+{% include ads.html %}
+
+{% include related.html post=page %}

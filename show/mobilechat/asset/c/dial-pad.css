@@ -1,0 +1,53 @@
+.client-ui-button-row {
+	float: left;
+	clear: both
+}
+
+.client-ui-button {
+	float: left;
+	padding: 12px;
+	margin: 5px;
+	background: #9d9d9d;
+	color: #fff;
+	text-align: center;
+	width: 30px;
+	height: 32px;
+	font-size: 24px;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px
+}
+
+.client-ui-button:hover {
+	background: #ef3b37
+}
+
+.client-ui-button.hover {
+	background: #ef3b37
+}
+
+#diai_pad_timer{
+	color:#EF3B37
+}	
+
+.client-ui-button .client-ui-button-number {
+	margin-top: -4px
+}
+
+.client-ui-button .client-ui-button-number.asterisk {
+	font-size: 40px
+}
+
+.client-ui-button .client-ui-button-letters {
+	font-weight: normal;
+	font-size: 12px;
+	margin-top: -3px
+}
+
+.call-buttons{
+	padding:  0 0 0;
+}
+
+

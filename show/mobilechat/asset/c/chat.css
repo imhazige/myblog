@@ -1,0 +1,135 @@
+.token-text{
+	font-weight: bold;
+	font-size: 1.5em !important;
+}
+
+.token-label{
+	padding-right: 2px;
+}
+
+.token-value{
+	padding-right: 2px;
+	font: 1.3em/1 "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+
+.descrip-row{
+	margin: 10px 0 0 0;
+}
+
+#ctLogScreen{
+	position: relative;
+	max-height: 600px;
+	overflow-y:auto;
+}
+
+.msg-row{
+}
+
+.msg{
+	/*background-color: #075698 !important;*/
+	max-width:260px;
+}
+
+.msg.right{
+	float: right;
+}
+
+.msg.left{
+}
+
+.msg-item-icon{
+	margin-right: 5px;
+}
+
+
+/**===================================*/
+.triangle-right {
+	position:relative;
+	padding:15px;
+	margin:1em 0 1em;
+	color:#fff;
+	background:#075698; /* default background for browsers without gradient support */
+	/* css3 */
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#2e88c4), to(#075698));
+	background:-moz-linear-gradient(#2e88c4, #075698);
+	background:-o-linear-gradient(#2e88c4, #075698);
+	background:linear-gradient(#2e88c4, #075698);
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+}
+
+/* Variant : for top positioned triangle
+------------------------------------------ */
+
+.triangle-right.top {
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#075698), to(#2e88c4));
+	background:-moz-linear-gradient(#075698, #2e88c4);
+	background:-o-linear-gradient(#075698, #2e88c4);
+	background:linear-gradient(#075698, #2e88c4);
+}
+
+/* Variant : for left positioned triangle
+------------------------------------------ */
+
+.triangle-right.left {
+	margin-left:0px;
+	background:#6FA3D8;
+}
+
+/* Variant : for right positioned triangle
+------------------------------------------ */
+
+.triangle-right.right {
+	margin-right:0px;
+	background:#3A87AD;
+}
+
+/* THE TRIANGLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-right:after {
+	content:"";
+	position:absolute;
+	bottom:-20px; /* value = - border-top-width - border-bottom-width */
+	left:50px; /* controls horizontal position */
+	border-width:20px 0 0 20px; /* vary these values to change the angle of the vertex */
+	border-style:solid;
+	border-color:#075698 transparent; 
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
+
+/* Variant : top
+------------------------------------------ */
+
+.triangle-right.top:after {
+	top:-20px; /* value = - border-top-width - border-bottom-width */
+	right:50px; /* controls horizontal position */
+	bottom:auto;
+	left:auto;
+	border-width:20px 20px 0 0; /* vary these values to change the angle of the vertex */
+	border-color:transparent #075698; 
+}
+
+/* Variant : left
+------------------------------------------ */
+
+.triangle-right.left:after {
+	left:-20px; /* value = - border-left-width - border-right-width */
+	bottom:10px;
+	border-width:15px 20px 0 0; /* vary these values to change the angle of the vertex */
+	border-color:transparent #6FA3D8; 
+}
+
+/* Variant : right
+------------------------------------------ */
+
+.triangle-right.right:after {
+	right:-20px; /* value = - border-left-width - border-right-width */
+	bottom:10px;
+    left:auto;
+	border-width:15px 0 0 20px; /* vary these values to change the angle of the vertex */
+	border-color:transparent #3A87AD ; 
+}

@@ -1,0 +1,745 @@
+#mainHTML {
+    overflow:hidden;
+    margin:0;
+}
+
+#mainBody {
+    width: 100%;
+    height: 100%;
+    padding:0;
+    margin:0;
+    border:0;
+    overflow: hidden;
+}
+#mainTopicDiv {
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    padding:0;
+    margin:0;
+    border:0;
+}
+#mainTopicFrame {
+    width: 100%;
+    height: 100%;
+    padding:0;
+    margin:0;
+    border:0;
+    z-index: 0;
+}
+#mainDragDiv {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    padding:0;
+    margin:0;
+    border:0;
+    z-index:1100;
+    visibility: hidden;
+    overflow: hidden;
+    background-color: transparent;
+    background-image: url("spacer.gif");
+}
+.cwShadow {
+    z-index: 1050;
+    opacity: 0.3;
+    filter:alpha(opacity=30);
+    -moz-opacity: 0.3;
+    -khtml-opacity: 0.3;
+    border:0;
+    padding:0;
+    margin:0;
+    visibility: visible;
+    background-color: transparent;
+}
+#cwShadowTR {
+    background: url(shadow-tr.png);
+    border:0;
+    padding:0;
+    margin:0;
+}
+#cwShadowR {
+    background: url(shadow-r.png) repeat;
+    border:0;
+    padding:0;
+    margin:0;
+}
+#cwShadowBL {
+    background: url(shadow-bl.png);
+    border:0;
+    padding:0;
+    margin:0;
+}
+#cwShadowB {
+    background: url(shadow-b.png) repeat;
+    border:0;
+    padding:0;
+    margin:0;
+}
+#cwShadowBR {
+    background: url(shadow-br.png);
+    border:0;
+    padding:0;
+    margin:0;
+}
+#maincwFrame{
+    position:absolute;
+    right: 30px;
+    top: 0px;
+    width: 250px;
+    height: 250px;
+    z-index: 1200;
+    overflow: hidden;
+    padding:0;
+    margin:0;
+    border:0;
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+    border-bottom: 0px;
+    background-color: transparent;
+}
+#cwBody {
+    margin: 0;
+    padding: 0;
+    top: 0px;
+    left: 0px;
+    border: 0;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    overflow: hidden;
+}
+#cwDragDiv {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 600;
+    visibility: hidden;
+    background-color: transparent;
+    background-image: url("spacer.gif");
+}
+.cwTransparentBackground {
+    background-color: transparent;
+}
+#cwBottomBarRow {
+    opacity: 0.3;
+    filter:alpha(opacity=30);
+    -moz-opacity: 0.3;
+    -khtml-opacity: 0.3;
+    background-color: #000000;
+}
+#cwResizeNorthDiv {
+    position: relative;
+    top: 0px;
+    right: 12px;
+    width: 100%;
+    height: 8px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 100;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+}
+#cwResizeWestDiv {
+    position: absolute;
+    left: 0px;
+    bottom: 12px;
+    width: 8px;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 100;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+}
+#cwResizeSouthDiv {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 100%;
+    height: 8px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 100;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+}
+#cwResizeEastDiv {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 8px;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 100;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+}
+#cwResizeNorthEastDiv {
+    position: absolute;
+    right: 12px;
+    top: 0px;
+    width: 8px;
+    height: 8px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 101;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+}
+#cwResizeSouthEastDiv {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 12px;
+    height: 12px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 101;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+}
+#cwResizeSouthWestDiv {
+    position: absolute;
+    left: 0px;
+    bottom: 12px;
+    width: 12px;
+    height: 12px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 101;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+
+}
+#cwResizeNorthWestDiv {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 8px;
+    height: 8px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size:1px;
+    line-height:0;
+    z-index: 101;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    background-color: white;
+}
+#cwBorderTopRight {
+    position: absolute;
+    right: 11px;
+    top: 6px;
+    height: 50%;
+    width: 1px;
+    background-color: #B9BED9;
+    font-size:1px;
+    line-height:0;
+    z-index: 500;
+}
+#cwBorderTopLeft {
+    position: absolute;
+    left: 0px;
+    top: 6px;
+    height: 50%;
+    width: 1px;
+    background-color: #B9BED9;
+    font-size:1px;
+    line-height:0;
+    z-index: 500;
+}
+#cwBorderBottomRight {
+    position: absolute;
+    right: 11px;
+    bottom: 20px;
+    height: 50%;
+    width: 1px;
+    background-color: #B9BED9;
+    font-size:1px;
+    line-height:0;
+    z-index: 500;
+}
+#cwBorderBottomLeft {
+    position: absolute;
+    left: 0px;
+    bottom: 20px;
+    height: 50%;
+    width: 1px;
+    background-color: #B9BED9;
+    font-size:1px;
+    line-height:0;
+    z-index: 500;
+}
+#cwChatWindowTable {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    overflow: hidden;
+}
+#cwChatWindowDiv {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    overflow: hidden;
+}
+#cwTitleBarDiv {
+    height: 30px;
+    width: 100%;
+    display: table-row;
+}
+#cwTitleLabelDiv {
+    position: absolute;
+    left: 10px;
+    top: 7px;
+    width: 200px;
+    height: 12px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    /*background: url("") no-repeat top left;*/
+}
+
+#cwCloseDiv {
+    position: absolute;
+    right: 20px;
+    top: 6px;
+    height: 15px;
+    width: 15px;
+    cursor: default;
+    font-size:1px;
+    line-height:0;
+}
+
+#cwSplitVertDiv {
+    position: absolute;
+    right: 37px;
+    top: 6px;
+    height: 15px;
+    width: 15px;
+    cursor: default;
+    font-size:1px;
+    line-height:0;
+}
+#cwSplitHorizDiv {
+    position: absolute;
+    right: 54px;
+    top: 6px;
+    height: 15px;
+    width: 15px;
+    cursor: default;
+    font-size:1px;
+    line-height:0;
+}
+#cwMinimizeDiv {
+    position: absolute;
+    right: 71px;
+    top: 6px;
+    height: 15px;
+    width: 15px;
+    cursor: default;
+    font-size:1px;
+    line-height:0;
+}
+.cwJumpToOption {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9px;
+}
+#cwJumpToCell {
+    width: 100%;
+    height: 28px;
+    background-color: #E0E7EF;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0;
+    border-top: #B7B7B7 1px solid;
+    visibility: visible;
+}
+#cwJumpToInnerCell {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+#cwJumpToTextField {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #323F5B;
+    width: 60%;   /* 68 */
+    vertical-align: middle;
+}
+#cwSearchField {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    color: #323F5B;
+}
+#cwJumpToGoButton {
+    position: relative;
+     vertical-align: middle;
+}
+#cwSearchButton {
+    position: relative;
+    vertical-align: middle;
+}
+.cwBorder {
+    border-left:#B7B7B7 1px solid;
+    border-right: #B9BED9 1px solid;
+    font-size:1px;
+    line-height:0;
+    background-image: url("tb-b.png");
+}
+#cwFoldRows {
+    display: inline-table;
+    width: 100%;
+}
+#cwChatHistoryCell {
+    height: 100%;
+    width: 80%;
+    border-top: #B7B7B7 1px solid;
+    border-bottom: #CCCCCC 1px solid;
+    border-left:#B7B7B7 1px solid;
+    background-color: #FFFFFF;
+    padding: 0;
+}
+#cwChatHistoryDiv {
+    height: 100%;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #FFFFFF;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    overflow: hidden;
+}
+#cwPresenceSwitch {
+    height: 100%;
+    width: 8px;
+    color: #B5BFCF;
+    background-color: #B5BFCF;
+}
+#cwPresenceSwitchBuffer {
+    width: 8px;
+    color: #B5BFCF;
+    background-color: #B5BFCF;
+    display: none;
+}
+#cwPresenceCell {
+    height: 100%;
+    width: 100px;
+    border-left: solid 1px #CCCCCC;
+    border-bottom: solid 1px #CCCCCC;
+    border-top: solid 1px #B7B7B7;
+    background-color: #E0E5EF;
+}
+#cwPresenceBufferImage {
+}
+#cwPresenceTitleDiv {
+    background-color: #E0E5EF;
+    height: 12px;
+    padding: 3px 8px 3px 8px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+    color: #666666;
+    overflow: hidden;
+}
+#cwRegisterTitleDiv {
+	padding-left: 5px;
+	background-color: #C3CFDF;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;	
+}
+#cwPresenceListDiv {
+    height: 100%;
+    width: 100px;
+    display:block;
+    background-color: #F2F3F5;
+    padding: 3px 8px 3px 8px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    overflow: hidden;
+}
+
+.rimg{
+	position:relative;
+    left: -20px;		
+}
+
+#cwNicknameCell {
+    height: 28px;
+    background-color: #C3CFDF;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    padding-left: 5px;
+    padding-right: 3px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin: 0;
+}
+#cwLoginCell {
+    width: 100%;
+    height: 28px;
+    background-color: #C3CFDF;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin: 0;
+}
+#cwAudioButtonCell {
+    background-color: #C3CFDF;
+    padding-right: 4px; 
+}
+
+#nicknameIcon {
+    vertical-align: middle;
+}
+
+#cwAudioButton {
+    position: relative; 
+    vertical-align: middle;
+}
+#cwJoinLeaveButtonCell {
+    background-color: #C3CFDF;
+    vertical-align: middle;
+    padding-right: 4px;  
+}
+#cwJoinLeaveButton {
+     position: relative;    
+    vertical-align: middle;
+}
+#cwTransparentButtonCell {
+     padding-right: 4px;  
+    background-color: #C3CFDF;
+}
+#cwTransparentButton {
+     position: relative; 
+    vertical-align: middle;
+}
+
+#cwRSSButtonCell {
+    background-color: #C3CFDF;
+    padding-right: 5px;
+}
+#cwRSSButton {
+    position: relative; 
+    vertical-align: middle;
+
+}
+#cwNicknameLabelDiv {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+#cwNicknameLabelSpan {
+    display: inline;
+}
+
+#cwNicknameIconSpan {
+    display: none;
+}
+
+#cwJumpToCellSpan {
+    display: inline;
+}
+.textLabel {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+}
+#cwNicknameTextField {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    vertical-align: middle;
+}
+#cwNicknameButton {
+    position: relative;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    vertical-align: middle;
+}
+#cwLoginButton {
+    position: relative;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    vertical-align: middle;
+}
+#cwMsgInputCell {
+    width: 100%;
+    height: 44px;
+    background-color: #C3CFDF;
+}
+#cwBottomBarCell {
+    height: 20px;
+}
+#cwMsgInputField {
+    font-size: 12px;
+    overflow: auto;
+    width: 93%;
+    height: 98%;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    BORDER-RIGHT: #c1d6eb 1px solid;
+    BORDER-TOP: #b3b3b3 1px solid;
+    BORDER-LEFT: #b3b3b3 1px solid;
+    BORDER-BOTTOM: #c1d6eb 1px solid;
+}
+#cwShadowCoverBR {
+    position: absolute;
+    right: 11px;
+    bottom: 12px;
+    height:6px;
+    width:6px;
+    border:0;
+    padding:0;
+    margin:0;
+    opacity: 0.3;
+    filter:alpha(opacity=30);
+    -moz-opacity: 0.3;
+    -khtml-opacity: 0.3;
+    font-size:1px;
+    line-height:0;
+    z-index: 1201;
+    background-image: url("shadow-cover.png");
+}
+#cwDialog {
+    position: absolute;
+    top:68px;
+    left: 50px;
+    height: 120px;
+    width: 200px;
+    background-color: #EBEBF5;
+    border:1px solid #B7B7B7;
+    z-index: 1000;
+    visibility: hidden;
+}
+#cwDialogContent {
+    padding-top: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 10px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9px;
+}
+
+.chatHistoryParagraph { margin-top: 5px; margin-bottom: 5px; height: 241px;overflow: auto;width: 100%;}
+.chatHistoryParagraphContinue { padding-left: 10px; margin-top: 5px; margin-bottom: 5px; }
+
+.tooltip {
+    color: #9F141A;
+    cursor: default;
+    text-decoration: none
+}
+.chatHistoryText {
+    opacity: 0.4;
+    filter:alpha(opacity=40);
+    -moz-opacity: 0.4;
+    -khtml-opacity: 0.4;
+}
+
+
+#cwTitleBarT{
+	background-image: url("tb-t.png");
+}
+
+
+#statustd{
+	background-image: url("bottom.png");
+}
+
+.iefixheight{
+	line-height:0;overflow:hidden
+}
+
+.his-r{
+	color: blue;
+}
+
+.his-u{
+	
+}
+
+.cc-r{
+	margin: 2px 5px;	
+}
+
+.cc-u{
+	margin: 2px 5px;
+}
+
+.t-r{
+	font-weight: bold;
+}
+
+.t-u{
+	font-weight: bold;
+}

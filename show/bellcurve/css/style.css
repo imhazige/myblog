@@ -1,0 +1,94 @@
+body {
+	font: 13px/ 1.5;
+}
+
+div#outer {
+}
+
+div#info {
+	float: left;
+	width: 350px;
+}
+
+div#canvas {
+	float: left;
+	height: 400px;
+	width: 780px;
+	/*border: 1px solid blue;*/
+	float: left;
+}
+
+div#desc{
+	padding: 20px 10px 0 20px;
+}
+
+#create {
+	position: relative;
+}
+
+#cmds {
+	position: relative;
+}
+
+.tooltip {
+	text-decoration: none;
+	position: absolute;
+	cursor: default;
+	background-color: #F9EDBE;
+	border: 1px solid #F9FFFF;
+	width: 180px;
+	top: 38px;
+	left: 10px;
+	padding: 5px;
+	font-size: 0.8em;
+}
+
+.tip-tan {
+	position: absolute;
+	left: 0;
+	top: -23px;
+	border: 8px solid transparent;
+	border-bottom: 16px solid #F9EDBE;
+	height: 0;
+	width: 0;
+}
+
+.tip-text {
+	
+}
+
+.txt-number {
+	float: left;
+	width: 30px;
+}
+
+.txt-small{
+	width: 60px;
+}
+
+.slider {
+	margin: 5px 5px 5px 15px;
+	float: left;
+	width: 150px;
+}
+
+.ci>.lab {
+	float: left;
+	width: 100px;
+	text-align: right;
+}
+
+a.cmd {
+	display: block;
+	height: 20px;
+	padding: 5px 2px;
+	float: left;
+}
+
+#tip {
+	color: red;
+}
+
+.error {
+	border: 1px solid red;
+}

@@ -1,0 +1,45 @@
+
+#content{
+	width: 1600px;
+}
+
+#content>div{
+	
+}
+
+.ct{
+	float: left;
+}
+
+.title{
+	text-align: center;
+	font-weight: bold;
+}
+
+.holder{
+	padding-top: 0;
+}
+
+.line{
+	border-top:1px solid gray;
+	margin-top:10px;
+	float: none;
+}
+
+.cdiv{
+	clear: both;
+}
+
+#toptitle{
+	font-weight: bold;
+	float: left;
+}
+
+#selct{
+	margin-left: 60px;
+	float: left;
+}
+
+#btn{
+	margin-left: 20px;
+}

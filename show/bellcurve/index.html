@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Bell Curve</title>
+
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!-- link rel="stylesheet" href="css/global.css" type="text/css" /-->
+<link type="text/css" rel="stylesheet" href="../js/jq-ui-1.8.23/css/redmond/jquery-ui-1.8.23.custom.css" />
+<link rel="stylesheet" href="css/style.css">
+
+<script type="text/javascript" src="../js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../js/jq-ui-1.8.23/jquery-ui-1.8.23.custom.min.js"></script>
+<script type="text/javascript" src="js/raphael.js"></script>
+<script type="text/javascript" src="js/kzg.js"></script>
+<script type="text/javascript" src="js/material.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+<div id="outer">
+<div id="info">
+	<div class="ci" title="Standard Deviation"><span class="lab">σ:</span><input readonly="readonly" type="text" id="txt_sd" class="txt-number" /><div id="slider_stand_deviation" class="slider"></div><br style="clear:both;" /></div>
+	<div class="ci" title="Median"><span class="lab">μ:</span><input readonly="readonly" type="text" id="txt_median" class="txt-number" /><div id="slider_median" class="slider"></div><br style="clear:both;" /></div>
+	<div class="ci" title="Selected Area"><span class="lab">Selected Area:</span><input readonly="readonly" type="text" id="txt_area" class="txt-number txt-small" /><br style="clear:both;" /></div>
+	<div id="desc" class="ci">
+		Normal Distribution Curve also know as Bell Curve, use the three control line in the chart to select Median and selected area.
+	</div>
+</div>
+<div id="canvas">
+
+</div>
+<br style="clear: both;">
+</div>
+</body>
+</html>

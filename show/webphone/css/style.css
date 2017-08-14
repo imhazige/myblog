@@ -1,0 +1,401 @@
+.startinput {
+	width: 220px;
+}
+
+.mock-button {
+	cursor: pointer;
+}
+
+.startmsg {
+	width: 453px;
+}
+
+.outcont {
+	width: 1260px;
+	margin: 10px;
+}
+
+.newsess {
+	float: left;
+	width: 500px;
+}
+
+.hist {
+	float: left;
+	margin-left: 50px;
+	width: 700px;
+}
+
+.link {
+	text-decoration: underline;
+	color: blue;
+	cursor: pointer;
+}
+
+.msginput {
+	width: 90%;
+}
+
+.his-item {
+	margin: 20px;
+	width: 100%;
+	overflow: visible;
+}
+
+.item-header {
+	font-weight: bold;
+}
+
+.item-msg {
+	height: 20px;
+	overflow: visible;
+}
+
+.item-input {
+	
+}
+
+.hist-me {
+	
+}
+
+.hist-p {
+	
+}
+
+.showhidemsg {
+	
+}
+
+.frame {
+	position: relative;
+	width: 100%;
+}
+
+.sub_frame {
+	
+}
+
+.emptyta{
+	color: #CCCCCC;
+}
+
+.textbox {
+	FONT-SIZE: 13px;
+	width: 100%;	
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.back_image {
+	border: none;
+}
+
+.textinfo {
+	FONT-SIZE: 13px;
+	color: black;
+}
+
+.textinput {
+	FONT-SIZE: 13px;
+	color: black;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.msg-time {
+	color: gray;
+	margin-left: 5px;
+}
+
+.tip-warn {
+	background-color: olive;
+	color: white;
+}
+
+.tip-error {
+	background-color: red;
+}
+
+.x-hide {
+	display: none;
+}
+
+.x-clear {
+	clear: both;
+}
+
+#tipmsg {
+	word-wrap: break-word;
+	margin: 5px 0px;
+}
+
+#statusmsg {
+	word-wrap: break-word;
+	margin: 5px 0px;
+}
+
+/** start call win */
+
+#__01 {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 275px;
+	height: 124px;
+	display: none;
+}
+
+#__01>div {
+	position: absolute;
+}
+
+#__01>* {
+	color: white;
+}
+
+#call-01 {
+	left: 0px;
+	top: 0px;
+	width: 275px;
+	height: 13px;
+	background-image: url(../img/callwin/call_01.gif);
+}
+
+#call-02 {
+	left: 0px;
+	top: 13px;
+	width: 12px;
+	height: 111px;
+	background-image: url(../img/callwin/call_02.gif);
+}
+
+#call-03 {
+	left: 12px;
+	top: 13px;
+	width: 253px;
+	height: 2px;
+	background-image: url(../img/callwin/call_03.gif);
+}
+
+#call-04 {
+	background-image: url(../img/callwin/call_04.gif);
+	left: 265px;
+	top: 13px;
+	width: 10px;
+	height: 111px;
+}
+
+#call-05 {
+	background-image: url(../img/callwin/call_05.gif);
+	left: 12px;
+	top: 15px;
+	width: 235px;
+	height: 20px;
+}
+
+#call-06 {
+	background-image: url(../img/callwin/call_06.gif);
+	left: 247px;
+	top: 15px;
+	width: 16px;
+	height: 16px;
+}
+
+#call-07 {
+	background-image: url(../img/callwin/call_07.gif);
+	left: 263px;
+	top: 15px;
+	width: 2px;
+	height: 20px;
+}
+
+#call-08 {
+	background-image: url(../img/callwin/call_08.gif);
+	left: 247px;
+	top: 31px;
+	width: 16px;
+	height: 4px;
+}
+
+#call-09 {
+	background-image: url(../img/callwin/call_09.gif);
+	left: 12px;
+	top: 35px;
+	width: 76px;
+	height: 2px;
+}
+
+#call-10 {
+	background-image: url(../img/callwin/call_10.gif);
+	left: 88px;
+	top: 35px;
+	width: 177px;
+	height: 53px;
+}
+
+#callwin_msg {
+	margin: 20px 0 0 10px;
+}
+
+#call-11 {
+	background-image: url(../img/callwin/call_11.gif);
+	left: 12px;
+	top: 37px;
+	width: 76px;
+	height: 9px;
+}
+
+#call-12 {
+	background-image: url(../img/callwin/call_12.gif);
+	left: 12px;
+	top: 46px;
+	width: 7px;
+	height: 71px;
+}
+
+#call-13 {
+	left: 19px;
+	top: 46px;
+	width: 66px;
+	height: 67px;
+}
+
+#call-14 {
+	background-image: url(../img/callwin/call_14.gif);
+	left: 85px;
+	top: 46px;
+	width: 3px;
+	height: 71px;
+}
+
+#call-15 {
+	background-image: url(../img/callwin/call_15.gif);
+	left: 88px;
+	top: 88px;
+	width: 1px;
+	height: 31px;
+}
+
+#call-16 {
+	background-image: url(../img/callwin/call_16.gif);
+	left: 89px;
+	top: 88px;
+	width: 6px;
+	height: 30px;
+}
+
+#call-17 {
+	background-image: url(../img/callwin/call_17.gif);
+	left: 95px;
+	top: 88px;
+	width: 68px;
+	height: 24px;
+}
+
+#call-18 {
+	background-image: url(../img/callwin/call_18.gif);
+	left: 163px;
+	top: 88px;
+	width: 5px;
+	height: 30px;
+}
+
+#call-19 {
+	background-image: url(../img/callwin/call_19.gif);
+	left: 168px;
+	top: 88px;
+	width: 68px;
+	height: 24px;
+}
+
+#call-20 {
+	background-image: url(../img/callwin/call_20.gif);
+	left: 236px;
+	top: 88px;
+	width: 29px;
+	height: 4px;
+}
+
+#call-21 {
+	background-image: url(../img/callwin/call_21.gif);
+	left: 236px;
+	top: 92px;
+	width: 5px;
+	height: 26px;
+}
+
+#call-22 {
+	background-image: url(../img/callwin/call_22.gif);
+	left: 241px;
+	top: 92px;
+	width: 16px;
+	height: 16px;
+}
+
+#call-23 {
+	background-image: url(../img/callwin/call_23.gif);
+	left: 257px;
+	top: 92px;
+	width: 8px;
+	height: 26px;
+}
+
+#call-24 {
+	background-image: url(../img/callwin/call_24.gif);
+	left: 241px;
+	top: 108px;
+	width: 16px;
+	height: 10px;
+}
+
+#call-25 {
+	background-image: url(../img/callwin/call_25.gif);
+	left: 95px;
+	top: 112px;
+	width: 68px;
+	height: 6px;
+}
+
+#call-26 {
+	background-image: url(../img/callwin/call_26.gif);
+	left: 168px;
+	top: 112px;
+	width: 68px;
+	height: 6px;
+}
+
+#call-27 {
+	background-image: url(../img/callwin/call_27.gif);
+	left: 19px;
+	top: 113px;
+	width: 66px;
+	height: 4px;
+}
+
+#call-28 {
+	background-image: url(../img/callwin/call_28.gif);
+	left: 12px;
+	top: 117px;
+	width: 76px;
+	height: 2px;
+}
+
+#call-29 {
+	background-image: url(../img/callwin/call_29.gif);
+	left: 89px;
+	top: 118px;
+	width: 176px;
+	height: 1px;
+}
+
+#call-30 {
+	background-image: url(../img/callwin/call_30.gif);
+	left: 12px;
+	top: 119px;
+	width: 253px;
+	height: 5px;
+}
+/** end call win */

@@ -1,0 +1,116 @@
+.kzg-box-shadow {
+	filter: progid : DXImageTransform . Microsoft .
+		Shadow(color = '#969696', Direction = 135, Strength = 5);
+	/*for ie6,7,8*/
+	background-color: #eee;
+	-moz-box-shadow: 2px 2px 5px #969696; /*firefox*/
+	-webkit-box-shadow: 2px 2px 5px #969696; /*webkit*/
+	box-shadow: 2px 2px 5px #969696; /*opera ie9*/
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+/* Hides from IE-mac \*/
+* html .clearfix {
+	height: 1%;
+}
+
+.clearfix {
+	display: block;
+}
+/* End hide from IE-mac */
+
+.kzg-suggestionstable {
+	background-color: #FFFFFF;
+	border: 1px solid #DDDDDD;
+	cursor: default;
+	margin: -4px;
+	/*min-width: 200px;*/
+	position: absolute;
+	text-align: left;
+	padding: 2px;
+	/*width: 200px;*/
+	z-index: 10000000;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	-moz-box-shadow: 2px 2px 2px #ccc; /*firefox*/
+	-webkit-box-shadow: 2px 2px 2px #ccc; /*webkit*/
+	box-shadow: 2px 2px 2px #ccc; /*opera ie9*/		
+}
+
+.kzg-suggestionrow {
+	cursor: pointer;
+}
+
+.kzg-suggestionhighlight {
+	background-color: #E7E7E7;
+}
+
+.kzg-suggestioncell {
+	border-bottom: 0 dotted #DDDDDD;
+	padding: 2px 5px;
+	white-space: nowrap;
+}
+
+.kzg-suggestionnumber {
+	border-bottom: 0 dotted #DDDDDD;
+	border-left: 0 dotted #DDDDDD;
+	color: #000000;
+	padding: 2px 5px;
+	text-align: center;
+	width: 15px;
+}
+
+.kzg-suggestion-match {
+	white-space: pre;
+}
+
+.kzg-suggestion-sug {
+	white-space: pre;
+}
+
+.kzg-suggestion-choice {
+	text-decoration: underline;
+	color: blue;
+}
+
+.kzg-suggestion-noise {
+	color:#696969;
+	white-space: pre;
+}
+
+
+.kzg-choicetable {
+	background-color: #FFFFFF;
+	border: 1px solid #DDDDDD;
+	cursor: default;
+	margin: -4px;
+	position: absolute;
+	text-align: left;
+	z-index: 10000000;
+	padding: 2px;
+	
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	-moz-box-shadow: 2px 2px 2px #ccc; /*firefox*/
+	-webkit-box-shadow: 2px 2px 2px #ccc; /*webkit*/
+	box-shadow: 2px 2px 2px #ccc; /*opera ie9*/
+}
+
+.kzg-choicerow {
+	cursor: pointer;
+}
+
+.kzg-choicecell {
+	border-bottom: 0 dotted #DDDDDD;
+	padding: 2px 5px;
+	white-space: nowrap;
+}
+
+.kzg-choice-item {
+	white-space: pre;
+}

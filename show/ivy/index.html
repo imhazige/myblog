@@ -1,0 +1,43 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Ivy Animation</title>
+
+		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
+		<meta http-equiv="description" content="this is my page" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+		
+		<link type="text/css" rel="stylesheet" href="../js/jq-ui-1.8.23/css/redmond/jquery-ui-1.8.23.custom.css" />
+		<link type="text/css" rel="stylesheet" href="../js/miniColors/jquery.miniColors.css" />
+		<link rel="stylesheet" href="style.css">
+
+		
+		<script type="text/javascript" src="../js/jq-ui-1.8.23/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" src="../js/jq-ui-1.8.23/jquery-ui-1.8.23.custom.min.js"></script>
+		
+		<script type="text/javascript" src="../js/miniColors/jquery.miniColors.min.js"></script>	
+		
+				<script type="text/javascript" src="js/all.js"></script>
+			
+	</head>
+	
+	<body>	
+		<div id="cp">
+			<div class="ci"><span class="lab">Ivy Color:</span><input id="color_ivy" type="text" class="color-picker" size="7" value="#fff" /></div>	
+			<div class="ci"><span class="lab">Ivy Leaf Color:</span><input id="color_leaf" type="text" class="color-picker" size="7" value="#fff" /></div>
+			<div class="ci"><span class="lab">Flower Color:</span><input id="color_flower" type="text" class="color-picker" size="7" value="#fff" /></div>
+					
+			<div class="ci"><span class="lab">Ivy Width:</span><input type="text" id="txt_width" class="txt-number" /><div id="slider_range_width" class="slider"></div><br style="clear:both;" /></div>
+			<div class="ci"><span class="lab">Ivy Unit Length:</span><input type="text" id="txt_unit" class="txt-number" /><div id="slider_range_unit" class="slider"></div><br style="clear:both;" /></div>
+			<div class="ci"><span class="lab">Angle:</span><input type="text" id="txt_angle" class="txt-number"  /><div id="slider_range_angle" class="slider"></div><br style="clear:both;" /></div>
+			<div class="ci"><span class="lab">Start Point:</span><input type="text" id="txt_x" class="txt-number" value="200" /><input type="text" id="txt_y" class="txt-number" value="0"/><br style="clear:both;" /></div>
+			<div class="ci"><span class="lab">Growth Speed:</span><input type="text" id="txt_growth" class="txt-number" /><div id="slider_range_growth" class="slider"></div><br style="clear:both;" /></div>
+			<div id="cmds"><div id="tip1" class="tooltip"><div class="tip-tan"></div>Click Create to start a Ivy with above parameters</div><a href="#" id="create" class="cmd">Create</a><a id="stop" href="#" class="cmd">Stop</a><a id="reset" href="#" class="cmd">Reset</a><br style="clear:both;" /></div>
+			<pre id="tip"></pre>			
+		</div>
+		<div id="ivy">
+			
+		</div>
+</html>
