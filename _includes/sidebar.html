@@ -18,7 +18,7 @@
       {% assign author = site.data.authors.first[1] | default:site.author %}
 
       {% if author.social or site.github_username or site.twitter_username %}
-        <div class="sidebar-social">
+        <div class="sidebar-social" style="min-width: 238px">
           {% include social.html social=author.social %}
         </div>
       {% endif %}

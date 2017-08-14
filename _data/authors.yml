@@ -8,7 +8,7 @@ Ka:
   # Used at the bottom of each page and at the top of the `about` layout
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
-          About Me...
+          
 
   # This photo will be used in the about section
   picture:
@@ -58,5 +58,4 @@ Ka:
     # paypal:          <username>
     github:          imhazige
     email:           mailto:imhazige@gmail.com
-    linkedin:        imhazige
     rss:             https://imhazige.github.io/myblog/feed.xml

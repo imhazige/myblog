@@ -42,3 +42,11 @@
     border: 1px solid #4c964d;
     color: #FFF;
 }
+
+.sidebar-social>ul>li>a {
+    font-size: 2.5em !important;
+}
+
+.sidebar-social>ul>li{
+    margin: 0.85em !important;
+}
