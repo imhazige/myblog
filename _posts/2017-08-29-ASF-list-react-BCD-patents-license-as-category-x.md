@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 关于Apache软件基金会不再允许Facebook BSD+Patents 开源协议项目做为Apache旗下项目的依赖 | About ASF did not allow products depend on license BSD+Patents
+title: "About ASF did not allow products depend on license BSD+Patents"
 date: 2017-08-29 10:10 +00:00
 type: post
 published: true
