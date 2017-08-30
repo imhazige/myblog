@@ -46,12 +46,14 @@ https://code.facebook.com/pages/850928938376556
 
 ## Aside
 Reactjs switch their license from Apache2.0 to BSD+Patents at 2014. The additional Patents in the license "BSD+Patents" is to protect corperation from meritless patent litigation.
-https://code.facebook.com/posts/112130496157735/explaining-react-s-license/
+https://code.facebook.com/posts/112130496157735/explaining-react-s-license/  
+
 
 
 ##### Refs:
-https://www.reddit.com/r/reactjs/comments/6vrinx/due_to_reacts_new_license_changes_which_would_you/
-http://writing.jan.io/2017/08/19/understanding-the-facebook-vs-asf-license-kerfuffle.html
-http://www.infoq.com/cn/news/2017/08/facebook-react-license?utm_source=infoq_en&utm_medium=link_on_en_item&utm_campaign=item_in_other_langs
+[InfoQ](http://www.infoq.com/cn/news/2017/08/facebook-react-license?utm_source=infoq_en&utm_medium=link_on_en_item&utm_campaign=item_in_other_langs)  
+[Reddit](https://www.reddit.com/r/reactjs/comments/6vrinx/due_to_reacts_new_license_changes_which_would_you/)  
+[More Detail](http://writing.jan.io/2017/08/19/understanding-the-facebook-vs-asf-license-kerfuffle.html)
+
 
 
