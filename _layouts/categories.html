@@ -36,7 +36,7 @@ layout: base
           {% else %}
           <li><a href="{{ BASE_PATH }}{{node.url}}">{{node.title}}</a></li>
           {% endif %} -->
-          {% include post-list-item.html post=node format="%d %b" %}
+          {% include post-list-item.html post=node format="%d %b %Y" %}
         {% endif %}
       {% endif %}
     {% endfor %}
