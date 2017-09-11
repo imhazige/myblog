@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '海洋量子号上的5天4夜'
+title: '海洋量子号上的五天四夜'
 date: 2017-09-11 10:10 +20:00
 type: post
 published: true
