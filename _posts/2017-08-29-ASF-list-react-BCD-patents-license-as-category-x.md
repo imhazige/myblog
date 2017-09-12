@@ -1,5 +1,6 @@
 ---
 layout: post
+comments: true
 title: "About ASF did not allow products depend on license BSD+Patents"
 date: 2017-08-29 10:10 +00:00
 type: post
