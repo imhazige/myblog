@@ -18,9 +18,9 @@
       {% capture content_temp %}{{ content }}<a href="{{ tag.url | relative_url }}" data-flip="title">{{ tag.title }}</a>{{ iter_separator }}{% endcapture %}
     {% else %}
       {% if is_category %}
-        {% capture content_temp %}{{ content }}<a href="/categories/#{{ tag_slug | capitalize }}-ref">{{ tag_slug | capitalize }}</a>{{ iter_separator }}{% endcapture %}
+        {% capture content_temp %}{{ content }}<a href="/categories/#{{ tag_slug }}-ref">{{ tag_slug }}</a>{{ iter_separator }}{% endcapture %}
       {% else %}
-        {% capture content_temp %}{{ content }}<a href="/tags/#{{ tag_slug | capitalize }}-ref">{{ tag_slug | capitalize }}</a>{{ iter_separator }}{% endcapture %}
+        {% capture content_temp %}{{ content }}<a href="/tags/#{{ tag_slug }}-ref">{{ tag_slug }}</a>{{ iter_separator }}{% endcapture %}
       {% endif %}
     {% endif %}
 
