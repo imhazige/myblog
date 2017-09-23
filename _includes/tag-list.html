@@ -3,6 +3,7 @@
 {% assign start_with = include.start_with %}
 {% assign separator = include.separator %}
 {% assign end_with = include.end_with %}
+{% assign is_category = include.is_category %}
 
 {% assign content = '' %}
 
@@ -16,7 +17,11 @@
     {% if tag %}
       {% capture content_temp %}{{ content }}<a href="{{ tag.url | relative_url }}" data-flip="title">{{ tag.title }}</a>{{ iter_separator }}{% endcapture %}
     {% else %}
-      {% capture content_temp %}{{ content }}<span>{{ tag_slug | capitalize }}</span>{{ iter_separator }}{% endcapture %}
+      {% if is_category %}
+        {% capture content_temp %}{{ content }}<a href="/categories/#{{ tag_slug | capitalize }}-ref">{{ tag_slug | capitalize }}</a>{{ iter_separator }}{% endcapture %}
+      {% else %}
+        {% capture content_temp %}{{ content }}<a href="/tags/#{{ tag_slug | capitalize }}-ref">{{ tag_slug | capitalize }}</a>{{ iter_separator }}{% endcapture %}
+      {% endif %}
     {% endif %}
 
     {% assign content = content_temp %}
