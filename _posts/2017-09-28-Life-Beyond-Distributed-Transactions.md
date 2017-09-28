@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title: "Life Beyond Distributed Transactions - An apostate's opinion"
+title: "[Reprinted] Life Beyond Distributed Transactions - An apostate's opinion"
 date: 2017-09-27 20:00 +08:00
 type: post
 published: true
@@ -13,6 +13,7 @@ tags:
 - 'distributed transaction'
 ---
 > This article is reprinted from [acm.org](http://queue.acm.org/detail.cfm?id=3025012)
+
 # Life Beyond Distributed Transactions
 
 ## An apostate's opinion
