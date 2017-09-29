@@ -12,6 +12,8 @@ tags:
 - 'database'
 - 'distributed transaction'
 ---
+> This article is reprinted or copy from other website, resource in the internet, copyright held by original owner/author. If you think it violated your right, please email <{{site.author.email}}> and the article will be removed from this site.
+
 > This article is reprinted from [acm.org](http://queue.acm.org/detail.cfm?id=3025012)
 
 # Life Beyond Distributed Transactions
