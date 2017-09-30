@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title: "About ASF did not allow products depend on license BSD+Patents"
-date: 2017-08-29 10:10 +00:00
+date: 2017-09-30 06:10 +00:00
 type: post
 published: true
 status: publish
@@ -29,6 +29,10 @@ https://code.facebook.com/posts/112130496157735/explaining-react-s-license/
 举个例子:
 小明基于ReactJs有个新专利，TA就不能因为这个专利起诉Facebook.--大概是这个意思，真要搞清楚，还得请个律师。
 
+* * *
+# 2017-09-30更新:  
+__[React Release 16 转到 MIT License](https://code.facebook.com/posts/300798627056246/relicensing-react-jest-flow-and-immutable-js/),开源社区的胜利!__
+
 
 * * *
 * * *
@@ -50,6 +54,9 @@ Reactjs switch their license from Apache2.0 to BSD+Patents at 2014. The addition
 https://code.facebook.com/posts/112130496157735/explaining-react-s-license/  
 
 
+* * *
+# Update 2017-09-30: 
+__[React Release 16 relicensing to MIT License](https://code.facebook.com/posts/300798627056246/relicensing-react-jest-flow-and-immutable-js/), Victory of the Open Source Community!__
 
 ##### Refs:
 [InfoQ](http://www.infoq.com/cn/news/2017/08/facebook-react-license?utm_source=infoq_en&utm_medium=link_on_en_item&utm_campaign=item_in_other_langs)  
