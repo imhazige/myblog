@@ -7,7 +7,7 @@ type: post
 published: true
 status: publish
 categories:
-- 'Web前端'
+- 'Web front-end'
 tags:
 - 'javascript'
 - 'nodejs'
