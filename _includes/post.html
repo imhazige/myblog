@@ -12,6 +12,10 @@
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
       {% include tag-list.html is_category=true tags=post.categories meta=site.featured_categories start_with="in " separator=" / " %}
       {% include tag-list.html tags=post.tags meta=site.featured_tags start_with="on " separator=", " %}
+    
+      <!-- busuanzi code. page view count -->
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv"> - Hits(<span style="color: cornflowerblue" id="busuanzi_value_page_pv"></span>)</span>
     </p>
 
     {% include message.html text=post.description %}
