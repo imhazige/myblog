@@ -5,11 +5,12 @@ title: 'Good Memory of Maldive'
 date: 2017-12-26 10:00 +08:00
 type: post
 published: true
-status: private
+status: publish
 categories:
-- 'travel'
+- '生活'
 tags:
 - 'Maldive'
+- 'Travel'
 ---
 传说中的马尔代夫，今年有幸游历了一番，在那待了六天五夜，其中一晚在马累，四天四晚在
 美丽的Centara Grand Island，美好而难忘的旅行……
@@ -66,6 +67,8 @@ Centara，我们终于到了。那浅蓝色的海，那白色的细沙滩，那�
 
 吃完饭，我们顺着小岛转了一圈，依然是很安静，小道旁边的别墅里面传不出任何声音，只有轻柔的音乐，和淡淡的海涛拍沙滩。
 我觉得一直这样逛下去也不会生厌。
+
+
 
 
 
