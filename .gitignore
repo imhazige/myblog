@@ -44,3 +44,4 @@ node_modules
 .jekyll-metadata
 *.gem
 _test_posts
+abc.sh
