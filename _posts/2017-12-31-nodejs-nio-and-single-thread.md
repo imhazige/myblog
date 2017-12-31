@@ -17,10 +17,15 @@ Nodejs is popular in recent years, people say it have good performance of high c
 
 I was confused sometimes, if I want to choose java,php,nodjs to implement a service, what should I concern if I prefer nodejs?
 
-After read this terrific disccussion, I understand 
+After read this [How the single threaded non blocking IO model works in Node.js](https://stackoverflow.com/questions/14795145/how-the-single-threaded-non-blocking-io-model-works-in-node-js) terrific disccussion, I understand:
 
-Refs:
-[How the single threaded non blocking IO model works in Node.js](https://stackoverflow.com/questions/14795145/how-the-single-threaded-non-blocking-io-model-works-in-node-js)
+- Nodejs use libuv implement NIO
+- normally we can say the event loop is single thread, the callback is execute in a aysnchronous way, which is powered by the nio(libub) - not multithread.
+- sql connection is been abstracted as a nio style, but it is not multithread too. sql query is queued.
+- **The most important is that, nodejs is good at io operation(network io,filesystem io) - not good at CPU-intensive operation.**
+
+
+
 
 
 
