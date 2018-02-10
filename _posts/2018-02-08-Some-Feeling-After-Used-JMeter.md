@@ -7,10 +7,10 @@ type: post
 published: true
 status: publish
 categories:
-- 'web'
-  tags:
-- 'jmeter'
-- 'loadtest'
+  - 'web'
+tags:
+  - 'jmeter'
+  - 'loadtest'
 ---
 These days I have do some [benchmark test for Java and Node.js](https://github.com/imhazige/benchmark-test-java-php-nodejs) by using JMeter, some problem made me spend much time try to resolve.
 
