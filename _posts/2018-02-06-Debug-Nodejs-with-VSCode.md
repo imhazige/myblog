@@ -7,11 +7,11 @@ type: post
 published: true
 status: publish
 categories:
-- 'Node.js'
-  tags:
-- 'javascript'
-- 'nodejs'
-- 'VSCode'
+  - 'Node.js'
+tags:
+  - 'javascript'
+  - 'nodejs'
+  - 'VSCode'
 ---
 Now Node.js support inspector protocol (>= 6.3 (Windows: >= 6.9)), we can add inspector by run script like this ```shell node --inspect app.js```.
 
