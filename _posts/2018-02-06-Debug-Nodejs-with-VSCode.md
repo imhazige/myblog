@@ -60,7 +60,7 @@ now we can see there are a Debug-Dev launch item in the left debug panel. click 
 
 ### Refs:
 
-https://code.visualstudio.com/docs/nodejs/nodejs-debugging
-https://nodejs.org/en/docs/inspector/
-https://nodejs.org/api/debugger.html
+https://code.visualstudio.com/docs/nodejs/nodejs-debugging  
+https://nodejs.org/en/docs/inspector/  
+https://nodejs.org/api/debugger.html  
 
