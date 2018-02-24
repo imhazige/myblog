@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title: "Top 1000 most depended-upon Javascript packages"
-date: 2017-09-27 20:00 +08:00
+date: 2018-02-24 20:00 +08:00
 type: post
 published: true
 status: publish
@@ -10,7 +10,7 @@ categories:
 - 'Node.js'
 - 'Javascript'
 tags:
-- 'rank'
+- 'ranking'
 ---
 
 Top 1000 most depended-upon packages have been list at [here](https://gist.github.com/anvaka/8e8fa57c7ee1350e3491#top-1000-most-depended-upon-packages).
