@@ -12,13 +12,25 @@ tags:
 ---
 ## GraphQL: a simple introduction
 
-### what's GraphQL
+### What's GraphQL
 
-from [https://github.com/facebook/graphql](https://github.com/facebook/graphql): 
+From [https://github.com/facebook/graphql](https://github.com/facebook/graphql): 
 
 > GraphQL is a query language and execution engine tied to any backend service. http://graphql.org/ 
 
-> a query language for APIs created by Facebook.  nnn
+> A query language for APIs created by Facebook. 
+
+### [The Spec](https://github.com/facebook/graphql)
+
+### Open source
+
+
+
+### Concern about the performance
+
+[GraphQL APIs and performance](https://brandur.org/fragments/graphql-performance)
+
+> It’s true that performance can be a challenge, but it’s not true that GraphQL somehow forces you to expose routes that are not performant. A GraphQL schema is designed the same way as your traditional REST-ish API in that a service operator only reveals routes where they can ensure good quality of service for users, and good stability for their own backend.
 
 
 
