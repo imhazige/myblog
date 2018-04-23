@@ -22,6 +22,7 @@ Next, as I am using windows, I load the private key of the SSH agent(in this cas
 ![gitssh.png]({{site.baseurl}}/assets/gitssh.png)
 
 
+
 Now go to the project home page, switch the type from https to ssh. copy that url to the sourcetree.
 
 Then when you do operation on that repository, it will connect via ssh successfully.
