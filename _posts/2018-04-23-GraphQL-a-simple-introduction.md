@@ -24,7 +24,11 @@ From [https://github.com/facebook/graphql](https://github.com/facebook/graphql):
 
 ### Open source
 
+[express-graphql](https://github.com/graphql/express-graphql) - Create a GraphQL HTTP server with Express.
 
+[GraphQL.js](https://github.com/graphql/graphql-js) - GraphQL.js is a general purpose library and can be used both in a Node server and in the browser.
+
+[GraphiQL](https://github.com/graphql/graphiql/) - A graphical interactive in-browser GraphQL IDE.
 
 ### Concern about the performance
 
