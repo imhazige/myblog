@@ -16,4 +16,8 @@ I always use git with https. But today, I found a git repository via https in no
 
 So I have to use ssh. I think it should work, it really be.
 
-My git repository is hosted on gitlab, I have to create a RSA key pair, as I use SourceTree, I can create a key pair via menu tools/Gernerate or import SSH keys
+My git repository is hosted on gitlab, I have to create a RSA key pair, as I use SourceTree, I can create a key pair via menu tools/Gernerate or import SSH keys. after that, I need upload the public key to the gitlab. Go to the /profile/keys sub directoty of the gitlab site. then you can add the public key.
+
+Next, as I am using windows, I load the private key of the SSH agent(in this case it normallyu should be putty). On windows10, I can open it in the task bar. Then in the ui, I imported the private key.
+
+Now go to the project page, choose the 
