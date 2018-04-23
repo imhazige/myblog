@@ -18,7 +18,7 @@ from [https://github.com/facebook/graphql](https://github.com/facebook/graphql):
 
 > GraphQL is a query language and execution engine tied to any backend service. http://graphql.org/ 
 
-> a query language for APIs created by Facebook.
+> a query language for APIs created by Facebook.  nnn
 
 
 
