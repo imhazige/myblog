@@ -36,6 +36,10 @@ From [https://github.com/facebook/graphql](https://github.com/facebook/graphql):
 
 > It’s true that performance can be a challenge, but it’s not true that GraphQL somehow forces you to expose routes that are not performant. A GraphQL schema is designed the same way as your traditional REST-ish API in that a service operator only reveals routes where they can ensure good quality of service for users, and good stability for their own backend.
 
+My two cents:
+
+the performance problem GraphQL will have, the normal RESTful way will also have, just that when you expose the GraphQL, it is easier to make nested query. but contract to its benifits(unitform api, code reusing), GraphQL is good to try.
+
 ### What's [GraphQL Appollo](https://www.apollographql.com/)
 
 > Build a universal GraphQL API on top of your existing REST APIs, so you can ship new application features fast without waiting on backend changes.
@@ -43,7 +47,3 @@ From [https://github.com/facebook/graphql](https://github.com/facebook/graphql):
 [GitHub](https://github.com/apollographql) 
 
 but it is [commercial](https://www.apollographql.com/engine).
-
-
-
-
