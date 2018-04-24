@@ -30,3 +30,5 @@ Then when you do operation on that repository, it will connect via ssh successfu
 I have no problem on Mac, so I have not try it on sourcetree mac version yet, but I think `ssh-add` may required to add the private key.
 
 If you are keeping asked password of the repository, it mean you did not set the ssh authentication correctly.
+
+But I found that the windows ssh agent lost all the imported keys after restart, so need import them again.
