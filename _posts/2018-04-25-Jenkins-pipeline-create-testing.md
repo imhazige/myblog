@@ -55,7 +55,39 @@ Run the command:
 
 The command will run the groovy script to the jenkins pipeline by the feature of replay, after that you can go to the Jenkins pipeline panel or the Blue Ocean Panel, you will see a new build have started. also you can see the parameters have defined on the pipeline. This is great! we can save our pipeline as a script, and save in to the SCM, which is Jenkins recommended [Single_Source_of_Truth](https://en.wikipedia.org/wiki/Single_source_of_truth).
 
-The next task is to write the build/deploy script, to complete the task. the most useful command we may using is git, sh, sshPublisher. git let you clone code from git SCM, sh allow you package the war(for Java) and any other thing a linux or windows shell can do. sshPublisher allow you upload packaged file to remote server and exec shell remotely.
+The next task is to write the build/deploy script, to complete the task. the most useful command we may using is git, sh, sshPublisher. git let you clone code from git SCM, sh allow you package the war(for Java) and any other thing a linux or windows shell can do. sshPublisher allow you upload packaged file to remote server and exec shell remotely. 
+
+The sshPublisher is little complex than others, let me give a example:
+```groovy
+def cmd = """
+                echo "stop service ${Service}";
+                sudo stop ${Service};
+                echo "clean folder ${serviceBinDir}";
+                sudo rm -rf ${serviceBinDir};
+                echo "extract package";
+                mkdir -p tmp;
+                tar -xzvf ${uploadLocalDir}.tar.gz -C tmp;
+                echo "copy files to ${serviceBinDir}";
+                mv tmp/${uploadLocalDir} ${serviceBinDir};
+                echo "copy service config to upstart folder";
+                sudo cp -f ${serviceBinDir}/${Service}.conf /etc/init/${Service}.conf;
+                echo "start service ${Service}";
+                sudo start ${Service};
+                """
+sshPublisher(
+            publishers:[
+                sshPublisherDesc(configName:'staging-3',verbose:true,transfers:[
+                    sshTransfer(
+                        sourceFiles:"${uploadLocalDir}.tar.gz"
+                        // remoteDirectory:"~" //use "~" will made it create a new ~ dir
+                    ),
+                    sshTransfer(
+                        //exec commands
+                        execCommand: cmd
+                    )
+                ])
+        ])
+```
 
 
 ## Refs:
