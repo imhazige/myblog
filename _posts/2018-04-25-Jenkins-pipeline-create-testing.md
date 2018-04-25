@@ -59,6 +59,7 @@ The next task is to write the build/deploy script, to complete the task. the mos
 
 The sshPublisher is little complex than others, let me give a example:
 ```groovy
+//use groovy thripe string to build remote ssh command
 def cmd = """
                 echo "stop service ${Service}";
                 sudo stop ${Service};
@@ -76,9 +77,9 @@ def cmd = """
                 """
 sshPublisher(
             publishers:[
-                sshPublisherDesc(configName:'staging-3',verbose:true,transfers:[
+                sshPublisherDesc(configName:'staging',verbose:true,transfers:[
                     sshTransfer(
-                        sourceFiles:"${uploadLocalDir}.tar.gz"
+                        sourceFiles:"abc.tar.gz"
                         // remoteDirectory:"~" //use "~" will made it create a new ~ dir
                     ),
                     sshTransfer(
@@ -88,6 +89,16 @@ sshPublisher(
                 ])
         ])
 ```
+I am not going to explain the code at here, you can take it as a example, more detail please see the document "DSL Reference".
+
+### How to handle pipeline script error
+When your script result in a build failure, then you can not test the script again without a successful build. You need run a successful build again from the build history, then you get a latest successful build. You can test the local pipeline script again.
+
+### The credential of the sshPublisher
+You need define remote ssh server at first before you use sshPublisher, the configName is the name of the remote ssh server. you are able to define only one private ssh key.
+
+## After Testing
+When you complete the script, you can comment the parameters definition code, paste the rest script to the Jenkins pipeline definition UI, then click save. At that time, a workable pipeline have made. By one or two or some clicks, you can made a deploy so easy, amazing.
 
 
 ## Refs:
