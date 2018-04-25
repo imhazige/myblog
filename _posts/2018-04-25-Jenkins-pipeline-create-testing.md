@@ -1,5 +1,15 @@
 ---
 published: false
+layout: post
+comments: true
+date: '2018-04-25 10:00 +08:00'
+type: post
+status: publish
+categories:
+  - Devops
+tags:
+  - Jenkins
+  - Groovy
 ---
 Nowadays, Jenkins is powerful and is like a standard tool for continue integration. this article is going to introduce the way to create, testing a pipeline. the pipeline will use jenkins pipeline script syntax to define, and use replay feature to test. 
 
