@@ -24,14 +24,10 @@ When I getstarted with Jenkins, I am very confused and boring with its bad docum
 
 Finally I found the document is in the Jenkins server, when you go into a pipeline, you will find a line like "Pipeline Syntax", it have the detailed reference of pipeline, especially the "DSL Reference" which is not on the official document. What's a joke!
 
-
 ## Define pipeline and testing
+With pipeline script, you can dfine a pipeline for everything include the parameters, but you need create the pipeline in the Jenkins UI at first. give it a name, and add 
 
 
 ## Refs:
 
-[Groovy Syntax](http://groovy-lang.org/syntax.html)  
-
-
-
-
+[Groovy Syntax](http://groovy-lang.org/syntax.html)
