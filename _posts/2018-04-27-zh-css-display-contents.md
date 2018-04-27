@@ -6,7 +6,7 @@ date: '2018-04-27 20:00 +08:00'
 type: post
 status: publish
 categories:
-  - Web-front-end
+  - front-end
 tags:
   - css
 title: '使用Display:contents'
