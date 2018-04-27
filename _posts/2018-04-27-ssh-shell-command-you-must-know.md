@@ -26,10 +26,23 @@ ssh -i /key/abc.key abc@202.1.1.1
 ```
 if we did not specify the -i option, the terminal will prompt for password of the username. the -i option specify the path of the key will used for ssh login. normally we will need a ssh key, because it is safer than a password, to get the file of a key is more harder than get your password, maybe it is not true, but anyway, you need not input password everytime when you wrote a complex shell script.
 
-### exec command with ssh
+### execute command with ssh
+```shell
+ssh -i /key/abc.key abc@202.1.1.1 "cd ~/tmp"
+```
+here we add a command string after the ssh command, it means, after ssh login to the remote server, execute the command on the remote server.
 
+you can execute many command at one time like
+```shell
+ssh -i /key/abc.key abc@202.1.1.1 "mkdir ~/tmp; \
+cd ~/tmp; \
+"
+```
+we can join many commands with semicolon, newline is not required, but need escape the newline with a backslash.
 
 ### tunnel
+
+
 ### ssh-add
 
 ## scp
