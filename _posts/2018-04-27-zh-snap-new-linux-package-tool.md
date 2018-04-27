@@ -10,6 +10,7 @@ categories:
   - DevOps
 tags:
   - snap
+title: Snap - 新的linux系统包管理工具
 ---
 2016年六月的时候，“通用linux包” “[Snap](https://snapcraft.io)”项目宣布启动。**所有**linux系统（桌面版，服务器版，嵌入式）将会支持此工具。
 
