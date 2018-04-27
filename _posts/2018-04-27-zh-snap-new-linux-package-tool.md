@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2018-04-27 20:00 +08:00'
@@ -32,10 +32,7 @@ sudo snap refresh node --channel=9
 这样通过refresh参数，将node切换到了version 9。
 
 
-
 ## Refs:
 - [https://insights.ubuntu.com/2016/06/14/universal-snap-packages-launch-on-multiple-linux-distros](https://insights.ubuntu.com/2016/06/14/universal-snap-packages-launch-on-multiple-linux-distros)
 
 - [https://nodesource.com/blog/installing-nodejs-tutorial-using-snaps-on-linux/](https://nodesource.com/blog/installing-nodejs-tutorial-using-snaps-on-linux/)
-
-
