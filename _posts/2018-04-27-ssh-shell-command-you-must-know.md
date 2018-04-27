@@ -26,6 +26,9 @@ ssh -i /key/abc.key abc@202.1.1.1
 ```
 if we did not specify the -i option, the terminal will prompt for password of the username. the -i option specify the path of the key will used for ssh login. normally we will need a ssh key, because it is safer than a password, to get the file of a key is more harder than get your password, maybe it is not true, but anyway, you need not input password everytime when you wrote a complex shell script.
 
+### exec command with ssh
+
+
 ### tunnel
 ### ssh-add
 
