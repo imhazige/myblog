@@ -41,8 +41,25 @@ cd ~/tmp; \
 we can join many commands with semicolon, newline is not required, but need escape the newline with a backslash.
 
 ### tunnel
+ssh port forward allow you to build tunnel from you local machine to a remote server. 
+
+```shell
+ssh  -i /key/abc.key abc@202.1.1.1 -L 13006:localhost:3006
+```
+The -L option create a tunnel, 13006 means the port will open on local machine. the localhost means the ip address of the remote server(B) related to the ssh server you connecting to(A), the 3006 port means the the port running on the server B.
+
+In the above example, if you connect to local machine port 13006, it will connect to the server B port 3006. this is a very useful feature ssh provided to a developer. We connect to the database, jmx without requiring to open the port to the internet, just need a ssh connection and with the benifits of security of ssh.
+
+Actually, this is a forward forwarding, there are another option -R means reverse forwarding.
+```shell
+ssh  -i /key/abc.key abc@202.1.1.1 -L 13006:localhost:3006
+```
+This time, we create a tunnel, which open port on the ssh server(A) we connecting to, forward the port 3006 of local machine to the server A, so within the server A, request to localhost:13006 will send to local machine port 3006.it like the service [ngrok](https://ngrok.com/) provided. But, in most server, you need additional steps to make the port run as a service and public to the internet.
 
 
 ### ssh-add
+In some cases, there are some [bastion host](https://en.wikipedia.org/wiki/Bastion_host) stand before the remote servers, and you are only able to connect to the remote servers via the bastion hosts, you need ssh to the bastion host, then run ssh on the bastion host to connect to the remote servers. 
+
+
 
 ## scp
