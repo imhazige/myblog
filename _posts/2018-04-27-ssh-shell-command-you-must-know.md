@@ -88,4 +88,5 @@ will upload files from local folder ./ to remote folder ~/tmp/dnload .
 ## windows
 On mac, ssh and scp command is included natively. for Window, you can install git client, which will include the ssh client. windows 10 powershell also provide ssh and scp.
 
-
+## Refs:
+[Linux man page](https://linux.die.net/man/1/ssh)
