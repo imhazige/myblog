@@ -34,11 +34,11 @@ here we add a command string after the ssh command, it means, after ssh login to
 
 you can execute many command at one time like
 ```shell
-ssh -i /key/abc.key abc@202.1.1.1 "mkdir ~/tmp; \
+ssh -t -i /key/abc.key abc@202.1.1.1 "mkdir ~/tmp; \
 cd ~/tmp; \
 "
 ```
-we can join many commands with semicolon, newline is not required, but need escape the newline with a backslash.
+we can join many commands with semicolon, newline is not required, but need escape the newline with a backslash. The -t option is important that allow you interact with the stdin stdout of the remote server, for example, to input your credential when run command git clone. 
 
 ### tunnel
 ssh port forward allow you to build tunnel from you local machine to a remote server. 
