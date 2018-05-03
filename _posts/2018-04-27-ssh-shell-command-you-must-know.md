@@ -18,7 +18,6 @@ In the following words, I will take 202.1.1.1 as a ficticious remote server, als
 
 ### ssh to remote server
 First is common and important to login to remote linux server via ssh.
-On mac, ssh and scp command is included natively. for Window, you can install git client, which will include the ssh client.
 
 To login to a remote server:
 ```shell
@@ -60,6 +59,33 @@ This time, we create a tunnel, which open port on the ssh server(A) we connectin
 ### ssh-add
 In some cases, there are some [bastion host](https://en.wikipedia.org/wiki/Bastion_host) stand before the remote servers, and you are only able to connect to the remote servers via the bastion hosts, you need ssh to the bastion host, then run ssh on the bastion host to connect to the remote servers. 
 
+When you conencting to remote server from the bastion host, it is not good to upload the key of the remote server to the bastion host, instead, you can use ssh-add to add the key to the authentication agent.
+```shell
+ssh-add -K $KEY_FILE_SERVER
+```
+after doing that, you need not specify the ssh key file to the remote server.
+```shell
+ssh -v -t -A -i $KEY_FILE_BASTION $BASTION_USER@$BASTION_HOST "ssh ubuntu@$SERVER -N -L $LOCAL_PORT:$REMOTE_HOST:$JMX_PORT"
+```
+The command above ssh to the bastion host and run command to the remote server -- ssh again to the remote server.
 
+the option -A here did the trick it enables forwarding of the authentication agent connection.
 
 ## scp
+scp allow you upload/download file to/from the server
+
+```shell
+scp -i $KEY_FILE_BASTION -r $BASTION_USER@$BASTION_HOST:~/tmp/dnload ./
+```
+the above command download all the files from the folder ~/tmp/dnload on the remote server to local folder ./, the -r option means download resursively include subfolder and files in them.
+
+in contrast
+```shell
+scp -i $KEY_FILE_BASTION -r ./ $BASTION_USER@$BASTION_HOST:~/tmp/dnload 
+```
+will upload files from local folder ./ to remote folder ~/tmp/dnload .
+
+## windows
+On mac, ssh and scp command is included natively. for Window, you can install git client, which will include the ssh client. windows 10 powershell also provide ssh and scp.
+
+
