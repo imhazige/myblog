@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 title: Page Transitions Animation
