@@ -25,4 +25,3 @@ When people say nosql feature of postgres, it mostly meaning the json type of po
 [8.14. JSON Types](https://www.postgresql.org/docs/9.5/static/datatype-json.html)
 
 [Chapter 26. High Availability, Load Balancing, and Replication](https://www.postgresql.org/docs/current/static/high-availability.html)
-
