@@ -9,6 +9,9 @@ categories:
 tags:
   - postgres
 ---
-## A New Post
+Recent years, postgres have 
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+## Refs
+[Is Postgres NoSQL Better Than MongoDB?](http://www.aptuz.com/blog/is-postgres-nosql-database-better-than-mongodb/)
+
+
