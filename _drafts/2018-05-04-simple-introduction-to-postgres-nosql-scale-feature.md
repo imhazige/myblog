@@ -18,6 +18,7 @@ This article is going to have a simple introduction of the "NoSql" feature and t
 When people say nosql feature of postgres, it mostly meaning the json type of postgres start from version 9. 
 
 
+## Scale out
 
 
 ## Refs
