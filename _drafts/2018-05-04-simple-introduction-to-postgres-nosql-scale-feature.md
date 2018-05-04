@@ -8,6 +8,7 @@ categories:
   - database
 tags:
   - postgres
+date: '2018-05-04 20:00 +08:00'
 ---
 Recent years, I have see many project using postgres instead of Mysql. it is time to have a try by youself if you have not used it yet.
 
