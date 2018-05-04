@@ -1,5 +1,13 @@
 ---
 published: false
+layout: post
+comments: true
+type: post
+title: Simple introduction of postgres NoSql and scale feature
+categories:
+  - database
+tags:
+  - postgres
 ---
 ## A New Post
 
