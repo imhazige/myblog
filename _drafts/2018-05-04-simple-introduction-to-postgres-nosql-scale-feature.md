@@ -66,7 +66,7 @@ INSERT INTO public.json_doc(
 
 ```
 
-query
+#### query operator @>
 ```shell
 postgres=# \c example
 You are now connected to database "example" as user "postgres".
@@ -76,9 +76,33 @@ example=# SELECT data->'guid', data->'name' FROM json_doc WHERE data @> '{"compa
  "9c36adc1-7fb5-4d5b-83b4-90356a46061a" | "Angela Barton"
 (1 row)
 ```
-the above query, select specified key from the json which match the condition, the operator "@>" meaning >Does the left JSON value contain the right JSON path/value entries at the top level?
+the above query, select specified key from the json which match the condition, the operator "@>" meaning "Does the left JSON value contain the right JSON path/value entries at the top level?"
 
-more operator refer to [Table 9-41](https://www.postgresql.org/docs/9.5/static/functions-json.html#FUNCTIONS-JSONB-OP-TABLE)
+
+#### query operator ?
+```shell
+example=# SELECT data->'guid', data->'name' FROM json_doc WHERE data ? 'registered';
+                ?column?                |    ?column?
+----------------------------------------+-----------------
+ "9c36adc1-7fb5-4d5b-83b4-90356a46061a" | "Angela Barton"
+(1 row)
+```
+the operator ? means that is there a key named "registered" on the top level of the object.
+More operator refer to [Table 9-41](https://www.postgresql.org/docs/9.5/static/functions-json.html#FUNCTIONS-JSONB-OP-TABLE)
+
+#### not top level query
+So, if we want to query with condition in the nested object, how to do? -- We can create index on nested level.
+```sql
+CREATE INDEX idxgintags ON json_doc USING GIN ((data -> 'tags'));
+```
+```shell
+example=# SELECT data->'guid', data->'name' FROM json_doc WHERE data->'tags' ? 'qui';
+                ?column?                |    ?column?
+----------------------------------------+-----------------
+ "9c36adc1-7fb5-4d5b-83b4-90356a46061a" | "Angela Barton"
+(1 row)
+```
+the above query select object which have nested key 'qui' in the top level json key 'tags'.
 
 ## Scale out
 
