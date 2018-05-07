@@ -28,7 +28,7 @@ title: flex和grid布局
 <p data-height="265" data-theme-id="0" data-slug-hash="oEXRmV" data-default-tab="css,result" data-user="una" data-embed-version="2" data-pen-title="Grid To Flex -- Example 2" class="codepen">See the Pen <a href="https://codepen.io/una/pen/oEXRmV/">Grid To Flex -- Example 2</a> by Una Kravets (<a href="https://codepen.io/una">@una</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-### [概念](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
+### [基本术语概念](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
 ![grid_intro_lines.png]({{site.baseurl}}/assets/grid_intro_lines.png)
 
  - Grid Container(容器) — 应用样式```css display:grid ```的元素，其子元素将使用grid布局.
@@ -37,6 +37,8 @@ title: flex和grid布局
  - Grid Track(轨道) — 两平行线之间的空间，例如上图有6个竖轨道，5个横轨道。
  - Grid Cell（单元格） — 四条相邻线包围中间的空间，是放置元素的基本单位。
  - Grid Area（区域） — 任意四条线包裹的区域，可包含多个单元格。
+
+
 
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
