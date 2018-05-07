@@ -60,4 +60,9 @@ grid-template-columns: 1fr 2fr 1fr;
 ```
 则将表格分成4个部分，第1，3列各占1个宽度，第二列占2个宽度。
 
+#### [grid-template-rows](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows)
+
+和grid-template-columns差不多。
+
+
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
