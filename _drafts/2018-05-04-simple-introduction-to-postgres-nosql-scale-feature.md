@@ -40,7 +40,45 @@ CREATE INDEX index_key_name
 ```
 the above code create a index on the column 'data'.
 
+Let's insert some test data.
+```sql
+INSERT INTO public.json_doc(
+            data)
+    VALUES (
+'
+{
+    "guid": "9c36adc1-7fb5-4d5b-83b4-90356a46061a",
+    "name": "Angela Barton",
+    "is_active": true,
+    "company": "Magnafone",
+    "address": "178 Howard Place, Gulf, Washington, 702",
+    "registered": "2009-11-07T08:53:22 +08:00",
+    "latitude": 19.793713,
+    "longitude": 86.513373,
+    "tags": [
+        "enim",
+        "aliquip",
+        "qui"
+    ]
+}
+'
+    );
 
+```
+
+query
+```shell
+postgres=# \c example
+You are now connected to database "example" as user "postgres".
+example=# SELECT data->'guid', data->'name' FROM json_doc WHERE data @> '{"company": "Magnafone"}';
+                ?column?                |    ?column?
+----------------------------------------+-----------------
+ "9c36adc1-7fb5-4d5b-83b4-90356a46061a" | "Angela Barton"
+(1 row)
+```
+the above query, select specified key from the json which match the condition, the operator "@>" Does the left JSON value contain the right JSON path/value entries at the top level?
+
+more operator refer to [Table 9-41](https://www.postgresql.org/docs/9.5/static/functions-json.html#FUNCTIONS-JSONB-OP-TABLE)
 
 ## Scale out
 
