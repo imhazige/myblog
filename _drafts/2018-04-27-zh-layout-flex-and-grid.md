@@ -88,6 +88,16 @@ grid-auto-rows: minmax(100px, auto);
 ```
 上例定义了每行的最小高度100px
 
+#### 基于线的布局
+```css
+.box2 { 
+  grid-column-start: 1; 
+  grid-row-start: 3; 
+  grid-row-end: 5; 
+}
+```
+上例中的元素将被布局于从第一竖列线开始直到行末横跨了所有列，从第三横线到第五横线，竖跨了两行。
+
 #### [grid-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap)
 ```css
 grid-gap: 10px 20px;
