@@ -90,7 +90,7 @@ example=# SELECT data->'guid', data->'name' FROM json_doc WHERE data ? 'register
 the operator ? means that is there a key named "registered" on the top level of the object.
 More operator refer to [Table 9-41](https://www.postgresql.org/docs/9.5/static/functions-json.html#FUNCTIONS-JSONB-OP-TABLE)
 
-#### not top level query
+#### not-top-level key query
 So, if we want to query with condition in the nested object, how to do? -- We can create index on nested level.
 ```sql
 CREATE INDEX idxgintags ON json_doc USING GIN ((data -> 'tags'));
