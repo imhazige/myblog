@@ -2,7 +2,7 @@
 published: false
 layout: post
 comments: true
-date: '2018-04-27 20:00 +08:00'
+date: '2018-05-07 20:00 +08:00'
 type: post
 categories:
   - front-end
@@ -19,6 +19,7 @@ title: flex和grid布局
 能用Flex的简单处，没必要使用Grid。全部使用Flex也达不到好的效果，混合使用才是顺其自然的方式。
 
 ## [Grid布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
+
 
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
