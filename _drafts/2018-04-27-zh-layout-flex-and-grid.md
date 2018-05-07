@@ -38,7 +38,24 @@ title: flex和grid布局
  - Grid Cell（单元格） — 四条相邻线包围中间的空间，是放置元素的基本单位。
  - Grid Area（区域） — 任意四条线包裹的区域，可包含多个单元格。
 
-
-
+### 基本用法
+#### [grid-template-columns](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns)
+##### 定义列的线名
+```css
+grid-template-columns: [linename1] 100px [linename2 linename3];
+```
+上例中定义了三条线名linename1，linename2，linename3，第一列在linename1和linename2之间，宽度为100PX.
+##### 定义列的宽度
+```css
+grid-template-columns: 1fr 60px;
+```
+上例定义了两列，第一列1fraction(部分),第二列60px
+###### fr单位
+fr是专门用于grid的长度单位，表示可用部分的一个部分。上例中，第二列60px从表格宽度中去掉后剩下的用于划分部分，由于只有一个部分，则全部给第一列。
+而这个例子
+```css
+grid-template-columns: 1fr 2fr 1fr;
+```
+则将表格分成4个部分，第1，3列各占1个宽度，第二列占2个宽度。
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
