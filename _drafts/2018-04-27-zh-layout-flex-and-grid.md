@@ -29,12 +29,14 @@ title: flex和grid布局
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 ### [概念](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
- - Grid Container — The element on which display: grid is applied. It's the direct parent of all the grid items.
- - Grid Item — The children (direct descendants) of the grid container.
- - Grid Line — The dividing lines that make up the structure of the grid. They can be either vertical (column grid lines) or horizontal (row grid lines) and reside on either side of a row or column. We can refer to them by number, or by name.In the above grid, there are 7 vertical lines and 5 horizontal lines. Lines are given numbers starting from 1. Vertical lines are shown from left to right, but this depends on the writing direction. Lines can optionally be given names, which helps with referencing them in CSS.
- - Grid Track — Is the space between two Grid Lines. So in the above example, there are 6 vertical tracks and 5 horizontal tracks. Lines are useful to indicate where content starts and stops, but tracks are the ones where content fits.
- - Grid Cell — Is the space between two adjacent row and two adjacent column grid lines. It is the smallest/single unit of the grid that is available for us to place an item into. In other words, a Grid Cell is the space between 4 Grid Lines. Conceptually it is just like a table cell. In the figure above, only one cell has been highlighted, but there are 24 cells in the grid.
- - Grid Area — The total space surrounded by four grid lines. A grid area may contain any number of grid cells.
+![grid_intro_lines.png]({{site.baseurl}}/assets/grid_intro_lines.png)
+
+ - Grid Container(容器) — 应用样式```css display:grid ```的元素，其子元素将使用grid布局.
+ - Grid Item(子项) — Grid Container的子元素.
+ - Grid Line(线) — 组成表格结构的竖或横的线，可用从1开始的数字或名称标识。以上图为例，由7根竖线和5根横线。
+ - Grid Track(轨道) — 两平行线之间的空间，例如上图有6个竖轨道，5个横轨道。
+ - Grid Cell（单元格） — 四条相邻线包围中间的空间，是放置元素的基本单位。
+ - Grid Area（区域） — 任意四条线包裹的区域，可包含多个单元格。
 
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
