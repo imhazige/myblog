@@ -64,5 +64,35 @@ grid-template-columns: 1fr 2fr 1fr;
 
 和grid-template-columns差不多。
 
+#### [grid-auto-rows](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows)
+
+```html
+<div class="wrapper">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+  <div>Four</div>
+  <div>Five</div>
+</div>
+```
+```css
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px;
+}
+```
+上例使用grid-auto-rows定义了每行的高度。
+```css
+grid-auto-rows: minmax(100px, auto);
+```
+上例定义了每行的最小高度100px
+
+#### [grid-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap)
+```css
+grid-gap: 10px 20px;
+```
+上例定义了每行之间10px间隙，每列之间20px间隙。
+
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
