@@ -40,11 +40,13 @@ title: flex和grid布局
 
 ### 基本用法
 #### [grid-template-columns](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns)
+
 ##### 定义列的线名
 ```css
 grid-template-columns: [linename1] 100px [linename2 linename3];
 ```
 上例中定义了三条线名linename1，linename2，linename3，第一列在linename1和linename2之间，宽度为100PX.
+
 ##### 定义列的宽度
 ```css
 grid-template-columns: 1fr 60px;
