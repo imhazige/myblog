@@ -104,8 +104,11 @@ example=# SELECT data->'guid', data->'name' FROM json_doc WHERE data->'tags' ? '
 ```
 the above query select object which have nested key 'qui' in the top level json key 'tags'.
 
-## Scale out
+## High Availablilty
+I am not saying scalability here is because, [it is a RDB](https://serverfault.com/questions/351072/rdbms-is-it-possible-to-scale-out-a-rdb), [and it even harder to scale out than Mysql?](https://serverfault.com/questions/204700/postgres-vs-mysql-which-one-is-more-difficult-to-scale-out). The [official document](https://www.postgresql.org/docs/current/static/high-availability.html) also focus on the HA.
 
+Failover:
+>Many failover systems use just two systems, the primary and the standby, connected by some kind of heartbeat mechanism to continually verify the connectivity between the two and the viability of the primary.
 
 ## Refs
 [Is Postgres NoSQL Better Than MongoDB?](http://www.aptuz.com/blog/is-postgres-nosql-database-better-than-mongodb/)
