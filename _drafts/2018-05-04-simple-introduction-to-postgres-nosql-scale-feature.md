@@ -76,7 +76,7 @@ example=# SELECT data->'guid', data->'name' FROM json_doc WHERE data @> '{"compa
  "9c36adc1-7fb5-4d5b-83b4-90356a46061a" | "Angela Barton"
 (1 row)
 ```
-the above query, select specified key from the json which match the condition, the operator "@>" Does the left JSON value contain the right JSON path/value entries at the top level?
+the above query, select specified key from the json which match the condition, the operator "@>" meaning >Does the left JSON value contain the right JSON path/value entries at the top level?
 
 more operator refer to [Table 9-41](https://www.postgresql.org/docs/9.5/static/functions-json.html#FUNCTIONS-JSONB-OP-TABLE)
 
