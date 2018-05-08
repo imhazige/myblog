@@ -104,5 +104,19 @@ grid-gap: 10px 20px;
 ```
 上例定义了每行之间10px间隙，每列之间20px间隙。
 
+#### z-index控制重叠(overlap)
+grid布局支持重叠,同一个空间上可能被不同元素的内容占用，默认的是后出现的重叠先出现的。
+可使用z-index来控制，值越大的表示越靠近顶层。
+
+看例子：
+<p data-height="265" data-theme-id="0" data-slug-hash="KRyLLG" data-default-tab="css,result" data-user="imhazige" data-embed-version="2" data-pen-title="Controlling the order" class="codepen">See the Pen <a href="https://codepen.io/imhazige/pen/KRyLLG/">Controlling the order</a> by imhazige (<a href="https://codepen.io/imhazige">@imhazige</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
+
+
+
+## Refs
+[Basic concepts of grid layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
+
+
