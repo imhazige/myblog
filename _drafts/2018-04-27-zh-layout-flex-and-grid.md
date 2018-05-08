@@ -119,8 +119,15 @@ grid布局支持重叠,同一个空间上可能被不同元素的内容占用，
  - The cross axis(交叉轴) — 与主轴垂直的轴。
  - Start(起始边) — 依据文字书写习惯的起始边。对于英文，中文，为左边，对于阿拉伯语，为右边。
  - End(结束边) — 依据文字书写习惯的结束边。
-
-
+ - The flex container（容器）— 使用了样式display:flex或者inline-flex的元素。默认样式如下
+ 	- Items display in a row (the flex-direction property's default is row).
+   	- The items start from the start edge of the main axis.
+    - The items do not stretch on the main dimension, but can shrink.
+    - The items will stretch to fill the size of the cross axis.
+    - The flex-basis property is set to auto.
+    - The flex-wrap property is set to nowrap.
+ 
+ 
 
 ## Refs
 [Basic concepts of grid layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
