@@ -139,11 +139,13 @@ grid布局支持重叠,同一个空间上可能被不同元素的内容占用，
 定义如何按比例缩减（在需要缩减的情况下）。
 这个值是比较值，数值高的比数值低的所见的更“迅速”，由于不像flex-grow那样有具体的值来分配，而类似“速度”的机制，故也没有flex-grow那样表现一致。
 速写方法
+```css
 flex:flex-grow  flex-shrink  flex-basis
 flex: initial = flex:0 1 auto 
 flex: auto = flex:1 1 auto
 flex: none = flex: 0 0 auto
 flex: <positive-number> = flex: <positive-number> <positive-number> 0
+```
 
 #### 交叉轴对齐[align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items)
 ```css
