@@ -153,6 +153,9 @@ flex: <positive-number> = flex: <positive-number> <positive-number> 0
           }
 ```
 上例就是很常用的垂直居中。
+<p data-height="265" data-theme-id="0" data-slug-hash="ereqxy" data-default-tab="html,result" data-user="imhazige" data-embed-version="2" data-pen-title="Example" class="codepen">See the Pen <a href="https://codepen.io/imhazige/pen/ereqxy/">Example</a> by imhazige (<a href="https://codepen.io/imhazige">@imhazige</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
 #### 主轴对齐[justify-content](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
 ```css
 .box {
@@ -161,6 +164,9 @@ flex: <positive-number> = flex: <positive-number> <positive-number> 0
           }
 ```
 上例就是很常用的水平居中。
+<p data-height="265" data-theme-id="0" data-slug-hash="ereqxy" data-default-tab="html,result" data-user="imhazige" data-embed-version="2" data-pen-title="Example" class="codepen">See the Pen <a href="https://codepen.io/imhazige/pen/ereqxy/">Example</a> by imhazige (<a href="https://codepen.io/imhazige">@imhazige</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
 ## Refs
 [Basic concepts of grid layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
 
