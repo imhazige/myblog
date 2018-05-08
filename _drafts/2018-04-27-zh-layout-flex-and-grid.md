@@ -122,13 +122,20 @@ grid布局支持重叠,同一个空间上可能被不同元素的内容占用，
  - The flex container（容器）— 使用了样式display:flex或者inline-flex的元素。默认样式如下
  	- flex-direction:row。
    	- 元素从起始边开始。
-    - 元素不在主轴上方向上伸展，但是可以缩减。
+    - 元素不会伸展，会自动缩减以适配容器大小，如果缩减了还不能适配，则会overflow。
     - 元素会在交叉轴上伸展显示完整内容。
     - flex-basis:auto.
     - flex-wrap:nowrap.
     
- 
- 
+### flex元素的三个属性flex-grow，flex-shrink，flex-basis 
+#### flex-basis
+元素在主轴方向上的初始大小。
+可以是具体数值，也可以是auto表示元素内容大小。
+#### flex-grow
+如何分配可用空间用来拉伸
+![](https://mdn.mozillademos.org/files/15620/Basics7.png)
+以上图为例，可用空间为200px，有a,b,c三个元素，如果如下给值的话a=2,b=1,c=1,则总共分了4个部分，a占2个部分=200/4*2=100px,b,c各分的50px。
+
  
 
 ## Refs
