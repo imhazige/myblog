@@ -136,12 +136,32 @@ grid布局支持重叠,同一个空间上可能被不同元素的内容占用，
 ![](https://mdn.mozillademos.org/files/15620/Basics7.png)
 以上图为例，可用空间为200px，有a,b,c三个元素，如果如下给值的话a=2,b=1,c=1,则总共分了4个部分，a占2个部分=200/4*2=100px,b,c各分的50px。
 #### flex-shrink
-如何
+定义如何按比例缩减（在需要缩减的情况下）。
+这个值是比较值，数值高的比数值低的所见的更“迅速”，由于不像flex-grow那样有具体的值来分配，而类似“速度”的机制，故也没有flex-grow那样表现一致。
+速写方法
+flex:flex-grow  flex-shrink  flex-basis
+flex: initial = flex:0 1 auto 
+flex: auto = flex:1 1 auto
+flex: none = flex: 0 0 auto
+flex: <positive-number> = flex: <positive-number> <positive-number> 0
 
- 
-
+#### 交叉轴对齐[align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items)
+```css
+.box {
+            display: flex;
+            align-items: center;
+          }
+```
+上例就是很常用的垂直居中。
+#### 主轴对齐[justify-content](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
+```css
+.box {
+            display: flex;
+            justify-content: center;
+          }
+```
+上例就是很常用的水平居中。
 ## Refs
 [Basic concepts of grid layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
 
 [Basic concepts of flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
-
