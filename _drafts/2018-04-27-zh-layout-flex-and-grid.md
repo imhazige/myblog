@@ -113,10 +113,17 @@ grid布局支持重叠,同一个空间上可能被不同元素的内容占用，
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
+### [基本术语概念](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
+
+ - The main axis(主轴) — 通过flex-direction定义的方向即为主轴，可为四个值row,row-reverse,column,column-reverse.
+ - The cross axis(交叉轴) — 与主轴垂直的轴。
+ - Start(起始边) — 依据文字书写习惯的起始边。对于英文，中文，为左边，对于阿拉伯语，为右边。
+ - End(结束边) — 依据文字书写习惯的结束边。
 
 
 
 ## Refs
 [Basic concepts of grid layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
 
+[Basic concepts of flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
 
