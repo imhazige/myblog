@@ -1,5 +1,5 @@
 ---
-published: true
+published: false
 layout: post
 comments: true
 date: '2018-05-07 20:00 +08:00'
@@ -104,5 +104,70 @@ grid-gap: 10px 20px;
 ```
 上例定义了每行之间10px间隙，每列之间20px间隙。
 
+#### z-index控制重叠(overlap)
+grid布局支持重叠,同一个空间上可能被不同元素的内容占用，默认的是后出现的重叠先出现的。
+可使用z-index来控制，值越大的表示越靠近顶层。
+
+看例子：
+<p data-height="265" data-theme-id="0" data-slug-hash="KRyLLG" data-default-tab="css,result" data-user="imhazige" data-embed-version="2" data-pen-title="Controlling the order" class="codepen">See the Pen <a href="https://codepen.io/imhazige/pen/KRyLLG/">Controlling the order</a> by imhazige (<a href="https://codepen.io/imhazige">@imhazige</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 ## [Flex布局](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
+### [基本术语概念](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
+
+ - The main axis(主轴) — 通过flex-direction定义的方向即为主轴，可为四个值row,row-reverse,column,column-reverse.
+ - The cross axis(交叉轴) — 与主轴垂直的轴。
+ - Start(起始边) — 依据文字书写习惯的起始边。对于英文，中文，为左边，对于阿拉伯语，为右边。
+ - End(结束边) — 依据文字书写习惯的结束边。
+ - The flex container（容器）— 使用了样式display:flex或者inline-flex的元素。默认样式如下
+ 	- flex-direction:row。
+   	- 元素从起始边开始。
+    - 元素不会伸展，会自动缩减以适配容器大小，如果缩减了还不能适配，则会overflow。
+    - 元素会在交叉轴上伸展显示完整内容。
+    - flex-basis:auto.
+    - flex-wrap:nowrap.
+    
+### flex元素的三个属性flex-grow，flex-shrink，flex-basis 
+#### flex-basis
+元素在主轴方向上的初始大小。
+可以是具体数值，也可以是auto表示元素内容大小。
+#### flex-grow
+如何分配可用空间用来拉伸
+![](https://mdn.mozillademos.org/files/15620/Basics7.png)
+以上图为例，可用空间为200px，有a,b,c三个元素，如果如下给值的话a=2,b=1,c=1,则总共分了4个部分，a占2个部分=200/4*2=100px,b,c各分的50px。
+#### flex-shrink
+定义如何按比例缩减（在需要缩减的情况下）。
+这个值是比较值，数值高的比数值低的所见的更“迅速”，由于不像flex-grow那样有具体的值来分配，而类似“速度”的机制，故也没有flex-grow那样表现一致。
+速写方法
+flex:flex-grow  flex-shrink  flex-basis
+flex: initial = flex:0 1 auto 
+flex: auto = flex:1 1 auto
+flex: none = flex: 0 0 auto
+flex: <positive-number> = flex: <positive-number> <positive-number> 0
+
+#### 交叉轴对齐[align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items)
+```css
+.box {
+            display: flex;
+            align-items: center;
+          }
+```
+上例就是很常用的垂直居中。
+<p data-height="265" data-theme-id="0" data-slug-hash="ereqxy" data-default-tab="html,result" data-user="imhazige" data-embed-version="2" data-pen-title="Example" class="codepen">See the Pen <a href="https://codepen.io/imhazige/pen/ereqxy/">Example</a> by imhazige (<a href="https://codepen.io/imhazige">@imhazige</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+#### 主轴对齐[justify-content](https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
+```css
+.box {
+            display: flex;
+            justify-content: center;
+          }
+```
+上例就是很常用的水平居中。
+<p data-height="265" data-theme-id="0" data-slug-hash="ereqxy" data-default-tab="html,result" data-user="imhazige" data-embed-version="2" data-pen-title="Example" class="codepen">See the Pen <a href="https://codepen.io/imhazige/pen/ereqxy/">Example</a> by imhazige (<a href="https://codepen.io/imhazige">@imhazige</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+## Refs
+[Basic concepts of grid layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
+
+[Basic concepts of flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
