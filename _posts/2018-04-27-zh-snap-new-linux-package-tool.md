@@ -32,6 +32,9 @@ sudo snap refresh node --channel=9
 ```
 这样通过refresh参数，将node切换到了version 9。
 
+PS:
+目前使用snap还是有些问题，例如，我安装了node 6,但是使用yarn时，其使用的却是内置的node 4,导致找这个问题找了半天，很是迷惑(node -v是6,但是yarn实际还是用的node 4)。
+
 
 ## Refs:
 - [https://insights.ubuntu.com/2016/06/14/universal-snap-packages-launch-on-multiple-linux-distros](https://insights.ubuntu.com/2016/06/14/universal-snap-packages-launch-on-multiple-linux-distros)
