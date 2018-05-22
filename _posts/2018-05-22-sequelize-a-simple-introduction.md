@@ -42,6 +42,8 @@ const sequelize = new Sequelize('postgres://postgres:postgres@localhost:5432/pos
     log.debug(`SQL:${sql}`);
   },
 })
+```
+
 ### Per-query setting
 [Reference](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert)
 ```javascript
