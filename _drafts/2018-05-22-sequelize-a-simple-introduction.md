@@ -68,7 +68,40 @@ function sync(...args) {
 Note: to sync the Models, the script should imported all the Models definition before invoke the sync function.
 
 ## Jsonb for postgres
+[Reference](http://docs.sequelizejs.com/manual/tutorial/querying.html#jsonb)
+```javascript
+SomeModel.findAll({
+  attributes: {
+    meta: {
+      video: {
+        url: {
+          [Op.ne]: null
+        }
+      }
+    }
+  }
+})
 
+SomeModel.findAll({
+  attributes: {
+    "meta.audio.length": {
+      [Op.gt]: 20
+    }
+  }
+})
+
+SomeModel.findAll({
+  attributes: {
+    "meta": {
+      [Op.contains]: {
+        site: {
+          url: 'http://google.com'
+        }
+      }
+    }
+  }
+})
+```
 
 ## Distinct
 [Reference](http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html#static-method-fn)
