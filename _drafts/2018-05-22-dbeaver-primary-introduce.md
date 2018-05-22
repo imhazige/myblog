@@ -8,6 +8,12 @@ type: post
 categories:
   - database
 ---
-## A New Post
+I used pgAdmin to connect to postgres, I think it is good, but when I use it to connect to a heroku database, I was shocked that it do list all the database(about 200) in the heroku server instance even I have choose the dafault database to connect. Imagine you have to scroll over the whole list to find a database name - and it do not support search! I then thought how stupid this tool is.
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+Then I found [DBeaver](https://dbeaver.io/), it is so good, it have many useful tool which I will introduce in this article. As a javaer, I know it is based on eclipse, how familiar when I see its UI.
+
+## create a connection to postgres on heroku
+for heroku postgres database, you need specify addtional options
+
+
+
