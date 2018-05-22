@@ -10,6 +10,17 @@ tags:
   - nodejs
 date: '2018-05-22 20:00 +08:00'
 ---
-## A New Post
+[Sequelize](https://github.com/sequelize/sequelize) "An easy-to-use multi SQL dialect ORM for Node.js"
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+## Create connection
+
+## Logging sql
+### Global setting
+### Per-query setting
+
+## Sync database schema
+
+## Jsonb for postgres
+
+## Distinct
+
