@@ -22,7 +22,7 @@ so you need specify these options in the connection panel
 
 ### hide non-default database
 Right click the connection, edit the connection, show the connection panel.
-there are a option shouw non-default database. unckeck it.
+there are a option show non-default database. unckeck it.
 ![Screen Shot 2018-05-22 at 12.41.34.gif]({{site.baseurl}}/assets/Screen Shot 2018-05-22 at 12.41.34.gif)
 
 What a useful and smart feature! it must be developed by the people who really use it, lol.
