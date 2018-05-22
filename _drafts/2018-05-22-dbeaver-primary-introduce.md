@@ -14,6 +14,7 @@ Then I found [DBeaver](https://dbeaver.io/), it is so good, it have many useful 
 
 ## create a connection to postgres on heroku
 for heroku postgres database, you need specify addtional options
-
-
+?ssl=true&v=w&sslfactory=org.postgresql.ssl.NonValidatingFactory
+otherwise you will not be able to connect.
+so you need specify these options in the connection panel
 
