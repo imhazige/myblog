@@ -13,7 +13,22 @@ I used pgAdmin to connect to postgres, I think it is good, but when I use it to 
 Then I found [DBeaver](https://dbeaver.io/), it is so good, it have many useful tool which I will introduce in this article. As a javaer, I know it is based on eclipse, how familiar when I see its UI.
 
 ## create a connection to postgres on heroku
+### add addtional ssl option
 for heroku postgres database, you need specify addtional options
+?ssl=true&v=w&sslfactory=org.postgresql.ssl.NonValidatingFactory
+otherwise you will not be able to connect.
+so you need specify these options in the connection panel
+![Screen Shot 2018-05-22 at 06.40.06.gif]({{site.baseurl}}/assets/Screen Shot 2018-05-22 at 06.40.06.gif)
+
+### hide non-default database
+right click the connection, edit the connection, show the connection panel.
+there are a option shouw non-default database. unckeck it.
+![Screen Shot 2018-05-22 at 12.41.34.gif]({{site.baseurl}}/assets/Screen Shot 2018-05-22 at 12.41.34.gif)
 
 
 
+## import data from other database
+
+## create mock data
+
+## export connections configuration
