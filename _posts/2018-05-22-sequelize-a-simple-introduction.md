@@ -67,7 +67,9 @@ function sync(...args) {
   return sequelize.sync(...args);
 }
 ```
-Note: to sync the Models, the script should imported all the Models definition before invoke the sync function.
+- this is a very useful funtion when start the code from scratch, it will create the database table schema based on the Model definition.
+- Note: to sync the Models, the script should imported all the Models definition before invoke the sync function.
+- force option is default set to false. `If force is true, each Model will run DROP TABLE IF EXISTS, before it tries to create its own table`
 
 ## Jsonb for postgres
 [Reference](http://docs.sequelizejs.com/manual/tutorial/querying.html#jsonb)
