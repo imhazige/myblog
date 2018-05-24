@@ -52,3 +52,6 @@ the connections are stored in the file {workspace}/General/.dbeaver-data-sources
 you can copy the file to another DBeaver workplace, then you will see all the connections.
 
 I will add more words in this article about DBeaver if I found.
+
+## encountering driver error
+some times I encountered the driver error when I restart the DBeaver, it is still there even I reinstall it.  In that case, I have to uninstall the app and remove the .dbeaver-drivers folder along the workspace folder. then after install the app again, it works.
