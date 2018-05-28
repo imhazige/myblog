@@ -12,6 +12,40 @@ tags:
   - ubuntu
 ---
 ## [systemd](https://www.freedesktop.org/software/systemd/man/systemd.service.html)
+- the systemd config file is under /lib/systemd/system
+- env vars only able to be set in ExecStart or ExecStartPre, best way is to set in the script
+- WorkingDirectory can not use double quote, seems to be a bug?
+- if you app run like `java -jar`, should use `Type=simple` instead of `Type=forking`, otherwise it will case a timeout  
+
+
+### View log
+```shell
+#view status, little log
+systemctl status servicename.service 
+
+#view the last 50 lines
+systemctl status service-name -n50  
+
+#view all the log
+systemctl --no-pager -l status servicename.service 
+
+#view all the log
+journalctl -u service-name.service 
+
+```
+
+example:  
+```shell
+Myexample
+[Unit]
+Description=Example
+[Service]
+Type=simple #for java, should not be forking
+#note the bash should specify its full path
+ExecStart=/bin/bash /home/ubuntu/myapp.sh
+[Install]
+WantedBy=multi-user.target
+```
 
 ## [init](http://www.tldp.org/LDP/intro-linux/html/sect_04_02.html)
 Reference:
@@ -26,7 +60,7 @@ upstart is replaced by systemd from ubuntu 16
 - console log is written to /var/log/upstart/servicename.log
 - [it support log rotating](http://manpages.ubuntu.com/manpages/xenial/man8/logrotate.8.html) 
 
-example:
+example:  
 ```shell
 author "kazge.com"
 description "start and stop example for Ubuntu (upstart)"
