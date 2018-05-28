@@ -12,6 +12,7 @@ tags:
   - ubuntu
 ---
 ## [systemd](https://www.freedesktop.org/software/systemd/man/systemd.service.html)
+- systemd is now supported by most linux system, and is the recommended way contrast to old upstart and init
 - the systemd config file is under /lib/systemd/system
 - env vars only able to be set in ExecStart or ExecStartPre, best way is to set in the script
 - WorkingDirectory can not use double quote, seems to be a bug?
@@ -52,7 +53,7 @@ journalctl -u service-name.service
 
 ```
 
-example:  
+### Example  
 ```shell
 Myexample
 [Unit]
@@ -78,7 +79,16 @@ upstart is replaced by systemd from ubuntu 16
 - console log is written to /var/log/upstart/servicename.log
 - [it support log rotating](http://manpages.ubuntu.com/manpages/xenial/man8/logrotate.8.html) 
 
-example:  
+### Run/Stop Service  
+```shell
+#start
+sudo start servicename
+
+#stop
+sudo stop servicename
+```
+
+### Example  
 ```shell
 author "kazge.com"
 description "start and stop example for Ubuntu (upstart)"
