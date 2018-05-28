@@ -19,7 +19,7 @@ tags:
 - if you app run like `java -jar`, should use `Type=simple` instead of `Type=forking`, otherwise it will case a timeout  
 
 ### Make a service auto-start
-after move the config under the folder 
+after move the config under the folder /lib/systemd/system
 ```shell
 #auto-start
 sudo systemctl enable servicename.service
