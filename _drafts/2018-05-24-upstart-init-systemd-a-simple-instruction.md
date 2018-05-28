@@ -17,6 +17,24 @@ tags:
 - WorkingDirectory can not use double quote, seems to be a bug?
 - if you app run like `java -jar`, should use `Type=simple` instead of `Type=forking`, otherwise it will case a timeout  
 
+### Make a service auto-start
+after move the config under the folder 
+```shell
+#auto-start
+sudo systemctl enable servicename.service
+
+#reload
+sudo systemctl daemon-reload
+```
+
+### Run/Stop Service  
+```shell
+#start
+sudo systemctl start servicename.service
+
+#stop
+sudo systemctl stop servicename.service
+```
 
 ### View log
 ```shell
