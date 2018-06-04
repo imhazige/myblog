@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2018-06-04 20:00 +08:00'
@@ -26,4 +26,3 @@ CPU只有几个核心（core）而GPU却有百个以上的核心,自然，GPU的
 [What’s the Difference Between a CPU and a GPU?](https://blogs.nvidia.com/blog/2009/12/16/whats-the-difference-between-a-cpu-and-a-gpu/)
 
 [CPU VS GPU – What is the Difference & How do you Avoid Bottlenecking](https://www.progamerreview.com/cpu-vs-gpu/)
-
