@@ -12,4 +12,32 @@ tags:
 ---
 >本文主要内容来自[Algorithms Behind Modern Storage Systems Different uses for read-optimized B-trees and write-optimized LSM-trees](https://queue.acm.org/detail.cfm?id=3220266)
 
+## [binary tree](http://cslibrary.stanford.edu/110/BinaryTrees.html)(二叉树)
+![](http://cslibrary.stanford.edu/110/binarytree.gif)
+二叉树有一个根节点（root node）,其左边（left child）同样是一个子二叉树（subtrees），右边(right child)也是一个子二叉树。左边或右边可以是空，或者两边都是空。
 
+### binary search tree BST（查找二叉树或有序二叉树）
+每个节点N的左边子节点都小于或等于(<=)节点N,每个节点N的右边子节点都大于(>)节点N.
+在查找二叉树中没有任何子节点的节点称为叶子节点(leaf node),相对的，其他节点则为内部节点(internal node).
+
+### Degenerate tree, or linear tree（退化树,线性树）
+![](https://webdocs.cs.ualberta.ca/~holte/T26/Lecture9Fig8.gif)
+情况最不利于查找的树
+
+### [Height of the tree(树的高度)](https://en.wikipedia.org/wiki/Tree_%28data_structure%29)
+一个节点的高度指的是其最远叶子节点到这个节点的路径经过的边。
+那么一个树的高度指的是根结点的高度。
+附带说一下，一般Depth指的是节点到根节点的路径经过的边，但有时说depth就是指的height。
+
+### [Balanced Trees(平衡二叉树)](https://webdocs.cs.ualberta.ca/~holte/T26/balanced-trees.html)
+#### perfectly height-balanced tree (完美平衡二叉树) 
+每个节点的左子树和右子树的高度保持一致则是完美平衡二叉树
+![]({{site.baseurl}}/https://webdocs.cs.ualberta.ca/~holte/T26/Lecture9Fig9.gif)
+#### height-balanced tree(平衡二叉树)
+左右子节点的height差不超过1的称为平衡二叉树，其包括了完美二叉树
+![]({{site.baseurl}}/https://webdocs.cs.ualberta.ca/~holte/T26/Lecture9Fig10.gif)
+平衡二叉树满足搜索效率 `O(logN) = height`
+
+## B-Tree
+
+## LSM-Trees
