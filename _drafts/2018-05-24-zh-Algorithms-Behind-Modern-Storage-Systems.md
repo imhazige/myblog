@@ -31,10 +31,10 @@ tags:
 
 ### [Balanced Trees(平衡二叉树)](https://webdocs.cs.ualberta.ca/~holte/T26/balanced-trees.html)
 #### perfectly height-balanced tree (完美平衡二叉树) 
-每个节点的左子树和右子树的高度保持一致则是完美平衡二叉树
+**每个节点**的左子树和右子树的高度保持一致则是完美平衡二叉树
 ![]({{site.baseurl}}/https://webdocs.cs.ualberta.ca/~holte/T26/Lecture9Fig9.gif)
 #### height-balanced tree(平衡二叉树)
-左右子节点的height差不超过1的称为平衡二叉树，其包括了完美二叉树
+**每个节点**的左右子节点的height差不超过1的称为平衡二叉树，其包括了完美二叉树
 ![]({{site.baseurl}}/https://webdocs.cs.ualberta.ca/~holte/T26/Lecture9Fig10.gif)
 平衡二叉树满足搜索效率 `O(logN) = height`
 
