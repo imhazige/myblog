@@ -16,7 +16,7 @@ tags:
 ![](http://cslibrary.stanford.edu/110/binarytree.gif)
 二叉树有一个根节点（root node）,其左边（left child）同样是一个子二叉树（subtrees），右边(right child)也是一个子二叉树。左边或右边可以是空，或者两边都是空。
 
-### binary search tree BST（查找二叉树或有序二叉树）
+### binary search tree BST（查找二叉树，有序二叉树）
 每个节点N的左边子节点都小于或等于(<=)节点N,每个节点N的右边子节点都大于(>)节点N.
 在查找二叉树中没有任何子节点的节点称为叶子节点(leaf node),相对的，其他节点则为内部节点(internal node).
 
@@ -31,12 +31,17 @@ tags:
 
 ### [Balanced Trees(平衡二叉树)](https://webdocs.cs.ualberta.ca/~holte/T26/balanced-trees.html)
 #### perfectly height-balanced tree (完美平衡二叉树) 
-每个节点的左子树和右子树的高度保持一致则是完美平衡二叉树
+**每个节点**的左子树和右子树的高度保持一致则是完美平衡二叉树
 ![]({{site.baseurl}}/https://webdocs.cs.ualberta.ca/~holte/T26/Lecture9Fig9.gif)
 #### height-balanced tree(平衡二叉树)
-左右子节点的height差不超过1的称为平衡二叉树，其包括了完美二叉树
+**每个节点**的左右子节点的height差不超过1的称为平衡二叉树，其包括了完美二叉树
 ![]({{site.baseurl}}/https://webdocs.cs.ualberta.ca/~holte/T26/Lecture9Fig10.gif)
+
+### [AVL trees，Height-Balanced Binary Search Trees（AVL树，平衡二叉搜索树）](https://webdocs.cs.ualberta.ca/~holte/T26/avl-trees.html)
+AVL命名来自其俄国发明者Adelson-Velskii and Landis。
 平衡二叉树满足搜索效率 `O(logN) = height`
+
+
 
 ## B-Tree
 
