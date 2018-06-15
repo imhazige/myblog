@@ -12,4 +12,8 @@ tags:
 ---
 >本文主要内容来自[Algorithms Behind Modern Storage Systems Different uses for read-optimized B-trees and write-optimized LSM-trees](https://queue.acm.org/detail.cfm?id=3220266)
 
+## binary tree(二叉树)
 
+## B-Tree
+
+## LSM-Trees
