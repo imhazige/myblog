@@ -12,4 +12,14 @@ tags:
 ---
 >本文主要内容来自[Algorithms Behind Modern Storage Systems Different uses for read-optimized B-trees and write-optimized LSM-trees](https://queue.acm.org/detail.cfm?id=3220266)
 
+## [binary tree](http://cslibrary.stanford.edu/110/BinaryTrees.html)(二叉树)
+![]({{site.baseurl}}/http://cslibrary.stanford.edu/110/binarytree.gif)
+二叉树有一个根节点（root node）,其左边（left child）同样是一个子二叉树（subtrees），右边(right child)也是一个子二叉树。左边或右边可以是空，或者两边都是空。
 
+### binary search tree BST（查找二叉树或有序二叉树）
+每个节点N的左边子节点都小于或等于(<=)节点N,每个节点N的右边子节点都大于(>)节点N
+
+
+## B-Tree
+
+## LSM-Trees
