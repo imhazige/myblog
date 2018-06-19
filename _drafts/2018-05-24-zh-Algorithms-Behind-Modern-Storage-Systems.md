@@ -104,10 +104,12 @@ LSM-Trees由google发表于1996，其原来用于big-table.
 #### [Red-Black Tree(红黑树)](http://pages.cs.wisc.edu/~paton/readings/Red-Black-Trees/)
 ![](http://www.btechsmartclass.com/DS/images/Red%20Black%20Tree%20Example.png)
 
-
-红黑树的操作复杂度是 O(log N)
+##### 红黑树也是一种BST(二叉搜索树)
+其有以下特点：
+- 根节点是黑色
+- 红色节点的子节点必须是黑色
+- (For each node with at least one null child, the number of black nodes on the path from the root to the null child is the same.)
+- 
 
 ## 总结
 B-Trees读起来快，LSM-Trees写起来快，读写都快的算法还没出来，所以目前大部分数据库都是混合使用这两种算法。
-
-
