@@ -104,7 +104,7 @@ LSM-Trees由google发表于1996，其原来用于big-table.
 #### [Red-Black Tree(红黑树)](http://pages.cs.wisc.edu/~paton/readings/Red-Black-Trees/)
 ![](http://www.btechsmartclass.com/DS/images/Red%20Black%20Tree%20Example.png)
 
-##### 红黑树也是一种BST(二叉搜索树)
+##### 红黑树也是一种平衡BST(平衡二叉搜索树)
 其有以下特点：
 - 根节点是黑色
 - 红色节点的子节点必须是黑色
