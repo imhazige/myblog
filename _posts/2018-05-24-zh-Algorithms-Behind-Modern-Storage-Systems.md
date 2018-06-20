@@ -10,7 +10,7 @@ categories:
 tags:
   - algorithms
 ---
->本文主要内容来自[[Data Structures Course Lecture Notes](https://webdocs.cs.ualberta.ca/~holte/T26/top.html) ; [Log Structured Merge Trees](http://www.benstopford.com/2015/02/14/log-structured-merge-trees/); Algorithms Behind Modern Storage Systems Different uses for read-optimized B-trees and write-optimized LSM-trees](https://queue.acm.org/detail.cfm?id=3220266);
+>本文主要内容来自 [Data Structures Course Lecture Notes](https://webdocs.cs.ualberta.ca/~holte/T26/top.html) ; [Log Structured Merge Trees](http://www.benstopford.com/2015/02/14/log-structured-merge-trees/); [Algorithms Behind Modern Storage Systems Different uses for read-optimized B-trees and write-optimized LSM-trees](https://queue.acm.org/detail.cfm?id=3220266);
 
 ## [binary tree](http://cslibrary.stanford.edu/110/BinaryTrees.html)(二叉树)
 ![](http://cslibrary.stanford.edu/110/binarytree.gif)
