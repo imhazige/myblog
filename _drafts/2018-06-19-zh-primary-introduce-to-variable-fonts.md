@@ -12,4 +12,9 @@ tags:
 ---
 > 本文内容主要来自[How to start with variable fonts on the web](https://www.zeichenschatz.net/typografie/how-to-start-with-variable-fonts-on-the-web.html)
 
+## 可变字体是什么？
 
+
+## 可变字体能做什么？
+一图顶万言
+![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-weight-width-slant-axis-morphing.gif)
