@@ -29,3 +29,10 @@ tags:
 ![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-named-instances-along-weight-axis.png)
 可以多个轴同时改变，例如weight和width轴
 ![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-venn-weight-axis-width-axis.png)
+
+比较常见的轴包括
+wdth for width -- 字宽
+wght for weight -- 字粗
+ital for italic -- 斜体
+slnt for slant -- 倾斜
+opsz for optical size -- 光学大小
