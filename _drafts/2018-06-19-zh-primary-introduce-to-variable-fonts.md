@@ -43,3 +43,13 @@ opsz for optical size -- 光学大小
 光学大小的例子
 ![](https://zeichenschatz.net/uploads/2018/05/variable-font-optical-size-voto-serif-variable.png)
 
+## 在浏览器上使用
+[浏览器支持](https://caniuse.com/#search=variable%20fonts)
+
+
+## 需要指出的
+- 如果你只需要一种字体，那就没必要用可变字体。
+- 针对罗马字或斜体字，你很可能仍然需要单独的字体文件。因为罗马字太特殊了。
+![]({{site.baseurl}}/https://zeichenschatz.net/uploads/2018/05/variable-fonts-italics-with-different-letter-shapes.png)
+上图可见a,g这两个字母无法用一个大纲描绘。
+
