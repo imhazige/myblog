@@ -33,12 +33,12 @@ tags:
 可以多个轴同时改变，例如weight和width轴
 ![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-venn-weight-axis-width-axis.png)
 
-比较常见的轴包括
-wdth for width -- 字宽
-wght for weight -- 字粗
-ital for italic -- 意大利体 (这个轴很少见)
-slnt for slant -- 倾斜
-opsz for optical size -- 光学大小
+比较常见的轴包括  
+wdth for width -- 字宽  
+wght for weight -- 字粗  
+ital for italic -- 意大利体 (这个轴很少见)  
+slnt for slant -- 倾斜  
+opsz for optical size -- 光学大小  
 
 光学大小的例子
 ![](https://zeichenschatz.net/uploads/2018/05/variable-font-optical-size-voto-serif-variable.png)
@@ -76,6 +76,5 @@ h1 {
 ## 需要指出的问题
 - 如果你只需要一种字体，那就没必要用可变字体。
 - 针对罗马字或斜体字，你很可能仍然需要单独的字体文件。因为罗马字太特殊了。
-![]({{site.baseurl}}/https://zeichenschatz.net/uploads/2018/05/variable-fonts-italics-with-different-letter-shapes.png)
+![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-italics-with-different-letter-shapes.png)
 上图可见a,g这两个字母无法用一个大纲描绘。
-
