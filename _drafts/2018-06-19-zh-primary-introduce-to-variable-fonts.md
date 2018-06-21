@@ -21,6 +21,9 @@ tags:
 一图顶万言
 ![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-weight-width-slant-axis-morphing.gif)
 
+字体也可以动画了 [Demo](https://developer.microsoft.com/en-us/microsoft-edge/testdrive/demos/variable-fonts/)
+
+
 ## 它是怎么做到的？
 可变字体用大纲(outline)描述一个字符，一个大纲可用多个点组成，然后可以定义多种样式在浏览器里动态的渲染或是篡改（interpolation）。
 ![](https://zeichenschatz.net/uploads/2018/04/variable-fonts-interpolation.gif)
