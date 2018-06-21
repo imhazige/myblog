@@ -40,3 +40,6 @@ ital for italic -- 斜体
 slnt for slant -- 倾斜
 opsz for optical size -- 光学大小
 
+光学大小的例子
+![](https://zeichenschatz.net/uploads/2018/05/variable-font-optical-size-voto-serif-variable.png)
+
