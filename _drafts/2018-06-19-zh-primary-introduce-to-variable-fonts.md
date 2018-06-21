@@ -28,4 +28,4 @@ tags:
 例如字粗（weight）轴
 ![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-named-instances-along-weight-axis.png)
 可以多个轴同时改变，例如weight和width轴
-![]({{site.baseurl}}/https://zeichenschatz.net/uploads/2018/05/variable-fonts-venn-weight-axis-width-axis.png)
+![](https://zeichenschatz.net/uploads/2018/05/variable-fonts-venn-weight-axis-width-axis.png)
