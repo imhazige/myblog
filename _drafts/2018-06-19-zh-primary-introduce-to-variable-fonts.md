@@ -36,7 +36,7 @@ tags:
 比较常见的轴包括
 wdth for width -- 字宽
 wght for weight -- 字粗
-ital for italic -- 斜体
+ital for italic -- 意大利体 (这个轴很少见)
 slnt for slant -- 倾斜
 opsz for optical size -- 光学大小
 
@@ -46,8 +46,34 @@ opsz for optical size -- 光学大小
 ## 在浏览器上使用
 [浏览器支持](https://caniuse.com/#search=variable%20fonts)
 
+### 拿到了一个字体怎么知道它有哪些轴？
+可以使用[这个工具](https://wakamaifondue.com/)
+![](https://zeichenschatz.net/uploads/2018/04/wakamaifondue-variable-fonts-integration.jpg)
 
-## 需要指出的
+### 引用字体
+```css
+@font-face {
+  font-family: 'Venn';
+  src: url('Venn.woff2') format('woff2-variations'),
+       /* will be the standard and works in Safari now */
+       url('Venn.woff2') format('woff2');
+       /* for the other supporting browsers */
+}
+```
+
+### 设置字体
+```html
+h1 {
+ font-family: 'Decovar Alpha VF', sans-serif;
+ font-variation-settings: "TRMC" 0, "SKLA" 0, "SKLB" 0, "TRME" 0;
+}
+```
+
+效果
+![](https://zeichenschatz.net/uploads/2018/05/variable-font-decovar-coustom-axis-morphing.gif)
+
+
+## 需要指出的问题
 - 如果你只需要一种字体，那就没必要用可变字体。
 - 针对罗马字或斜体字，你很可能仍然需要单独的字体文件。因为罗马字太特殊了。
 ![]({{site.baseurl}}/https://zeichenschatz.net/uploads/2018/05/variable-fonts-italics-with-different-letter-shapes.png)
