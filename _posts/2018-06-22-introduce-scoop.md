@@ -11,6 +11,7 @@ tags:
   - shell
   - powershell
 ---
+## scoop是什么
 [Scoop](https://scoop.sh/)是windows下的命令行工具安装管理工具，类似ubuntu的apt-get,或者mac上的homebrew.
 
 使用scoop可以通过命令行安装在unix上颇受欢迎的工具，例如
@@ -33,8 +34,14 @@ powershell $psversiontable.psversion
 
 ### 安装
 ```shell
+powershell
 iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 ```
+
+## 那些工具可以通过scoop安装
+见[这里](https://github.com/lukesampson/scoop/tree/master/bucket)
+
+
 
 
 
