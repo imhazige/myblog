@@ -40,3 +40,9 @@ iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 
 ## 那些工具可以通过scoop安装
 见[这里](https://github.com/lukesampson/scoop/tree/master/bucket)
+但不限于这上面的
+例如electron需要的windows-build-tools
+```shell
+sudo npm uninstall --global windows-build-tools
+sudo npm install --global windows-build-tools
+```
