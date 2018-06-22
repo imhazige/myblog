@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2018-06-22 20:00 +08:00'
@@ -40,8 +40,3 @@ iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 
 ## 那些工具可以通过scoop安装
 见[这里](https://github.com/lukesampson/scoop/tree/master/bucket)
-
-
-
-
-
