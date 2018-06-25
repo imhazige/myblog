@@ -26,7 +26,7 @@ scoop install curl
 ### 安装前提
 需要颇为powershell3以上，那么还在用windows7的就不用想了。
 
-### 怎样查看pwoershell版本?
+### 怎样查看powershell版本?
 ```shell
 powershell $psversiontable.psversion
 ```
