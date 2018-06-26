@@ -43,7 +43,15 @@ ES6模块在nodejs中不是新鲜事，而在浏览器里开始支持，意味�
 
 #### 浏览器中模块脚本文件扩展名可以不是.mjs,但是[nodejs目前实验版本只支持.mjs的模块脚本](https://nodejs.org/api/esm.html)
 
+#### 模块脚本默认是延迟加载(defer)
+![]({{site.baseurl}}/https://res.cloudinary.com/cpress/image/upload/w_1280,e_sharpen:60/htbubqjomlv7ov4muket.jpg)
 
+#### bare import暂不支持
+[bare import](https://html.spec.whatwg.org/multipage/webappapis.html#resolve-a-module-specifier)
+不带相对路径或绝对路径的import,例如
+```javascript
+import {shout} from 'jquery';
+```
 
 
 
