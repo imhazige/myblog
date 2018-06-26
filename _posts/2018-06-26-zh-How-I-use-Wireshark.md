@@ -15,10 +15,10 @@ title: wireshark使用
 [wireshark](https://www.wireshark.org/)是闻名已久的[开源](https://code.wireshark.org/review/gitweb?p=wireshark.git;a=summary)网络协议分析工具（抓包工具）。本文简单介绍wireshark的常用“食用”方法。
 
 ## 安装wireshark
-Mac: `sudo apt install wireshark`
-Windows: 推荐使用[scoop方式]({% post_url 2018-06-22-introduce-scoop %})
-`scoop install wireshark`
-命令行`wireshark`打开wireshark。
+Mac: `sudo apt install wireshark`  
+Windows: 推荐使用[scoop方式]({% post_url 2018-06-22-introduce-scoop %})  
+`scoop install wireshark`  
+命令行`wireshark`打开wireshark。  
 
 ## 使用wireshark分析pcap包
 
@@ -56,28 +56,16 @@ wireshark output.pcap
 ### [分析查询](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkDisplayFilterSection.html)
 最重要的还是查询功能
 举例
-- `frame contains "mozilla"` – search for the string “mozilla” anywhere in the packet
-- `tcp.port == 443` – tcp port is 443
-- `dns.resp.len > 0` – all DNS responses
-- `ip.addr == 52.7.23.87` – source or dest IP address is 52.7.23.87
+- `frame contains "mozilla"` – 包中包含字符串“mozilla”
+- `tcp.port == 443` – tcp协议端口号是 443的
+- `dns.resp.len > 0` – 所有DNS返回
+- `ip.addr == 52.7.23.87` – 源地址或目标地址IP为52.7.23.87
 
 #### 统计时常
-菜单 ‘Statistics’ > ‘Conversations’
+菜单 ‘Statistics’ > ‘Conversations’  
 如下图  
 ![](https://jvns.ca/images/wireshark_statistics.png)
-点击duration列则依据duration排序
+点击duration列则依据duration排序  
 
 ## PS: 
 依据原文暂且只写这些，感觉也没写什么东西。
-
- 
-
-
-
-
-
-
-
-
-
-
