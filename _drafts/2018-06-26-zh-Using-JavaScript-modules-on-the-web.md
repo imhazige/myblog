@@ -35,5 +35,13 @@ ES6模块在nodejs中不是新鲜事，而在浏览器里开始支持，意味�
 <script type="module">import './module.mjs';</script>
 <!-- module.mjs 执行一次. -->
 ```
+### 普通脚本不需要CORS返回头，而模块脚本需要
+模块脚本以及其依赖加载都是跨源(CORS)请求，而普通脚本不是
+
+### 普通内嵌脚本的async属性是无效的，而模块内嵌脚本的async是有效的
+因为普通内嵌脚本默认都是同步一条条加载执行。详见[async属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script)
+
+
+
 
 
