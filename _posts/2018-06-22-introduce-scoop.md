@@ -17,6 +17,8 @@ tags:
 使用scoop可以通过命令行安装在unix上颇受欢迎的工具，例如
 ```shell
 scoop install curl
+scoop uninstall curl
+scoop update curl
 ```
 这对开发者非常便利。
 由于工具都是默认安装在用户文件夹，所以不存在管理员权限要求的问题。
@@ -39,4 +41,5 @@ iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 ```
 
 ## 那些工具可以通过scoop安装
-见[这里](https://github.com/lukesampson/scoop/tree/master/bucket)
+见[这里](https://github.com/lukesampson/scoop/tree/master/bucket)  
+还有[扩展包](https://github.com/lukesampson/scoop-extras)
