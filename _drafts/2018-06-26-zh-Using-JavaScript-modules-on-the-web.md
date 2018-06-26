@@ -23,3 +23,17 @@ title: 在浏览器中使用Javascript 模块(module)
 其中type=module表示是javascript模块，下面的一行nomodule会被支持module的浏览器忽略，而被不支持module的浏览器解析。
 ES6模块在nodejs中不是新鲜事，而在浏览器里开始支持，意味着浏览器支持ES6的特性，也许不需要将ES6代码转成pollyfill代码，减少了多余的脚本库，性能提升。
 
+## 浏览器中模块脚本和普通脚本的区别
+### 普通脚本加载了几次就会执行几次,而模块只会执行一次
+```javascript
+<script src="classic.js"></script>
+<script src="classic.js"></script>
+<!-- classic.js 执行多次. -->
+
+<script type="module" src="module.mjs"></script>
+<script type="module" src="module.mjs"></script>
+<script type="module">import './module.mjs';</script>
+<!-- module.mjs 执行一次. -->
+```
+
+
