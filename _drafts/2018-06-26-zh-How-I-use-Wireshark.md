@@ -53,7 +53,7 @@ wireshark output.pcap
 #### 字节码详情试图
 ![](https://jvns.ca/images/wireshark_packet_details.png)
 
-### 分析查询
+### [分析查询](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkDisplayFilterSection.html)
 最重要的还是查询功能
 举例
 - `frame contains "mozilla"` – search for the string “mozilla” anywhere in the packet
@@ -61,7 +61,14 @@ wireshark output.pcap
 - `dns.resp.len > 0` – all DNS responses
 - `ip.addr == 52.7.23.87` – source or dest IP address is 52.7.23.87
 
+#### 统计时常
+菜单 ‘Statistics’ > ‘Conversations’
+如下图  
+![](https://jvns.ca/images/wireshark_statistics.png)
+点击duration列则依据duration排序
 
+
+ 
 
 
 
