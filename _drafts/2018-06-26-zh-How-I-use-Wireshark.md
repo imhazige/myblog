@@ -18,6 +18,23 @@ title: wireshark使用
 Mac: `sudo apt install wireshark`
 Windows: 推荐使用[scoop方式]({% post_url 2018-06-22-introduce-scoop %})
 `scoop install wireshark`
+命令行`wireshark`打开wireshark。
+
+## 使用wireshark分析pcap包
+#### 首先在linux服务器上用`tcpdump`生成一个pcap 
+```shell
+sudo tcpdump port 443 -w output.pcap
+```
+#### 下载到本地
+```shell
+scp host:~/output.pcap .
+```
+
+#### 使用wireshark打开
+```shell
+wireshark output.pcap
+```
+
 
 
 
