@@ -31,6 +31,8 @@ sudo tcpdump port 443 -w output.pcap
 ```shell
 scp host:~/output.pcap .
 ```
+#### 或者直接ssh到远程服务器抓包（scoop安装方式才有）
+capture/options菜单,可看到ssh remote capture,选择此项可设置ssh登陆远程主机来抓包.
 
 #### 使用wireshark打开pcap文件
 ```shell
@@ -42,8 +44,24 @@ wireshark output.pcap
 ![](https://jvns.ca/images/wireshark_filter.png)
 ![](https://jvns.ca/images/wireshark_tcp.png)
 
-### 直接ssh到远程服务器抓包（scoop安装方式才有）
-capture/options菜单,可看到ssh remote capture,选择此项可设置ssh登陆远程主机来抓包.
+#### Decode as提示wiresharp解析为协议
+右键一个包，decode as可提示wireshark将此包解析为指定的协议
+
+#### 请求头详情视图
+![](https://jvns.ca/images/wireshark_packet_details_list.png)
+
+#### 字节码详情试图
+![](https://jvns.ca/images/wireshark_packet_details.png)
+
+### 分析查询
+最重要的还是查询功能
+举例
+- `frame contains "mozilla"` – search for the string “mozilla” anywhere in the packet
+- `tcp.port == 443` – tcp port is 443
+- `dns.resp.len > 0` – all DNS responses
+- `ip.addr == 52.7.23.87` – source or dest IP address is 52.7.23.87
+
+
 
 
 
