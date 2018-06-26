@@ -21,6 +21,8 @@ Windows: 推荐使用[scoop方式]({% post_url 2018-06-22-introduce-scoop %})
 命令行`wireshark`打开wireshark。
 
 ## 使用wireshark分析pcap包
+
+### 分析生成好的pcap
 #### 首先在linux服务器上用`tcpdump`生成一个pcap 
 ```shell
 sudo tcpdump port 443 -w output.pcap
@@ -30,10 +32,21 @@ sudo tcpdump port 443 -w output.pcap
 scp host:~/output.pcap .
 ```
 
-#### 使用wireshark打开
+#### 使用wireshark打开pcap文件
 ```shell
 wireshark output.pcap
 ```
+
+#### 查看一个连接
+对于一个TCP包，可以通过右键“Conversation filter” -> “TCP”过滤出同一个连接的其他包
+![](https://jvns.ca/images/wireshark_filter.png)
+![](https://jvns.ca/images/wireshark_tcp.png)
+
+### 直接ssh到远程服务器抓包（scoop安装方式才有）
+capture/options菜单,可看到ssh remote capture,选择此项可设置ssh登陆远程主机来抓包.
+
+
+
 
 
 
