@@ -53,6 +53,33 @@ ES6模块在nodejs中不是新鲜事，而在浏览器里开始支持，意味�
 import {shout} from 'jquery';
 ```
 
+#### 普通脚本不支持export,import语法,而模块脚本可以
+
+#### 模块脚本默认是[strict模式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)  
+
+#### 普通脚本的变量作用于默认是全局的,而模块脚本顶级作用域是本模块
+```javascript
+//普通脚本
+var i = 0; //windows.i = 0;
+```
+
+#### 模块脚本支持动态import
+
+## 性能建议
+
+### 继续使用bundling(打包工具)
+webpack,rollup等工具能对代码整体分析优化打包结构
+
+### 使用模块预加载
+```html
+<link rel="modulepreload" href="lib.mjs">
+<link rel="modulepreload" href="main.mjs">
+<script type="module" src="main.mjs"></script>
+<script nomodule src="fallback.js"></script>
+```
+
+
+
 
 
 
