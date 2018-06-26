@@ -67,6 +67,7 @@ wireshark output.pcap
 ![](https://jvns.ca/images/wireshark_statistics.png)
 点击duration列则依据duration排序
 
+依据原文暂且只写这些，感觉也没写什么东西。
 
  
 
