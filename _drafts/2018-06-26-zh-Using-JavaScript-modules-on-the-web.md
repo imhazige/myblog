@@ -24,7 +24,7 @@ title: 在浏览器中使用Javascript 模块(module)
 ES6模块在nodejs中不是新鲜事，而在浏览器里开始支持，意味着浏览器支持ES6的特性，也许不需要将ES6代码转成pollyfill代码，减少了多余的脚本库，性能提升。
 
 ## 浏览器中模块脚本和普通脚本的区别
-### 普通脚本加载了几次就会执行几次,而模块只会执行一次
+#### 普通脚本加载了几次就会执行几次,而模块只会执行一次
 ```javascript
 <script src="classic.js"></script>
 <script src="classic.js"></script>
@@ -35,11 +35,14 @@ ES6模块在nodejs中不是新鲜事，而在浏览器里开始支持，意味�
 <script type="module">import './module.mjs';</script>
 <!-- module.mjs 执行一次. -->
 ```
-### 普通脚本不需要CORS返回头，而模块脚本需要
+#### 普通脚本不需要CORS返回头，而模块脚本需要
 模块脚本以及其依赖加载都是跨源(CORS)请求，而普通脚本不是
 
-### 普通内嵌脚本的async属性是无效的，而模块内嵌脚本的async是有效的
+#### 普通内嵌脚本的async属性是无效的，而模块内嵌脚本的async是有效的
 因为普通内嵌脚本默认都是同步一条条加载执行。详见[async属性](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script)
+
+#### 浏览器中模块脚本文件扩展名可以不是.mjs,但是[nodejs目前实验版本只支持.mjs的模块脚本](https://nodejs.org/api/esm.html)
+
 
 
 
