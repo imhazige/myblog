@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2018-06-27 20:00 +08:00'
@@ -186,4 +186,3 @@ console.log(o.a); // 38
 </button>
 ```
 上例中由于匿名函数不是在事件监听的代码顶层，而是被包含在一个闭包中，可看作是全局闭包，那自然this就是window了。
-
