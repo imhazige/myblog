@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2018-06-27 20:00 +08:00'
@@ -29,6 +29,3 @@ tags:
 
 ## 结论
 目前还是React一统天下，Angular紧随其后，Vue后起之秀劲头十足。(好老套)
-
-
-
