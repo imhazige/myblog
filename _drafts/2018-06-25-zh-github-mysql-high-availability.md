@@ -9,6 +9,7 @@ categories:
 tags:
   - mysql
   - cluster
+title: github怎样实施mysql高可用性(HA)
 ---
 > 本文内容主要来自[MySQL High Availability at GitHub](https://githubengineering.com/mysql-high-availability-at-github/); [Orchestrator at GitHub](https://githubengineering.com/orchestrator-github/)
 
