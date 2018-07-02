@@ -3,7 +3,7 @@ published: false
 layout: post
 comments: true
 date: '2018-07-02 20:00 +08:00'
-title: 数据库工具DB Fiddle
+title: '数据库工具SQL Fiddle, DB Fiddle'
 type: post
 categories:
   - database
