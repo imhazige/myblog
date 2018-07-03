@@ -39,6 +39,9 @@ This is the one I need, the project have over 12K stars on github.
 `pipenv install <packagename>`
 `pipenv install <packagename>=<versionname> --dev`
 
+#### Load the shell
+`pipenv shell`
+
 #### Like yarn remove
 `pipenv uninstall <packagename>`
 `pipenv uninstall all`
