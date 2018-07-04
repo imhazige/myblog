@@ -51,7 +51,7 @@ This is the one I need, the project have over 12K stars on github.
 
 #### VSCode setting
 To let VSCode understand the venv created by pipenv, see [Configuring Pipenv in Visual Studio Code](https://olav.it/2017/03/04/pipenv-visual-studio-code/)  
-`pipenv --venv` to show the venv path
+`pipenv --venv` to show the venv path  
 then in the .vscode directory of the project
 windows:
 ```json
@@ -59,6 +59,16 @@ windows:
     "python.pythonPath": "<venvpath>/Scripts/python.exe"
 }
 ```
+To let VSCode load pylint for Django, see [Class has no objects member](https://stackoverflow.com/questions/45135263/class-has-no-objects-member)  
+`pipenv install pylint-django --dev`  
+then in the .vscode directory of the project
+windows:
+```json
+{"python.linting.pylintArgs": [
+     "--load-plugins=pylint_django"
+],}
+```
+
 
 
 ## The mysqlclient problem
