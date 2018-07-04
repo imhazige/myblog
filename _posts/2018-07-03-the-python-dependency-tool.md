@@ -49,6 +49,18 @@ This is the one I need, the project have over 12K stars on github.
 #### See the graph
 `pipenv graph`
 
+#### VSCode setting
+To let VSCode understand the venv created by pipenv, see [Configuring Pipenv in Visual Studio Code](https://olav.it/2017/03/04/pipenv-visual-studio-code/)  
+`pipenv --venv` to show the venv path
+then in the .vscode directory of the project
+windows:
+```json
+{
+    "python.pythonPath": "<venvpath>/Scripts/python.exe"
+}
+```
+
+
 ## The mysqlclient problem
 pipenv is like a life saver -- But! it still can not resolve such a problem:
 [Can't open 'mysql.h' - and Can't open : 'config-win.h': No such file or directory](https://stackoverflow.com/questions/51118963/issues-installing-mysqldb-with-python-3-6-5-cant-open-mysql-h-and-cant-op)  
