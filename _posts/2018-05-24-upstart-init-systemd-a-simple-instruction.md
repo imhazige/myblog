@@ -51,6 +51,8 @@ systemctl --no-pager -l status servicename.service
 #view all the log
 journalctl -u service-name.service 
 
+#tail the log
+journalctl -f -u service-name.service 
 ```
 
 ### Example  
