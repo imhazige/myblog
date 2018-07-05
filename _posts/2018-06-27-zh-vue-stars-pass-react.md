@@ -3,7 +3,7 @@ published: true
 layout: post
 comments: true
 date: '2018-06-27 20:00 +08:00'
-title: vue在github上星标首次超过vue
+title: vue在github上星标首次超过react
 type: post
 categories:
   - javascript
