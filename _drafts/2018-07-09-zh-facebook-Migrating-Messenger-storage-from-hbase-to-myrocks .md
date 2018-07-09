@@ -25,4 +25,8 @@ facebook messenger最开始使用的是[cassandra](https://github.com/apache/cas
 
 Messenger这么大的吞吐量(1 billion accounts，十亿用户)的项目从NOSQL(hbase)又回到了SQL(mysql),这个视角的原因，文中并没有提到。
 
+## 无宕机时间的迁移策略
+这个过程还有个亮点是无宕机的完全迁移，简言之是初期同时写入旧的数据库hbase,和新的数据库myrocks
+
+
 
