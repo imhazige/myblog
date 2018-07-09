@@ -23,6 +23,6 @@ facebook messenger最开始使用的是[cassandra](https://github.com/apache/cas
 
 据facebook介绍，转换的出发点当然是为了提升性能，mysql复制拓扑结构更适合facebook的数据中心环境。使得能够在减少物理复制个数的情况下同时提高可用性(availability)和容灾恢复(disaster recovery)。
 
-Messenger这么大的吞吐量的项目从NOSQL(hbase)又回到了SQL(mysql),这个视角的原因，文中并没有提到。
+Messenger这么大的吞吐量(1 billion accounts，十亿用户)的项目从NOSQL(hbase)又回到了SQL(mysql),这个视角的原因，文中并没有提到。
 
 
