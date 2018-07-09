@@ -12,6 +12,13 @@ tags:
   - myrock
   - hbase
 ---
-## A New Post
+> 本文内容主要来自[Migrating Messenger storage to optimize performance](https://code.fb.com/data-infrastructure/migrating-messenger-storage-to-optimize-performance/)
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+最近facebook宣布已成功完全将messenger数据库从[hbase](https://github.com/apache/hbase)软切换到[myrocks](https://github.com/facebook/mysql-5.6)。这样做的结果就是提高了性能，节约了存储空间。
+
+
+facebook messenger最开始使用的是[cassandra](https://github.com/apache/cassandra),后来将其开源并移交了apache基金会，后来messenger又转为使用hbase,现在又转为myrocks - 一个facebook的mysql的引擎实现。
+
+这其中主要的特点是从普通硬盘(spinning disk)到flash硬盘,使用的是facebook的[Lightning Server SKU](https://code.fb.com/data-center-engineering/introducing-lightning-a-flexible-nvme-jbof/)服务。
+
+
