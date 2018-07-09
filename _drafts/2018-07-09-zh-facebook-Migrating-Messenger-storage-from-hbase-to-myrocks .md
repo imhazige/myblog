@@ -40,4 +40,3 @@ Messenger这么大的吞吐量(1 billion accounts，十亿用户)的项目从NOS
 ![statemachine-new-code.png]({{site.baseurl}}/assets/img/statemachine-new-code.png)
 
 经过多方验证后保证所有数据已完全切换到myrocks后，再将hbase下线，用户完全感受不到这个过程。
-
