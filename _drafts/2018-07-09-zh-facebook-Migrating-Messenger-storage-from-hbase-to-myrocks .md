@@ -21,4 +21,6 @@ facebook messenger最开始使用的是[cassandra](https://github.com/apache/cas
 
 这其中主要的特点是从普通硬盘(spinning disk)到flash硬盘,使用的是facebook的[Lightning Server SKU](https://code.fb.com/data-center-engineering/introducing-lightning-a-flexible-nvme-jbof/)服务。
 
+据facebook介绍，转换的出发点当然是为了提升性能，mysql复制拓扑结构更适合facebook的数据中心环境。使得能够在减少物理复制个数的情况下同时提高可用性(availability)和容灾恢复(disaster recovery)。
+
 
