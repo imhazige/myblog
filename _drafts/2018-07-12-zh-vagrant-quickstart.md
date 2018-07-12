@@ -42,9 +42,9 @@ Vagrant是主要目的是更容易地搭建开发环境（通过虚拟技术）�
 `vagrant ssh`
 
 #### 共享文件夹
-这个不需要什么额外操作，默认Vagrant配置文件所在文件夹会被同步到虚拟环境中的/vagrant目录中（注意，ssh登录的用户名字叫vagrant,所以默认用户文件夹是/home/vagrant，这个与/vagrant目录不同）.
+这个不需要什么额外操作，默认Vagrant配置文件所在文件夹会被同步到虚拟环境中的/vagrant目录中（注意，ssh登录的用户名字叫vagrant,所以默认用户文件夹是/home/vagrant，这个与/vagrant目录不同）。
 
-就是这么简单，不需要像virtualbox那样还要安装安装
+就是这么简单，不需要像virtualbox那样还要安装addon，安装addon还要安装gcc，共享文件夹还要重启，重启了还要解决权限问题，要将用户加入vboxsf组,要ssh还要配置防火墙(UFW),越扯越多……
 
 
 ## windows virtualbox下问题
