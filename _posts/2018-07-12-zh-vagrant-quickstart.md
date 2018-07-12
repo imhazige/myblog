@@ -44,7 +44,13 @@ Vagrant主要目的是更容易地搭建开发环境（通过虚拟技术），�
 到了这一步，大部分需要的功能都具备了，就是这么简单，不需要像virtualbox那样还要安装addon，安装addon还要安装gcc，共享文件夹还要重启，重启了还要解决权限问题，要将用户加入vboxsf组,要ssh还要配置防火墙(UFW),越扯越多……
 
 #### [symbolic-links问题](https://www.vagrantup.com/docs/synced-folders/basic_usage.html#symbolic-links)
-对于provider virtualbox,默认依然用的是virtualbox的共享文件机制,所以symbolic问题依然存在。因此要切换共享机制
+对于provider virtualbox,默认依然用的是virtualbox的共享文件机制,所以symbolic问题依然存在。解决方案参见[这里](https://stackoverflow.com/questions/24200333/symbolic-links-and-synced-folders-in-vagrant)
+- vagrantp配置文件里添加
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+  end
+- sudo vagrant reload
+
 
 ## windows下 virtualbox问题
 ### 无法选择64位系统问题
