@@ -52,6 +52,8 @@ Vagrant主要目的是更容易地搭建开发环境（通过虚拟技术），�
 - `vagrant reload` 重新加载配置
 - `sudo vagrant up`  admin启动windows下sudo来自scoop工具
 
+或使用[rsync](https://www.vagrantup.com/docs/synced-folders/rsync.html)
+
 
 ## windows下 virtualbox问题
 ### 无法选择64位系统问题
