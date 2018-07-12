@@ -46,10 +46,11 @@ Vagrant主要目的是更容易地搭建开发环境（通过虚拟技术），�
 #### [symbolic-links问题](https://www.vagrantup.com/docs/synced-folders/basic_usage.html#symbolic-links)
 对于provider virtualbox,默认依然用的是virtualbox的共享文件机制,所以symbolic问题依然存在。解决方案参见[这里](https://stackoverflow.com/questions/24200333/symbolic-links-and-synced-folders-in-vagrant)
 - vagrantp配置文件里添加
-  config.vm.provider "virtualbox" do |v|
+  `config.vm.provider "virtualbox" do |v|
     v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
-  end
-- sudo vagrant reload
+  end`
+- `vagrant reload` 重新加载配置
+- `sudo vagrant up`  admin启动windows下sudo来自scoop工具
 
 
 ## windows下 virtualbox问题
