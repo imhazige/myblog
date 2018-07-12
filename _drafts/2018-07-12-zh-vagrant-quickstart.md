@@ -16,9 +16,6 @@ tags:
 
 Vagrant是主要目的是更容易地搭建开发环境（通过虚拟技术），使得开发运行环境与实际产品运行环境“几乎”一致。
 
-## 对比virtualbox,docker
-
-
 ## 使用
 ### 安装vagrant
 到[这里](https://www.vagrantup.com/downloads.html)下载对应平台安装文件，安装。针对不同的虚拟技术provider，您还要安装对应的虚拟软件，例如，provider是virtualbox,那么您还要装好virtualbox。
@@ -61,6 +58,9 @@ Vagrant是主要目的是更容易地搭建开发环境（通过虚拟技术）�
 -- `sudo Apt-get install gcc perl make` 安装gcc
 -- `mount /dev/cdrom /mnt` 加载cd
 -- `sudo /mnt/VBoxLinuxAdditions.run` 运行
+
+## 对比docker
+我之愚见，docker当初也是说简化开发环境搭建，使得开发者可以使用统一的开发环境，结果它windows7一大堆的毛病，windows10安装起来还是费劲。最主要的是，配置还是太麻烦，并没有对开发环境友好，docker用来部署产品环境，那还行，用来开发，还是算了吧。
 
 
 ## Refs:   
