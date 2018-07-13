@@ -45,8 +45,9 @@ Vagrant主要目的是更容易地搭建开发环境（通过虚拟技术），�
 
 #### [provisioning](https://www.vagrantup.com/docs/provisioning/)
 provisioning用于在box初始化时执行某些操作，例如运行脚本，上传文件等，默认只在初次运行vagrant up时加载，您可以通过`vagrant up --provision`或`vagrant reload --provision`参数进行强制加载
-对于脚本加载安装的情况，遇到长时间没反应，没输出，解决方法见[这里](https://stackoverflow.com/questions/42195218/vagrant-provisioning-command-does-not-add-aliases-to-profile)
-`config.vm.provision "shell", path: "bootstrap.sh", privileged: "false"`
+
+##### 存在的问题 
+- provision 脚本加载安装的，有的命令遇到长时间没反应，没输出（命令在运行，但是无法判断进行到哪一步）,未找到解决方法，还是得在虚拟机启动以后再手动安装，这样很不方便，没有达到配置运行环境的目的。
 
 ### Vagrant示例
 ```yml
