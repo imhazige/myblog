@@ -22,17 +22,17 @@ Vagrant主要目的是更容易地搭建开发环境（通过虚拟技术），�
 
 ### 安装box
 安装项目目标运行环境的box，例如，您的产品将要运行于ubuntu上，那就到[这里](https://app.vagrantup.com/boxes/search)搜索，发现排名第一的ubuntu,可获得下载信息。
-运行命令即可开始安装box`ubuntu/trusty64x`
-`vagrant box add ubuntu/trusty64x`
+运行命令即可开始安装box`ubuntu/xenial64`
+`vagrant box add ubuntu/xenial64`
 
 #### 然而网络环境原因，下载很慢怎么办?
 上面的命令会打印出原始下载url,使用各种技巧（🤦‍♂️🤦‍♀️）（例如迅雷）直接下载到本地。
 然后使用[add](https://www.vagrantup.com/docs/cli/box.html#box-add)命令直接加载
-`vagrant box add 'D:\path\trusty-server-cloudimg-amd64-vagrant-disk1.box'  --name  ubuntu/trusty64x`
+`vagrant box add 'D:\path\trusty-server-cloudimg-amd64-vagrant-disk1.box'  --name  ubuntu/xenial64`
 
 ### 使用box  
 #### 初始化box
-`vagrant init` 会在当前文件夹下创建Vagrant文件，这个是配置文件，一般应该将此文件提交到版本控制中，则其他小伙伴可以直接使用
+`vagrant init ubuntu/xenial64` 会在当前文件夹下创建Vagrant文件，这个是配置文件，一般应该将此文件提交到版本控制中，则其他小伙伴可以直接使用
 #### 启动box  
 `vagrant up`
 #### ssh登录到box 
