@@ -57,6 +57,10 @@ provisioning用于在box初始化时执行某些操作，例如运行脚本，�
 
 或使用[rsync](https://www.vagrantup.com/docs/synced-folders/rsync.html)
 
+## 销毁原来的，重新加载vagrant配置
+`vagrant destroy`  
+`vagrant up`
+
 
 ## windows下 virtualbox问题
 ### 无法选择64位系统问题
