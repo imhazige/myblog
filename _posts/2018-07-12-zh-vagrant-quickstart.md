@@ -141,6 +141,8 @@ end
 - `sudo vagrant up`  admin启动windows下sudo来自scoop工具
 
 或使用[rsync](https://www.vagrantup.com/docs/synced-folders/rsync.html)
+- windows下需要安装CGWin以安装rsync
+
 
 ## 销毁原来的，重新加载vagrant配置
 `vagrant destroy`  
