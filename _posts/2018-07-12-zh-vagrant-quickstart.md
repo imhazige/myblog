@@ -46,6 +46,11 @@ Vagrant主要目的是更容易地搭建开发环境（通过虚拟技术），�
 #### [provisioning](https://www.vagrantup.com/docs/provisioning/)
 provisioning用于在box初始化时执行某些操作，例如运行脚本，上传文件等，默认只在初次运行vagrant up时加载，您可以通过`vagrant up --provision`或`vagrant reload --provision`参数进行强制加载
 
+##### 测试provision
+有时候您已经建立了虚拟环境，现在想增加一个provision,可以使用provision命令
+`sh vagrant provision --provision-with file `
+这就在当前虚拟环境上运行file provision(您在Vagrantfile里的file配置)
+
 ##### 存在的问题 
 - provision 脚本加载安装的，有的命令遇到长时间没反应，没输出（命令在运行，但是无法判断进行到哪一步）,未找到解决方法，还是得在虚拟机启动以后再手动安装，这样很不方便，没有达到配置运行环境的目的。
 
@@ -124,6 +129,8 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   # SHELL
   config.vm.provision "shell", path: "vagrant.provision.sh",privileged: "false"
+  
+  config.vm.provision "file", source: ".meteor", destination: "/vagrant/.meteor"
 end
 
 
