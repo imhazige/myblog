@@ -40,3 +40,8 @@ Messenger这么大的吞吐量(1 billion accounts，十亿用户)的项目从NOS
 ![statemachine-new-code.png]({{site.baseurl}}/assets/img/statemachine-new-code.png)
 
 经过多方验证后保证所有数据已完全切换到myrocks后，再将hbase下线，用户完全感受不到这个过程。
+
+## PS
+有趣的是，Facebook的这篇文章出来后，NOSQL to SQL的相关文章冒出来很多,举例:
+[Have you ever chosen Postgres over Mongo and regretted it?](https://news.ycombinator.com/item?id=17497164)  
+[Thank You for Your Help NoSQL, but We Got It from Here](http://blog.memsql.com/nosql/)
