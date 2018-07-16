@@ -20,4 +20,5 @@ title: github怎样实施mysql高可用性(HA)
 - 单一master怎样同步到备份数据库，log？
 
 
-##
+## Refs
+[Github工程师为MySQL高可用性采用了新架构](http://www.infoq.com/cn/news/2018/07/github-mysql-high-availability)
