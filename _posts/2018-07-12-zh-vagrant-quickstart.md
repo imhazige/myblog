@@ -171,9 +171,12 @@ end
 -- `mount /dev/cdrom /mnt` 加载cd  
 -- `sudo /mnt/VBoxLinuxAdditions.run` 运行  
 
-## 对比docker
-我之愚见，docker当初也是说简化开发环境搭建，使得开发者可以使用统一的开发环境，结果它windows7一大堆的毛病，windows10安装起来还是费劲。最主要的是，配置还是太麻烦，并没有对开发环境友好，docker用来部署产品环境，那还行，用来开发，还是算了吧。
 
+## PS:
+实际使用一段时间后，弃用！具体痛点（pain point）:
+- ssh操作比较长时间的命令，几乎次次不是这里就是那里没反应，控制台无输出了，不知道进行到哪里了
+- windows下,mac下都试过，感觉网络速度比较慢
+- 各项目对vagrant支持非常少，很少有文档提到，别人用的少，你用起来就痛苦，
 
 ## Refs:   
 [Vagrant入门](https://www.cnblogs.com/davenkin/p/vagrant-virtualbox.html)
