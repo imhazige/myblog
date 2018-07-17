@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2018-07-17 20:00 +08:00'
@@ -32,5 +32,3 @@ ubuntu desktop刚出来时老早就用过，那时候并没有现在这样好安
 
 ## 安装双系统
 使用easyBCD可达到硬盘安装的目的，比较便利,参见[win10下装ubuntu双系统（免U盘）](https://www.jianshu.com/p/417c1001a559)
-
-
