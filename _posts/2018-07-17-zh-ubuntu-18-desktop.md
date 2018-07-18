@@ -8,6 +8,7 @@ categories:
   - linux
 tags:
   - ubuntu
+title: 用ubuntu 18桌面版来开发怎么样?
 ---
 最近因为要测试一个软件的开发环境，尝试了ubuntu-18 desktop，写下来感受。
 
