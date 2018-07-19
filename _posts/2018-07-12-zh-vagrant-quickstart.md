@@ -174,7 +174,7 @@ end
 
 ## PS:
 实际使用一段时间后，弃用！具体痛点（pain point）:
-- 依然未能很好地解决symbolic-links问题,rsync还是不太方便。[而docker就比较好处理](https://stackoverflow.com/questions/38142610/how-can-avoid-symlink-problems-with-npm-running-in-docker-on-a-windows-host)。
+- 依然未能很好地解决symbolic-links问题,rsync还是不太方便。[而docker也存在这个问题,npm构建方式的毛病](https://stackoverflow.com/questions/38142610/how-can-avoid-symlink-problems-with-npm-running-in-docker-on-a-windows-host)。
 - ssh操作比较长时间的命令，几乎次次不是这里就是那里没反应，控制台无输出了，不知道进行到哪里了
 - windows下,mac下都试过，感觉网络速度比较慢
 - 各项目对vagrant支持非常少，很少有文档提到，别人用的少，你用起来就痛苦
