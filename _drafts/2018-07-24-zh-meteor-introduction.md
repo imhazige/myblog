@@ -79,6 +79,11 @@ Meteor.publish('custom-publication', function() {
   });
 });
 ```
+首先需要明确，不管服务端数据源是否来自mongodb,[客户端都有一个内存mongodb](https://guide.meteor.com/collections.html#client-collections),客户端都是针对这个mongodb来查询操作。
+[详见这里](https://guide.meteor.com/data-loading.html#fetching)
+
+再来看看默认的基于服务端Mogodb数据实现:
+使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mogo数据库的修改得以立即广播到读取指针.
 
 
 #### 修改数据使用[method](https://guide.meteor.com/methods.html)
