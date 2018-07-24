@@ -19,7 +19,7 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 以下列出优缺点更直观的了解meteor
 
 ## 优点
-### 实时展示--实现机制，websocket，mogo?
+### 实现机制，websocket，mogo?
 #### [读取](https://guide.meteor.com/data-loading.html)数据DDP
 数据实时读取使用[DDP(distributed data protocal)](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
 
