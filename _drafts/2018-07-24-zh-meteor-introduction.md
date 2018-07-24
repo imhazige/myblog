@@ -175,6 +175,7 @@ npm方式
 ### [移动端支持](https://guide.meteor.com/ui-ux.html#mobile)
 #### 使用[Cordova](https://cordova.apache.org/),
 #### 使用DDP方式调用meteor服务端
+对于ios，可使用[meteor-ios](https://cordova.apache.org/)框架。
 
 ## 缺点
 ### 仍算比较冷门，中文支持较少
