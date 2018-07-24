@@ -14,9 +14,9 @@ tags:
 ## [Meteor](https://github.com/meteor/meteor)(流星)是什么
 > Meteor is a full-stack JavaScript platform for developing modern web and mobile applications. Meteor includes a key set of technologies for building connected-client reactive applications, a build tool, and a curated set of packages from the Node.js and general JavaScript community.
 
-Meteor是一个full-stack javascript平台，可用于开发web和移动应用。其最大特点是其（通过websocket）保持客户端连接的“实时”框架。数据库（mongodb）的改变可“实时”展示到界面中。
+Meteor是一个full-stack javascript平台，可用于开发web和移动应用。其最大特点是其（通过websocket）保持客户端连接的“实时”框架。数据库（mongodb）的改变可“实时”展示到界面中。  
 
-以下列出优缺点更直观的了解meteor
+以下列出优缺点更直观的了解meteor  
 
 ## 优点
 
@@ -56,7 +56,7 @@ Meteor.publish('polled-publication', function() {
   });
 });
 ```
-上例使用的是Meteor自带的DDP API的changed,added方法来实现数据publish
+上例使用的是Meteor自带的DDP API的changed,added方法来实现数据publish  
 参见[使用底层api自定义publication(Custom publications with the low level API)](https://guide.meteor.com/data-loading.html#custom-publication)
 ```javascript
 Meteor.publish('custom-publication', function() {
@@ -84,9 +84,9 @@ Meteor.publish('custom-publication', function() {
 首先需要明确，不管服务端数据源是否来自mongodb,[客户端都有一个内存mongodb](https://guide.meteor.com/collections.html#client-collections),客户端都是针对这个mongodb来查询操作。
 [详见这里](https://guide.meteor.com/data-loading.html#fetching)
 
-再来看看默认的基于服务端Mongodb数据实现:
-使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mongo数据库的修改得以立即广播到读取指针(cursor).
-示例
+再来看看默认的基于服务端Mongodb数据实现:  
+使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mongo数据库的修改得以立即广播到读取指针(cursor).  
+示例  
 ```javascript
 Meteor.publish('lists.public', function() {
   return Lists.find({
@@ -96,16 +96,16 @@ Meteor.publish('lists.public', function() {
   });
 });
 ```
-魔法就在于Lists.find，如果对应的集合有所变动，都会向客户端广播。
+魔法就在于Lists.find，如果对应的集合有所变动，都会向客户端广播。  
 oplog也有一些[限制](https://galaxy-guide.meteor.com/apm-optimize-your-app-for-oplog.html)
 
 
 #### 修改数据使用[method](https://guide.meteor.com/methods.html)(也属于DDP协议)
-method类似RPC,
-method有一些特点
-- 客户端调用方法直接引用定义文件调用，直观。
-- 现在客户端调用验证，如果失败，就不会调用服务端。
-- 方便于测试。
+method类似RPC；
+method有一些特点:  
+- 客户端调用方法直接引用定义文件调用，直观。  
+- 现在客户端调用验证，如果失败，就不会调用服务端。  
+- 方便于测试。  
 
 ##### [不提倡从method获得数据](https://guide.meteor.com/methods.html#loading-data)
 一般应该是从DDP获得数据，method只负责修改，不应该从method的返回获得数据。因为虽然method是能够返回数据的，
@@ -145,7 +145,7 @@ Fiber不是个新概念，它不同于thread，并不能起到thread的作用，
 
 
 ### 商业支持，论团支持,文档详细
-meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看，项目活跃程度
+meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看github上有40k+星标，[项目活跃程度还算不错](https://github.com/meteor/meteor/graphs/commit-activity)
 [其提供hosting服务，也提供商业支持服务](https://www.meteor.com/pricing)，商业支持服务对于商业项目来说是很重要的考虑点。
 
 ### 支持npm，可以整合其他框架，例如expressjs
@@ -172,14 +172,15 @@ export function setupApi() {
   WebApp.connectHandlers.use(app);
 }
 ```
-其中用到的是[meteor webapp api](https://docs.meteor.com/packages/webapp.html)
+其中用到的是[meteor webapp api](https://docs.meteor.com/packages/webapp.html)  
 
-atmospherejs示例
-`meteor add qualia:reval`
-会在.meteor/pacakge中增加对应信息，且代码中不需要显示import
-npm方式
-`meteor npm i exressjs`
-会在pacakge.json中添加信息
+atmospherejs示例    
+`meteor add qualia:reval`  
+会在.meteor/pacakge中增加对应信息，且代码中不需要显示import   
+ 
+npm方式  
+`meteor npm i exressjs`    
+会在pacakge.json中添加信息  
 不要尝试npm i xx直接添加，因为meteor工具自带绑定版本的node和npmj
 
 ### [web前端官方支持react,Angular](https://guide.meteor.com/ui-ux.html#view-layers)
