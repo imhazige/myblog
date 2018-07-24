@@ -19,7 +19,9 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 以下列出优缺点更直观的了解meteor
 
 ## 优点
+
 ### 实时
+
 #### [读取](https://guide.meteor.com/data-loading.html)数据DDP
 数据实时读取使用[DDP(distributed data protocal)](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
 
@@ -121,6 +123,7 @@ function updateAverages() {
 ```
 
 #### [Method相对于REST API的好处](https://guide.meteor.com/methods.html#methods-vs-rest)
+
 ##### 基于[Fibers](https://github.com/laverdet/node-fibers),编写类似于同步方式的代码，但是不是阻塞(blocking)的
 使用fibers将method(请求估计也是websocket，由于每个method都有id，将调用和返回通过id关联，将websocket异步的包装成同步的)封装成同步的形式，这样既保持了websocket的便利，也使得编码逻辑直观。
 Fiber不是个新概念，它不同于thread，并不能起到thread的作用，个人理解，更像nodejs里面await/sync的一种实现。
@@ -130,11 +133,14 @@ Fiber不是个新概念，它不同于thread，并不能起到thread的作用，
 
 
 ### 
+
 ### userId?
 https://guide.meteor.com/data-loading.html
 Note that the publication will re-run if the user logs out (or back in again), which means that the published set of private lists will change as the active user changes.
+
 ### 商业支持，论团支持,文档详细
 meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看，项目活跃程度
+
 ### 支持npm，可以整合其他框架，例如expressjs
 Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
 [整合express的示例](https://github.com/imhazige/benchmark-test-java-php-nodejs/blob/master/nodejs/meteor/imports/server/api.js)：
@@ -173,13 +179,17 @@ npm方式
 对于meteor自带的[Blaze](https://guide.meteor.com/blaze.html),由于其提供了许多便利的特性，[一般建议与React,Angular合用](https://guide.meteor.com/react.html#using-with-blaze)
 
 ### [移动端支持](https://guide.meteor.com/ui-ux.html#mobile)
+
 #### 使用[Cordova](https://cordova.apache.org/),
+
 #### 使用DDP方式调用meteor服务端
 对于ios，可使用[meteor-ios](https://cordova.apache.org/)框架。
 
 ## 缺点
+
 ### 仍算比较冷门，中文支持较少
+
 ### 与普通的nodejs开发方式不太相同，学习曲线稍陡
+
 ### 默认绑定了mogodb
 这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mogodb是必须的，你可以不用它，但是这样会丢失DDP很多特性,且必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
-### 移动端绑定框架
