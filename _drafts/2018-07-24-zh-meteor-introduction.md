@@ -81,8 +81,6 @@ Meteor.publish('custom-publication', function() {
 ```
 
 
-
-
 #### 修改数据使用[method](https://guide.meteor.com/methods.html)
 修改数据则使用[Method](https://guide.meteor.com/methods.html)
 
