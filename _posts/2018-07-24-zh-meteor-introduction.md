@@ -143,8 +143,6 @@ Fiber不是个新概念，它不同于thread，并不能起到thread的作用，
 ### [每个DDP(pub/sub和method)都可以是绑定用户信息的](https://guide.meteor.com/accounts.html#userid-ddp)
 通过this.userId可用于判断用户是否登录，用户系统可自定义，也可使用meteor的api。
 
-https://guide.meteor.com/data-loading.html
-Note that the publication will re-run if the user logs out (or back in again), which means that the published set of private lists will change as the active user changes.
 
 ### 商业支持，论团支持,文档详细
 meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看，项目活跃程度
