@@ -83,11 +83,20 @@ Meteor.publish('custom-publication', function() {
 [详见这里](https://guide.meteor.com/data-loading.html#fetching)
 
 再来看看默认的基于服务端Mogodb数据实现:
-使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mogo数据库的修改得以立即广播到读取指针.
+使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mogo数据库的修改得以立即广播到读取指针(cursor).
 
 
 #### 修改数据使用[method](https://guide.meteor.com/methods.html)
-修改数据则使用[Method](https://guide.meteor.com/methods.html)
+method类似RPC,
+method有一些特点
+Run validation code by itself without running the Method body.
+Easily override the Method for testing.
+Easily call the Method with a custom user ID, especially in tests (as recommended by the Discover Meteor two-tiered methods pattern).
+Refer to the Method via JS module rather than a magic string.
+Get the Method simulation return value to get IDs of inserted documents.
+Avoid calling the server-side Method if the client-side validation failed, so we don’t waste server resources.
+
+#### 
 
 ### 请求队列?
 
@@ -99,7 +108,7 @@ Note that the publication will re-run if the user logs out (or back in again), w
 ### 支持npm，可以整合其他框架，例如expressjs
 Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
 [整合express的示例](https://github.com/imhazige/benchmark-test-java-php-nodejs/blob/master/nodejs/meteor/imports/server/api.js)：
-```nodejs
+```javascript
 import { Meteor } from 'meteor/meteor';
 import express from 'express';
 
