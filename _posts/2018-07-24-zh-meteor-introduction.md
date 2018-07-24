@@ -16,7 +16,7 @@ tags:
 
 Meteor是一个full-stack javascript平台，可用于开发web和移动应用。其最大特点是其（通过websocket）保持客户端连接的“实时”框架。数据库（mongodb）的改变可“实时”展示到界面中。  
 
-以下列出优缺点更直观的了解meteor  
+以下列出优缺点更直观的了解meteor。
 
 ## 优点
 
