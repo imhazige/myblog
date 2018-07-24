@@ -20,10 +20,13 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 
 ## 优点
 ### 实时展示--实现机制，websocket，mogo?
-
+数据实时读取使用[DDP(distributed data protocal)](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
 ### 请求队列?
+修改数据则使用[Method](https://guide.meteor.com/methods.html)
 ### 
 ### userId?
+https://guide.meteor.com/data-loading.html
+Note that the publication will re-run if the user logs out (or back in again), which means that the published set of private lists will change as the active user changes.
 ### 商业支持，论团支持,文档详细
 ### 支持npm，可以整合其他框架，例如expressjs
 Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
@@ -57,4 +60,5 @@ export function setupApi() {
 ## 缺点
 ### 仍算比较冷门，中文支持较少
 ### 与普通的nodejs开发方式不太相同，学习曲线稍陡
-### 
+### 默认绑定了mogodb
+这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mogodb是必须的，你可以不用它，但是必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
