@@ -27,6 +27,31 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 ### 商业支持，论团支持,文档详细
 ### 支持npm，可以整合其他框架，例如expressjs
 Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
+[整合express的示例](https://github.com/imhazige/benchmark-test-java-php-nodejs/blob/master/nodejs/meteor/imports/server/api.js)：
+```nodejs
+import { Meteor } from 'meteor/meteor';
+import express from 'express';
+
+import bodyParser from 'body-parser';
+
+export function setupApi() {
+  const app = express();
+
+  app.use(bodyParser.json()); // for parsing application/json
+  app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+  var t1 = require('./t1');
+  var t2 = require('./t2');
+
+  app.use('/t1', t1);
+  app.use('/t2', t2);
+
+  WebApp.connectHandlers.use(app);
+}
+```
+其中用到的是[meteor webapp api](https://docs.meteor.com/packages/webapp.html)
+### Fiber方式
+
 
 ## 缺点
 ### 仍算比较冷门，中文支持较少
