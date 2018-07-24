@@ -132,5 +132,5 @@ npm方式
 ### 仍算比较冷门，中文支持较少
 ### 与普通的nodejs开发方式不太相同，学习曲线稍陡
 ### 默认绑定了mogodb
-这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mogodb是必须的，你可以不用它，但是必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
+这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mogodb是必须的，你可以不用它，但是这样会丢失DDP很多特性,且必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
 ### 移动端绑定框架
