@@ -11,15 +11,20 @@ tags:
   - meteor
   - fullstack
 ---
-## Meteor(流星)是什么
+## [Meteor](https://github.com/meteor/meteor)(流星)是什么
+> Meteor is a full-stack JavaScript platform for developing modern web and mobile applications. Meteor includes a key set of technologies for building connected-client reactive applications, a build tool, and a curated set of packages from the Node.js and general JavaScript community.
 
+Meteor是一个full-stack javascript平台，可用于开发web和移动应用。其最大特点是其（通过websocket）保持客户端连接的“实时”框架。数据库（mogodb）的改变可“实时”展示到界面中。
+
+以下列出优缺点更直观的了解meteor
 
 ## 优点
 ### 实时展示--实现机制，websocket，mogo?
+
 ### 请求队列?
 ### 
 ### userId?
-### 商业支持，论团支持
+### 商业支持，论团支持,文档详细
 ### 支持npm，可以整合其他框架，例如express
 
 ## 缺点
