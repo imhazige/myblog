@@ -19,7 +19,7 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 以下列出优缺点更直观的了解meteor
 
 ## 优点
-### 实现机制，websocket，mogo?
+### 实时
 #### [读取](https://guide.meteor.com/data-loading.html)数据DDP
 数据实时读取使用[DDP(distributed data protocal)](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
 
@@ -96,7 +96,13 @@ Refer to the Method via JS module rather than a magic string.
 Get the Method simulation return value to get IDs of inserted documents.
 Avoid calling the server-side Method if the client-side validation failed, so we don’t waste server resources.
 
-#### 
+##### [不提倡从method获得数据](https://guide.meteor.com/methods.html#loading-data)
+一般应该是从DDP获得数据，method只负责修改，不应该从method的返回获得数据。因为虽然method是能够返回数据的，
+但这种情况下，你还得手动维护客户端mongodb的数据一致性。
+
+
+####
+
 
 ### 请求队列?
 
