@@ -20,9 +20,74 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 
 ## 优点
 ### 实时展示--实现机制，websocket，mogo?
+#### [读取](https://guide.meteor.com/data-loading.html)数据DDP
 数据实时读取使用[DDP(distributed data protocal)](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
-### 请求队列?
+
+例如不停的请求第三方api来达到实时效果[官方示例](https://guide.meteor.com/data-loading.html#loading-from-rest)
+```javascript
+const POLL_INTERVAL = 5000;
+
+Meteor.publish('polled-publication', function() {
+  const publishedKeys = {};
+
+  const poll = () => {
+    // Let's assume the data comes back as an array of JSON documents, with an _id field, for simplicity
+    const data = HTTP.get(REST_URL, REST_OPTIONS);
+
+    data.forEach((doc) => {
+      if (publishedKeys[doc._id]) {
+        this.changed(COLLECTION_NAME, doc._id, doc);
+      } else {
+        publishedKeys[doc._id] = true;
+        this.added(COLLECTION_NAME, doc._id, doc);
+      }
+    });
+  };
+
+  poll();
+  this.ready();
+
+  const interval = Meteor.setInterval(poll, POLL_INTERVAL);
+
+  this.onStop(() => {
+    Meteor.clearInterval(interval);
+  });
+});
+```
+上例使用的是Meteor自带的DDP API的changed,added方法来实现数据publish
+参见[使用底层api自定义publication(Custom publications with the low level API)](https://guide.meteor.com/data-loading.html#custom-publication)
+```javascript
+Meteor.publish('custom-publication', function() {
+  // We can add documents one at a time
+  this.added('collection-name', 'id', {field: 'values'});
+
+  // We can call ready to indicate to the client that the initial document sent has been sent
+  this.ready();
+
+  // We may respond to some 3rd party event and want to send notifications
+  Meteor.setTimeout(() => {
+    // If we want to modify a document that we've already added
+    this.changed('collection-name', 'id', {field: 'new-value'});
+
+    // Or if we don't want the client to see it any more
+    this.removed('collection-name', 'id');
+  });
+
+  // It's very important to clean up things in the subscription's onStop handler
+  this.onStop(() => {
+    // Perhaps kill the connection with the 3rd party server
+  });
+});
+```
+
+
+
+
+#### 修改数据使用[method](https://guide.meteor.com/methods.html)
 修改数据则使用[Method](https://guide.meteor.com/methods.html)
+
+### 请求队列?
+
 ### 
 ### userId?
 https://guide.meteor.com/data-loading.html
@@ -70,3 +135,4 @@ npm方式
 ### 与普通的nodejs开发方式不太相同，学习曲线稍陡
 ### 默认绑定了mogodb
 这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mogodb是必须的，你可以不用它，但是必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
+### 移动端绑定框架
