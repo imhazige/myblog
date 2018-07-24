@@ -54,6 +54,14 @@ export function setupApi() {
 ```
 其中用到的是[meteor webapp api](https://docs.meteor.com/packages/webapp.html)
 
+atmospherejs示例
+`meteor add qualia:reval`
+会在.meteor/pacakge中增加对应信息，且代码中不需要显示import
+npm方式
+`meteor npm i exressjs`
+会在pacakge.json中添加信息
+不要尝试npm i xx直接添加，因为meteor工具自带绑定版本的node和npmj
+
 ### Fiber方式
 
 
