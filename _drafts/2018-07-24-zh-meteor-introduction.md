@@ -25,7 +25,8 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 ### 
 ### userId?
 ### 商业支持，论团支持,文档详细
-### 支持npm，可以整合其他框架，例如express
+### 支持npm，可以整合其他框架，例如expressjs
+Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
 
 ## 缺点
 ### 仍算比较冷门，中文支持较少
