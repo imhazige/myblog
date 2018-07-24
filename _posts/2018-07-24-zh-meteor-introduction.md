@@ -103,12 +103,9 @@ oplog也有一些[限制](https://galaxy-guide.meteor.com/apm-optimize-your-app-
 #### 修改数据使用[method](https://guide.meteor.com/methods.html)(也属于DDP协议)
 method类似RPC,
 method有一些特点
-Run validation code by itself without running the Method body.
-Easily override the Method for testing.
-Easily call the Method with a custom user ID, especially in tests (as recommended by the Discover Meteor two-tiered methods pattern).
-Refer to the Method via JS module rather than a magic string.
-Get the Method simulation return value to get IDs of inserted documents.
-Avoid calling the server-side Method if the client-side validation failed, so we don’t waste server resources.
+- 客户端调用方法直接引用定义文件调用，直观。
+- 现在客户端调用验证，如果失败，就不会调用服务端。
+- 方便于测试。
 
 ##### [不提倡从method获得数据](https://guide.meteor.com/methods.html#loading-data)
 一般应该是从DDP获得数据，method只负责修改，不应该从method的返回获得数据。因为虽然method是能够返回数据的，
