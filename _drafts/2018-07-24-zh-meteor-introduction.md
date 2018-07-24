@@ -22,7 +22,7 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 
 ### 实时
 
-#### [读取](https://guide.meteor.com/data-loading.html)数据DDP
+#### [读取数据使用DDP](https://guide.meteor.com/data-loading.html)
 数据实时读取使用[DDP(distributed data protocal)](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
 
 例如不停的请求第三方api来达到实时效果[官方示例](https://guide.meteor.com/data-loading.html#loading-from-rest)
@@ -86,6 +86,18 @@ Meteor.publish('custom-publication', function() {
 
 再来看看默认的基于服务端Mogodb数据实现:
 使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mogo数据库的修改得以立即广播到读取指针(cursor).
+示例
+```javascript
+Meteor.publish('lists.public', function() {
+  return Lists.find({
+    userId: {$exists: false}
+  }, {
+    fields: Lists.publicFields
+  });
+});
+```
+魔法就在于Lists.find，如果对应的集合有所变动，都会向客户端广播。
+oplog也有一些[限制](https://galaxy-guide.meteor.com/apm-optimize-your-app-for-oplog.html)
 
 
 #### 修改数据使用[method](https://guide.meteor.com/methods.html)
@@ -131,15 +143,13 @@ Fiber不是个新概念，它不同于thread，并不能起到thread的作用，
 ##### 请求和返回都是有序的
 对于ajax请求，请求和返回不能保证有序，可能后请求的先得到返回。meteor保证了每个客户端的每个请求都是有序的，前一个调用成功后才进行下一个。不过对于特殊的情况，也可以改变这个机制而使得执行无序。例如[this.unblock()](https://docs.meteor.com/api/methods.html#DDPCommon-MethodInvocation-unblock)。
 
-
-### 
-
 ### userId?
 https://guide.meteor.com/data-loading.html
 Note that the publication will re-run if the user logs out (or back in again), which means that the published set of private lists will change as the active user changes.
 
 ### 商业支持，论团支持,文档详细
 meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看，项目活跃程度
+[其提供hosting服务，也提供商业支持服务](https://www.meteor.com/pricing)，商业支持服务对于商业项目来说是很重要的考虑点。
 
 ### 支持npm，可以整合其他框架，例如expressjs
 Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
