@@ -134,6 +134,7 @@ Fiber不是个新概念，它不同于thread，并不能起到thread的作用，
 https://guide.meteor.com/data-loading.html
 Note that the publication will re-run if the user logs out (or back in again), which means that the published set of private lists will change as the active user changes.
 ### 商业支持，论团支持,文档详细
+meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看，项目活跃程度
 ### 支持npm，可以整合其他框架，例如expressjs
 Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
 [整合express的示例](https://github.com/imhazige/benchmark-test-java-php-nodejs/blob/master/nodejs/meteor/imports/server/api.js)：
@@ -168,7 +169,12 @@ npm方式
 会在pacakge.json中添加信息
 不要尝试npm i xx直接添加，因为meteor工具自带绑定版本的node和npmj
 
+### [web前端官方支持react,Angular](https://guide.meteor.com/ui-ux.html#view-layers)
+对于meteor自带的[Blaze](https://guide.meteor.com/blaze.html),由于其提供了许多便利的特性，[一般建议与React,Angular合用](https://guide.meteor.com/react.html#using-with-blaze)
 
+### [移动端支持](https://guide.meteor.com/ui-ux.html#mobile)
+#### 使用[Cordova](https://cordova.apache.org/),
+#### 使用DDP方式调用meteor服务端
 
 ## 缺点
 ### 仍算比较冷门，中文支持较少
