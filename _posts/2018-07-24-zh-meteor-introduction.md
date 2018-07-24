@@ -108,7 +108,7 @@ method有一些特点:
 - 方便于测试。  
 
 ##### [不提倡从method获得数据](https://guide.meteor.com/methods.html#loading-data)
-一般应该是从DDP获得数据，method只负责修改，不应该从method的返回获得数据。因为虽然method是能够返回数据的，
+一般应该是从pub/sub获得数据，method只负责修改，不应该从method的返回获得数据。因为虽然method是能够返回数据的，
 但这种情况下，你还得手动维护客户端mongodb的数据一致性。
 ```javascript
 // In client-side code, declare a local collection
