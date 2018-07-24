@@ -123,6 +123,7 @@ function updateAverages() {
 #### [Method相对于REST API的好处](https://guide.meteor.com/methods.html#methods-vs-rest)
 ##### 基于[Fibers](https://github.com/laverdet/node-fibers),编写类似于同步方式的代码，但是不是阻塞(blocking)的
 使用fibers将method(请求估计也是websocket，由于每个method都有id，将调用和返回通过id关联，将websocket异步的包装成同步的)封装成同步的形式，这样既保持了websocket的便利，也使得编码逻辑直观。
+Fiber不是个新概念，它不同于thread，并不能起到thread的作用，个人理解，更像nodejs里面await/sync的一种实现。
 
 ##### 请求和返回都是有序的
 对于ajax请求，请求和返回不能保证有序，可能后请求的先得到返回。meteor保证了每个客户端的每个请求都是有序的，前一个调用成功后才进行下一个。不过对于特殊的情况，也可以改变这个机制而使得执行无序。例如[this.unblock()](https://docs.meteor.com/api/methods.html#DDPCommon-MethodInvocation-unblock)。
@@ -167,7 +168,6 @@ npm方式
 会在pacakge.json中添加信息
 不要尝试npm i xx直接添加，因为meteor工具自带绑定版本的node和npmj
 
-### Fiber方式
 
 
 ## 缺点
