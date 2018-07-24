@@ -99,12 +99,34 @@ Avoid calling the server-side Method if the client-side validation failed, so we
 ##### [不提倡从method获得数据](https://guide.meteor.com/methods.html#loading-data)
 一般应该是从DDP获得数据，method只负责修改，不应该从method的返回获得数据。因为虽然method是能够返回数据的，
 但这种情况下，你还得手动维护客户端mongodb的数据一致性。
+```javascript
+// In client-side code, declare a local collection
+// by passing `null` as the argument
+ScoreAverages = new Mongo.Collection(null);
+```
+```javascript
+import { calculateAverages } from '../api/games/methods.js';
 
+function updateAverages() {
+  // Clean out result cache
+  ScoreAverages.remove({});
 
-####
+  // Call a Method that does an expensive computation
+  calculateAverages.call((err, res) => {
+    res.forEach((item) => {
+      ScoreAverages.insert(item);
+    });
+  });
+}
+```
 
+#### [Method相对于REST API的好处](https://guide.meteor.com/methods.html#methods-vs-rest)
+##### 基于[Fibers](https://github.com/laverdet/node-fibers),编写类似于同步方式的代码，但是不是阻塞(blocking)的
+使用fibers将method(请求估计也是websocket，由于每个method都有id，将调用和返回通过id关联，将websocket异步的包装成同步的)封装成同步的形式，这样既保持了websocket的便利，也使得编码逻辑直观。
 
-### 请求队列?
+##### 请求和返回都是有序的
+对于ajax请求，请求和返回不能保证有序，可能后请求的先得到返回。meteor保证了每个客户端的每个请求都是有序的，前一个调用成功后才进行下一个。不过对于特殊的情况，也可以改变这个机制而使得执行无序。例如[this.unblock()](https://docs.meteor.com/api/methods.html#DDPCommon-MethodInvocation-unblock)。
+
 
 ### 
 ### userId?
