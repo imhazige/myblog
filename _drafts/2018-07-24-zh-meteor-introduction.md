@@ -14,7 +14,7 @@ tags:
 ## [Meteor](https://github.com/meteor/meteor)(流星)是什么
 > Meteor is a full-stack JavaScript platform for developing modern web and mobile applications. Meteor includes a key set of technologies for building connected-client reactive applications, a build tool, and a curated set of packages from the Node.js and general JavaScript community.
 
-Meteor是一个full-stack javascript平台，可用于开发web和移动应用。其最大特点是其（通过websocket）保持客户端连接的“实时”框架。数据库（mogodb）的改变可“实时”展示到界面中。
+Meteor是一个full-stack javascript平台，可用于开发web和移动应用。其最大特点是其（通过websocket）保持客户端连接的“实时”框架。数据库（mongodb）的改变可“实时”展示到界面中。
 
 以下列出优缺点更直观的了解meteor
 
@@ -23,7 +23,7 @@ Meteor是一个full-stack javascript平台，可用于开发web和移动应用�
 ### 实时
 
 #### [读取数据使用DDP](https://guide.meteor.com/data-loading.html)
-数据实时读取使用[DDP(distributed data protocal)](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
+数据实时读取使用[DDP(distributed data protocal)的pub/sub](https://github.com/meteor/meteor/blob/master/packages/ddp/DDP.md)，一般是websocket实现的的pub/sub方式。
 
 例如不停的请求第三方api来达到实时效果[官方示例](https://guide.meteor.com/data-loading.html#loading-from-rest)
 ```javascript
@@ -84,8 +84,8 @@ Meteor.publish('custom-publication', function() {
 首先需要明确，不管服务端数据源是否来自mongodb,[客户端都有一个内存mongodb](https://guide.meteor.com/collections.html#client-collections),客户端都是针对这个mongodb来查询操作。
 [详见这里](https://guide.meteor.com/data-loading.html#fetching)
 
-再来看看默认的基于服务端Mogodb数据实现:
-使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mogo数据库的修改得以立即广播到读取指针(cursor).
+再来看看默认的基于服务端Mongodb数据实现:
+使用的是[MongoDB’s Oplog](https://github.com/meteor/docs/blob/version-NEXT/long-form/oplog-observe-driver.md),对mongo数据库的修改得以立即广播到读取指针(cursor).
 示例
 ```javascript
 Meteor.publish('lists.public', function() {
@@ -100,7 +100,7 @@ Meteor.publish('lists.public', function() {
 oplog也有一些[限制](https://galaxy-guide.meteor.com/apm-optimize-your-app-for-oplog.html)
 
 
-#### 修改数据使用[method](https://guide.meteor.com/methods.html)
+#### 修改数据使用[method](https://guide.meteor.com/methods.html)(也属于DDP协议)
 method类似RPC,
 method有一些特点
 Run validation code by itself without running the Method body.
@@ -143,7 +143,9 @@ Fiber不是个新概念，它不同于thread，并不能起到thread的作用，
 ##### 请求和返回都是有序的
 对于ajax请求，请求和返回不能保证有序，可能后请求的先得到返回。meteor保证了每个客户端的每个请求都是有序的，前一个调用成功后才进行下一个。不过对于特殊的情况，也可以改变这个机制而使得执行无序。例如[this.unblock()](https://docs.meteor.com/api/methods.html#DDPCommon-MethodInvocation-unblock)。
 
-### userId?
+### [每个DDP(pub/sub和method)都可以是绑定用户信息的](https://guide.meteor.com/accounts.html#userid-ddp)
+通过this.userId可用于判断用户是否登录，用户系统可自定义，也可使用meteor的api。
+
 https://guide.meteor.com/data-loading.html
 Note that the publication will re-run if the user logs out (or back in again), which means that the published set of private lists will change as the active user changes.
 
@@ -201,5 +203,5 @@ npm方式
 
 ### 与普通的nodejs开发方式不太相同，学习曲线稍陡
 
-### 默认绑定了mogodb
-这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mogodb是必须的，你可以不用它，但是这样会丢失DDP很多特性,且必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
+### 默认绑定了mongodb
+这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mongodb是必须的，你可以不用它，但是这样会丢失DDP很多特性,且必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
