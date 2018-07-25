@@ -167,7 +167,7 @@ get: function() {
 通过this.userId可用于判断用户是否登录，用户系统可自定义，也可使用meteor的api。
 
 
-### 商业支持，论坛支持,文档详细
+### 商业支持
 meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看github上有40k+星标，[项目活跃程度还算不错](https://github.com/meteor/meteor/graphs/commit-activity)
 [其提供hosting服务，也提供商业支持服务](https://www.meteor.com/pricing)，商业支持服务对于商业项目来说是很重要的考虑点。
 
@@ -217,6 +217,9 @@ npm方式
 对于ios，可使用[meteor-ios](https://cordova.apache.org/)框架。
 
 ## 缺点
+
+### 文档详细，但是维护跟不上
+已发现多处与当前实际运行机制不相同的描述，实际编码遇到的问题，很难找到资源，论坛并不能起到很大作用。总而言之，用的人还是不多，坑多人少……
 
 ### 仍算比较冷门，中文支持较少
 
