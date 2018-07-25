@@ -135,7 +135,7 @@ function updateAverages() {
 
 ##### 基于[Fibers](https://github.com/laverdet/node-fibers),编写类似于同步方式的代码，但是不是阻塞(blocking)的
 使用fibers将method(请求估计也是websocket，由于每个method都有id，将调用和返回通过id关联，将websocket异步的包装成同步的)封装成同步的形式，这样既保持了websocket的便利，也使得编码逻辑直观。
-Fiber不是个新概念，它不同于thread，并不能起到thread的作用，个人理解，更像nodejs里面await/sync的一种实现。
+Fiber不是个新概念，它不同于thread，并不能起到thread的作用，个人理解，更像nodejs里面await/async的一种实现。
 例如meteor里的method需要返回，是不支持callback的方式的，可以通过[Meteor.wrapAsync](https://docs.meteor.com/api/core.html#Meteor-wrapAsync)来包装callback方式的调用。  
 [举个例子](https://github.com/imhazige/benchmark-test-java-php-nodejs/blob/master/nodejs/meteor/imports/server/restvus-t1.js)
 ```javascript
@@ -167,7 +167,7 @@ get: function() {
 通过this.userId可用于判断用户是否登录，用户系统可自定义，也可使用meteor的api。
 
 
-### 商业支持，论团支持,文档详细
+### 商业支持，论坛支持,文档详细
 meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看github上有40k+星标，[项目活跃程度还算不错](https://github.com/meteor/meteor/graphs/commit-activity)
 [其提供hosting服务，也提供商业支持服务](https://www.meteor.com/pricing)，商业支持服务对于商业项目来说是很重要的考虑点。
 
