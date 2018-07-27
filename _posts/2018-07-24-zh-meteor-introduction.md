@@ -171,6 +171,8 @@ get: function() {
 meteor虽然开源，[但背后有专门的商业公司支持](https://www.meteor.io/),目前来看github上有40k+星标，[项目活跃程度还算不错](https://github.com/meteor/meteor/graphs/commit-activity)
 [其提供hosting服务，也提供商业支持服务](https://www.meteor.com/pricing)，商业支持服务对于商业项目来说是很重要的考虑点。
 
+meteor背后的团队是Meteor Development Group(MDG),也是[apollo](https://www.apollographql.com/)背后的团队，技术水平是值得信赖的。
+
 ### 支持npm，可以整合其他框架，例如expressjs
 Meteor之前是仅通过[Atmosphere](https://atmospherejs.com/)来扩展，后来开始直接支持npm，这样一来，其他nodejs框架可以直接整合，例如meteor没有官方支持的restapi方式，可通过整合express来实现，这样meteor完全融合到了nodejs生态中。
 [整合express的示例](https://github.com/imhazige/benchmark-test-java-php-nodejs/blob/master/nodejs/meteor/imports/server/api.js)：
