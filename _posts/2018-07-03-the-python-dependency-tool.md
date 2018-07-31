@@ -49,6 +49,9 @@ This is the one I need, the project have over 12K stars on github.
 #### See the graph
 `pipenv graph`
 
+#### [generate a requirements.txt](https://docs.pipenv.org/advanced/#generating-a-requirements-txt)
+pipenv lock -r > requirements.txt
+
 #### VSCode setting
 To let VSCode understand the venv created by pipenv, see [Configuring Pipenv in Visual Studio Code](https://olav.it/2017/03/04/pipenv-visual-studio-code/)  
 `pipenv --venv` to show the venv path  
