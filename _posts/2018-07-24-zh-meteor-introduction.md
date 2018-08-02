@@ -226,3 +226,7 @@ npm方式
 
 ### 默认绑定了mongodb
 这可以说是个优点，如果你本来就用mongo,然而大部分情况我会认为是个缺点，虽然可以使用其他数据库整合，但mongodb是必须的，你可以不用它，但是这样会丢失DDP很多特性,且必须通过[MONGO_URL](https://guide.meteor.com/deployment.html#custom-deployment)配置启动。
+
+### 它可以横向扩展(scale out),但是不是那么简单
+如果不用mongo,那你就不能使用[mongo oplog](https://projectricochet.com/blog/magic-meteor-oplog-tailing)来scale out.这种情况如果要使用publications,就必须使用服务端local collection,本质上是一种不支持集群的内存数据库，那么就做不到scale out。
+
