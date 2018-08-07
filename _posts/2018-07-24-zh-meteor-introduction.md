@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: '2018-07-24 20:00 +08:00'
 type: post
-title: meteor介绍
+title: Meteor介绍
 categories:
   - nodejs
 tags:
@@ -232,4 +232,4 @@ meteor圈如果有人问怎么横向扩展，往往得到的回答是类似-先�
 
 这个回答确实很实际，就像RoR作者DHH说的"在选彩票的时候就开始操心中奖以后买哪个游艇。"(Programmers worrying about whether their architecture will Web Scale is like buying a lottery coupon and fretting about which yacht to buy.)  
   
-如果不用mongo,那你就不能使用[mongo oplog](https://projectricochet.com/blog/magic-meteor-oplog-tailing)来scale out.这种情况如果要使用publications,就必须使用服务端local collection,本质上是一种不支持集群的内存数据库，那么就做不到scale out。  
+如果不用mongo,那你就不能使用[mongo oplog](https://projectricochet.com/blog/magic-meteor-oplog-tailing)来scale out.这种情况如果要使用publications,就必须使用服务端local collection,本质上是一种不支持集群的内存数据库，那么就做不到scale out。
