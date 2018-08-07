@@ -98,6 +98,8 @@ Meteor.publish('lists.public', function() {
 ```
 魔法就在于Lists.find，如果对应的集合有所变动，都会向客户端广播。  
 oplog也有一些[限制](https://galaxy-guide.meteor.com/apm-optimize-your-app-for-oplog.html)
+最主要的是，mongodb必须是replica set,否则还是默认的polling。这一下子就提高了门槛。
+不过，polling对于同一个进程的修改反映还是蛮快的，而默认的meteor collection实现应该是一个进程中，故还不错。目前meteor1.7的版本使用的是mogon 3.0的driver，还不能使用driver3.1事务,如果自己新开一个cmongo client,则估计是在另外一个process,从测试结果来看，与meteor的collection更新时间间隔有5秒以上的差距，见[示例](https://github.com/imhazige/node-examples#transaction).
 
 
 #### 修改数据使用[method](https://guide.meteor.com/methods.html)(也属于DDP协议)
