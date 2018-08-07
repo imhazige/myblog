@@ -56,7 +56,9 @@ Meteor.publish('polled-publication', function() {
   });
 });
 ```
-上例使用的是Meteor自带的DDP API的changed,added方法来实现数据publish  
+上例使用的是Meteor自带的DDP API的changed,added方法来实现数据publish, 这种方式有个问题，即没有通过mongodb，创建的是其实是local collection,那么它的改变只对当前连接（websocket）有效，无法做到多个clients共享。其实相当于为每个subscribe客户端创建一个同名local collection。
+
+
 参见[使用底层api自定义publication(Custom publications with the low level API)](https://guide.meteor.com/data-loading.html#custom-publication)
 ```javascript
 Meteor.publish('custom-publication', function() {
