@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: '2018-08-08 20:00 +08:00'
 type: post
-title: VSCode介绍
+title: VSCode Live Share介绍
 categories:
   - IDE
 tags:
@@ -29,5 +29,3 @@ tags:
 同一个账号打开链接也可以使用其功能。
 
 笔者觉得这个功能挺实用的，对于远程协作，调试非常便利。
-
-
