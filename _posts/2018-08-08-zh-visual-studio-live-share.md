@@ -18,7 +18,7 @@ tags:
 ## 操作步骤:
 
 ###左下角点击share
-![](https://docs.microsoft.com/en-us/visualstudio/liveshare/media/vscode-sign-in-button.png)
+![](https://docs.microsoft.com/en-us/visualstudio/liveshare/media/vscode-share-button.png)
 
 ###登录miscrosoft账号或者github账号(刚收购了github,大多数人就有githu账号,就是这么的666...)
 
