@@ -51,6 +51,9 @@ systemctl --no-pager -l status servicename.service
 #view all the log
 journalctl -u service-name.service 
 
+#view the last 50 lines
+journalctl -n50 -u service-name.service 
+
 #tail the log
 journalctl -f -u service-name.service 
 ```
