@@ -32,6 +32,11 @@ This is the one I need, the project have over 12K stars on github.
 #### Install  pipenv
 `sudo pip install pipenv` (windows need sudo, need [scoop](https://github.com/lukesampson/scoop) to install sudo command)
 
+#### Setup a pipenv project
+Go to the root folder of the python project.
+run `pipenv --three` for a python3 project
+run `pipenv --two` for a python2 project
+
 #### Like npm install
 `pipenv install`
 
@@ -51,6 +56,11 @@ This is the one I need, the project have over 12K stars on github.
 
 #### [generate a requirements.txt](https://docs.pipenv.org/advanced/#generating-a-requirements-txt)
 pipenv lock -r > requirements.txt
+
+#### Remove pipenv for vcurrent project
+pipenv --rm
+
+#### 
 
 #### VSCode setting
 To let VSCode understand the venv created by pipenv, see [Configuring Pipenv in Visual Studio Code](https://olav.it/2017/03/04/pipenv-visual-studio-code/)  
@@ -99,6 +109,14 @@ Then I tried `pipenv install mysqlclient==1.3.12` it works!!!!!
 ### The final solution
 - make sure mysql connector/c is installed(the old version like 5.7 of windows mysql server installer have this option)  
 - `pipenv install mysqlclient==1.3.12`
+
+### [The pipenv install slow problem](https://github.com/pypa/pipenv/issues/1816)
+~~Mostly, it is because the pipenv did not show any progress of the downloading.
+As the pipenv using pip cache, and pip have the progress showing. we can download the dependency at first by pip and then run pipenv install -- hope pipenv resolve this prolem ASAP.
+`python3 -m install tensorflow`
+`pipenv install tensorflow`~~
+this still not working
+
 
 ## Refs  
 [Why is python dependency management so shit?](https://www.reddit.com/r/Python/comments/51ae8b/why_is_python_dependency_management_so_shit/)
