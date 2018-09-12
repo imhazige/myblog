@@ -115,7 +115,8 @@ Then I tried `pipenv install mysqlclient==1.3.12` it works!!!!!
 As the pipenv using pip cache, and pip have the progress showing. we can download the dependency at first by pip and then run pipenv install -- hope pipenv resolve this prolem ASAP.
 `python3 -m install tensorflow`
 `pipenv install tensorflow`~~
-this still not working
+this still not working, so if you encounter this problem, 
+run `pipenv install --skip-lock` will download the dependency but will not create the lock file.
 
 
 ## Refs  
