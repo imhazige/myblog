@@ -1,5 +1,14 @@
 ---
 published: false
+layout: post
+comments: true
+date: '2018-10-14 20:00 +08:00'
+type: post
+categories:
+  - medical
+tags:
+  - choke
+  - 急救
 ---
 
 这几天看少年谢尔顿，感觉对于孩子的家长来说，更有切入感。例如，谢尔顿吃饭噎着了，剧中就把急救方法展示了个遍，干货满满。
