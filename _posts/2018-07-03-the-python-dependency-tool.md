@@ -32,6 +32,13 @@ This is the one I need, the project have over 12K stars on github.
 #### Install  pipenv
 `sudo pip install pipenv` (windows need sudo, need [scoop](https://github.com/lukesampson/scoop) to install sudo command)
 
+
+for Ubuntu 16 python3:   
+`sudo apt install python3`   
+`sudo apt install python3-pip`    
+`pip3 install --user pipenv`    
+
+
 #### Setup a pipenv project
 Go to the root folder of the python project.
 run `pipenv --three` for a python3 project
