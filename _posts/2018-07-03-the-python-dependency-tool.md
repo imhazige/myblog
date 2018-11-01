@@ -43,6 +43,7 @@ for Ubuntu 16 python3:
 Go to the root folder of the python project.
 run `pipenv --three` for a python3 project
 run `pipenv --two` for a python2 project
+run `pipenv --python 3.6` for a python3.6 version project
 
 #### Like npm install
 `pipenv install`
