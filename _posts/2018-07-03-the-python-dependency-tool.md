@@ -41,16 +41,23 @@ for Ubuntu 16 python3:
 ##### More about installation on windows 10
 I have tried many ways to resolve problems when install pipenv on windows when I have to code on sh(*)t windows and sh(*)t python:   
 
-###### install [choco](https://chocolatey.org/)   
-###### install python via choco    
+###### Install [choco](https://chocolatey.org/)   
+###### Install python via choco    
 Why?! Because it will save your life by choco, it will automatically set path for your powershell to avoid can not found python,pip ..., and also it will benifit your VSCode.
 
 open powershell in administrator mode, run `choco install python --version=3.6.7`
 
-###### install pipenv
+###### Install pipenv
 Open a normal powershell run, `pip uninstall pipenv`, then run `pip install pipenv`.
 anyway, you'd better uninstall at first then install.
 
+
+###### Resolve decode problem
+When you encounter problem like
+ `File "c:\python37\lib\site-packages\pipenv\vendor\shellingham\nt.py", line 78, in _iter_process
+    info = {'executable': str(pe.szExeFile.decode('utf-8'))}` when run `pipenv`
+Open the nt.py file, change the code to
+`info = {'executable': str(pe.szExeFile.decode('utf-8', errors='ignore'))}`
 
 
 #### Setup a pipenv project
@@ -82,7 +89,6 @@ pipenv lock -r > requirements.txt
 #### Remove pipenv for vcurrent project
 pipenv --rm
 
-#### 
 
 #### VSCode setting
 To let VSCode understand the venv created by pipenv, see [Configuring Pipenv in Visual Studio Code](https://olav.it/2017/03/04/pipenv-visual-studio-code/)  
