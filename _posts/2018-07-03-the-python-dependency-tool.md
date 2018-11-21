@@ -38,6 +38,20 @@ for Ubuntu 16 python3:
 `sudo apt install python3-pip`    
 `pip3 install --user pipenv`    
 
+##### More about installation on windows 10
+I have tried many ways to resolve problems when install pipenv on windows when I have to code on sh(*)t windows and sh(*)t python:   
+
+###### install [choco](https://chocolatey.org/)   
+###### install python via choco    
+Why?! Because it will save your life by choco, it will automatically set path for your powershell to avoid can not found python,pip ..., and also it will benifit your VSCode.
+
+open powershell in administrator mode, run `choco install python --version=3.6.7`
+
+###### install pipenv
+Open a normal powershell run, `pip uninstall pipenv`, then run `pip install pipenv`.
+anyway, you'd better uninstall at first then install.
+
+
 
 #### Setup a pipenv project
 Go to the root folder of the python project.
