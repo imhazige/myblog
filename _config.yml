@@ -53,7 +53,7 @@ google_analytics:    UA-104619155-1
 disqus_shortname:    kazge
 
 # This text will appear in the footer of every page. Markdown enabled.
-copyright:           '&copy; 2013 - 2018. All rights reserved.'
+copyright:           '&copy; 2013 - 2019. All rights reserved.'
 
 # Format of the permalinks
 permalink:           pretty
