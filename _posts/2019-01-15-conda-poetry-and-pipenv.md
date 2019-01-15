@@ -1,5 +1,12 @@
 ---
 published: false
+layout: post
+comments: true
+date: '2019-01-15 20:00 +08:00'
+type: post
+title: Conda Poetry and Pipenv
+categories:
+  - python
 ---
 
 Last year, I have used python more, mostly related to the AI domain, I am just a novice, but I frequently have the feel that the python is not as popular as its great reputation, it did not mature as a language of a softengineering. I know my opinion should be wrong, but when I encounter problems and try to google, there are few good anwser in a engineering point of view.
