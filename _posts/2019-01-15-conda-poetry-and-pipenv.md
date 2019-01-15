@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2019-01-15 20:00 +08:00'
@@ -66,4 +66,15 @@ Before you use a enviornment, you need to activate it
 After you used a enviornment, you can deactivate it
 `deactivate my_py36`
 
-## [Poetry](https://conda.io)
+## [Poetry](https://github.com/sdispater/poetry)
+
+### Install
+
+`curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python`
+
+### The common tasks
+
+#### Init a project in a exists folder
+
+go to the project folder
+`poetry init`
