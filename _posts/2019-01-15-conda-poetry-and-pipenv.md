@@ -19,4 +19,11 @@ The most headache is the dependencies management, I have wrote a post in 2018 [T
 
 These problem is enough for me to try to find another better tool. I had know conda before the pipenv, but strangely, [there are little discussion about the conda](https://www.reddit.com/r/Python/comments/93u6sn/as_we_talk_about_pipenvpoetry_why_not_conda_am_i/), that's make me have a mistaken feel that it may be not popular at all. 
 
-I finally did try conda, it is very good.
+I finally did try [mini conda](https://conda.io/miniconda.html), I feel it is good. It is better than pipenv, but it also can not make you project work in other machine easily, the `environment.yml` is not going to resolve the difference between different platforms, you still need run pip install manually in a new machine when you encounter the problem  
+
+### The common tasks    
+
+Usually we just need use mini conda, it will be smaller to install and we also can add other dependency by pip in the conda enviorment. 
+
+#### Create a environment  
+
