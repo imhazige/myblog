@@ -1,6 +1,5 @@
 ---
 published: false
 ---
-## A New Post
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+{% post_url 2018-07-03-the-python-dependency-tool %}
