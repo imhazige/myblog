@@ -9,11 +9,11 @@ categories:
   - python
 ---
 
-Last year, I have used python more, mostly related to the AI domain, I am just a novice, but I frequently have the feel that the python is not as popular as its great reputation, it did not mature as a language of a softengineering. I know my opinion should be wrong, but when I encounter problems and try to google, there are few good anwser in a engineering point of view.
+Last year, I have used python more, mostly related to the AI domain, I am just a novice, but I frequently have the feel that the python is not as popular as its great reputation, it did not mature as a language of a software engineering. I know my opinion should be wrong, but when I encounter problems and try to google, there are few good anwser in a engineering point of view.
 
 ## [Pipenv](https://pypi.org/project/pipenv/)
 
-The most headache is the dependencies management, I have wrote a post in 2018 [The Python Dependency Tool]({% post_url 2018-07-03-the-python-dependency-tool %}), I was thinking that I found the solution with pipenv, but after a few project, I found pipenv also have problems:
+The most headache is the dependencies management, I have wrote a post in year 2018 [The Python Dependency Tool]({% post_url 2018-07-03-the-python-dependency-tool %}), I was thinking that I found the solution with pipenv, but after a few project, I found pipenv also have problems:
 
 - It still hard to setup corectlly on Windows, mac, linux. Some days you make it work easily, and suddenly, it will throw an error when you create a new project. Because it also depends on the python you installed on the machine.
 
@@ -60,13 +60,20 @@ This command will export the environment to a yaml file, but as I mentioned abov
 
 #### Activate/Deactvate environment
 
-Before you use a enviornment, you need to activate it
+Before you use a environment, you need to activate it
 `activate my_py36`
 
-After you used a enviornment, you can deactivate it
+After you used a environment, you can deactivate it
 `deactivate my_py36`
 
 ## [Poetry](https://github.com/sdispater/poetry)
+
+Poetry as it saying is going to resolve problem of pipenv. but from my point, it is also have problem, and did not resolve the real problem.
+
+- It still depend on the python you installled in the machine.
+- It even can not specify different python version while conda and pipenv can.
+
+I do not have any idea why I need chose it.
 
 ### Install
 
@@ -78,3 +85,37 @@ After you used a enviornment, you can deactivate it
 
 go to the project folder
 `poetry init`
+
+install dependencies from a pyproject.toml file  
+`poetry install`
+
+### Add/remove dependecy
+
+`poetry add requests pendulum`
+
+`poetry remove requests pendulum`
+
+### [Build wheel](https://github.com/sdispater/poetry#build)
+
+> The build command builds the source and wheels archives.  
+> `poetry build`. Note that, at the moment, **only pure python wheels are supported.**
+
+### Run Project
+
+`poetry run python -V`
+
+or `poetry shell` in the project folder, then run python will use the environment. Which is seems to be as same as pipenv.
+
+### [Export requirements.txt](https://poetry.eustace.io/docs/cli/#export)
+
+`poetry export -f requirements.txt`
+
+## With Docker
+
+For both pipenv and poetry, as they are able to export requirements.txt we can use a normal python docker image to run the project.
+
+With Conda, they have maintained a [official docker image](https://hub.docker.com/r/conda/miniconda3)
+
+## Conclusion
+
+From my opinion, I will choose conda in the future project. It have a big community include most scientists who are using python and it is stable. It give me the best experience than the other two so far.
