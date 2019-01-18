@@ -30,22 +30,28 @@ tags:
 
 ## 与 websocket 的比较
 
-|                           | **HTTP/2**                      | **WebSocket**                        |
-| ------------------------- | ------------------------------- | ------------------------------------ |
-| **Headers** 头            | Compressed (HPACK) 请求头部压缩 | None 无                              |
-| **Binary** 二进制         | Yes                             | Binary or Textual 二进制或文本都支持 |
-| **Multiplexing** 多路复用 | Yes                             | Yes                                  |
-| **Prioritization** 优先化 | Yes                             | No                                   |
-| **Compression** 压缩      | Yes                             | Yes                                  |
-| **Direction** 方向        | Client/Server + Server Push     | Bidirectional 双向                   |
-| **Full-duplex** 全双工    | Yes                             | Yes                                  |
+|                           | **HTTP/2**                                                                              | **WebSocket**                        |
+| ------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------ |
+| **Headers** 头            | Compressed (HPACK) 请求头部压缩                                                         | None 无                              |
+| **Binary** 二进制         | Yes                                                                                     | Binary or Textual 二进制或文本都支持 |
+| **Multiplexing** 多路复用 | Yes                                                                                     | Yes                                  |
+| **Prioritization** 优先化 | Yes                                                                                     | No                                   |
+| **Compression** 压缩      | Yes                                                                                     | Yes                                  |
+| **Direction** 方向        | Client/Server + Server Push (*Server Push只能浏览器消化，不支持API,也就是代码无法使用*) | Bidirectional 双向                   |
+| **Full-duplex** 全双工    | Yes                                                                                     | Yes                                  |
 
 
+
+## 问题
+- HTTP/2 Server Push 不能被代码使用，所以还得配合SSE(Server sent event)，无论从coder还是运维的角度来看，这混搭增加了复杂度。
+- 多路复用问题，当
 
 ## 实际实现状态
 
 [HTTP2](https://caniuse.com/#search=http2) vs [Websocket](https://caniuse.com/#search=websocket)
 显而易见，http2 在浏览器服务器上限制颇多，而 websocket 基本普及
+
+再来看看[SSE](https://caniuse.com/#search=server%20side%20event), 支持程度仍然不如websocket
 
 [Will WebSocket survive HTTP/2?](https://www.infoq.com/articles/websocket-and-http2-coexist)
 
