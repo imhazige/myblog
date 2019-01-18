@@ -1,10 +1,10 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: '2019-01-18 20:00 +08:00'
 type: post
-title: 'HTTP/2 Websocket 和 gRPC'
+title: 'HTTP/2 Websocket'
 categories:
   - web
 tags:
@@ -53,10 +53,10 @@ tags:
 ## 实际实现状态
 
 [HTTP2](https://caniuse.com/#search=http2) vs [Websocket](https://caniuse.com/#search=websocket)
-显而易见，http2 在浏览器服务器上限制颇多，而 websocket 基本普及
+显而易见，http2 在浏览器服务器上限制颇多，而 websocket 基本普及。
 
 再来看看[SSE](https://caniuse.com/#search=server%20side%20event), 支持程度仍然不如websocket。
 
-proxy problem?
+## 结论：
 
-[Creating a Node gRPC Service Using Mali](https://auth0.com/blog/creating-a-node-grpc-service-using-mali/)
+HTTP/2 完全无法不能替代websocket，各有各的适用场景。我个人偏好，做app还是偏向于websocket，参看我的另外一博文[介绍Meteor]({% post_url 2019-01-15-conda-poetry-and-pipenv %}).
