@@ -59,4 +59,4 @@ tags:
 
 ## 结论：
 
-HTTP/2 完全无法不能替代websocket，各有各的适用场景。我个人偏好，做app还是偏向于websocket，参看我的另外一博文[介绍Meteor]({% post_url 2018-07-24-zh-meteor-introduction %}).
+HTTP/2 完全不能替代websocket，各有各的适用场景。我个人偏好，做app还是偏向于websocket，参看我的另外一博文[介绍Meteor]({% post_url 2018-07-24-zh-meteor-introduction %}).
