@@ -31,5 +31,9 @@ Then I found [this answer](https://stackoverflow.com/questions/20435653/what-is-
 
 Why not use "pure javascript" directly? I am not a native English speaker, I don't know! 😄
 
+> Computer software, and sometimes also other computing-related systems like computer hardware or algorithms, are called vanilla when not customized from their original form, meaning that they are used without any customization or updates applied to them (Refer this article). So Vanilla often refers to pure or plain.
+
+> In the English language Vanilla has a similar meaning, In information technology, vanilla (pronounced vah-NIHL-uh ) is an adjective meaning plain or basic. Or having no special or extra features, ordinary or standard.
+
 The more funny thing is a stackoverflow anwser.
 ![](https://i.stack.imgur.com/HaQQI.png)
