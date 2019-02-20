@@ -39,8 +39,16 @@ We use free support plan of AWS, we have not much problem, we are sufficient wit
 
 GCE's document is like some thing written by robot. Yes, they have lots of detailed documents, but one article never want to make you clear how to do it quickly after you jump from one link to another and from another to another another, boring.
 
-Azure's support is the worst, how can you believe I spend 3 days to register a account but have problem to bind my credit card? I send many emails to their support, the support responsed, but anyway, finally - still can not register a account. hmm... Microsft is still the old Microsoft?
+Azure's support is the worst, how can you believe I spend 3 days to register a account but have problem to bind my credit card? I send many emails to their support, though they responsed, but anyway, finally - still can not register a account. hmm... Microsft is still the old Microsoft?
 
 ## Stable
 
+AWS is also the best, than GCE, than Aliyun.
+
+The connection to AWS server is stable, the uplaod and download speed is fast and steady.
+
+While GCE server, behaved not good.
+
 ## Conclusion
+
+So far, in my opinion, AWS is the best choice to us, the only problem is they need provide more region like Hongkong, it is already 2019, AWS, what's the status of Hongkong region?
