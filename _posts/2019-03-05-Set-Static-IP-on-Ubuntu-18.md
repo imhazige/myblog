@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: '2019-03-05 20:00 +08:00'
 type: post
-title: 'Set-Static-IP-on-Ubuntu-18'
+title: 'Set LAN Static IP on Ubuntu 18'
 categories:
   - linux
 tags:
