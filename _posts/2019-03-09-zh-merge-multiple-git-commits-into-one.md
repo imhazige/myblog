@@ -29,4 +29,4 @@ git commit -am "some new commit message"
 git push --force
 ```
 
-这种方式只能藏当前提交合并之前的 n(示例中为 5)个提交。
+这种方式只能从当前提交合并之前的 n(示例中为 5)个提交。
