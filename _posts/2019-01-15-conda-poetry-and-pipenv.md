@@ -52,6 +52,12 @@ conda create -n py3_32 python=3
 
 refer to [here](https://stackoverflow.com/questions/33709391/using-multiple-python-engines-32bit-64bit-and-2-7-3-5)
 
+#### Remove a environment
+
+```
+conda env remove -n py3_32
+```
+
 #### [Export environment](https://conda.io/docs/user-guide/tasks/manage-environments.html#exporting-the-environment-file)
 
 `conda env export --no-builds > environment.yml`
@@ -65,6 +71,14 @@ Before you use a environment, you need to activate it
 
 After you used a environment, you can deactivate it
 `deactivate my_py36`
+
+#### [Export as a requirments.txt](https://pip.readthedocs.io/en/1.1/requirements.html)
+
+`pip freeze > requirments.txt`
+
+#### Load from requirments.txt
+
+`pip install -r requirements.txt`
 
 ## [Poetry](https://github.com/sdispater/poetry)
 
