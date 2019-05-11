@@ -15,7 +15,7 @@ tags:
 
 ## [Nodejs 的实现情况](https://www.lowjs.org/documentation/nodejs-api.html)
 
-目前 70%的接口已经实现，另外 30%仍在实现中。
+目前 70%的 Nodejs 接口已经实现，另外 30%仍在实现中。
 
 如下接口则不会实现：
 worker cluster ， child_process 等进程模块，lowjs 没有进程的概念。
