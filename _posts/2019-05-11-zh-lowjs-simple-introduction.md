@@ -37,4 +37,4 @@ Internalization, as not required for typical microcontroller usage
 ## WIFI 和磁盘空间
 
 lowjs 自动控制网络，这个简便许多。
-磁盘空间一般是 1M，最大可调至 10M。
+磁盘空间一般是 1M，最大可调至 12M。
