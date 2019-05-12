@@ -12,7 +12,7 @@ tags:
   - react native
 ---
 
-微软在 Build 开发者大会上正式公布了 React Native for Windows
+微软在 Build 开发者大会上正式公布了 [React Native for Windows](https://github.com/Microsoft/react-native-windows)
 
 React Native for Windows 开发的是原声的 Windows 应用。
 
