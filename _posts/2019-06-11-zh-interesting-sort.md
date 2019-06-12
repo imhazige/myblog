@@ -56,10 +56,7 @@ scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="tru
 
 ### [堆排序 Heap Sort](https://baike.baidu.com/item/%E5%A0%86%E6%8E%92%E5%BA%8F)
 
-<iframe src="https://giphy.com/embed/14iTOxmpkjAa08" 
-style="width:100%;height:30rem"
- frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-<p><a href="https://giphy.com/gifs/tech-computer-science-14iTOxmpkjAa08">via GIPHY</a></p>
+![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015231308699-356134237.gif)
 
 ### [快速排序 Quick Sort](https://baike.baidu.com/item/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/369842)
 最优 O(N log N) 最差 O(N²)
