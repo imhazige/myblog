@@ -56,7 +56,7 @@ scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="tru
 
 ### [堆排序 Heap Sort](https://baike.baidu.com/item/%E5%A0%86%E6%8E%92%E5%BA%8F)
 
-![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015231308699-356134237.gif)
+![](/assets/sort-heap-1.gif)
 
 ### [快速排序 Quick Sort](https://baike.baidu.com/item/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/369842)
 最优 O(N log N) 最差 O(N²)
@@ -78,7 +78,7 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 最优 O(N log N) 最差 O((log n)n^2)
 ![](/assets/sort-shell.gif)
 
-![](https://images2018.cnblogs.com/blog/849589/201803/849589-20180331170017421-364506073.gif)
+![](/assets/sort-shell-1.gif)
 
 来跳个舞：
 <iframe src="//player.bilibili.com/player.html?aid=17004970&cid=27796470&page=1" scrolling="no" 
@@ -90,7 +90,7 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 ## 最快的算法是什么
 ![](/assets/sort-list.png)
-![](https://images2018.cnblogs.com/blog/849589/201804/849589-20180402133438219-1946132192.png)
+![](/assets/sort-list-1.png)
 从上两个图来看快速排序无论是时间复杂度还是空间复杂度都是最优的（空间复杂度超越所有其他算法）。
 
 实际情况是怎样的呢？
