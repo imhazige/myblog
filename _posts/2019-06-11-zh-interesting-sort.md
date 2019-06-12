@@ -10,19 +10,9 @@ categories:
 tags:
   - sort
 ---
-
-排序算法
-A Sort of All Sorting Algorithms https://levelup.gitconnected.com/a-sort-of-all-sorting-algorithms-506cbc76d47
-Why do we need so many sorting algorithms? [duplicate]
-https://imgur.com/gallery/voutF
-WHEN IS THE BEST SORTING ALGORITHM THE BEST?
-https://attackonalgorithms.wordpress.com/2018/07/11/what-is-the-best-sorting-algorithm/
-视频
-https://space.bilibili.com/34739903/?spm_id_from=333.788.b_7265636f5f6c697374.3
-
 说起算法，离不开排序。提起算法，就有点脑壳疼……
 
-为了不头疼，还是得趣味一下下……
+为了不头疼，外国人还真会玩……
 
 ## 事件复杂度分析指标 Big O
 
@@ -91,6 +81,8 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 最优 O(N log N) 最差 O((log n)n^2)
 ![](/assets/sort-shell.gif)
 
+![](https://images2018.cnblogs.com/blog/849589/201803/849589-20180331170017421-364506073.gif)
+
 来跳个舞：
 <iframe src="//player.bilibili.com/player.html?aid=17004970&cid=27796470&page=1" scrolling="no" 
 style="width:100%;height:30rem" 
@@ -99,7 +91,30 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 还有很多子类型……
 
-## 为什么要这么多排序?
+## 最快的算法是什么
 ![](/assets/sort-list.png)
+![](https://images2018.cnblogs.com/blog/849589/201804/849589-20180402133438219-1946132192.png)
+从上两个图来看快速排序无论是时间复杂度还是空间复杂度都是最优的（空间复杂度超越所有其他算法）。
 
-### 最快的算法是什么
+实际情况是怎样的呢？
+![](/assets/sort-compare.png)
+上图可见快速排序稳定且实际效率良好。
+测试代码见[这里](https://github.com/devarshi16/sorting_comparison)
+
+## 为什么要这么多排序?
+既然已经知道快速排序是目前所知最好的，[为什么还需要其他排序？](https://cs.stackexchange.com/questions/86628/why-do-we-need-so-many-sorting-algorithms)
+有人的回答是，不同的算法对于视觉特效（游戏）有不同的展示，大家来看几个例子：
+
+(以下图片均出自https://imgur.com/gallery/voutF)
+
+冒泡排序:
+![](/assets/sort-visual-bubble.gif)
+
+[鸡尾酒排序(冒泡排序变体)](https://baike.baidu.com/item/%E9%B8%A1%E5%B0%BE%E9%85%92%E6%8E%92%E5%BA%8F/7515196):
+![](/assets/sort-visual-cocktail-shaker.gif)
+
+[梳排序排序(改良自冒泡排序和快速排序)](https://baike.baidu.com/item/%E6%A2%B3%E6%8E%92%E5%BA%8F/5955762):
+![](/assets/sort-visual-comb-min.gif)
+
+## 参见
+[十大经典排序算法（动图演示）](https://www.cnblogs.com/onepixel/articles/7674659.html)
