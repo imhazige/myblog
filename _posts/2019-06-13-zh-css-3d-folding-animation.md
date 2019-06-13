@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: '2019-06-13 00:00 +08:00'
 type: post
-title: '讲解css3折叠动画的实现'
+title: 'css3折叠动画的实现'
 categories:
   - frontend
   - css
@@ -15,6 +15,7 @@ tags:
 [这里](https://www.joshwcomeau.com/posts/folding-the-dom/)有高手实现了 css3 折叠动画,他是用 react 写的。
 
 我用 html 实现的可以[在线查看](https://imhazige.github.io/html-examples/css-animation-folding/index.html)。
+![](/assets/folding-animation.gif)
 
 主要思路是：
 由两个 div 分别显示图片的上下两部分，用背景样式显示图片。
