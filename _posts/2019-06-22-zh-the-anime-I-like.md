@@ -8,7 +8,9 @@ title: '星白闲，希德尼娅的骑士和那些我喜爱的动漫'
 categories:
   - anime
 tags:
-  - anime
+  - 星白闲
+  - 希德尼娅的骑士
+  - 贰瓶勉
 ---
 
 ![](/assets/xinbaixian.jpeg)
