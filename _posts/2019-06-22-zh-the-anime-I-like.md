@@ -89,7 +89,7 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 #### 画面
 
-Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合希德尼娅了，正是庆幸。
+Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合希德尼娅了，真是庆幸。
 
 他们的作品包括`变形金刚:领袖之证`，`亚人`明显的特点就是面部没有瑕疵，衣服上总是点点的像是弄脏了。这些我觉得都很好，看着顺眼。
 
