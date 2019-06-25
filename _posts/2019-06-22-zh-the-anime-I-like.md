@@ -107,7 +107,12 @@ Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合
 
 这些作品我并未觉得颓废，虽然描述的是让人绝望的环境，却从来不缺少希望，这样一种科幻风格，我喜欢！！
 
-### [岁月的童话](https://movie.douban.com/subject/1291588/)
+## [岁月的童话](https://movie.douban.com/subject/1291588/)
+
+### 我为什么喜欢？
+
+#### 画面
+每一个镜头都是那么美，完全是超越大部分真实电影的气势，大家来安静地欣赏一下：
 
 ![](/assets/suiyuedetonghua-1.webp)
 ![](/assets/suiyuedetonghua-8.jpg)
@@ -120,7 +125,14 @@ Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合
 ![](/assets/suiyuedetonghua-9.jpg)
 ![](/assets/suiyuedetonghua-10.jpg)
 
-这部电影的结尾，每次听到这音乐响起，画面转到列车外的景色，那感觉千言万语无法形容……
+#### 情怀
+故事发生在暑假的季节，女主角儿时由于不像小区其他伙伴没有乡下可以去，暑假只能孤独的每天打卡做早操。
+
+这一次依然是明媚的夏天，影片展示的暑假乡村画面真是太有代入感了，我想起了儿时的故乡，学生时代的暑假，外公外婆家，爷爷奶奶家的暑假，有乡愁，有怀旧……
+
+这部电影，我能感受到是岁月的厚重，从儿童到成人。下定决心告别恋恋不舍的童年，认识自我，找到爱人，开始人生的下一个阶段……
+
+这部电影的结尾，在列车上老头所带的古董收音机的背景音乐中，片尾的音乐（The Rose）响起，画面转到列车外的景色，那心情千言万语无法形容……
 
 <iframe src="//player.bilibili.com/player.html?aid=14205593&cid=23186398&page=1" scrolling="no" 
 style="width:100%;height:500px;"
@@ -132,19 +144,19 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 `高畑勋`导演的动画似乎更具文学气息，另一部`萤火虫之墓`拍的太好了，也表现的太悲伤了，所以我不想太多提及。然而，`高畑勋`的作品让我感动，让我钦佩！
 
-### [聪明的一休](https://movie.douban.com/subject/1883755/)
+## [聪明的一休](https://movie.douban.com/subject/1883755/)
 
 ![](/assets/congmingyixiu-1.webp)
 
-### [星空清理者](https://movie.douban.com/subject/1859043/)
+## [星空清理者](https://movie.douban.com/subject/1859043/)
 
 ![](/assets/xinkongqinglizhe-1.webp)
 
-### [欢迎加入 NHK](https://movie.douban.com/subject/1908561/)
+## [欢迎加入 NHK](https://movie.douban.com/subject/1908561/)
 
 ![](/assets/huanyinglaidaonhk-1.webp)
 
-### [高机动幻想～新结军行歌](https://movie.douban.com/photos/photo/2290456352/)
+## [高机动幻想～新结军行歌](https://movie.douban.com/photos/photo/2290456352/)
 
 ![](/assets/xinjiexinjunge-1.webp)
 
