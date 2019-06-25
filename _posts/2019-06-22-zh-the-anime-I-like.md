@@ -29,7 +29,7 @@ tags:
 
 ## [希德尼娅的骑士](https://www.bilibili.com/bangumi/media/md1576/)
 
-![](/assets/xideniya-1.webp)
+![](/assets/xideniya-1.png)
 
 > 曾几何时，神秘生物奇居子入侵太阳系，致使人类流离失所，只能乘坐行星般大小的巨型飞船希德尼娅流浪在茫茫宇宙中。如是过了漫长的一千年，而今希德尼娅的居民们已有一百年未曾遭遇奇居子，不过他们从未放松警惕，培养了一代又一代操纵人形兵器“卫人”的驾驶员。某天，居住在地下的青年`谷风长道`（逢坂良太 配音）迫于饥饿爬到地面，偷米后被人抓住，后在舰长（大原沙耶香 配音）的授意下成为卫人驾驶员第 628 期的训练生，在这里他见到了有过一面之缘的善良女孩`星白闲`（洲崎绫 配音）、友好的第三性人`科户濑伊扎那`（丰崎爱生 配音）以及高傲刚愎的`岐神海苔夫`（樱井孝宏 配音）等人。未几，少年们外出执行采集任务，甚至却遭逢百年不见的奇居子。沉寂已久的宇宙战争再度拉开帷幕……
 >
@@ -112,9 +112,10 @@ Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合
 ### 我为什么喜欢？
 
 #### 画面
+
 每一个镜头都是那么美，完全是超越大部分真实电影的气势，大家来安静地欣赏一下：
 
-![](/assets/suiyuedetonghua-1.webp)
+![](/assets/suiyuedetonghua-1.png)
 ![](/assets/suiyuedetonghua-8.jpg)
 ![](/assets/suiyuedetonghua-2.jpg)
 ![](/assets/suiyuedetonghua-3.jpg)
@@ -126,6 +127,7 @@ Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合
 ![](/assets/suiyuedetonghua-10.jpg)
 
 #### 情怀
+
 故事发生在暑假的季节，女主角儿时由于不像小区其他伙伴没有乡下可以去，暑假只能孤独的每天打卡做早操。
 
 这一次依然是明媚的夏天，影片展示的暑假乡村画面真是太有代入感了，我想起了儿时的故乡，学生时代的暑假，外公外婆家，爷爷奶奶家的暑假，有乡愁，有怀旧……
@@ -146,18 +148,18 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 ## [聪明的一休](https://movie.douban.com/subject/1883755/)
 
-![](/assets/congmingyixiu-1.webp)
+![](/assets/congmingyixiu-1.png)
 
 ## [星空清理者](https://movie.douban.com/subject/1859043/)
 
-![](/assets/xinkongqinglizhe-1.webp)
+![](/assets/xinkongqinglizhe-1.png)
 
 ## [欢迎加入 NHK](https://movie.douban.com/subject/1908561/)
 
-![](/assets/huanyinglaidaonhk-1.webp)
+![](/assets/huanyinglaidaonhk-1.png)
 
 ## [高机动幻想～新结军行歌](https://movie.douban.com/photos/photo/2290456352/)
 
-![](/assets/xinjiexinjunge-1.webp)
+![](/assets/xinjiexinjunge-1.jpeg)
 
 [未完待续……]
