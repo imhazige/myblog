@@ -120,6 +120,18 @@ Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合
 ![](/assets/suiyuedetonghua-9.jpg)
 ![](/assets/suiyuedetonghua-10.jpg)
 
+这部电影的结尾，每次听到这音乐响起，画面转到列车外的景色，那感觉千言万语无法形容……
+
+<iframe src="//player.bilibili.com/player.html?aid=14205593&cid=23186398&page=1" scrolling="no" 
+style="width:100%;height:500px;"
+border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+### 关于导演`高畑勋`
+
+在写此文时，高老爷子已经作古，我很感谢在我们这一代，能有`高畑勋`和`宫崎骏`这样的大师来制作如此经典的动画片来陪伴我们，我们是幸运的。
+
+`高畑勋`导演的动画似乎更具文学气息，另一部`萤火虫之墓`拍的太好了，也表现的太悲伤了，所以我不想太多提及。然而，`高畑勋`的作品让我感动，让我钦佩！
+
 ### [聪明的一休](https://movie.douban.com/subject/1883755/)
 
 ![](/assets/congmingyixiu-1.webp)
