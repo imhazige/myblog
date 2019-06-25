@@ -122,18 +122,18 @@ Polygon Pictures 制作精良，他们的画风太适合科幻片了，太适合
 
 ### [聪明的一休](https://movie.douban.com/subject/1883755/)
 
-![](https://img3.doubanio.com/view/photo/l/public/p1628809462.webp)
+![](/assets/congmingyixiu-1.webp)
 
 ### [星空清理者](https://movie.douban.com/subject/1859043/)
 
-![](https://img3.doubanio.com/view/photo/l/public/p2517464555.webp)
+![](/assets/xinkongqinglizhe-1.webp)
 
 ### [欢迎加入 NHK](https://movie.douban.com/subject/1908561/)
 
-![](https://img3.doubanio.com/view/photo/l/public/p1970946463.webp)
+![](/assets/huanyinglaidaonhk-1.webp)
 
 ### [高机动幻想～新结军行歌](https://movie.douban.com/photos/photo/2290456352/)
 
-![](https://img3.doubanio.com/view/photo/l/public/p2290456352.webp)
+![](/assets/xinjiexinjunge-1.webp)
 
 [未完待续……]
