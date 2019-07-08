@@ -42,3 +42,21 @@ packages:
     publish: $anonymous
     proxy: npmjs
 ```
+
+### 解决匿名仍需要 token 问题
+
+由于[这个问题](https://github.com/verdaccio/verdaccio/issues/212#issuecomment-308578500)，匿名可能仍需要配置如下。
+
+在需要发布的项目下新建.npmrc 文件
+
+```bash
+//localhost:4873/:_authToken="fooBar"
+```
+
+其中`localhost:4873`为`verdaccio`服务器地址。
+
+### 发布到本地
+
+`npm --registry http://localhost:4873 publish`
+
+这样就达到了匿名发布到本地仓库的目的。
