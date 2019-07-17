@@ -153,4 +153,4 @@ function* fibGen() {
 
 ## 总结
 
-generator 最大的用处还是实现 async/await,然而已然不如直接使用 async/await 直观。总的来说，使用 generator 的场景并不多见。
+generator 最大的用处还是实现 async/await,然而依然不如直接使用 async/await 直观。总的来说，使用 generator 的场景并不多见。
