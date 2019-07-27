@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: '2019-07-27 00:00 +08:00'
 type: post
-title: '三个有趣的javascript语法（提议）'
+title: '几个有趣的javascript语法（提议）'
 categories:
   - javascript
 tags:
