@@ -182,3 +182,49 @@ export default httpListener({
   output$,
 });
 ```
+
+## [Websocket](https://docs.marblejs.com/websockets)
+
+Websocket 只支持标准的[RFC 6455](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=2ahUKEwiByOfquMPgAhWBpIsKHXWED_wQFjAAegQICRAB&url=https%3A%2F%2Ftools.ietf.org%2Fhtml%2Frfc6455&usg=AOvVaw06SuiDfKSSeLd0cvyIYrrM) 协议
+因此不兼容`Socket.io`。
+
+开启 websocket 是通过 context 注入实现的
+
+```javascript
+import { bindTo createServer } from '@marblejs/core';
+import { WebSocketServerToken } from './tokens.ts';
+import httpListener from './http.listner.ts';
+import webSocketListener from './webSocket.listner.ts';
+
+const server = createServer({
+  // ...
+  httpListener,
+  dependencies: [
+    bindTo(WebSocketServerToken)(webSocketListener({ port: 8080 }).run),
+  ],
+  // ...
+});
+
+server.run();
+```
+
+通过 effect 处理请求
+
+```javascript
+export const hello$: WsEffect = event$ =>
+  event$.pipe(
+    //匹配HELLO事件
+    matchEvent('HELLO'),
+    mapTo({ type: 'HELLO', payload: 'Hello, world!' })
+  );
+```
+
+请求的格式为
+
+```json
+{
+  "type": "HELLO"
+}
+```
+
+目前已是 2.0 版本。
