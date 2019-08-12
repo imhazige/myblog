@@ -220,7 +220,11 @@ npm方式
 #### 使用[Cordova](https://cordova.apache.org/),
 
 #### 使用DDP方式调用meteor服务端
-对于ios，可使用[meteor-ios](https://cordova.apache.org/)框架。
+- 对于ios，可使用[meteor-ios](https://cordova.apache.org/)框架。
+
+- 对于小程序，可使用我封装的基于[simpleddp](https://github.com/Gregivy/simpleddp)的插件[simpleddp-wechat-miniprogram-dirver](https://github.com/imhazige/simpleddp-wechat-miniprogram-dirver)。
+
+
 
 ## 缺点
 
