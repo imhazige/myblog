@@ -17,9 +17,10 @@ The [Meteor document](https://guide.meteor.com/data-loading.html#pagination) hav
 
 Here I want to discuss a way of page-by-page pagination support sort, condition with limited data(page size).
 
-- Shortly, the idea is query the page with skip and limit, so the published cursor only include the data of that page. 
+- Shortly, the idea is query the page with skip and limit, only fecth the ObjectID.
+- another query is the published cursor only include the data of that page which query based on the ObjectID. 
 - And there are another query to find out the total count of the query.
-- Also there are a collection to store the total count of the query and the real page index.
+- Also there are a collection to store the total count of the query , the ids and the real page index.
 
 ## Detail
 
@@ -39,6 +40,7 @@ export type PaginatingParams = {
 export function buildPaginatingOptions(paginatingParams: PaginatingParams, ops: any = {}) {
   ops = {
     ...ops,
+     fields: { '_id': 1 }
   };
 
   if (paginatingParams.size > -1) {
@@ -57,18 +59,18 @@ As you see, the buildPaginatingOptions function will create pagination options f
 
 ### Query
 ```typescript
-Meteor.publish('TODOList.query.pub', function (args) {
+Meteor.publish('List.query.pub', function (args) {
 const selector = {
       // some params here
     };
-    const ops = buildPaginatingOptions(paginatingParams, {  });
-    const total = TODOList.find(selector).count();
+    const ids = List.find(selector, buildPaginatingOptions(paginatingParams)).fetch().map(r => r._id.toString());
+    // const ops = buildPaginatingOptions(paginatingParams);
+    const total = List.find(selector).count();
+    const selectorReal = {  _id: { $in: ids } };
+    // records = CampaignSessionList.filterPrivateFields(records);
 
-    // pagination data
     let pagingSelector = {
-        accountId,
-        //name
-        name: 'TODOList.query.pub',
+        name,
         paramsHash: hash(args),
     };
 
@@ -76,6 +78,7 @@ const selector = {
         $set: {
             index: paginatingParams.index,
             total,
+            ids,
             updatedAt: now
         },
         $setOnInsert: {
@@ -84,15 +87,13 @@ const selector = {
         }
     });
 
-    
     const pagingCursor = PagingList.find(pagingSelector);
-    
-    const recordsCursor = CampaignSettingList.find(selector, ops);
+    const recordsCursor = List.find(selector, selectorReal);
 
-    // return two cursor
     return [pagingCursor, recordsCursor];
+});
 ```
-So there are two query, one for page data, another is the total count.
+So there are three query, one for page ObjectID, one for page data will be used as publication, another is the total count.
 
 The `pagingSelector` is the paging data we will use, we will discuss at later.
 
@@ -106,6 +107,9 @@ schema: {
         paramsHash: { type: String, optional: false, index: true },
         // page index
         index: { type: Number, optional: false, index: false },
+        // IDs
+        ids: { type: Array, optional: false, index: false },
+        'ids.$': { type: String, blackbox: true, optional: false, index: false },
         // total count
         total: { type: Number, optional: false, index: false }
     }
@@ -116,26 +120,21 @@ PagingList store the paging data, we use name and params [hash](https://github.c
 Here I use amazing DDP Client [simpleddp](https://github.com/Gregivy/simpleddp) and [sift](https://github.com/crcn/sift.js) to perform ddp subscribe and filter the data.
 
 ```javascript
-const pubname = 'TODOList.query.pub';
+const pubname = 'List.query.pub';
 const subHandler = await ddp.subscribe(name, params);
 
 //
 const hashedParams = hash(params);
 
-const { index, total } = ddp.collection('PagingList').filter(sift({
+const { index, total , ids} = ddp.collection('PagingList').filter(sift({
   name: pubname,
   paramsHash: hashedParams
 })).fetch()[0];
 
-const coll = ddp.collection('TODOList');
+const coll = ddp.collection('List').filter(sift({
+  id:{$in{ids}}
+}));
 
-if (!params) {
-  params = {};
-}
-
-if (params.params) {
-  coll.filter(sift(params.params));
-}
 ```
 
 ## Conclusion
