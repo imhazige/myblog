@@ -54,7 +54,7 @@ RN自带的List不能适应大数据量的场景，使用[Perf Monitor](https://
 
 ### 滑动侧边栏的优化
 从体验上认为侧边栏确实反应较慢，决定改善。
-[React Native JS Responder system](https://facebook.github.io/react-native/docs/gesture-responder-system)大多数情况下表现良好，然而这里却表现不佳，找到[react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler),辅助[react-native-reanimated](https://github.com/kmagiera/react-native-reanimated)和[<PanGestureHandler>](https://kmagiera.github.io/react-native-gesture-handler/docs/handler-pan.html)
+[React Native JS Responder system](https://facebook.github.io/react-native/docs/gesture-responder-system)大多数情况下表现良好，然而这里却表现不佳，找到[react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler),辅助[react-native-reanimated](https://github.com/kmagiera/react-native-reanimated)和[PanGestureHandler](https://kmagiera.github.io/react-native-gesture-handler/docs/handler-pan.html)
 
 ## 运用[随机访问模块（RAM Bundles）](https://facebook.github.io/react-native/docs/performance#ram-bundles-inline-requires)
 大量采用动态加载，但对于lodash这样的基本依赖则主动加载。
