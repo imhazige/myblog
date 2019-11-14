@@ -39,4 +39,23 @@ Discord IOS APP是2015年的代码，当时运行得很好，4年过去了，渐
 [purecomponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)用的不恰当，也依然会造成频繁重绘。动态的style也会造成重绘，这里应该经量减少动态style。
 
 ### - List组件的问题
-RN自带的List不能适应大数据量的场景，使用[Perf Monitor](https://facebook.github.io/react-native/docs/debugging#performance-monitor)
+RN自带的List不能适应大数据量的场景，使用[Perf Monitor](https://facebook.github.io/react-native/docs/debugging#performance-monitor)可以监控react组件加载情况。于是首先找到[react-native-large-list](https://github.com/bolan9999/react-native-largelist)，后来发现性能更好的[recyclerlistview](https://github.com/Flipkart/recyclerlistview)但是其有些bug,例如首次加载空白，跳转到奇怪的位置等，且与[Animated](https://facebook.github.io/react-native/docs/animated)有冲突。最终discord将原来web的自定义组件list改一下(div改为View,Scroller改为ScrollerView),基本上就可用了。名之为FAstList(尚未开源)。
+
+## 主线程调优
+
+### UIKit的bug导致图片缓存还不如直接读取
+多方验证UIKit从内存读取图片缓存还不如直接从硬盘获取，最后自己实现LocalAssetImageLoader，直接从硬盘读取。
+
+### 继续通过逐步减少组件渲染定位问题
+发现是有个一直后台运行的动画一直在吃CPU
+
+## 感知性能调优
+此时FPS已经达到60,仍然感觉到慢。
+
+### 滑动侧边栏的优化
+从体验上认为侧边栏确实反应较慢，决定改善。
+[React Native JS Responder system](https://facebook.github.io/react-native/docs/gesture-responder-system)大多数情况下表现良好，然而这里却表现不佳，找到[react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler),辅助[react-native-reanimated](https://github.com/kmagiera/react-native-reanimated)和[<PanGestureHandler>](https://kmagiera.github.io/react-native-gesture-handler/docs/handler-pan.html)
+
+## 运用[随机访问模块（RAM Bundles）](https://facebook.github.io/react-native/docs/performance#ram-bundles-inline-requires)
+大量采用动态加载，但对于lodash这样的基本依赖则主动加载。
+这一步骤对iphone6起效显著，平均加载时间减少了3600毫秒。对IPhoneXS减少了700毫秒。
