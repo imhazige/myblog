@@ -172,9 +172,22 @@ heroku container:release web --app <your heroku app name>
 ```
 The problem is, it will upload a large docker image to the heroku hub.
 
-
+The `heroku.yml`
+```yaml
+# https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
+build:
+  docker:
+    web: Dockerfile
+setup:
+  config:
+    ROOT_URL: <required>
+    MONGO_URL: <required>
+    OTHER_ENV: some other env
+```
 
 ### Via [Building Docker Images with heroku.yml](https://devcenter.heroku.com/articles/build-docker-images-heroku-yml)
+
+#### The Way not Working
 While build the docker with the Dockerfile above in this article works well on a normal linux container, it did not on heroku.
 
 The problem I have encountered:
@@ -184,4 +197,160 @@ npm WARN lifecycle meteor-dev-bundle@~install: cannot run in wd meteor-dev-bundl
 
 `Error: Cannot find module 'meteor-deque'`
 
-After many tries, I give up
+After many tries, I realized that this way won't work.
+
+#### Use Upload node_modules Directly
+So I think how about upload node_modules directly so avoid build the native dependency on heroku docker?
+
+The Result is, it works!😄
+
+So I create two dockerfile, one to build the dependency, copy its final built folder to the final docker.
+
+Note, Multiple Stage Build will not work because as illustrate above, build dependency step will not work in heroku container.
+
+The build Dockerfile, mostly same as the one above, just need not the `CMD` directive.
+```Dockerfile
+# https://www.docker.com/blog/keep-nodejs-rockin-in-docker/
+FROM node:8.16.2-slim
+# https://hub.docker.com/_/node/?tab=tags&page=1&name=8.15
+# meteor 1.5.1   === Node 4.8.4
+# meteor 1.6     === Node 8.8.1
+# meteor 1.6.0.1 === Node 8.9.3
+# meteor 1.6.1   === Node 8.9.4
+# meteor 1.6.1.1 === Node 8.11.1
+# meteor 1.6.1.3 === Node 8.11.3
+# meteor 1.7     === Node 8.11.2
+# meteor 1.7.0.2 === Node 8.11.3
+# meteor 1.7.0.5 === Node 8.11.4
+# meteor 1.8.1   === Node 8.15.1
+# see https://docs.meteor.com/changelog.html
+
+ENV APP_DIR=/meteor						\
+    NODE_ENV=production
+# EXPOSE $PORT
+
+# Install as root (otherwise node-gyp gets compiled as nobody.使用--unsafe-perm可解决)
+USER root
+WORKDIR $APP_DIR/bundle/programs/server/
+
+# Copy bundle and scripts to the image APP_DIR
+COPY bundle $APP_DIR/bundle
+
+# the install command for debian
+RUN echo "Installing the node modules..." \
+    && npm install -g node-gyp \
+    && npm install --production \
+    && echo \
+    && echo \
+    && echo \
+    && ls -a \
+    && echo "Updating file permissions for the node user..." \
+    && chmod -R 750 $APP_DIR \
+    && chown -R node.node $APP_DIR \
+    && cd $APP_DIR/bundle \
+    && ls -la
+
+# start the app
+WORKDIR $APP_DIR/
+
+USER node
+
+WORKDIR $APP_DIR/bundle
+RUN ls -a
+WORKDIR $APP_DIR/
+```
+
+The Run Dockerfile, very simple, just run a node app
+```Dockerfile
+# https://www.docker.com/blog/keep-nodejs-rockin-in-docker/
+# need be same as the build docker
+FROM node:8.16.2-slim
+# https://hub.docker.com/_/node/?tab=tags&page=1&name=8.15
+# meteor 1.5.1   === Node 4.8.4
+# meteor 1.6     === Node 8.8.1
+# meteor 1.6.0.1 === Node 8.9.3
+# meteor 1.6.1   === Node 8.9.4
+# meteor 1.6.1.1 === Node 8.11.1
+# meteor 1.6.1.3 === Node 8.11.3
+# meteor 1.7     === Node 8.11.2
+# meteor 1.7.0.2 === Node 8.11.3
+# meteor 1.7.0.5 === Node 8.11.4
+# meteor 1.8.1   === Node 8.15.1
+# see https://docs.meteor.com/changelog.html
+
+ENV APP_DIR=/meteor						\
+    NODE_ENV=production
+
+# Copy bundle and scripts to the image APP_DIR
+COPY bundle $APP_DIR/bundle
+
+# start the app
+WORKDIR $APP_DIR/
+
+# the heroku will assign the $PORT
+CMD node bundle/main.js --port $PORT
+```
+
+`Build shell`
+```shell
+echo "build... from " `pwd`
+
+echo "load vars from shared vars, see the shell above in this article"
+. ./vars.build.sh
+
+echo "stage one---------------------------------------"
+
+echo "build..."
+rm -rf $DIST_DIR 
+(cd $SERVER_FOLDER && npm install --production && SKIP_LEGACY_COMPILATION=0 meteor build --server-only --directory $DIST_DIR --architecture os.linux.x86_64)
+
+echo "copy build.Dockerfile, pls make sure it exists under $DOCKER_BUILD_PATH"
+cp $DOCKER_BUILD_PATH/build.Dockerfile $DIST_DIR/Dockerfile
+
+echo "build docker"
+docker build -t $DOCKER_TAG $DIST_DIR 
+
+echo "stage 2 build running docker---------------------------------------"
+
+echo "clean final dist folder"
+rm -rf $BUNDLE_DIR
+mkdir -p $BUNDLE_DIR
+
+
+echo "remove old dokcer..."
+docker rm --force $DOCKER_CONTAINER_NAME
+echo "create container to copy file"
+docker create --name $DOCKER_CONTAINER_NAME $DOCKER_TAG
+echo "copy final bundle files from built image"
+docker cp $DOCKER_CONTAINER_NAME:/meteor/bundle $BUNDLE_DIR
+
+echo "copy heroku docker yaml"
+cp $DOCKER_BUILD_PATH/heroku.yml $BUNDLE_DIR
+
+echo "copy running docker file $DOCKER_BUILD_PATH/run.Dockerfile"
+cp $DOCKER_BUILD_PATH/run.Dockerfile $BUNDLE_DIR/Dockerfile
+
+echo "build running docker image to test"
+docker build -t $DOCKER_TAG_BUNDLE $BUNDLE_DIR 
+```
+
+`vars.build.sh`
+```shell
+MY_ROOT_PATH=`pwd`
+
+
+SERVER_FOLDER="$MY_ROOT_PATH/server"
+APP_NAME="<your heroku app name>"
+DIST_DIR="$MY_ROOT_PATH/dist"
+DOCKER_TAG="<your build docker image tag>"
+DOCKER_CONTAINER_NAME="<your build docker container name>"
+DOCKER_TAG_BUNDLE="<your run docker image tag>"
+DOCKER_CONTAINER_NAME_BUNDLE="<your run docker container name>"
+DOCKER_BUILD_PATH="<where your dockerfile located>"
+BUNDLE_DIR="<where to put final dist bundle>"
+```
+
+`Deploy shell`
+```shell
+
+```
