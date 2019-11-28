@@ -104,6 +104,8 @@ CMD node bundle/main.js --port $PORT
 ```
 
 ## Deploy to Heroku
+
+### Via Buildpacks
 When deploy to Heroku, we can not use meteorup, but there are a working buildpacks `admithub/meteor-horse`, it need you push the source code to the git.
 
 Here is the script I use to deploy in this way:
@@ -147,3 +149,39 @@ git commit -am "deploy..."
 git push heroku master --force
 heroku logs -t --app $HEROKU_APPNAME
 ```
+
+### Via [Container Registry & Runtime (Docker Deploys)](https://devcenter.heroku.com/articles/container-registry-and-runtime)
+This way is straightforward, just push the image you have build to the heroku docker hub.
+
+```shell
+echo "push docker image to heroku"
+docker tag <you local docker tag> registry.heroku.com/<your heroku app name>/web
+echo "push to docker, this may cause uploading a large file to the docker hub"
+docker push registry.heroku.com/<your heroku app name>/web
+
+
+echo "set heroku env..."
+#see  https://devcenter.heroku.com/articles/buildpacks
+heroku buildpacks:clear --app $HEROKU_APPNAME
+echo "set heroku app as docker container by stack:set container"
+# https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
+heroku stack:set container --app $HEROKU_APPNAME
+
+echo "deploy docker container to heroku app"
+heroku container:release web --app <your heroku app name>
+```
+The problem is, it will upload a large docker image to the heroku hub.
+
+
+
+### Via [Building Docker Images with heroku.yml](https://devcenter.heroku.com/articles/build-docker-images-heroku-yml)
+While build the docker with the Dockerfile above in this article works well on a normal linux container, it did not on heroku.
+
+The problem I have encountered:
+```shell
+npm WARN lifecycle meteor-dev-bundle@~install: cannot run in wd meteor-dev-bundle@ node npm-rebuild.js (wd=/meteor/bundle/programs/server)
+```
+
+`Error: Cannot find module 'meteor-deque'`
+
+After many tries, I give up
