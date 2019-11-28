@@ -103,4 +103,47 @@ WORKDIR $APP_DIR/
 CMD node bundle/main.js --port $PORT
 ```
 
-### Deploy Docker to Heroku
+## Deploy to Heroku
+When deploy to Heroku, we can not use meteorup, but there are a working buildpacks `admithub/meteor-horse`, it need you push the source code to the git.
+
+Here is the script I use to deploy in this way:
+```shell
+echo "start deploy to heroku..."
+GIT_URL="<your heroku git url>"
+ROOT_DIR=`pwd`
+echo "deploy... from " $ROOT_DIR
+echo "make sure logined to heroku"
+echo "assume your built code is under folder dist"
+DIST_DIR="$ROOT_DIR/dist"
+echo "assume your source code is under folder server"
+SERVER_DIR="$ROOT_DIR/server"
+HEROKU_APPNAME="<your heroku app name>"
+ROOT_URL="<>"
+MONGO_URL="<>"
+OTHER_ENV="some other env"
+
+
+echo "clean dist folder..."
+rm -rf $DIST_DIR
+echo "copy source code to push..."
+rsync -av --progress $SERVER_DIR $DIST_DIR --exclude .meteor/local --exclude .git --exclude node_modules
+
+echo "set heroku env..."
+heroku buildpacks:set admithub/meteor-horse --app $HEROKU_APPNAME
+heroku config:set ROOT_URL=$ROOT_URL  --app $HEROKU_APPNAME
+heroku config:set MONGO_URL=$MONGO_URL  --app $HEROKU_APPNAME
+heroku config:set myuflowEngineRootUrl=$myuflowEngineRootUrl  --app $HEROKU_APPNAME
+heroku config:set campaignFlowProjectCode=$campaignFlowProjectCode  --app $HEROKU_APPNAME
+
+echo "go to dist folder"
+cd $DIST_DIR
+rm -rf .git
+echo "push to heroku git"
+git init .
+git remote add heroku $GIT_URL
+echo "commit"
+git add .
+git commit -am "deploy..."
+git push heroku master --force
+heroku logs -t --app $HEROKU_APPNAME
+```
