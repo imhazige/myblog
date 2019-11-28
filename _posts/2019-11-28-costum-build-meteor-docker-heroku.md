@@ -338,7 +338,7 @@ docker build -t $DOCKER_TAG_BUNDLE $BUNDLE_DIR
 ```shell
 MY_ROOT_PATH=`pwd`
 
-
+GIT_URL="<your heroku git url>"
 SERVER_FOLDER="$MY_ROOT_PATH/server"
 APP_NAME="<your heroku app name>"
 DIST_DIR="$MY_ROOT_PATH/dist"
@@ -352,5 +352,29 @@ BUNDLE_DIR="<where to put final dist bundle>"
 
 `Deploy shell`
 ```shell
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+. $SCRIPTPATH/vars.build.sh
 
+ROOT_DIR=`pwd`
+echo "deploy... from " $ROOT_DIR
+echo "make sure deployed to heroku"
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
+
+echo "配置heroku环境..."
+#see  https://devcenter.heroku.com/articles/buildpacks
+heroku buildpacks:clear --app $HEROKU_APPNAME
+echo "heroku docker必须要配置 stack:set container"
+# https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
+heroku stack:set container --app $HEROKU_APPNAME
+
+cd $BUNDLE_DIR
+rm -rf .git
+echo "直接推送"
+git init .
+git remote add heroku $GIT_URL
+echo "提交"
+git add .
+git commit -am "deploy... $DATE"
+git push heroku master --force
+heroku logs -t -a $HEROKU_APPNAME
 ```
