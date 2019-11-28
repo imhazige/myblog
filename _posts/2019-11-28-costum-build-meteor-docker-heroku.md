@@ -134,8 +134,6 @@ echo "set heroku env..."
 heroku buildpacks:set admithub/meteor-horse --app $HEROKU_APPNAME
 heroku config:set ROOT_URL=$ROOT_URL  --app $HEROKU_APPNAME
 heroku config:set MONGO_URL=$MONGO_URL  --app $HEROKU_APPNAME
-heroku config:set myuflowEngineRootUrl=$myuflowEngineRootUrl  --app $HEROKU_APPNAME
-heroku config:set campaignFlowProjectCode=$campaignFlowProjectCode  --app $HEROKU_APPNAME
 
 echo "go to dist folder"
 cd $DIST_DIR
@@ -360,21 +358,26 @@ echo "deploy... from " $ROOT_DIR
 echo "make sure deployed to heroku"
 DATE=`date '+%Y-%m-%d %H:%M:%S'`
 
-echo "配置heroku环境..."
+echo "set heroku ..."
 #see  https://devcenter.heroku.com/articles/buildpacks
 heroku buildpacks:clear --app $HEROKU_APPNAME
-echo "heroku docker必须要配置 stack:set container"
+echo "heroku docker: stack:set container"
 # https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
 heroku stack:set container --app $HEROKU_APPNAME
 
 cd $BUNDLE_DIR
 rm -rf .git
-echo "直接推送"
+echo "push git"
 git init .
 git remote add heroku $GIT_URL
-echo "提交"
+echo "commit git"
 git add .
 git commit -am "deploy... $DATE"
 git push heroku master --force
 heroku logs -t -a $HEROKU_APPNAME
 ```
+
+## Conclusion
+Meteor depends on fibers, which require install on the native system. This make the custom deployment a bit complex based on the system difference. Docker is a good way to solve this problem.
+
+With the shell script I wrote in this article, you should be easy to reproduce the success of custom deployment via docker to normal docker container even like heroku.
