@@ -11,7 +11,7 @@ tags:
   - docker
   - meteor
 ---
-[Meteor](https://www.meteor.com/developers) is a amazing and stable nodejs framework to build enterprise APP.
+[Meteor](https://www.meteor.com/developers) is an amazing and stable nodejs framework to build enterprise APP.
 
 Here I will discuss the way to deploy a meteor APP and some problem it have.
 
@@ -19,12 +19,12 @@ It is easy to deploy with source code mode like use many stable docker tool:
 
 ## [Normal Deploy](https://guide.meteor.com/deployment.html)
 
-As inllustrate in the [official document](https://guide.meteor.com/deployment.html), there are following popular used tools:
+As illustrate in the [official document](https://guide.meteor.com/deployment.html), there are following popular used tools:
 
 ### [Meteor Up](https://guide.meteor.com/deployment.html#mup)
 This is the simplest way, you just need set up a config file, provide the information to the server which have ssh enabled, the meteor up will do `meteor build` and upload the compiled APP to the server.
 
-## Docerize
+## Dockerize
 
 ### Tools
 I have tried many docker image, currently, I only found [`johnnyutahio/meteor-launchpad`](https://github.com/jshimko/meteor-launchpad/issues/121) worked well.
@@ -109,7 +109,7 @@ CMD node bundle/main.js --port $PORT
 When deploy to Heroku, we can not use meteorup, but there are a working buildpacks `admithub/meteor-horse`, it need you push the source code to the git.
 
 Here is the script I use to deploy in this way:
-```shell
+```bash
 echo "start deploy to heroku..."
 GIT_URL="<your heroku git url>"
 ROOT_DIR=`pwd`
@@ -151,7 +151,7 @@ heroku logs -t --app $HEROKU_APPNAME
 ### Via [Container Registry & Runtime (Docker Deploys)](https://devcenter.heroku.com/articles/container-registry-and-runtime)
 This way is straightforward, just push the image you have build to the heroku docker hub.
 
-```shell
+```bash
 echo "push docker image to heroku"
 docker tag <you local docker tag> registry.heroku.com/<your heroku app name>/web
 echo "push to docker, this may cause uploading a large file to the docker hub"
@@ -290,7 +290,7 @@ CMD node bundle/main.js --port $PORT
 ```
 
 `Build shell`
-```shell
+```bash
 echo "build... from " `pwd`
 
 echo "load vars from shared vars, see the shell above in this article"
@@ -333,7 +333,7 @@ docker build -t $DOCKER_TAG_BUNDLE $BUNDLE_DIR
 ```
 
 `vars.build.sh`
-```shell
+```bash
 MY_ROOT_PATH=`pwd`
 
 GIT_URL="<your heroku git url>"
@@ -349,7 +349,7 @@ BUNDLE_DIR="<where to put final dist bundle>"
 ```
 
 `Deploy shell`
-```shell
+```bash
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 . $SCRIPTPATH/vars.build.sh
 
