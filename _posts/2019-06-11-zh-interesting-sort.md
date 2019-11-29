@@ -113,5 +113,10 @@ border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 [梳排序排序(改良自冒泡排序和快速排序)](https://baike.baidu.com/item/%E6%A2%B3%E6%8E%92%E5%BA%8F/5955762):
 ![](/assets/sort-visual-comb-min.gif)
 
+
+> 实际上各语言默认的排序是综合性能目前最优的[Timsort](https://www.zhouexin.com/issues/25#Timsort%20%E5%90%84%E7%A7%8D%E8%AF%AD%E8%A8%80%E9%BB%98%E8%AE%A4%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95)
+
+> ![](https://cdn-images-1.medium.com/max/800/0*I8VlK7-Zh-2btQP4.gif)
+
 ## 参见
 [十大经典排序算法（动图演示）](https://www.cnblogs.com/onepixel/articles/7674659.html)
