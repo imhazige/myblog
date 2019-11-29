@@ -38,4 +38,6 @@ node默认只用一个cpu core，最多差不多1.5G内存。
 
 对于node12增加了线程的支持，推荐使用配合[comlink](https://github.com/GoogleChromeLabs/comlink)。
 
-## 避免内存回收
+## [避免内存回收](https://github.com/nodejs/node/issues/3370)
+Nodejs默认是1.5G,懒GC，因此如果你的server明显小于1.5RAM时（例如heroku dyno），则应该指明`--max_old_space_size=`到server实际RAM大小。否则的话，node会一直到1.5G时才GC，而实际上在超出实际RAM时就卡住了，也不GC,程序也不相应。
+指明--max_old_space_size后会在超出指定值时kill进程，这样至少对于heroku这样的自扩展架构，会产生新的dyno继续运行（同样适用于集群）。
