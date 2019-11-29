@@ -19,7 +19,7 @@ tags:
 - package-lock.json则只需要兼容即可，同一个库大部分只有一个版本。
 
 ## 结论
-一般使用package-lock.json是提倡的，无论是发布包到npm还是实际执行的代码。
+一般使用package-lock.json是提倡的，无论是发布包到npm还是实际执行的代码（配合`npm ci`而不是`npm install`）。
 
 如果你要严格界定版本与你开发时完全一致，则应该使用`npm-shrinkwrap.json`。
 
