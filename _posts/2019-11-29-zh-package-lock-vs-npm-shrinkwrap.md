@@ -2,7 +2,7 @@
 published: true
 layout: post
 comments: true
-date: '2019-11-28 00:00 +08:00'
+date: '2019-11-29 00:00 +08:00'
 type: post
 title: 'package-lock.json 与 npm-shrinkwrap的区别'
 categories:
