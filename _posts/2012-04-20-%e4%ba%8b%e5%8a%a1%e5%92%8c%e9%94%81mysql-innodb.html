@@ -12,45 +12,81 @@ tags:
 - "事务"
 - "锁"
 meta:
-  views: '275'
+views: '275'
 author:
-  login: ig2net
-  email: ig2net@ig2net.info
-  display_name: "农夫一号"
-  first_name: ''
-  last_name: ''
+login: ig2net
+email: ig2net@ig2net.info
+display_name: "农夫一号"
+first_name: ''
+last_name: ''
 ---
 <p>先看看mysql文档最好:</p>
-<p><a href="http://dev.mysql.com/doc/refman/5.1/en/innodb-lock-modes.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-lock-modes.html</a></p>
-<p><a href="http://dev.mysql.com/doc/refman/5.1/en/innodb-transaction-model.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-transaction-model.html</a></p>
-<p><a href="http://dev.mysql.com/doc/refman/5.1/en/innodb-locking-reads.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-locking-reads.html</a></p>
-<p><a href="http://dev.mysql.com/doc/refman/5.1/en/innodb-record-level-locks.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-record-level-locks.html</a></p>
-<p><a href="http://dev.mysql.com/doc/refman/5.1/en/lock-tables.html">http://dev.mysql.com/doc/refman/5.1/en/lock-tables.html</a></p>
-<p>首先InnoDB默认是行级锁，但是，不是说事务里面的select语句是自动加了锁的，需要使用<a href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>LOCK IN SHARE MODE</code></a> 设定S锁 或 <a href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>FOR UPDATE</code></a> 设定X锁。 并且要看事务隔离级别。例如SERIALIZABLE级别下，本事务下所有不带锁的查询将自动设置为<a href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>LOCK IN SHARE MODE</code></a> 。参见<a href="http://dev.mysql.com/doc/refman/5.1/en/set-transaction.html">http://dev.mysql.com/doc/refman/5.1/en/set-transaction.html</a></p>
-<blockquote><p><a name="id847659"></a><a name="id847672"></a><code>SERIALIZABLE</code></p>
-<p>This level is like <a href="http://dev.mysql.com/doc/refman/5.1/en/set-transaction.html#isolevel_repeatable-read"><code>REPEATABLE READ</code></a>, but <code>InnoDB</code> implicitly converts all plain <a href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT</code></a> statements to <a href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT ... LOCK IN SHARE MODE</code></a> if autocommit is disabled. If autocommit is enabled, the <a href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT</code></a> is its own transaction. It therefore is known to be read only and can be serialized if performed as a consistent (nonlocking) read and need not block for other transactions. (To force a plain <a href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT</code></a> to block if other transactions have modified the selected rows, disable autocommit.)</p>
+<p><a
+    href="http://dev.mysql.com/doc/refman/5.1/en/innodb-lock-modes.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-lock-modes.html</a>
+</p>
+<p><a
+    href="http://dev.mysql.com/doc/refman/5.1/en/innodb-transaction-model.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-transaction-model.html</a>
+</p>
+<p><a
+    href="http://dev.mysql.com/doc/refman/5.1/en/innodb-locking-reads.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-locking-reads.html</a>
+</p>
+<p><a
+    href="http://dev.mysql.com/doc/refman/5.1/en/innodb-record-level-locks.html">http://dev.mysql.com/doc/refman/5.1/en/innodb-record-level-locks.html</a>
+</p>
+<p><a
+    href="http://dev.mysql.com/doc/refman/5.1/en/lock-tables.html">http://dev.mysql.com/doc/refman/5.1/en/lock-tables.html</a>
+</p>
+<p>首先InnoDB默认是行级锁，但是，不是说事务里面的select语句是自动加了锁的，需要使用<a
+    href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>LOCK IN SHARE MODE</code></a> 设定S锁 或 <a
+    href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>FOR UPDATE</code></a> 设定X锁。
+  并且要看事务隔离级别。例如SERIALIZABLE级别下，本事务下所有不带锁的查询将自动设置为<a
+    href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>LOCK IN SHARE MODE</code></a> 。参见<a
+    href="http://dev.mysql.com/doc/refman/5.1/en/set-transaction.html">http://dev.mysql.com/doc/refman/5.1/en/set-transaction.html</a>
+</p>
+<blockquote>
+  <p><a name="id847659"></a><a name="id847672"></a><code>SERIALIZABLE</code></p>
+  <p>This level is like <a
+      href="http://dev.mysql.com/doc/refman/5.1/en/set-transaction.html#isolevel_repeatable-read"><code>REPEATABLE READ</code></a>,
+    but <code>InnoDB</code> implicitly converts all plain <a
+      href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT</code></a> statements to <a
+      href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT ... LOCK IN SHARE MODE</code></a> if
+    autocommit is disabled. If autocommit is enabled, the <a
+      href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT</code></a> is its own transaction. It
+    therefore is known to be read only and can be serialized if performed as a consistent (nonlocking) read and need not
+    block for other transactions. (To force a plain <a
+      href="http://dev.mysql.com/doc/refman/5.1/en/select.html"><code>SELECT</code></a> to block if other transactions
+    have modified the selected rows, disable autocommit.)</p>
 </blockquote>
 <p>然而update和delete语句是加了X锁的<font color="#0000ff">[这个照其文档意思是这样，我没找到明确说明]</font>。insert语句就用不了行级锁了，因为这待插入的数据还没存储。</p>
 <p>select 语句即使加了锁,但是如果查找条件没有明确使用索引，则导致锁表。</p>
-<blockquote><p>舉個例子:</p>
-<p>假設有個表單 products ，裡面有 id 跟 name 二個欄位，id 是主鍵。</p>
-<p>例1: (明確指定主鍵，並且有此筆資料，row lock)</p>
-<p>SELECT * FROM products WHERE id='3' FOR UPDATE;</p>
-<p>例2: (明確指定主鍵，若查無此筆資料，無 lock)</p>
-<p>SELECT * FROM products WHERE id='-1' FOR UPDATE;</p>
-<p>例2: (無主鍵，table lock)</p>
-<p>SELECT * FROM products WHERE name='Mouse' FOR UPDATE;</p>
-<p>例3: (主鍵不明確，table lock)</p>
-<p>SELECT * FROM products WHERE id&lt;&gt;'3' FOR UPDATE;</p>
-<p>例4: (主鍵不明確，table lock)</p>
-<p>SELECT * FROM products WHERE id LIKE '3' FOR UPDATE;</p>
+<blockquote>
+  <p>舉個例子:</p>
+  <p>假設有個表單 products ，裡面有 id 跟 name 二個欄位，id 是主鍵。</p>
+  <p>例1: (明確指定主鍵，並且有此筆資料，row lock)</p>
+  <p>SELECT * FROM products WHERE id='3' FOR UPDATE;</p>
+  <p>例2: (明確指定主鍵，若查無此筆資料，無 lock)</p>
+  <p>SELECT * FROM products WHERE id='-1' FOR UPDATE;</p>
+  <p>例2: (無主鍵，table lock)</p>
+  <p>SELECT * FROM products WHERE name='Mouse' FOR UPDATE;</p>
+  <p>例3: (主鍵不明確，table lock)</p>
+  <p>SELECT * FROM products WHERE id&lt;&gt;'3' FOR UPDATE;</p>
+  <p>例4: (主鍵不明確，table lock)</p>
+  <p>SELECT * FROM products WHERE id LIKE '3' FOR UPDATE;</p>
 </blockquote>
 <p>&#160;</p>
-<p>锁和事务的关系这里我再明白了些，参照<a href="http://kazge.com/archives/607.html">http://kazge.com/archives/607.html</a> ,锁是事务实现并发控制隔离级别的实现方法。为了避免并发操作存在的异常情况出现，在标准SQL规范中定义了4个事务隔离级别，不同隔离级别对事务处理不同 。</p>
+<p>锁和事务的关系这里我再明白了些，参照<a
+    href="https://blog.kazge.com/%E6%95%B0%E6%8D%AE%E5%BA%93/2011/10/25/e4-b8-89-e7-ba-a7-e5-b0-81-e9-94-81-e5-8d-8f-e8-ae-ae-e4-b8-a4-e6-ae-b5-e9-94-81-e4-bb-a5-e5-8f-8a-e9-9a-94-e7-a6-bb-e7-ba-a7-e5-88-ab/">三级封锁协议两段锁以及隔离级别</a>
+  ,锁是事务实现并发控制隔离级别的实现方法。为了避免并发操作存在的异常情况出现，在标准SQL规范中定义了4个事务隔离级别，不同隔离级别对事务处理不同 。</p>
 <p>虽然各数据库对此标准的实现各有不同，但是它们需要保证这一点。对于使用者则需依据实际情况定义好适当的事务隔离策略再来调用个数据库native sql来实现这些策略来达到应用目的，而不是以为只要使用了事务就万事大吉了。</p>
 <p>参考:</p>
-<p><a href="http://blog.csdn.net/zdl1016/article/details/6946060">http://blog.csdn.net/zdl1016/article/details/6946060</a></p>
-<p><a href="http://hi.baidu.com/thinkinginlamp/blog/item/d677cffcb7098482b901a014.html">http://hi.baidu.com/thinkinginlamp/blog/item/d677cffcb7098482b901a014.html</a></p>
+<p><a
+    href="http://blog.csdn.net/zdl1016/article/details/6946060">http://blog.csdn.net/zdl1016/article/details/6946060</a>
+</p>
+<p><a
+    href="http://hi.baidu.com/thinkinginlamp/blog/item/d677cffcb7098482b901a014.html">http://hi.baidu.com/thinkinginlamp/blog/item/d677cffcb7098482b901a014.html</a>
+</p>
 <p><a href="http://www.neo.com.tw/archives/900">http://www.neo.com.tw/archives/900</a></p>
 <p><a href="http://www.tapy.org/index.php/archives/228">http://www.tapy.org/index.php/archives/228</a></p>
-<p><a href="http://blog.chinaunix.net/space.php?uid=123581&amp;do=blog&amp;id=2944289">http://blog.chinaunix.net/space.php?uid=123581&amp;do=blog&amp;id=2944289</a></p>
+<p><a
+    href="http://blog.chinaunix.net/space.php?uid=123581&amp;do=blog&amp;id=2944289">http://blog.chinaunix.net/space.php?uid=123581&amp;do=blog&amp;id=2944289</a>
+</p>
