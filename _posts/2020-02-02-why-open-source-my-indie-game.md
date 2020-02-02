@@ -28,9 +28,15 @@ I made these games all by myself, art, sounds, music, coding, etc...
 
 I spend most of my spare time on these games. 
 
-I did not have a big expect that these games will give me much money. Just that I had a wish, as I was so obsessed by playing game, I want to build a game that other players like to play. I will be the creator of the sprites in the games. Also, I like art, I am not very like most style of current popular 3D games.  
+I did not have a big expect that these games will give me much money. Just that I had a wish, as I was so obsessed by playing game, I want to build a game that other players like to play.
 
+I will be the creator of the sprites in the games. Also, I like art, I am not very like most style of current popular 3D games.  
 
+And now, I have create the 3 games, I like them, I like playing `Karaok Kong`, I feel `Aero Egg` a bit hard, I keep making it easier.
+
+I think I satisfied my desire. I am proud of the game I have made, I like the art in the `Aero Egg`.
+
+Now, I decide to say good bye to indie game journey. I will not create any game anymore, I opensource `Aero Egg`, as a souvenir. 
 
 Why?
 
