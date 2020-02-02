@@ -28,7 +28,7 @@ I made these games all by myself, art, sounds, music, coding, etc...
 
 I spend most of my spare time on these games. 
 
-I did not have a big expect that these games will give me much money. Just that I had a wish, as I was so obsessed by playing game, I want to build a game that other players like to play. I will be the creator of the sprites in the games. Also, I like art, I am not very like most style of current popular 3d games.  
+I did not have a big expect that these games will give me much money. Just that I had a wish, as I was so obsessed by playing game, I want to build a game that other players like to play. I will be the creator of the sprites in the games. Also, I like art, I am not very like most style of current popular 3D games.  
 
 
 
