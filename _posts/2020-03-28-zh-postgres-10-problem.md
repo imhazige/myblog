@@ -12,7 +12,7 @@ tags:
   - postgres
 ---
 
-摘译自[10 Things I Hate About PostgreSQL](https://medium.com/@rbranson/10-things-i-hate-about-postgresql-20dbab8c2791)
+摘译自[10 Things I Hate About PostgreSQL](https://medium.com/@rbranson/10-things-i-hate-about-postgresql-20dbab8c2791) 作者 `Rick Branson`
 
 首先，作者从 2003 年开始就在产品线上使用 postgre, 他表示这十大问题都可以使用云数据库来解决，其实都是与运维相关。他仍然推荐使用 postgre。
 
