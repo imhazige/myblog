@@ -2,7 +2,7 @@
 published: true
 layout: post
 comments: true
-date: "2020-02-02 00:00 +08:00"
+date: "2020-04-06 00:00 +08:00"
 type: post
 title: "[摘译]十几年postgres使用者对其痛恨十大问题"
 categories:

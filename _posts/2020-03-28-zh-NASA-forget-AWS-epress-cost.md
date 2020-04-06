@@ -2,7 +2,7 @@
 published: true
 layout: post
 comments: true
-date: "2020-02-02 00:00 +08:00"
+date: "2020-03-28 00:00 +08:00"
 type: post
 title: "幽默-NASA导入247 Petabytes(拍)到AWS,却忘记了计算AWS的出口费用"
 categories:
