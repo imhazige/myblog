@@ -36,7 +36,7 @@ I will be the creator of the sprites in the games. Also, I like art, I am not ve
 ## How Many I earned from these 3 games.
 The result is that I earned -490$ by these 3 indie games. -500$ for App Store fee. +20$ for Unity Ads earning LOL!
 
-No more than 50 people download the games from App Store a I think. 
+No more than 50 people download the games from App Store as I think. 
 
 Some of my firends like the `Karaok Kong`, and they said `Aero Egg` is too hard, but they like the art!
 

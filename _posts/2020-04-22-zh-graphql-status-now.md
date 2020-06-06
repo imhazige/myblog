@@ -15,7 +15,7 @@ tags:
 GraphQL 要说火，却又不是很火，要说不火，却又不是很不火，这样的状态怎么形容呢？
 
 至少在国内，并没有火起来。我个人的感觉，GraphQL 能解决的问题，RESTful API 绝对能解决，而相反 RESTful API 能解决的问题，GraphQL 不一定能解决。这个在文章后面会讲。
-至少在国内，并没有火起来。我个人的感觉，GraphQL 能解决的问题，RESTful API 绝对能解决，而相反 RESTful API 绝对能解决问题，GraphQL 不一定能解决，这个在文章后面会讲。
+
 
 ## GraphQL 生态
 
