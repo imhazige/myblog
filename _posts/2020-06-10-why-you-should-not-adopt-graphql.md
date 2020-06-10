@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: "2020-06-10 00:00 +08:00"
 type: post
-title: "Why-You-Should-Not-Adopt-GraphQL"
+title: "Why You Should Not Adopt GraphQL"
 categories:
   - fullstack
 tags:
