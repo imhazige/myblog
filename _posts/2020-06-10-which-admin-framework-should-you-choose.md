@@ -46,6 +46,8 @@ ant-design-pro is based on [ant-design](https://github.com/ant-design/ant-design
 
 It provide admin layout, authorize, routes , i18n, code-splitting, mock, proxy, theme, typescript out-of-the-box.
 
+[It support VUE](https://pro.antdv.com/)
+
 ### Some issues
 
 But I also want to mention the issue you may concern:
@@ -53,6 +55,8 @@ But I also want to mention the issue you may concern:
 It use [dva](https://github.com/dvajs/dva) which based on redux-saga. It is not bad, but if you want to use async/await in the side effect, that's will be a problem, you need be careful and you'd better use generator to follow the rule.
 
 It does not work well with [nextjs](https://www.dogedoge.com/rd/psx1x4ozyHYBBl8ZcszW8x%2B%2BCzkq4UKiP3P%2FgbjxZHM%3D), but I think we need not.
+
+[It does not support angular yet.](https://github.com/ant-design/ant-design-pro/issues/605)
 
 ## Conclusion
 
