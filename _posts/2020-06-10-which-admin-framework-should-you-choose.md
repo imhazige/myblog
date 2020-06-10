@@ -42,7 +42,7 @@ This is based on [MeteorJs](https://www.meteor.com/) and integrated GraphQL, I l
 
 But Ant design pro can do the same thing as a frontend framework + Meteor as backend.
 
-## [ant-design-pro](https://github.com/ant-design/ant-design-pro/) 25.4k
+## [ant-design-pro](https://github.com/ant-design/ant-design-pro/) 25.4k stars
 
 ant-design-pro is based on [ant-design](https://github.com/ant-design/ant-design) and [umi](https://github.com/umijs/umi), endorsed by [Alibaba](https://www.dogedoge.com/rd/Fw%2BG9v82CFGOW4E6nYW%2BCAsxQ%2FZ8frgJIwBbOuSoezI%3D). ant-design-pro was commercial but then open source and totally free under the license MIT.
 
