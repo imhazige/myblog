@@ -23,8 +23,10 @@ There are many excellent admin framework, including
 This is a well-designed framework, it allow you provide a datasource and it is very easy to setup a Create/Update/Delete/List UI for an entity.
 
 There are two problem I encountered:
+
 1: The UI is bind to Material UI v1, and can not upgrade.
-2: When you encounter problem, it is hard to find resource to resolve. That's means, it is not widely adopted?
+
+2: When you encounter problem, it is hard to find resource to resolve. That means, it is not widely adopted?
 
 ### [coreui-free-react-admin-template](https://github.com/coreui/coreui-free-react-admin-template) 2.7k stars
 
