@@ -20,4 +20,6 @@ tags:
 - 编译出现一些需要特殊处理的问题，例如不能定义 Header 这样的类名
 - typescript 创建声明文件 d.ts 并不高效，且很复杂繁琐
 
-总体看来，typescript 作为实现一种语言的语言并不适合。
+Ryan Dahl(Deno 作者)强调，deno 本身是永远会支持 typescript 的。
+
+> typescript 作为实现一种语言的语言并不适合，毕竟它是 javascript 上的一层，不如直接使用 javascript。
