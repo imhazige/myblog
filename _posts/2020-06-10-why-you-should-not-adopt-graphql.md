@@ -63,6 +63,6 @@ RestApi also can fetch more with one query, a good example is [expanding](https:
 
 ## Conclusion
 
-I have see many projects using GraphQL, they works, but some seems to be in a mess. Some project considered using GraphQL but finally choose GraphQL for the risk reason.
+I have see many projects using GraphQL, they works, but some seems to be in a mess. Some project considered using GraphQL but finally abandon for the risk reason.
 
-As what GraphQL can doing is absolutly be able to be implemented by RESTful API, I recommend keep on RESTful.
+As what GraphQL can doing is absolutely be able to be implemented by RESTful API, I recommend keep on RESTful.
