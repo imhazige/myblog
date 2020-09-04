@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: "2020-09-05 00:00 +08:00"
 type: post
-title: "React Native发布之前的检查步骤"
+title: "高质量React Native项目发布之前的检查步骤"
 categories:
   - mobile
 tags:
