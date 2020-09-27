@@ -4,14 +4,14 @@ layout: post
 comments: true
 date: "2020-09-27 00:00 +08:00"
 type: post
-title: "2020-09-27-outline-of-the-important-share-Arguments-for-Meteor"
+title: "Outline of the important share Arguments for Meteor"
 categories:
   - nodejs
 tags:
   - meteor.js
 ---
 
-This article is the outline or note of the important share about high-performance meteor - ["Arguments for Meteor - Theodor Diaconu, CEO of Cult of Coders: “Redis Oplog, Grapher, and Apollo Live."](https://drive.google.com/file/d/1Tx9vO-XezO3DI2uAYalXPvhJ-Avqc4-q/view), because there are much useful experience on using meteor in production.
+This article is the outline or note of the important share about high-performance meteor - ["Arguments for Meteor - Theodor Diaconu, CEO of Cult of Coders: “Redis Oplog, Grapher, and Apollo Live."](https://drive.google.com/file/d/1Tx9vO-XezO3DI2uAYalXPvhJ-Avqc4-q/view), because in the share, there are much useful experience on using meteor in production.
 
 ## [RedisOplog](https://github.com/cult-of-coders/redis-oplog)
 
