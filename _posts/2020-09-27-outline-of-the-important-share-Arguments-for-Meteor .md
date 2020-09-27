@@ -32,4 +32,8 @@ This is the solution that improve mongodb oplog performance bottleneck. Simply t
 - classroomapp.com
   - Number of servers / 1000 Users drop from more than 6 to less than 1.5
 
+### With [OplogToRedis](https://github.com/tulip/oplogtoredis)
+
+This program tails the oplog of a Mongo server, and publishes changes to Redis. It's designed to work with the redis-oplog Meteor package.
+
 ##
