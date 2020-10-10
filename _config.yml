@@ -3,64 +3,64 @@
 # -----------------------------------------------------------------------------
 #encoding: "utf-8"
 
-title:               Ka's Blog
+title: Ka's Blog
 
 # The unique resource location of your page.
 # Set to `https://<username>.github.io` when hosting on GitHub Pages
-url:                 https://blog.kazge.com
+url: https://blog.kazge.com
 
 # Set to '' when hosting a blog on GitHub Pages, ie on `//<username>.github.io`
 # Set to '/<reponame>' when using the `gh-pages` branch of a repository
-baseurl:             /
+baseurl: /
 
 # A very short description of your page
-tagline:             IT software.
+tagline: IT software.
 
 # A short description of the page, used in the sidebar and as fallback for the meta description tag.
 # Markdown enabled, but don't use more than one paragraph (enforced by `>`)
-description:         >
+description: >
   Coding with delight...
 
 # This should be the same author as first entry in `_data/authors.yml`
 author:
-  name:  Ka
+  name: Ka
   email: ka@kazge.com
   picture:
-    src:             https://avatars0.githubusercontent.com/u/4122902?v=4&s=460
+    src: https://avatars0.githubusercontent.com/u/4122902?v=4&s=460
 
 # Fallback image and color
-image:               /myblog/assets/img/nap.jpg
-color:               '#4f86aa'
+image: /myblog/assets/img/nap.jpg
+color: "#4f86aa"
 
 # The font used for headings. Expects a string that is a valid CSS font-family value.
-font_heading:        "'Roboto Slab', Helvetica, Arial, sans-serif"
+font_heading: "'Roboto Slab', Helvetica, Arial, sans-serif"
 
 # The text font. Expects a string that is a valid CSS font-family value.
-font:                "'Noto Sans', Helvetica, Arial, sans-serif"
+font: "'Noto Sans', Helvetica, Arial, sans-serif"
 
 # The string encoding what fonts to fetch from Google Fonts.
 # See: https://qwtel.com/hydejack/docs/configuration/
-google_fonts:        Roboto+Slab:700|Noto+Sans:400,400i,700,700i
+google_fonts: Roboto+Slab:700|Noto+Sans:400,400i,700,700i
 
 # If you do not use a Google Fonts, uncomment the line below
 # no_google_fonts:     true
 
 # Set your Google Analytics id to receive `pageview` events.
 # To remove Google Anaylics from your page, remove the line below.
-google_analytics:    UA-104619155-1
+google_analytics: UA-104619155-1
 
 # Setting a disqus shortname will enable the comment section on pages with `comments: true` in the front matter
-disqus_shortname:    kazge
+disqus_shortname: kazge
 
 # This text will appear in the footer of every page. Markdown enabled.
-copyright:           '&copy; 2013 - 2019. All rights reserved.'
+copyright: "&copy; 2013 - 2020. All rights reserved."
 
 # Format of the permalinks
-permalink:           pretty
+permalink: pretty
 
 # Pagination configuration (used by the `blog` layout)
-paginate:            10
-paginate_path:       '/page-:num/'
+paginate: 10
+paginate_path: "/page-:num/"
 
 # If you are upgrading form a v5 verison of Hydejack, uncomment the two lines below,
 # so that the location of the feed XML stays the same.
@@ -86,14 +86,14 @@ paginate_path:       '/page-:num/'
 
 collections:
   featured_categories:
-    permalink:       /category/:name/
-    output:          true
+    permalink: /category/:name/
+    output: true
   featured_tags:
-    permalink:       /tag/:name/
-    output:          true
+    permalink: /tag/:name/
+    output: true
   projects:
-    permalink:       /projects/:path/
-    output:          true
+    permalink: /projects/:path/
+    output: true
 
 # -----------------------------------------------------------------------------
 #  Advanced configuration
@@ -117,20 +117,18 @@ exclude:
   - Gemfile.lock
 
 kramdown:
-  footnote_backlink: '&#x21a9;&#xfe0e;'
-  math_engine:       mathjax
+  footnote_backlink: "&#x21a9;&#xfe0e;"
+  math_engine: mathjax
   math_engine_opts:
-    preview:         true
+    preview: true
     preview_as_code: true
 
 compress_html:
-  comments:          ["<!-- ", " -->"]
-  clippings:         all
-  endings:           all
+  comments: ["<!-- ", " -->"]
+  clippings: all
+  endings: all
   ignore:
-    envs:            [development]
+    envs: [development]
 
 sass:
-  style:             compressed
-
-
+  style: compressed
