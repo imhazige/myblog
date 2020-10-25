@@ -4,7 +4,7 @@ layout: post
 comments: true
 date: "2020-10-25 00:00 +08:00"
 type: post
-title: "My flow of test/publish Expo project with release channel and Update Over The Air"
+title: "My flow of test/publish Expo project with release channel and Update Over-The-Air(OTA)"
 categories:
   - mobile
 tags:
@@ -91,3 +91,12 @@ if (releaseChannel.indexOf('prod') !== -1) {
 ```
 
 ## The issue maybe able to be improved
+
+### Have to maually update the build number every time deploy
+The build number is require to be bumpped up when deploy to Apple or Google, if you forget, you will not able to upload as the old build number already exists in the Apple or Google.
+
+There are a expo community provided tool [
+standard-version-expo](https://github.com/expo-community/standard-version-expo) is able to automate updating the version, Android versionCode, and/or iOS buildNumber.
+
+### To test, have to iterate twice
+So before publish to real user, have to build with a staging version connect to staging api, after tested, again need to build a product version conneting to production api. Is there a good way? Welcome your suggestion! 😊
