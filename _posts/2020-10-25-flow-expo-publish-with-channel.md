@@ -92,7 +92,7 @@ if (releaseChannel.indexOf('prod') !== -1) {
 
 ## The issue maybe able to be improved
 
-### Have to maually update the build number every time deploy
+### Have to maually update the build number everytime deploy
 The build number is require to be bumpped up when deploy to Apple or Google, if you forget, you will not able to upload as the old build number already exists in the Apple or Google.
 
 There are a expo community provided tool [
