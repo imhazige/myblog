@@ -17,7 +17,7 @@ Here I want to discuss the detail and some issue I want to improve.
 ## Expo release Channel
 Expo have a good [Official Document](https://docs.expo.io/workflow/publishing/) describe publish with release  channel.
 
-First we premise have two environment/channel and we will not use any continue integrate tool here:
+First we premise have two environment/channel and we will not use any continuous integration tool here:
 - `staging` for tesing before publish to real users(connect to api `test-api.myproduct.com`)
 - `product` for oneline product(connect to `api.myproduct.com`)
 
