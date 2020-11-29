@@ -10,7 +10,7 @@ categories:
 tags:
   - expo
 ---
-These weeks, We did move our outdated react native mobile project to expo. We encountered many problems, some solved with some workaround, some did not. In the end, we make it works, I'd list them here and hope they solved by expo team. 
+These weeks, We did move our outdated react native mobile project to expo. We encountered many problems, some solved with some workaround, some did not. In the end, we make it works, I'd like to list them here and hope they solved by expo team. 
 
 ## The problems I encountered so far
 
