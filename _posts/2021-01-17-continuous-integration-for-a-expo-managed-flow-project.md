@@ -2,7 +2,7 @@
 published: true
 layout: post
 comments: true
-date: "2020-10-25 00:00 +08:00"
+date: "2020-01-17 00:00 +08:00"
 type: post
 title: "CI/CD of a EXPO managed-flow project based on tag"
 categories:
@@ -10,17 +10,17 @@ categories:
 tags:
   - expo
 ---
-I was thought that expo managed flow CI/CD should be very easy than the React Native project.
+I was thought that expo managed flow CI/CD should be very easy than the vanilla React Native project.
 
-But I found I am wrong, it still encountered some cavets that spend much time to solve. 
+But I found I was wrong, it encountered some cavets that spend much time to solve. 
 
 Anyway, it is true easier than vanilla React Native Project.
 
 ## The build strategy
-We have many environments(develop,staging,production) which have different api endpoint. So we will build different APP with corresponding APPID/package name:
-production: com.kazge
-staging: com.kazge.staging
-develop: com.kazge.develop
+We have many environments(develop,staging,production) which have different api endpoint. So we will build different APP with corresponding APPID/package name:  
+production: com.kazge  
+staging: com.kazge.staging  
+develop: com.kazge.develop  
 
 For iOS, only production APP will go to release after tested. others will only available on testflight to test.
 
@@ -215,7 +215,7 @@ aha! that's it, an loop run `expo url:ipa` to get the url, and check if it is a 
 ### Upload by fastlane
 As we know, `expo upload:ios` should do this task, but... actually it does not work in most case, it will response a error `Upload iOs: [iTMSTransporter] -Djava.ext.dirs=……/ext is not supported. Use -classpath instead.`
 
-So what we are doing is use fastlane, in bitrise, this is pretty simple as it is a build in widget.
+So what we are doing is use fastlane, in `bitrise`, this is pretty simple as it is a build in widget.
 
 ## Upload to Google Play Store
 This have the same problem like ios, need get the download link by a loop
