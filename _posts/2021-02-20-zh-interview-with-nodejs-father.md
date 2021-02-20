@@ -2,7 +2,7 @@
 published: true
 layout: post
 comments: true
-date: "2020-02-20 00:00 +08:00"
+date: "2021-02-20 00:00 +08:00"
 type: post
 title: "nodejs作者Ryan Dahl访谈2021摘要"
 categories:

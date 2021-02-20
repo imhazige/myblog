@@ -2,7 +2,7 @@
 published: true
 layout: post
 comments: true
-date: "2020-01-17 00:00 +08:00"
+date: "2021-01-17 00:00 +08:00"
 type: post
 title: "CI/CD of a EXPO managed-flow project based on tag"
 categories:
