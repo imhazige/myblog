@@ -51,7 +51,7 @@ In the above example, if you connect to local machine port 13006, it will connec
 
 Actually, this is a forward forwarding, there are another option -R means reverse forwarding.
 ```shell
-ssh  -i /key/abc.key abc@202.1.1.1 -L 13006:localhost:3006
+ssh  -i /key/abc.key abc@202.1.1.1 -R 13006:localhost:3006
 ```
 This time, we create a tunnel, which open port on the ssh server(A) we connecting to, forward the port 3006 of local machine to the server A, so within the server A, request to localhost:13006 will send to local machine port 3006.it like the service [ngrok](https://ngrok.com/) provided. But, in most server, you need additional steps to make the port run as a service and public to the internet.
 
