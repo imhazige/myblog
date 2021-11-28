@@ -43,4 +43,4 @@ tags:
 ### YAGNI - You aren't gonna need it
 ### KISS - Keep it stupid simple
 
-> 编者：感觉有些面向对象的语言例如Java本身就有过度设计的隐喻
+> 编者按：感觉有些面向对象的语言例如Java本身就有过度设计的隐喻
