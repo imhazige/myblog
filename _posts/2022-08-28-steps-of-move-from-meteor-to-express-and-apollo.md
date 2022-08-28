@@ -34,13 +34,32 @@ I saw a large Meteorjs project with mixed client-server code and I can't imagine
 The new version of react router api will require many changes when convert flow router to. So I wrote a wrapper [react-route-named-route](https://github.com/imhazige/react-router-named-route). Which will make a smallest changes when convert flow router to react router.
 
 ### Convert all meteor method to graphql api
+This is a general target, most problems we encountered was that we need found alternative to the third party library which based on Meteorjs, I will discuss them later.
 
 ### Cron to [bulljs](https://github.com/OptimalBits/bull)
-Formally we use cron package of meteor, now switch to bulljs, the drawback is that it is depend on redis, but not a big problem. Of course, this result in lots of refactoring. 
+Formally we use cron package of Meteorjs, and now we use Bulljs instead, the drawback is that it depends on Redis, but not a big problem. Of course, this result in lots of refactoring. 
 
 ### Accounts
-Meteorjs package `accounts-base`, `accounts-password` is the core of the system, this is the most important part we were foucus on when doing the refactoring.
+Meteorjs package `accounts-base`, `accounts-password` is the core of the system, which was the most concerned part when we refactor.
 
-The good news is that meteorjs is open source(the reason why we choosed it), we read the source code of the two package and implement the same flow(inlcude email, forget password, etc). No changes will apply to the `users` collection.
+The good news is that Meteorjs is open source (the reason we chose it), we read the source code of both packages and implemented the same flow (including email, forgotten password, etc.). No changes will be made to the "Users" collection.
 
-## Meteor Mongo
+### Meteor Mongo
+In this step we implement a class based on mongo driver to have the same inteface as Meteorjs collection, but need check all the invokation and make sure being changed to asynchronism. 
+
+### New project struacture without Meteorjs
+At the before steps, we were able to do the refactor with meteor running. But now, we have to remove Meteorjs all Meteor keyword need to check and refactor to new stack.
+
+This was also the most time-consuming and hard part.
+
+We have to make it easy to merge the develop branch which is keep on developing for online product. So there should be not big project folder structure change.
+
+We followed the structure recommendation of Meteorjs, most of code are underneath the `imports` folder.
+
+
+### Meteor subscription to Apollo v3 Subscription
+
+### 
+
+
+
