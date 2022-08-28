@@ -47,19 +47,41 @@ The good news is that Meteorjs is open source (the reason we chose it), we read 
 ### Meteor Mongo
 In this step we implement a class based on mongo driver to have the same inteface as Meteorjs collection, but need check all the invokation and make sure being changed to asynchronism. 
 
-### New project struacture without Meteorjs
+### New project structure without Meteorjs
 At the before steps, we were able to do the refactor with meteor running. But now, we have to remove Meteorjs all Meteor keyword need to check and refactor to new stack.
 
 This was also the most time-consuming and hard part.
 
 We have to make it easy to merge the develop branch which is keep on developing for online product. So there should be not big project folder structure change.
 
-We followed the structure recommendation of Meteorjs, most of code are underneath the `imports` folder.
+#### Mono-reposotory
+We have look for some mono-reposotory framework, including `Nextjs`, `Remix`, `Nx`, None of them does good support to a existing project. You know now, how powerful that Meteorjs's build tool is. It is very tolerent to differnt stack(react,vue, frontend), different syntax(commonjs,ES6,typescript)...
 
+#### Yarn Workspace and webpack
+So we had to do it by ourself. 
+
+We uses yarn workspace, the root folder is the same one of old project. 
+
+- Setup a `API` project underneath the root folder. Setup express and apollo v3 server.
+- Setup a `WEB` project underneath the root folder. Via the `create-react-app and eject`.
+
+Need mentioned here is that we had tried `Vite`, it almost fit until we encountered the problem that some code use `require` and some code using `import`. `Vite` can not handle that.
+
+We have to use webpack on both `API` and `WEB` project. The magic is webpack `alias`, point `/imports` to the `imports` folder underneath the project root. In this way, the import statement `/imports/xxxx` at everywhere in the code will not need to be changed, and we can always easily merge from `develop` branch which was still on Meteorjs stack.
+
+The alias trick also helped us to run the application at the very ealier stage before all refactoring done. In the webpack config, resolve `meteor/xxx` package to code that we re-implemented without Meteorjs. 
 
 ### Meteor subscription to Apollo v3 Subscription
+This step is easy because at this point we are already based on expressjs.
 
-### 
+### Make all the unit test working
+We have about 500+ test on the server side. Now with new stack, all test are done much faster than the old stack, which is nice to see.
+
+### Updating build/deploy CI
+This step also took us a lot of time.
+
+## Conclusion
+Meteorjs is still an amazing full stack framework. Switching to the new stack depends on the existing code, in our case it wasn't a very complicated process, but it still took us months and there were a lot of issues blocked and resolved.
 
 
 
