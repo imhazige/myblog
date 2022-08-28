@@ -17,11 +17,11 @@ How to move the stacks from Meteorjs to Express and Apollo?
 We was doing this and after monthes of refactoring and testing, finally we made it, it is a time-consuming and arduous process.
 
 ## Context
-The product's stack is Meteorjs at the beginning, I and most of my team members love meteorjs(even now). As time wen on, React came out, then graphql and apollo, need to mention(again?) that the apollo team is same team create meteorjs.
+The product's stack is Meteorjs at the beginning, I and most of my team members love meteorjs(even now). As time wen on, React came out, then graphql and apollo, need to mention(again?) that the apollo team is same team who created meteorjs.
 
-Once the meteorjs support react, non of us was willing to use blaze template anymore. One day we found it is time to convert all blaze to react, later, we got started to use graphql instead meteor DDP method. Eventually, we were all think about why not phase out meteorjs and move to apollo + express + react?
+Once the meteorjs support React, non of us was willing to use Blaze template anymore. One day we found it is time to convert all Blaze to React, later, we got started to use graphql instead Meteorjs DDP method. Eventually, we were all think about why not phase out Meteorjs and move to apollo + express + react?
 
-Actually, we had thought to keep meteor as the bedrock of the mono-repository project, because the build tool chain of Meteorjs is so good, but the problem is that meteorjs does not working well with apollo v3 subscriptionit(conflict with DDP subscription and lead to crash).
+Actually, we had thought to keep meteor as the bedrock of the mono-repository project, because the build tool chain of Meteorjs is so good, but the problem is that Meteorjs does not working well with apollo v3 subscriptionit(conflicts with DDP subscription and lead to crash).
 
 ## Steps
 
