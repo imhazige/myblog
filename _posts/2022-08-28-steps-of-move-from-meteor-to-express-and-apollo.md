@@ -69,7 +69,7 @@ Need mentioned here is that we had tried `Vite`, it almost fit until we encounte
 
 We have to use webpack on both `API` and `WEB` project. The magic is webpack `alias`, point `/imports` to the `imports` folder underneath the project root. In this way, the import statement `/imports/xxxx` at everywhere in the code will not need to be changed, and we can always easily merge from `develop` branch which was still on Meteorjs stack.
 
-The alias trick also helped us to run the application at the very ealier stage before all refactoring done. In the webpack config, resolve `meteor/xxx` package to code that we re-implemented without Meteorjs. 
+The alias trick also helped us being able to run the application at the very ealier stage before all refactoring done. In the webpack config, resolve `meteor/xxx` package to code that we re-implemented without Meteorjs. 
 
 ### Meteor subscription to Apollo v3 Subscription
 This step is easy because at this point we are already based on expressjs.
