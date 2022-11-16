@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 layout: post
 comments: true
 date: "2022-11-12 00:00 +08:00"
@@ -127,5 +127,8 @@ const randomChangeIndex = (index, maxChange, maxIndex) => {
   return index;
 };
 ```
+Also full code is available at [here](https://github.com/imhazige/fake-ranking-remix/blob/master/app/ranking.utils.js)
 
+## Conclusion
+My solution is straightforward and I am wondering any other way to do that? Any suggestion is welcome! :)
 
