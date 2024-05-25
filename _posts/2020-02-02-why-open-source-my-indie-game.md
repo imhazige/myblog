@@ -17,13 +17,13 @@ Today, I makes my favourite indie game [opensource on github](https://github.com
 I made it in year 2017, after creates 2 other indie game Karaok Kong and Mouse Bee and Elephant.
 
 > Aero Egg in 2017  
-![](https://blog.kazge.com/show/img/volitantegg-show.gif)
+![](https://blog.ureshika.com/show/img/volitantegg-show.gif)
 
 > Karaok Kong in 2015  
-![](https://blog.kazge.com/show/img/karaokkong-show.jpg)
+![](https://blog.ureshika.com/show/img/karaokkong-show.jpg)
 
 > Mouse Bee and Elephant in 2016
-![](https://blog.kazge.com/show/img/mousebeeelephant-show.png)
+![](https://blog.ureshika.com/show/img/mousebeeelephant-show.png)
 
 I made these games all by myself, art, sounds, music, coding, etc... 
 

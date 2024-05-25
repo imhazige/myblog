@@ -25,7 +25,7 @@ author:
 <p> (3)线索之间是相互独立的(正交的);</p>
 <p> (4)系统有一个公共驱动层(一般为最高层,<font color="#0000ff">下图的第一层</font>)和公共<a href="http://www.csai.cn/incsearch/search.asp?key=%CA%FD%BE%DD%BD%E1%B9%B9">数据结构</a>(一般为最低层,<font color="#0000ff">下图第五层</font>)。</p>
 <p> 对于大型的和复杂的软件系统，其子线索(一级子线索)还可以划分为更低一级的子线索(二级子线索)，形成多级正交结构。正交软件体系结构的框架如图1所示。</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/10/xjj.gif"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="xjj" border="0" alt="xjj" src="{{ site.baseurl }}/assets/xjj_thumb.gif" width="444" height="296" /></a> </p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/10/xjj.gif"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="xjj" border="0" alt="xjj" src="{{ site.baseurl }}/assets/xjj_thumb.gif" width="444" height="296" /></a> </p>
 <p> 图1是一个三级线索、五层结构的正交软件体系结构框架图，在该图中，ABDFK组成了一条线索，ACEJK也是一条线索。因为B、C处于同一层次中，所以不允许进行互相调用;H、J处于同一层次中，也不允许进行互相调用。一般来讲，第五层是一个物理数据库连接构件或设备构件，供整个系统公用。</p>
 <p> 在软件进化过程中，系统需求会不断发生变化。在正交软件体系结构中，因线索的正交性，每一个需求变动仅影响某一条线索，而不会涉及到其他线索。这样，就把软件需求的变动局部化了，产生的影响也被限制在一定范围内，因此实现容易。</p>
 <p> 正交软件体系结构具有以下优点：</p>

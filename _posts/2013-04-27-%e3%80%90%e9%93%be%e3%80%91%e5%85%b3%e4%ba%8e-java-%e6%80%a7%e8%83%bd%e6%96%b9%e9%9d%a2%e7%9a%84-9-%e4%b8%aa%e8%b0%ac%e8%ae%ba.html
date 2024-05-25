@@ -25,7 +25,7 @@ author:
 <p>看这篇文章，原文要看，评论也要看。文章总结了9点谬误：</p>
 <h5>1: Java运行慢 </h5>
 <p>提到了对比测试 <a href="http://www.techempower.com/blog/2013/04/05/frameworks-round-2/">web performance benchmarks</a> ，</p>
-<p><a href="http://kazge.com/wp-content/uploads/2013/04/Snap13.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb3.gif" width="545" height="759" /></a> </p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2013/04/Snap13.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb3.gif" width="545" height="759" /></a> </p>
 <p>头两个都是netty相关，netty是基于java的，去看了一下，基于nio,与mina是同一个作者(韩国李)。 </p>
 <p>这里也扯一下netty和mina, <a href="http://stackoverflow.com/questions/1637752/netty-vs-apache-mina">http://stackoverflow.com/questions/1637752/netty-vs-apache-mina</a></p>
 <p>上面链接看看韩国李的评论，netty就是为了解决mina开发中出现的问题而重新设计的，它的文档更好，构建速度更快，去掉了可能不是用的很多的东西从而简单化，提高性能。mina3将会是完全的重构，意味着api兼容性将会破坏（说到这你也懂韩国李自己都在黑mina了。） 只是对于UDP,mina提供更高层的抽象（稳定连接），而netty更接近UDP本意。</p>

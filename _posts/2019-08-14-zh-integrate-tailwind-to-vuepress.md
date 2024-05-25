@@ -29,7 +29,7 @@ tags:
 
 ```javascript
 module.exports = {
-  title: 'www.kazge.com',
+  title: 'blog.ureshika.com',
   description: ' ',
   postcss: {
     plugins: [

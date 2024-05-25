@@ -22,6 +22,6 @@ React Native for Windows 开发的是原声的 Windows 应用。
 
 所以当前微软正在使用 C++ 重写 React Native for Windows，以获得更好的性能，同时更好地与暴露出来的 C++ React Native 核心保持一致。微软打算提供一个具有最小破坏性更改的兼容层，该层将支持使用 C# 编写的现有应用、view 管理器和原生模块。
 
-参见[微软即将完成将 office365 用 react-native 方式重写](https://blog.kazge.com/javascript/2018/06/16/zh-microsoft-rewritten-office365-in-react-native/)
+参见[微软即将完成将 office365 用 react-native 方式重写](https://blog.ureshika.com/javascript/2018/06/16/zh-microsoft-rewritten-office365-in-react-native/)
 
 然而此项目目前文档尚不太详细。

@@ -135,9 +135,9 @@ author:
 <p>在大型网站架构中，最关键最核心的也是缓存策略了，介于其复杂性，这里只简单的介绍一下基于高并发数据库缓存方案，后面的将详细介绍常用的缓存策略。这个方法与其叫缓存不如叫数据缓冲，其实也是异步更新数据，根据负载情况不同，我们哪怕仅仅将数据缓冲1秒，带来的负载提升就已经非常好了。</p>
 <p>实现原理很简单，将并发的更新首先缓存到一个应用程序池中，然后定时查询（注意这里的方案应和缓存方案具体结合，这里只介绍概要情况）。</p>
 <p>传统的update请求处理流程是：请求—》应用程序—》更新数据库,如下图：</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/11/clip_image001.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image001" border="0" alt="clip_image001" src="{{ site.baseurl }}/assets/clip_image001_thumb.jpg" width="574" height="328" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/11/clip_image001.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image001" border="0" alt="clip_image001" src="{{ site.baseurl }}/assets/clip_image001_thumb.jpg" width="574" height="328" /></a></p>
 <p>数据缓冲和更新部分可以在数据层里独立实现，也就是update的传递的时候首先传递缓冲池，然后定时更新，这里需要注意的数据缓冲池的还要做的另外一份工作就是全局的数据缓存，缓存数据更新到数据这段的时间间隔，我们可以理解为临时表，再提取上下文请求的即时信息的时候首先从缓冲池里读取（这里有很多技巧，比如巧妙的利用cookie，session做；临界条件判断），流程如下图所示</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/11/clip_image003.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image003" border="0" alt="clip_image003" src="{{ site.baseurl }}/assets/clip_image003_thumb.jpg" width="670" height="326" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/11/clip_image003.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image003" border="0" alt="clip_image003" src="{{ site.baseurl }}/assets/clip_image003_thumb.jpg" width="670" height="326" /></a></p>
 <p>上面简单的介绍了一下基于数据更新缓存的处理，下篇具体详细介绍基于并发更新机制的详细缓存处理机制</p>
 <h3>疯狂代码,大型网站架构系列之五，缓存策略设计概要</h3>
 <p>上篇对疯狂代码缓存配置进行了概要的设计，可能说的有点模糊了，有几个朋友发了几个问题探讨了下，这里有必要先澄清一个问题，和常见的缓存策略不同，我们的缓存策略将重点放在更新策略而不是只读策略上。只读缓存以及共性缓存策略性质实现的难度并不大，我们要解决的是非共性缓存，并发更新缓存，可扩充性缓存，分布式缓存更新运算的问题，而对于共性的东西的话我们可以很轻松的实现，而不必做太多的运算。</p>

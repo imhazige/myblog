@@ -83,14 +83,14 @@ author:
 <p><font color="#0000ff">相对于二级锁，Slock的范围加长了，开销自然大了。      <br /></font></p>
 <p>执行了封锁协议之后，就可以克服数据库操作中的数据不一致所引起的问题。</p>
 <p>参看图4。</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/10/Snap21.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb1.jpg" width="438" height="449" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/10/Snap21.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb1.jpg" width="438" height="449" /></a></p>
 <p>从图4的情况我们看到事务T1在执行过程中独自占用并加X锁，直到处理完之后再释放锁，T2虽然也需要使用，但是在封锁协议的约束之下，T2所要求的X 锁就被拒绝，因此必须处于等待状态，直到T1释放之后，T2才获得使用的权利，这样就不会发生使用冲突，避免了数据的丢失。这里我们看到，此处实际上是执行了一级封锁协议。</p>
 <p>下面我们看图5。</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/10/Snap32.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap3" border="0" alt="Snap3" src="{{ site.baseurl }}/assets/Snap3_thumb2.jpg" width="368" height="536" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/10/Snap32.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap3" border="0" alt="Snap3" src="{{ site.baseurl }}/assets/Snap3_thumb2.jpg" width="368" height="536" /></a></p>
 <p>通过图5，能够清楚的看到，由于施行了封锁协议，使事务T1使用了共享锁占用A,B两块数据,这样T2需要加上的X锁就无法实现，(如果是S锁，虽然可以加上,但也不能够随便修改数据,只是读取一下数据。)当T1释放锁之后，T2就可以得到并使用锁了,这样读取的数据B仍然还是100，不影响A+B的结果，这就是可重复读取。因此我们看到，其实这里用的就是三级封锁协议</p>
 <p>&#160;</p>
 <p>参看图6，事务T1在对数据C修改之前，先加上了X锁，修改后写回数据库，这时T2请求在C上添加S锁，因为T1加了X锁，T2只好等待，当T1因为某种原因撤销了修改的数据后，C就恢复了原来的数据100，等T1释放 X锁后T2获得C上的S锁，读到的还是C=100，因此避免了读出“脏”数据。这里使用的其实就是二级封锁协议。</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/10/Snap13.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb3.jpg" width="365" height="425" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/10/Snap13.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb3.jpg" width="365" height="425" /></a></p>
 <p>&#160;</p>
 <h3>两阶段封锁协议</h3>
 <p>对锁机制，保证事务可串行性的最常用协议是两阶段封锁协议。该协议要求每个事务分两个阶段提出加锁和解锁申请：</p>

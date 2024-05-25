@@ -3,7 +3,7 @@
 # Change `qwtel` to your shortname (used in the front matter to set a page's author, e.g. `author: qwtel`).
 Ka:
   name:              Ka
-  email:             ka@kazge.com
+  email:             ka@ureshika.com
 
   # Used at the bottom of each page and at the top of the `about` layout
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
@@ -57,5 +57,5 @@ Ka:
     # stumbleupon:     <username>
     # paypal:          <username>
     github:          imhazige
-    email:           mailto:ka@kazge.com
-    rss:             https://blog.kazge.com/feed.xml
+    email:           mailto:ka@ureshika.com
+    rss:             https://blog.ureshika.com/feed.xml

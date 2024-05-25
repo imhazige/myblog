@@ -69,7 +69,7 @@ author:
 <p>第4部分：Atmosphere和CometD <a href="http://kb.cnblogs.com/page/116653/">http://kb.cnblogs.com/page/116653/</a></p>
 <blockquote><p>Atmosphere和CometD都是稳定的、开源的反向Ajax解决方案，我们在Ovea选用的是CometD，因为我们在一个集群环境内部为移动设备开发可伸缩的事件驱动应用，我们完全掌控基础设施（我们使用Jetty）。不过，在没有额外开发的情况下，如果你正在出售web应用且希望你的反向Ajax功能在尽可能多的服务器上都可运作的话，CometD可能不是最好的选择。但现在随着越来越多的Web应用开始支持Servlet 3.0规范，CometD的局限性呈下降趋势。说到传输层，余下的主要差异则取决于对WebSocket的支持。</p>
 </blockquote>
-<p><font color="#0000ff">关于servlet 3.0 参见 </font><a href="http://kazge.com/archives/635.html"><font color="#0000ff">http://kazge.com/archives/635.html</font></a><font color="#0000ff"> ，在此文中主要指异步servlet处理。Ovea是php网站，但是使用java的CometD来做comet服务？</font></p>
+<p><font color="#0000ff">关于servlet 3.0 参见 </font><a href="http://blog.ureshika.com/archives/635.html"><font color="#0000ff">http://blog.ureshika.com/archives/635.html</font></a><font color="#0000ff"> ，在此文中主要指异步servlet处理。Ovea是php网站，但是使用java的CometD来做comet服务？</font></p>
 <p><font color="#0000ff">作者还是倾向于cometD,但是cometD要求jetty6以上以及任何支持Servlet 3.0规范的服务器中</font></p>
 <p>第5部分：事件驱动的Web开发 <a href="http://kb.cnblogs.com/page/117099/">http://kb.cnblogs.com/page/117099/</a></p>
 <p>comet有多种实现，long poll，长连接，上面的文章仍然推荐long poll。</p>

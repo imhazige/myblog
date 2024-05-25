@@ -24,7 +24,7 @@ author:
 <p>&#160;</p>
 <p>&#160;</p>
 <p>有两个问题要注意：</p>
-<p>1：直接使用javascript调用bosh往往存在同源原则的问题，例如localhost:80端口下的页面脚本要访问Bosh服务localhost:7070,那么这个ajax访问就会失败,因为违背了同源法则。<font color="#0000ff">(这使得我又回去看了一下cookie的问题</font><a title="https://blog.kazge.com/web/2012/08/26/e5-86-8d-e8-b0-88p3p-e4-b8-8e-e7-ac-ac-e4-b8-89-e6-96-b9cookie/" href="https://blog.kazge.com/web/2012/08/26/e5-86-8d-e8-b0-88p3p-e4-b8-8e-e7-ac-ac-e4-b8-89-e6-96-b9cookie/,cookie"><font color="#0000ff">https://blog.kazge.com/web/2012/08/26/e5-86-8d-e8-b0-88p3p-e4-b8-8e-e7-ac-ac-e4-b8-89-e6-96-b9cookie/,cookie</font></a><font color="#0000ff">保存却又不区分端口)</font><font color="#000000">因此，我们要么使用跨域插件fkXHR要么在服务器上配置代理来使bosh服务与发起请求页面“同源”。</font></p>
+<p>1：直接使用javascript调用bosh往往存在同源原则的问题，例如localhost:80端口下的页面脚本要访问Bosh服务localhost:7070,那么这个ajax访问就会失败,因为违背了同源法则。<font color="#0000ff">(这使得我又回去看了一下cookie的问题</font><a title="https://blog.ureshika.com/web/2012/08/26/e5-86-8d-e8-b0-88p3p-e4-b8-8e-e7-ac-ac-e4-b8-89-e6-96-b9cookie/" href="https://blog.ureshika.com/web/2012/08/26/e5-86-8d-e8-b0-88p3p-e4-b8-8e-e7-ac-ac-e4-b8-89-e6-96-b9cookie/,cookie"><font color="#0000ff">https://blog.ureshika.com/web/2012/08/26/e5-86-8d-e8-b0-88p3p-e4-b8-8e-e7-ac-ac-e4-b8-89-e6-96-b9cookie/,cookie</font></a><font color="#0000ff">保存却又不区分端口)</font><font color="#000000">因此，我们要么使用跨域插件fkXHR要么在服务器上配置代理来使bosh服务与发起请求页面“同源”。</font></p>
 <p>例如apache里面在 httpd.conf 中加入下面几行：</p>
 <p>LoadModule proxy_module modules/mod_proxy.so    <br />LoadModule proxy_http_module modules/mod_proxy_http.so</p>
 <p>&#160;</p>

@@ -41,19 +41,19 @@ author:
 </div>
 <p>使用attr方法将画笔属性设置成红色和5像素宽。</p>
 <p>效果如图:</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/11/Snap1.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb.gif" width="221" height="218" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/11/Snap1.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap1" border="0" alt="Snap1" src="{{ site.baseurl }}/assets/Snap1_thumb.gif" width="221" height="218" /></a></p>
 <p>我们再画个三角形:</p>
 <div>
 <pre style="width: 858px; height: 33px">r.path('M{0},{1},L{2},{3}L{4},{5}Z',0,100,50,150,0,200).attr({fill:'blue'});</pre>
 </div>
 <p>注意到，使用path的另外的形式，使用大括号中的参数来生成语句。其中的索引分别对应后面的参数位置。更多的格式见Raphael.format。另外我们指定了三个顶点，最后一个Z表示将此路径封闭。然后我们使用蓝色来填充这个封闭的三角形。</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/11/Snap2.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb.gif" width="219" height="218" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/11/Snap2.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap2" border="0" alt="Snap2" src="{{ site.baseurl }}/assets/Snap2_thumb.gif" width="219" height="218" /></a></p>
 <p>我们再来写上文本：</p>
 <div>
 <pre style="width: 858px; height: 48px">r.text(100,90,'Hello!').attr({stroke:'black','stroke-width':'2px',fill:'green','font-size':'90px'});</pre>
 </div>
 <p>在上面的代码中，我们在100,90坐标处，写上了hello的文本。它是用2px黑色外框，绿色填充，90px大小的字体来绘制的。</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/11/Snap3.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap3" border="0" alt="Snap3" src="{{ site.baseurl }}/assets/Snap3_thumb.gif" width="222" height="212" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/11/Snap3.gif"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="Snap3" border="0" alt="Snap3" src="{{ site.baseurl }}/assets/Snap3_thumb.gif" width="222" height="212" /></a></p>
 <p>完整的代码是:</p>
 <p>html代码:</p>
 <div>

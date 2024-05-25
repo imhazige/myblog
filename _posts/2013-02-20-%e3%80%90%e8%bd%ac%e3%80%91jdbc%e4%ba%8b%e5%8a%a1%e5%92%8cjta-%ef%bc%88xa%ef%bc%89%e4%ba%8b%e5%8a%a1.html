@@ -25,9 +25,9 @@ author:
 <p><font color="#0000ff">原文不知出处，这是转自</font><a title="http://wenku.baidu.com/view/1ecebb1db7360b4c2e3f6438.html" href="http://wenku.baidu.com/view/1ecebb1db7360b4c2e3f6438.html"><font color="#0000ff">http://wenku.baidu.com/view/1ecebb1db7360b4c2e3f6438.html</font></a><font color="#0000ff"> 我做了些排版便于阅读,蓝色字是我的注解。</font></p>
 <p><font color="#0000ff"></font></p>
 <p><font color="#0000ff">最近用spring,整理了一下对它的事务的认识，找到这篇文章，正好可作为参照。其实用惯了java，很多东西都被它搞复杂了，认识事务还需要看我的其他文章:</font></p>
-<p><a href="http://kazge.com/archives/607.html"><font color="#0000ff">三级封锁协议两段锁以及隔离级别</font></a></p>
-<p><a href="http://kazge.com/archives/487.html"><font color="#0000ff">spring ejb3 jta 事务泛谈</font></a>&#160; <font color="#0000ff">(原来已经整理过一回)</font></p>
-<p><a href="http://kazge.com/archives/442.html"><font color="#0000ff">数据库同步–可别忘记了</font></a></p>
+<p><a href="http://blog.ureshika.com/archives/607.html"><font color="#0000ff">三级封锁协议两段锁以及隔离级别</font></a></p>
+<p><a href="http://blog.ureshika.com/archives/487.html"><font color="#0000ff">spring ejb3 jta 事务泛谈</font></a>&#160; <font color="#0000ff">(原来已经整理过一回)</font></p>
+<p><a href="http://blog.ureshika.com/archives/442.html"><font color="#0000ff">数据库同步–可别忘记了</font></a></p>
 <p>&#160;</p>
 <p>&#160;</p>
 <h4>JDBC事务和JTA （XA）事务</h4>
@@ -269,7 +269,7 @@ xaCon.close();
 <p>&#160; <br />当然，实际过程中，我们不需要写这些代码，这些代码是JTA最终的实现代码。</p>
 <p><font color="#0000ff">(那么再往里面一层,它对于数据库是怎么实现的？jdbc对于数据库又是怎样实现事务的？还是调用各数据库提供的封锁协议以及两段锁实现来达到目的的。)</font></p>
 <p>
-  <br />关于“两步提交协议”，可以参看下面的文章：<font color="#0000ff">(建议还是看</font><a href="http://kazge.com/archives/607.html"><font color="#0000ff">三级封锁协议两段锁以及隔离级别</font></a><font color="#0000ff">)<br />
+  <br />关于“两步提交协议”，可以参看下面的文章：<font color="#0000ff">(建议还是看</font><a href="http://blog.ureshika.com/archives/607.html"><font color="#0000ff">三级封锁协议两段锁以及隔离级别</font></a><font color="#0000ff">)<br />
     <br /></font>http://www.ibm.com/developerworks/cn/db2/library/techarticles/dm-0505weber/index.html </p>
 <p>两阶段提交（Two-Phase-Commit）协议 </p>
 <p>首先，两阶段提交（Two-Phase-Commit）事务的启动与常规的单阶段提交（One-Phase-Commit）事务类似。接着，应用程序/客 户机对该两阶段提交（Two-Phase-Commit）操作中所涉及的所有数据库执行其修改工作。现在，在最终提交该事务之前，客户机通知参与的数据库准备提交（第 1 阶段）。如果客户机从数据库收到一条“okay”，就发出命令向数据库提交该事务（第 2 阶段）。最后分布式事务（Distributed Transaction）结束。 </p>
@@ -283,7 +283,7 @@ xaCon.close();
 <p>&#160;</p>
 <p>&#160;</p>
 <p><font color="#0000ff">PS:针对java,spring层面的事务总结一下:</font></p>
-<p><font color="#0000ff">单数据源事务最终还是jdbc到数据库的连接事务，所以你要注意同步问题，</font><a href="http://kazge.com/archives/442.html"><font color="#0000ff">数据库同步–可别忘记了</font></a><font color="#0000ff">。如果使用spring事务管理机制则不需要考虑这个问题。即使你将同一个数据源实例赋值给多个数据操作Bean,那也没关系，因为spring会保证同一个线程是同一个连接嘛（SingleConnectionDataSource除外），如果你的程序是多个线程共一个连接，例如使用SingleConnectionDataSource，那就不能不支持多线程了。</font></p>
+<p><font color="#0000ff">单数据源事务最终还是jdbc到数据库的连接事务，所以你要注意同步问题，</font><a href="http://blog.ureshika.com/archives/442.html"><font color="#0000ff">数据库同步–可别忘记了</font></a><font color="#0000ff">。如果使用spring事务管理机制则不需要考虑这个问题。即使你将同一个数据源实例赋值给多个数据操作Bean,那也没关系，因为spring会保证同一个线程是同一个连接嘛（SingleConnectionDataSource除外），如果你的程序是多个线程共一个连接，例如使用SingleConnectionDataSource，那就不能不支持多线程了。</font></p>
 <p><font color="#0000ff"></font></p>
 <p><font color="#0000ff">这篇文章 </font><a title="http://blog.sina.com.cn/s/blog_53dd74430100haaj.html" href="http://blog.sina.com.cn/s/blog_53dd74430100haaj.html"><font color="#0000ff">http://blog.sina.com.cn/s/blog_53dd74430100haaj.html</font></a><font color="#0000ff"> 分析了spring事务管理实现。</font></p>
 <p><font color="#0000ff"></font></p>

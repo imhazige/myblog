@@ -24,15 +24,15 @@ author:
 <p>文档:<a href="http://code.google.com/p/memcached/wiki/NewStart?tm=6">http://code.google.com/p/memcached/wiki/NewStart?tm=6</a></p>
 <p>这位<a href="http://www.cnblogs.com/Jwin/archive/2008/10/05/1304261.html" target="_blank">仁兄</a>收集了些文章:</p>
 <p><a href="http://kb.cnblogs.com/page/42775/">分布式缓存系统Memcached简介与实践</a></p>
-<p><a href="http://kazge.com/archives/750.html">Memcached深度分析</a>&#160;<font color="#0000ff">[好文，必读]</font></p>
+<p><a href="http://blog.ureshika.com/archives/750.html">Memcached深度分析</a>&#160;<font color="#0000ff">[好文，必读]</font></p>
 <p><a href="http://kb.cnblogs.com/page/42777/">自己实现memcached客户端库</a></p>
-<p><a href="http://www.javaeye.com/topic/225692">memcached server LRU 深入分析</a><font color="#0000ff">[这个针对实际问题阐述memcached内存存储的调整，回头再看</font><a href="http://kazge.com/archives/750.html"><font color="#0000ff">Memcached深度分析</font></a><font color="#0000ff"> ]</font></p>
+<p><a href="http://www.javaeye.com/topic/225692">memcached server LRU 深入分析</a><font color="#0000ff">[这个针对实际问题阐述memcached内存存储的调整，回头再看</font><a href="http://blog.ureshika.com/archives/750.html"><font color="#0000ff">Memcached深度分析</font></a><font color="#0000ff"> ]</font></p>
 <p><a href="http://blog.csdn.net/heiyeshuwu/article/details/3950532"><font color="#0000ff">Memcached 原理和使用详解(PPT/PDF)</font></a>&#160;<font color="#0000ff">[这个写的很好,必读]</font></p>
 <p><a href="http://kb.cnblogs.com/page/42790/">Memcached使用点滴</a>&#160;<font color="#0000ff">[这个需要对memcache有一定了解之后，打算自己实现client可做借鉴]</font></p>
 <p><a href="http://tech.idv2.com/2008/08/17/memcached-pdf/">memcached全面剖析–PDF总结篇</a>&#160;<font color="#0000ff">[very good,日本mixi网站工程师写的，国人翻译的]</font></p>
 <p>&#160;</p>
 <p>api client 列表 <a href="http://code.google.com/p/memcached/wiki/Clients">http://code.google.com/p/memcached/wiki/Clients</a></p>
-<p>参见<a title="http://kazge.com/archives/753.html" href="http://kazge.com/archives/753.html">http://kazge.com/archives/753.html</a>&#160;</p>
+<p>参见<a title="http://blog.ureshika.com/archives/753.html" href="http://blog.ureshika.com/archives/753.html">http://blog.ureshika.com/archives/753.html</a>&#160;</p>
 <p>memcached 安装见<a href="http://www.ccvita.com/257.html">http://www.ccvita.com/257.html</a></p>
 <p>以下是我的安装命令[需要root权限]:</p>
 <p>------------------------------------------------------------------------------------------------------------</p>
@@ -129,11 +129,11 @@ author:
 <p>以下摘自: <a href="http://blog.csdn.net/heiyeshuwu/article/details/3950532"><font color="#0000ff">Memcached 原理和使用详解(PPT/PDF)</font></a>&#160;</p>
 <h6>数据存储方式：Slab Allocation</h6>
 <p><strong>Slab Alloction 构造图:</strong></p>
-<p><a href="http://kazge.com/wp-content/uploads/2012/03/image.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="{{ site.baseurl }}/assets/image_thumb.png" width="417" height="312" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2012/03/image.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="{{ site.baseurl }}/assets/image_thumb.png" width="417" height="312" /></a></p>
 <p>Slab Allocator的基本原理是按照预先规定的大小，将分配的内存分割成特定长度的块，以完全解决内存碎片问题。 </p>
 <p>Slab Allocation的原理相当简单。 将分配的内存分割成各种尺寸的块（chunk），并把尺寸相同的块分成组（chunk的集合）</p>
 <p><strong>Slab Classes 分配图</strong></p>
-<p><a href="http://kazge.com/wp-content/uploads/2012/03/image1.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="{{ site.baseurl }}/assets/image_thumb1.png" width="417" height="312" /></a> </p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2012/03/image1.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="{{ site.baseurl }}/assets/image_thumb1.png" width="417" height="312" /></a> </p>
 <p>Page：分配给Slab的内存空间，默认是1MB。分配给Slab之后根据slab的大小切分成chunk。</p>
 <p>Chunk：用于缓存记录的内存空间。</p>
 <p>注意:摘自<a href="http://y.jmeye.com/?aid=185">http://y.jmeye.com/?aid=185</a></p>
@@ -146,10 +146,10 @@ author:
 <p>memcached根据收到的数据的大小，选择最适合数据大小的slab。 </p>
 <p>memcached中保存着slab内空闲chunk的列表，根据该列表选择chunk，然后将数据缓存于其中。</p>
 <p><strong>Slab Alloction 缺点</strong></p>
-<p><a href="http://kazge.com/wp-content/uploads/2012/03/image2.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="{{ site.baseurl }}/assets/image_thumb2.png" width="416" height="180" /></a> </p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2012/03/image2.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="{{ site.baseurl }}/assets/image_thumb2.png" width="416" height="180" /></a> </p>
 <p>这个问题就是，由于分配的是特定长度的内存，因此无法有效利用分配的内存。例如，将100字节的数据缓存到128字节的chunk中，剩余的28字节就浪费了。</p>
 <p>&#160;</p>
-<p>以下摘自: <a href="http://kazge.com/archives/750.html">http://kazge.com/archives/750.html</a></p>
+<p>以下摘自: <a href="http://blog.ureshika.com/archives/750.html">http://blog.ureshika.com/archives/750.html</a></p>
 <div>在1.2中，chunk大小表示为初始大小*f^n，f为factor，在memcached.c中定义，n为classid，同时，201个头不是全部 都要初始化的，因为factor可变，初始化只循环到计算出的大小达到slab大小的一半为止，而且它是从id1开始的，即：id为1的slab，每 chunk大小80字节，id为2的slab，每chunk大小80*f，id为3的slab，每chunk大小80*f^2，初始化大小有一个修正值 CHUNK_ALIGN_BYTES，用来保证n-byte排列 （保证结果是CHUNK_ALIGN_BYTES的整倍数）。这样，在标准情况下，memcached1.2会初始化到id40，这个slab中每个 chunk大小为504692，每个slab中有两个chunk。最后，slab_init函数会在最后补足一个id41，它是整块的，也就是这个 slab中只有一个1MB大的chunk</div>
 <div>&#160;</div>
 <p><font color="#000000">以下摘自:</font> </p>
@@ -187,4 +187,4 @@ author:
 <p><font color="#0000ff">你做数据缓存，那么哪些数据应该缓存？怎么样缓存？过期策略？</font></p>
 <p><font color="#0000ff">做session集群共享，要不要保证可靠性?</font></p>
 <p><font color="#0000ff">很多时候不该memcached做的事情也让它来做了，这时可考虑下nosql地盘的东东了。</font></p>
-<p>可参考转载的这篇文章：<a title="http://kazge.com/archives/757.html" href="http://kazge.com/archives/757.html">http://kazge.com/archives/757.html</a></p>
+<p>可参考转载的这篇文章：<a title="http://blog.ureshika.com/archives/757.html" href="http://blog.ureshika.com/archives/757.html">http://blog.ureshika.com/archives/757.html</a></p>

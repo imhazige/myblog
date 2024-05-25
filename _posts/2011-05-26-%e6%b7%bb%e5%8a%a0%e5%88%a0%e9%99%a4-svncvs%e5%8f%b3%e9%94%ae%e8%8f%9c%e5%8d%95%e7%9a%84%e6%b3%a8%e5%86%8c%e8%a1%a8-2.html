@@ -29,7 +29,7 @@ author:
 	[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\DeleteCVS\command]&nbsp;&nbsp; <br />
 	&nbsp;&nbsp;&nbsp;&nbsp; @=&quot;cmd.exe /c \&quot;TITLE Removing CVS Folders in %1 &amp;&amp; COLOR 9A &amp;&amp; FOR /r \&quot;%1\&quot; %%f IN (CVS) DO RD /s /q \&quot;%%f\&quot; \&quot;&quot;&nbsp;&nbsp; <br />
 	将上面的代码保存为delCVS.reg 后双击此文件即可，可看到文件夹右键多出个Delete CVS Folders菜单.如图</p>
-<p><a href="http://kazge.com/wp-content/uploads/2011/05/6ebc7152e122acda8d5430ff1.jpg"><img alt="6ebc7152e122acda8d5430ff" border="0" height="184" src="{{ site.baseurl }}/assets/6ebc7152e122acda8d5430ff_thumb1.jpg" style="border-bottom: 0px;border-left: 0px;border-top: 0px;border-right: 0px" width="244" /></a></p>
+<p><a href="http://blog.ureshika.com/wp-content/uploads/2011/05/6ebc7152e122acda8d5430ff1.jpg"><img alt="6ebc7152e122acda8d5430ff" border="0" height="184" src="{{ site.baseurl }}/assets/6ebc7152e122acda8d5430ff_thumb1.jpg" style="border-bottom: 0px;border-left: 0px;border-top: 0px;border-right: 0px" width="244" /></a></p>
 <p>根据上面的代码，通过修改蓝色部分，你可以自己定制更多的右键菜单来删除不同的文件夹.</p>
 <p>下面是删除svn文件夹的代码:</p>
 <p>Windows Registry Editor Version 5.00</p>

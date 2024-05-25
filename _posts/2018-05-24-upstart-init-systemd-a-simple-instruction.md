@@ -95,7 +95,7 @@ sudo stop servicename
 
 ### Example  
 ```shell
-author "kazge.com"
+author "blog.ureshika.com"
 description "start and stop example for Ubuntu (upstart)"
 version "1.0"
 
